@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 12%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 12%;
+ 
+    --primary: 45 85% 55%; /* Gold/yellow for light mode */
+    --primary-foreground: 0 0% 100%;
+ 
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 220 20% 12%;
+ 
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 20% 45%;
+ 
+    --accent: 220 20% 96%;
+    --accent-foreground: 220 20% 12%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 20% 90%;
+    --input: 220 20% 92%;
+    --ring: 45 85% 55%;
+ 
+    --radius: 0.5rem;
+
+    /* Sidebar variables - Light Theme */
+    --sidebar-background: 220 20% 98%;
+    --sidebar-foreground: 220 20% 12%;
+    --sidebar-primary: 45 85% 55%; 
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 96%;
+    --sidebar-accent-foreground: 220 20% 12%;
+    --sidebar-border: 220 20% 90%;
+    --sidebar-ring: 45 85% 55%;
+
+    --chart-1: hsl(var(--primary));
+    --chart-2: hsl(var(--accent));
+    --chart-3: 200 20% 60%; 
+    --chart-4: 30 80% 60%; 
+    --chart-5: 220 70% 65%;
+  }
+ 
+  .dark {
+    --background: 220 16% 12%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 220 16% 16%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 220 16% 16%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 45 90% 60%; /* Gold/yellow from screenshot */
+    --primary-foreground: 45 90% 10%;
+ 
+    --secondary: 220 16% 24%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 220 16% 24%;
+    --muted-foreground: 220 10% 65%;
+ 
+    --accent: 220 16% 24%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 220 16% 24%;
+    --input: 220 16% 20%;
+    --ring: 45 90% 60%;
+
+    /* Sidebar variables - Dark Theme */
+    --sidebar-background: 220 16% 12%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 45 90% 60%;
+    --sidebar-primary-foreground: 45 90% 10%;
+    --sidebar-accent: 220 16% 24%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 16% 24%;
+    --sidebar-ring: 45 90% 60%;
+    
+    --chart-1: hsl(var(--primary));
+    --chart-2: hsl(var(--accent));
+    --chart-3: 200 20% 70%; 
+    --chart-4: 30 70% 70%; 
+    --chart-5: 220 60% 75%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Added marquee styles */
+@layer utilities {
+  .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+}
