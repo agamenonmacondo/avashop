@@ -84,8 +84,6 @@ export default function CheckoutPage() {
   // Cargar usuario autenticado
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      // Remove email logging for privacy
-      console.log('User authenticated:', !!firebaseUser);
       setUser(firebaseUser || null);
     });
     return () => unsubscribe();
@@ -94,8 +92,6 @@ export default function CheckoutPage() {
   // Actualizar formulario cuando se carga el perfil
   useEffect(() => {
     if (profile && Object.values(profile).some(v => v)) {
-      // Remove profile data logging
-      console.log('Updating form with profile data');
       shippingForm.reset(profile);
       setTimeout(() => {
         shippingForm.trigger();
@@ -115,7 +111,6 @@ export default function CheckoutPage() {
           .maybeSingle();
 
         if (error) {
-          console.error('Error fetching profile');
           return;
         }
         if (data) {
@@ -194,26 +189,19 @@ export default function CheckoutPage() {
       const contentType = res.headers.get('content-type') || '';
       if (!contentType.includes('application/json')) {
         const text = await res.text();
-        console.error('create-payment non-json response:', text);
         toast({ title: 'Error al preparar el pago', description: 'Respuesta no JSON del servidor.', variant: 'destructive' });
         setIsBoldLoading(false);
         return;
       }
 
       const result = await res.json();
-      // Remove sensitive data logging and debug logs
-      // console.log('Payment preparation result:', { success: result.success });
 
       if (res.ok && result.success && result.data) {
-        // Remove debug log with server data
-        // console.log('FRONT DEBUG -> data recibida:', result.data);
         setBoldButtonData(result.data);
       } else {
-        console.error('create-payment error payload:', result);
         toast({ title: 'Error al preparar el pago', description: result?.message || 'No se pudo preparar el pago.', variant: 'destructive' });
       }
     } catch (err) {
-      console.error('Error preparando pago Bold:', err);
       toast({ title: 'Error al preparar el pago', description: 'Ocurrió un error al comunicar con el servidor.', variant: 'destructive' });
     }
     setIsBoldLoading(false);
@@ -224,17 +212,26 @@ export default function CheckoutPage() {
     const orderInput = await getValidatedOrderInput();
     if (!orderInput) {
       setIsCoinbaseLoading(false);
-      return;
+      return; // Agregado el return que faltaba
     }
     
-    const result = await createCoinbaseCharge(orderInput);
+    try {
+      const result = await createCoinbaseCharge(orderInput);
 
-    if (result.success && result.redirectUrl) {
-      window.location.href = result.redirectUrl;
-    } else {
+      if (result.success && result.redirectUrl) {
+        window.location.href = result.redirectUrl;
+      } else {
+        toast({ 
+          title: "Problema con el Pedido", 
+          description: result.message || "No se pudo procesar el pedido con Coinbase.", 
+          variant: "destructive" 
+        });
+        setIsCoinbaseLoading(false);
+      }
+    } catch (error) {
       toast({ 
-        title: "Problema con el Pedido", 
-        description: result.message || "No se pudo procesar el pedido con Coinbase.", 
+        title: "Error al procesar el pago", 
+        description: "Ocurrió un error al comunicar con Coinbase.", 
         variant: "destructive" 
       });
       setIsCoinbaseLoading(false);

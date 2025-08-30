@@ -13,7 +13,8 @@ const KEY_CANDIDATES = [
   'NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY',
   'SUPABASE_ANON_KEY'
-];
+] as const;
+
 let SUPABASE_SERVICE_KEY = '';
 let usedKeyName = '';
 for (const name of KEY_CANDIDATES) {
@@ -30,6 +31,7 @@ if (usedKeyName) {
 } else {
   console.warn('No Supabase service key env found, falling back to anon key (read-only).');
 }
+
 // Use the service role key explicitly on the server. Do NOT expose this to the client.
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY || SUPABASE_ANON, {
   auth: { persistSession: false },
@@ -39,7 +41,7 @@ const FIREBASE_KEY_PATH =
   process.env.FIREBASE_SERVICE_ACCOUNT_PATH ||
   path.join(process.cwd(), 'ava-agente-firebase-adminsdk-fbsvc-c919f728cd.json');
 
-function loadServiceAccountFile(filePath: string) {
+function loadServiceAccountFile(filePath: string): admin.ServiceAccount | null {
   try {
     const absPath = path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
     if (!fs.existsSync(absPath)) {
@@ -47,7 +49,7 @@ function loadServiceAccountFile(filePath: string) {
       return null;
     }
     const raw = fs.readFileSync(absPath, 'utf8');
-    return JSON.parse(raw);
+    return JSON.parse(raw) as admin.ServiceAccount;
   } catch (err) {
     console.error('Failed to load/parse firebase service account file:', err);
     return null;
@@ -59,7 +61,7 @@ const serviceAccountKey = loadServiceAccountFile(FIREBASE_KEY_PATH);
 if (!admin.apps.length && serviceAccountKey) {
   try {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccountKey as admin.ServiceAccount),
+      credential: admin.credential.cert(serviceAccountKey),
     });
     console.log('Firebase Admin initialized from file:', FIREBASE_KEY_PATH);
   } catch (e) {
@@ -68,7 +70,7 @@ if (!admin.apps.length && serviceAccountKey) {
 }
 
 // helper: verify token only if admin initialized
-async function getUserFromIdToken(idToken?: string) {
+async function getUserFromIdToken(idToken?: string): Promise<{ uid: string; email: string | null } | null> {
   if (!idToken) return null;
   if (!admin.apps.length) {
     // no admin -> can't verify token
@@ -82,6 +84,16 @@ async function getUserFromIdToken(idToken?: string) {
     console.warn('Failed to verify idToken:', (err as any)?.message || err);
     return null;
   }
+}
+
+interface ProfilePayload {
+  name: string;
+  phone?: string;
+}
+
+interface RequestBody {
+  type: 'getProfile' | 'profile';
+  payload?: ProfilePayload;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -100,16 +112,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: 'Server misconfiguration: Firebase Admin not initialized' });
     }
 
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-    const { type, payload } = req.body || {};
+    const { type, payload } = req.body as RequestBody;
     const authHeader = req.headers.authorization || '';
     const idToken = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
 
-    if (!idToken) return res.status(401).json({ error: 'Missing Authorization Bearer token' });
+    if (!idToken) {
+      return res.status(401).json({ error: 'Missing Authorization Bearer token' });
+    }
 
     const user = await getUserFromIdToken(idToken);
-    if (!user) return res.status(401).json({ error: 'Invalid idToken or Firebase Admin not configured' });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid idToken or Firebase Admin not configured' });
+    }
 
     // GET PROFILE
     if (type === 'getProfile') {
@@ -121,7 +139,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           console.error('[api/profile] supabase select error:', error.message || error);
           return res.status(500).json({ error: 'Database error' });
         }
-        if (data) return res.status(200).json({ profile: data });
+        if (data) {
+          return res.status(200).json({ profile: data });
+        }
       }
       return res.status(200).json({ profile: null });
     }
@@ -129,16 +149,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // CREATE/UPSERT PROFILE
     if (type === 'profile') {
       const id = user.email ?? user.uid;
-      if (!id) return res.status(400).json({ error: 'Could not determine id from token' });
+      if (!id) {
+        return res.status(400).json({ error: 'Could not determine id from token' });
+      }
 
       const { name, phone } = payload || {};
-      if (!name || typeof name !== 'string') return res.status(400).json({ error: 'Invalid name' });
+      if (!name || typeof name !== 'string') {
+        return res.status(400).json({ error: 'Invalid name' });
+      }
 
-      const { error } = await supabaseAdmin.from('profiles').upsert({
-        id,
-        name,
-        phone: phone ?? '',
-        updated_at: new Date().toISOString(),
-      }, { returning: 'minimal' });
+      const { error } = await supabaseAdmin.from('profiles').upsert(
+        {
+          id,
+          name,
+          phone: phone ?? '',
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'id' }
+      );
 
-      if
+      if (error) {
+        console.error('[api/profile] supabase upsert error:', error.message || error);
+        return res.status(500).json({ error: 'Database error' });
+      }
+
+      return res.status(200).json({ success: true });
+    }
+
+    // Si el tipo no es reconocido
+    return res.status(400).json({ error: 'Invalid request type' });
+
+  } catch (err) {
+    console.error('[api/profile] Unexpected error:', (err as any)?.message || err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
