@@ -1,30 +1,39 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
+
 WORKDIR /app
-ENV CI=true
 
-# Instala dependencias (copia package-lock si usas npm)
+# Copy package files
 COPY package*.json ./
-RUN npm ci
 
-# Copia el resto y build
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
 COPY . .
+
+# Build the application
 RUN npm run build
 
-# Runtime stage
-FROM node:18-alpine AS runner
+# Production stage
+FROM node:20-alpine AS runner
+
 WORKDIR /app
-ENV NODE_ENV=production
-# Puerto por defecto usado por Cloud Run
-ENV PORT=8080
 
-# Copy build + deps
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy built application
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.js ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-EXPOSE 8080
-# start con puerto configurable (usa NEXT/Start script)
-CMD ["sh", "-c", "npm run start -- -p ${PORT:-8080}"]
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["node", "server.js"]
