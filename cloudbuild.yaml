@@ -5,6 +5,23 @@ steps:
       - 'build'
       - '-t'
       - 'gcr.io/$PROJECT_ID/$_IMAGE:$SHORT_SHA'
+      # Build args necesarios para Next.js build
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_API_KEY=$_FIREBASE_API_KEY'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=$_FIREBASE_AUTH_DOMAIN'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_PROJECT_ID=$_FIREBASE_PROJECT_ID'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$_FIREBASE_STORAGE_BUCKET'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=$_FIREBASE_MESSAGING_SENDER_ID'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_APP_ID=$_FIREBASE_APP_ID'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_URL=$_NEXT_PUBLIC_SUPABASE_URL'
+      - '--build-arg'
+      - 'SUPABASE_SERVICE_ROLE_KEY=$_SUPABASE_SERVICE_ROLE_KEY'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -32,6 +49,15 @@ substitutions:
   _IMAGE: 'ava-shop'      # reemplaza por el nombre deseado de imagen
   _SERVICE: 'ava-shop'    # nombre del servicio Cloud Run
   _REGION: 'us-central1'  # región objetivo (ajusta)
+  # Añade aquí tus valores o configúralos en el trigger (no dejar secretos en el repo)
+  _FIREBASE_API_KEY: ""
+  _FIREBASE_AUTH_DOMAIN: ""
+  _FIREBASE_PROJECT_ID: ""
+  _FIREBASE_STORAGE_BUCKET: ""
+  _FIREBASE_MESSAGING_SENDER_ID: ""
+  _FIREBASE_APP_ID: ""
+  _NEXT_PUBLIC_SUPABASE_URL: ""
+  _SUPABASE_SERVICE_ROLE_KEY: ""
 
 options:
   substitutionOption: ALLOW_LOOSE
