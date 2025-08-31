@@ -101,8 +101,11 @@ export default function CheckoutPage() {
   }, [profile]);
 
   useEffect(() => {
-    if (user?.email) {
-      const fetchProfile = async () => {
+    // si no hay usuario, salir
+    if (!user?.email) return;
+
+    const fetchProfile = async () => {
+      try {
         const normalizedEmail = user.email.toLowerCase().trim();
         const { data, error } = await supabase
           .from('profiles')
@@ -111,29 +114,36 @@ export default function CheckoutPage() {
           .maybeSingle();
 
         if (error) {
+          console.error('Supabase fetchProfile error:', error);
           return;
         }
+
         if (data) {
           const addressObj = Array.isArray(data.addresses) && data.addresses.length > 0
             ? data.addresses[0]
             : {};
-          shippingForm.reset({
-            fullName: data.name || '',
-            address: addressObj.street || addressObj.address || '',
-            city: addressObj.city || '',
-            state: addressObj.state || '',
-            zipCode: addressObj.zipCode || '',
-            country: addressObj.country || 'Colombia',
-            email: data.id || '',
-            phone: data.phone || '',
-          });
-          shippingForm.trigger();
+
+          const shippingData = {
+            fullName: data.name ?? '',
+            address: addressObj.street ?? addressObj.address ?? '',
+            city: addressObj.city ?? '',
+            state: addressObj.state ?? '',
+            zipCode: addressObj.zipCode ?? '',
+            country: addressObj.country ?? 'Colombia',
+            email: data.id ?? '',
+            phone: data.phone ?? '',
+          };
+
+          // si el tipo del form no coincide con el objeto, castear temporalmente
+          shippingForm.reset(shippingData as any);
         }
-      };
-      fetchProfile();
-    }
-    // eslint-disable-next-line
-  }, [user]);
+      } catch (err) {
+        console.error('fetchProfile exception', err);
+      }
+    };
+
+    fetchProfile();
+  }, [user, supabase, shippingForm]);
 
   useEffect(() => {
     if (orderSummary.items.length === 0) {
