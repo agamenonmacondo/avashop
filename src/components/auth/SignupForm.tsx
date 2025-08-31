@@ -1,4 +1,3 @@
-
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -56,7 +55,53 @@ export default function SignupForm() {
     },
   });
 
+  const handleGoogleSignIn = async () => {
+    if (!auth) {
+      toast({
+        title: "Error de Configuración",
+        description: "El servicio de autenticación no está disponible. Inténtalo de nuevo más tarde.",
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      toast({
+        title: "Registro/Inicio de Sesión con Google Exitoso",
+        description: `¡Bienvenido, ${user.displayName || user.email}!`,
+      });
+      router.push('/dashboard');
+    } catch (error: any) {
+      console.error("Error during Google sign in:", error);
+      let errorMessage = "Ocurrió un error al iniciar sesión con Google.";
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        errorMessage = "Ya existe una cuenta con este correo electrónico usando un método de inicio de sesión diferente.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = "El proceso de inicio de sesión con Google fue cancelado.";
+        toast({ title: "Proceso Cancelado", description: errorMessage });
+        return;
+      }
+      toast({
+        title: "Error de Inicio de Sesión con Google",
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  };
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!auth) {
+      toast({
+        title: "Error de Configuración",
+        description: "El servicio de autenticación no está disponible. Inténtalo de nuevo más tarde.",
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       if (userCredential.user) {
@@ -79,34 +124,6 @@ export default function SignupForm() {
       }
       toast({
         title: "Error de Registro",
-        description: errorMessage,
-        variant: 'destructive',
-      });
-    }
-  }
-
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      toast({
-        title: "Registro/Inicio de Sesión con Google Exitoso",
-        description: `¡Bienvenido, ${user.displayName || user.email}!`,
-      });
-      router.push('/dashboard');
-    } catch (error: any) {
-      console.error("Error during Google sign in:", error);
-      let errorMessage = "Ocurrió un error al iniciar sesión con Google.";
-      if (error.code === 'auth/account-exists-with-different-credential') {
-        errorMessage = "Ya existe una cuenta con este correo electrónico usando un método de inicio de sesión diferente.";
-      } else if (error.code === 'auth/popup-closed-by-user') {
-        errorMessage = "El proceso de inicio de sesión con Google fue cancelado.";
-        toast({ title: "Proceso Cancelado", description: errorMessage });
-        return;
-      }
-      toast({
-        title: "Error de Inicio de Sesión con Google",
         description: errorMessage,
         variant: 'destructive',
       });

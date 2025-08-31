@@ -17,11 +17,18 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
 };
 
-// Evitar múltiples inicializaciones
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+// Inicialización solo en cliente (evita build-time)
+let app: any = null;
+export function getFirebaseApp() {
+  if (typeof window === 'undefined') return null;
+  if (!app) {
+    app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+  }
+  return app;
+}
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const auth = getFirebaseApp() ? getAuth(getFirebaseApp()) : null;
+export const db = getFirebaseApp() ? getFirestore(getFirebaseApp()) : null;
+export const storage = getFirebaseApp() ? getStorage(getFirebaseApp()) : null;
 
-export default app;
+export default getFirebaseApp;

@@ -44,17 +44,26 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!auth) {
+      toast({ title: 'Error', description: 'Autenticación no disponible.', variant: 'destructive' });
+      return;
+    }
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
       toast({ title: 'Inicio de sesión exitoso', description: 'Bienvenido.' });
       router.push('/dashboard');
     } catch (error: any) {
       console.error('Email sign in error', error);
-      toast({ title: 'Error', description: 'Credenciales inválidas.', variant: 'destructive' });
+      const message = error?.message || 'Ocurrió un error al iniciar sesión';
+      toast({ title: 'Error', description: message, variant: 'destructive' });
     }
   }
 
   const handleGoogleSignIn = async () => {
+    if (!auth) {
+      toast({ title: 'Error', description: 'Autenticación no disponible.', variant: 'destructive' });
+      return;
+    }
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
