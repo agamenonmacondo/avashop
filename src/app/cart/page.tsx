@@ -13,16 +13,39 @@ import type { CartItem, Product } from '@/types';
 import { products as allProducts } from '@/lib/placeholder-data';
 import { CreditCard, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import { formatColombianCurrency } from '@/lib/utils';
+
+import { createClient } from '@supabase/supabase-js';
+import { useEffect } from 'react';
+import { getSupabase } from '@/lib/supabaseClient';
+
+// Initialize Supabase client using NEXT_PUBLIC_* environment variables.
+// These must be defined in your environment for the client to work in the browser.
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+);
+
 // --- AGREGADO PARA LOGIN ---
 // Remover import duplicado y corregir rutas basadas en Supabase
 import { onAuthStateChanged, type User } from 'firebase/auth';
-import { auth } from '@/lib/firebase/firebaseConfig'; // Mantener auth de Firebase
-import { supabase } from '@/lib/supabaseClient'; // Importar cliente de Supabase (ajusta la ruta si es diferente)
+import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 // ---------------------------
 
 const initialCartItems: CartItem[] = [
-  { ...allProducts[0], quantity: 1, createdAt: new Date(), updatedAt: new Date() },
-  { ...allProducts[2], quantity: 2, createdAt: new Date(), updatedAt: new Date() },
+  {
+    ...allProducts[0],
+    quantity: 1,
+    stock: Number(allProducts[0].stock ?? 0),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    ...allProducts[2],
+    quantity: 2,
+    stock: Number(allProducts[2].stock ?? 0),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
 ];
 
 export default function CartPage() {
@@ -34,13 +57,19 @@ export default function CartPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const auth = getFirebaseAuth();
+    if (!auth) {
+      setLoading(false);
+      router.replace(`/auth/login?redirect=/cart`);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
       if (!firebaseUser) {
         router.replace(`/auth/login?redirect=/cart`);
       } else {
-        loadCartFromDB(firebaseUser.uid); // Cargar carrito desde DB
+        loadCartFromDB(firebaseUser.uid);
       }
     });
     return () => unsubscribe();
@@ -49,6 +78,12 @@ export default function CartPage() {
   // Función para cargar carrito desde Supabase
   const loadCartFromDB = async (userId: string) => {
     try {
+      const supabase = getSupabase();
+      if (!supabase) {
+        // fallback (localStorage) durante prerender/build o cuando no hay env
+        console.warn('Supabase no disponible: usando fallback local.');
+        return;
+      }
       const { data, error } = await supabase
         .from('carts')
         .select('items')
@@ -102,16 +137,18 @@ export default function CartPage() {
     const productInStock = allProducts.find(p => p.id === productId);
     if (!productInStock) return;
 
-    if (newQuantity > productInStock.stock) {
+    if (newQuantity > (productInStock.stock ?? 0)) {
       toast({
         title: "Stock Insuficiente",
-        description: `Solo quedan ${productInStock.stock} unidades de ${productInStock.name}.`,
+        description: `Solo quedan ${productInStock.stock ?? 0} unidades de ${productInStock.name}.`,
         variant: "destructive",
       });
       setCartItems(currentItems => {
         const updatedCart = currentItems.map(item =>
-          item.id === productId ? { ...item, quantity: productInStock.stock } : item
-        ).filter(item => item.quantity > 0);
+          item.id === productId ? { ...item, quantity: Number(productInStock.stock ?? 0) } : { ...item, quantity: Number(item.quantity ?? 0) }
+        )
+        .map(i => ({ ...i, quantity: Number(i.quantity ?? 0) }))
+        .filter(item => item.quantity > 0);
         saveCartToDB(updatedCart);
         return updatedCart;
       });
@@ -120,8 +157,10 @@ export default function CartPage() {
 
     setCartItems(currentItems => {
       const updatedCart = currentItems.map(item =>
-        item.id === productId ? { ...item, quantity: Math.max(0, newQuantity) } : item
-      ).filter(item => item.quantity > 0);
+        item.id === productId ? { ...item, quantity: Math.max(0, newQuantity) } : { ...item, quantity: Number(item.quantity ?? 0) }
+      )
+      .map(i => ({ ...i, quantity: Number(i.quantity ?? 0) }))
+      .filter(item => item.quantity > 0);
       saveCartToDB(updatedCart);
       return updatedCart;
     });
