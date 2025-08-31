@@ -9,6 +9,8 @@ steps:
       - 'NEXT_PUBLIC_FIREBASE_API_KEY=$$NEXT_PUBLIC_FIREBASE_API_KEY'
       - '--build-arg'
       - 'NEXT_PUBLIC_SUPABASE_URL=$$NEXT_PUBLIC_SUPABASE_URL'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_ANON_KEY=$$NEXT_PUBLIC_SUPABASE_ANON_KEY'
       - '.'
 
   # 2) Push image
@@ -23,12 +25,14 @@ steps:
     args:
       - '-c'
       - |
+        # deploy with runtime env and attach secret from Secret Manager (recommended)
         gcloud run deploy $_SERVICE \
           --image gcr.io/$PROJECT_ID/ava-shop:$SHORT_SHA \
           --region $_REGION \
           --platform managed \
           --allow-unauthenticated \
           --set-env-vars "NODE_ENV=production,NEXT_PUBLIC_SUPABASE_URL=$_NEXT_PUBLIC_SUPABASE_URL" \
+          --set-secrets "SUPABASE_SERVICE_ROLE_KEY=projects/$PROJECT_ID/secrets/SUPABASE_SERVICE_ROLE_KEY:latest" \
           --project $PROJECT_ID
 
 images:
@@ -39,6 +43,7 @@ secrets:
   - secretEnv:
       NEXT_PUBLIC_FIREBASE_API_KEY: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_FIREBASE_API_KEY/versions/latest"
       NEXT_PUBLIC_SUPABASE_URL: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_SUPABASE_URL/versions/latest"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_SUPABASE_ANON_KEY/versions/latest"
       SUPABASE_SERVICE_ROLE_KEY: "projects/PROJECT_ID/secrets/SUPABASE_SERVICE_ROLE_KEY/versions/latest"
 
 substitutions:
