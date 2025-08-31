@@ -14,16 +14,8 @@ import { products as allProducts } from '@/lib/placeholder-data';
 import { CreditCard, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import { formatColombianCurrency } from '@/lib/utils';
 
-import { createClient } from '@supabase/supabase-js';
-import { useEffect } from 'react';
 import { getSupabase } from '@/lib/supabaseClient';
-
-// Initialize Supabase client using NEXT_PUBLIC_* environment variables.
-// These must be defined in your environment for the client to work in the browser.
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
-);
+// No crear el cliente con createClient en top-level. Llama getSupabase() dentro de useEffect/handlers.
 
 // --- AGREGADO PARA LOGIN ---
 // Remover import duplicado y corregir rutas basadas en Supabase
@@ -116,10 +108,14 @@ export default function CartPage() {
   const saveCartToDB = async (items: CartItem[]) => {
     if (!user) return;
     try {
+      const supabase = getSupabase();
+      if (!supabase) {
+        console.warn('Supabase no disponible en este contexto; omitiendo guardado.');
+        return;
+      }
       const { error } = await supabase
         .from('carts')
         .upsert({ user_id: user.uid, items }, { onConflict: 'user_id' });
-
       if (error) throw error;
     } catch (error) {
       console.error('Error guardando carrito:', error);
