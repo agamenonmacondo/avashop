@@ -6,8 +6,6 @@ steps:
       - '-t'
       - 'gcr.io/$PROJECT_ID/ava-shop:$SHORT_SHA'
       - '--build-arg'
-      - 'NEXT_PUBLIC_FIREBASE_API_KEY=$$NEXT_PUBLIC_FIREBASE_API_KEY'
-      - '--build-arg'
       - 'NEXT_PUBLIC_SUPABASE_URL=$$NEXT_PUBLIC_SUPABASE_URL'
       - '--build-arg'
       - 'NEXT_PUBLIC_SUPABASE_ANON_KEY=$$NEXT_PUBLIC_SUPABASE_ANON_KEY'
@@ -41,10 +39,8 @@ images:
 # Use Secret Manager (recommended). Replace PROJECT_ID and secret names with your values.
 secrets:
   - secretEnv:
-      NEXT_PUBLIC_FIREBASE_API_KEY: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_FIREBASE_API_KEY/versions/latest"
       NEXT_PUBLIC_SUPABASE_URL: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_SUPABASE_URL/versions/latest"
       NEXT_PUBLIC_SUPABASE_ANON_KEY: "projects/PROJECT_ID/secrets/NEXT_PUBLIC_SUPABASE_ANON_KEY/versions/latest"
-      SUPABASE_SERVICE_ROLE_KEY: "projects/PROJECT_ID/secrets/SUPABASE_SERVICE_ROLE_KEY/versions/latest"
 
 substitutions:
   _IMAGE: 'ava-shop'
