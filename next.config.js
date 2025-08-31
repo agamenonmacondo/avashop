@@ -29,4 +29,10 @@ const nextConfig = {
   ],
 };
 
-module.exports = nextConfig;
+const path = require('path')
+
+module.exports = {
+  ...nextConfig,
+  // evita que Next infiera la raíz equivocada
+  outputFileTracingRoot: path.join(__dirname),
+}
