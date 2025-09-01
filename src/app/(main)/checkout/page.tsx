@@ -186,10 +186,29 @@ export default function CheckoutPage() {
       });
       return null;
     }
+    // Prepara datos para Bold
+    const shipping = shippingForm.getValues();
     return {
-      shippingDetails: shippingForm.getValues(),
+      shippingDetails: shipping,
       cartItems: orderSummary.items,
       totalAmount: orderSummary.total,
+      currency: 'COP',
+      orderId: `order-${Date.now()}`,
+      tax: 'vat-19',
+      customerData: {
+        email: shipping.email,
+        fullName: shipping.fullName,
+        phone: shipping.phone,
+        documentNumber: '', // agrega si tienes
+        documentType: '',   // agrega si tienes
+      },
+      billingAddress: {
+        address: shipping.address,
+        city: shipping.city,
+        zipCode: shipping.zipCode,
+        state: shipping.state,
+        country: 'CO',
+      },
     };
   };
 
@@ -202,7 +221,7 @@ export default function CheckoutPage() {
     }
 
     try {
-      // enviar también la url de redirección al endpoint para que la use Bold
+      // Enviar todos los datos necesarios al endpoint
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
