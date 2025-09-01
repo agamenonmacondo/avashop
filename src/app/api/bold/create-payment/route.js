@@ -42,15 +42,22 @@ export async function POST(request) {
     };
     console.log('payload (sent):', JSON.stringify(payload));
 
+    // Probar más variantes de header para cubrir todas las opciones usadas por integraciones
     const headerVariants = [
       { 'Content-Type': 'application/json', 'x-api-key': apiKey },
       { 'Content-Type': 'application/json', 'Authorization': `x-api-key ${apiKey}` },
+      { 'Content-Type': 'application/json', 'api-key': apiKey },
+      { 'Content-Type': 'application/json', 'Api-Key': apiKey },
     ];
 
     let lastText = '';
-    let finalRes = null;
+    let lastStatus = 0;
+    let succeeded = null;
+    let tried = [];
+
     for (const hdr of headerVariants) {
       try {
+        tried.push(Object.keys(hdr));
         console.log('Probando headers:', Object.keys(hdr));
         const res = await fetch('https://payments.api.bold.co/v2/payment-btn', {
           method: 'POST',
@@ -60,29 +67,33 @@ export async function POST(request) {
         const text = await res.text().catch(() => '');
         console.log('Bold status', res.status, ' body:', text);
         lastText = text || lastText;
+        lastStatus = res.status || lastStatus;
         if (res.ok) {
-          finalRes = { status: res.status, text };
+          // parsear si viene JSON
+          try { succeeded = text ? JSON.parse(text) : null; } catch { succeeded = text; }
           break;
         }
       } catch (e) {
         console.error('Fetch error:', e);
-        lastText = String(e);
+        lastText = String(e) || lastText;
       }
     }
 
-    if (!finalRes) {
-      // devolver detalle crudo para depurar (no incluir secret)
+    if (!succeeded) {
+      // devolver detalle crudo y metadata para depuración (no incluir secret)
       return NextResponse.json({
         success: false,
         message: 'Bold API error - todas las variantes fallaron',
         detail: lastText,
-        debug: { orderId, amount, currency, apiKeyMasked: mask(apiKey) }
+        boldStatus: lastStatus,
+        debug: { orderId, amount, currency, apiKeyMasked: mask(apiKey), triedHeaders: tried }
       }, { status: 502 });
     }
 
-    let data;
-    try { data = finalRes.text ? JSON.parse(finalRes.text) : null; } catch { data = finalRes.text; }
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    // Extraer redirect si Bold la devuelve
+    const redirectFromBold = succeeded?.redirect_url || succeeded?.data?.redirect_url || succeeded?.redirectUrl || null;
+
+    return NextResponse.json({ success: true, data: succeeded, redirectUrl: redirectFromBold }, { status: 200 });
 
   } catch (err) {
     console.error('Handler error:', err);
