@@ -63,32 +63,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
     }
 
-    // Generar integritySignature SHA256(orderId + amount + currency + secret)
-    const concatenated = `${String(orderId)}${String(amount)}${String(currency)}${String(secret)}`;
-    const integritySignature = crypto.createHash('sha256').update(concatenated, 'utf8').digest('hex');
-
-    // Construir payload requerido por Bold (no incluir items)
-    const payload: Record<string, any> = {
-      apiKey,
-      amount,
-      currency,
-      orderId,
-      integritySignature,
-      redirectionUrl,
-      redirection_url: redirectionUrl,
-      description: body.description || `Pedido ${orderId}`,
-    };
-
-    // Opcionales formateados como strings cuando aplica
-    if (body.customerData && Object.keys(body.customerData).length > 0) {
-      payload.customerData = typeof body.customerData === 'string' ? body.customerData : JSON.stringify(body.customerData);
-    }
-    if (body.billingAddress && Object.keys(body.billingAddress).length > 0) {
-      payload.billingAddress = typeof body.billingAddress === 'string' ? body.billingAddress : JSON.stringify(body.billingAddress);
-    }
-    if (body['extra-data-1']) payload['extra-data-1'] = body['extra-data-1'];
-    if (body['extra-data-2']) payload['extra-data-2'] = body['extra-data-2'];
-
     // LOG antes de enviar
     console.log('Payload enviado a Bold (sin items):', JSON.stringify(payload, null, 2));
 
