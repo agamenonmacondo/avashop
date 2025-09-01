@@ -67,18 +67,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Redirection URL not configured' }, { status: 400 });
     }
 
-    // Credenciales
-    const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY ?? '';
-    const secret = process.env.BOLD_SECRET_KEY ?? '';
-    
+    // Credenciales (trim para evitar espacios invisibles)
+    const apiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
+    const secret = (process.env.BOLD_SECRET_KEY || '').trim();
+
     if (!apiKey || !secret) {
-      console.error('Missing Bold credentials');
-      return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
+      console.error('Missing Bold credentials (NEXT_PUBLIC_BOLD_API_KEY or BOLD_SECRET_KEY)');
+      return NextResponse.json({ success: false, message: 'Server not configured: missing Bold keys' }, { status: 500 });
     }
+    // mask para logs (no imprimir secret)
+    const mask = (s = '') => s ? `${s.slice(0,4)}...${s.slice(-4)}` : 'null';
+    console.log('ENV (masked) apiKey:', mask(apiKey), ' secret: (hidden)');
 
     // Generar integritySignature usando la función (Node)
     const integritySignature = generateBoldHash(orderId, amount, currency, secret);
-    
+
     console.log('Hash generado con formato Bold oficial:', integritySignature);
     console.log('Cadena concatenada:', `${orderId}${amount}${currency}***`); // secret enmascarado
 
@@ -100,7 +103,7 @@ export async function POST(request: Request) {
     } else if (typeof body.customerData === 'string') {
       payload.customerData = body.customerData;
     }
-    
+
     if (body.billingAddress && typeof body.billingAddress === 'object' && Object.keys(body.billingAddress).length > 0) {
       payload.billingAddress = JSON.stringify(body.billingAddress);
     } else if (typeof body.billingAddress === 'string') {
@@ -124,50 +127,55 @@ export async function POST(request: Request) {
     console.log('Payload enviado a Bold (sin items):', JSON.stringify(payload, null, 2));
 
     // Headers según documentación Bold - tipado seguro
-    const headerVariants: Record<string, string>[] = [
-      { 'Content-Type': 'application/json', 'x-api-key': apiKey },
-      { 'Content-Type': 'application/json', 'Authorization': `x-api-key ${apiKey}` },
-    ];
+    // Usar únicamente 'x-api-key' (evita variantes que pueden provocar 500)
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+    };
 
     let boldResponse: any = null;
     let lastError = '';
+    try {
+      console.log('Probando header x-api-key');
+      const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+      });
+      const responseText = await boldRes.text();
+      console.log(`Respuesta Bold (status ${boldRes.status}):`, responseText);
 
-    for (const headers of headerVariants) {
-      try {
-        console.log('Probando headers:', Object.keys(headers));
-        
-        const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-          method: 'POST',
-          headers: headers as HeadersInit,
-          body: JSON.stringify(payload),
-        });
-
-        const responseText = await boldRes.text();
-        console.log(`Respuesta Bold (status ${boldRes.status}):`, responseText);
-
-        if (boldRes.ok) {
-          try {
-            boldResponse = JSON.parse(responseText);
-          } catch {
-            boldResponse = responseText;
-          }
-          break;
+      if (boldRes.ok) {
+        try { boldResponse = JSON.parse(responseText); } catch { boldResponse = responseText; }
+      } else {
+        // detectar 401 para dar pista (BTN-000)
+        if (boldRes.status === 401) {
+          lastError = responseText || 'Unauthorized (401) from Bold - check identity key';
+          console.error('Bold returned 401 - identity key likely invalid');
         } else {
-          lastError = responseText || lastError;
+          lastError = responseText || `Bold error status ${boldRes.status}`;
         }
-      } catch (fetchErr) {
-        console.error('Error en fetch:', fetchErr);
-        lastError = String(fetchErr);
       }
+    } catch (fetchErr) {
+      console.error('Error en fetch hacia Bold:', fetchErr);
+      lastError = String(fetchErr);
     }
 
     if (!boldResponse) {
       return NextResponse.json({
         success: false,
-        message: 'Bold API error - todas las variantes fallaron',
+        message: 'Bold API error',
         detail: lastError,
-        debug: { received, payload }
+        hint: boldResHint(lastError),
+        debug: { received, payload: { ...payload, apiKey: mask(apiKey), integritySignature: integritySignature.slice(0,8) + '...' } }
       }, { status: 502 });
+    }
+    // helper para sugerir causa simple
+    function boldResHint(detail: string) {
+      if (!detail) return null;
+      if (detail.toLowerCase().includes('unauthorized') || detail.includes('401')) return 'BTN-000: identity key invalid or wrong environment (test vs production).';
+      if (detail.toLowerCase().includes('integrity') || detail.toLowerCase().includes('integrity key')) return 'BTN-002: integrity signature mismatch.';
+      return null;
     }
 
     // Extraer URL de redirección que Bold devuelva
