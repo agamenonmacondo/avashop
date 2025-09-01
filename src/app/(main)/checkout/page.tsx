@@ -54,9 +54,10 @@ const calculateOrderSummary = () => {
   return { items: mockCartItems, subtotal, shipping, tax, total };
 };
 
-const APP_URL = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL as string;
-
-const boldRedirect = `${APP_URL.replace(/\/$/, '')}/order/success`;
+// Construir APP_URL como string seguro (usar la env definitiva)
+const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
+// asegurar que no sea empty antes de llamar replace
+const boldRedirect = APP_URL ? `${APP_URL.replace(/\/$/, '')}/order/success` : '/order/success';
 
 export default function CheckoutPage() {
   const { toast } = useToast();

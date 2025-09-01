@@ -3,8 +3,10 @@
 // You can find these in your Firebase project console:
 // Project settings > General > Your apps > SDK setup and configuration (Config option)
 
-import { initializeApp, getApps } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
+import { getStorage as getStorageService, type FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? '',
@@ -15,17 +17,30 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ?? '',
 };
 
-let _auth: Auth | null = null;
+let _app: any = null;
+export let auth: Auth | null = null;
+export let db: Firestore | null = null;
+export let storage: FirebaseStorage | null = null;
 
-/**
- * Devuelve Auth sólo en runtime (cliente). Retorna null si falta config (evita crash en build).
- */
-export function getFirebaseAuth(): Auth | null {
-  if (!firebaseConfig.apiKey) return null;
-  if (!getApps().length) initializeApp(firebaseConfig);
-  if (!_auth) _auth = getAuth();
-  return _auth;
+function ensureInitialized() {
+  if (!firebaseConfig.apiKey) return;
+  if (!getApps().length) _app = initializeApp(firebaseConfig);
+  else _app = getApp();
+  if (!auth) auth = getAuth(_app);
+  if (!db) db = getFirestore(_app);
+  if (!storage) storage = getStorageService(_app);
 }
 
-// Export por defecto para compatibilidad con imports que usan default
+/**
+ * Getter seguro: inicializa en runtime y devuelve Auth o null.
+ */
+export function getFirebaseAuth(): Auth | null {
+  try {
+    ensureInitialized();
+    return auth;
+  } catch {
+    return null;
+  }
+}
+
 export default getFirebaseAuth;
