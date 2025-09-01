@@ -191,10 +191,9 @@ export default function CheckoutPage() {
     return {
       shippingDetails: shipping,
       cartItems: orderSummary.items,
-      totalAmount: orderSummary.total,
+      amount: orderSummary.total, // <-- así es más directo
       currency: 'COP',
       orderId: `order-${Date.now()}`,
-      tax: 'vat-19',
       customerData: {
         email: shipping.email,
         fullName: shipping.fullName,

@@ -7,7 +7,12 @@ export async function POST(request: Request) {
     const { shippingDetails, cartItems, totalAmount, currency: bodyCurrency, orderId: bodyOrderId, tax, customerData, billingAddress } = body ?? {};
 
     // Validar y preparar campos obligatorios
-    const amount = Math.round(Number(totalAmount) || 0); // entero
+    const amount = Math.round(Number(body.totalAmount) || 0); // <-- usa totalAmount del frontend
+
+    if (!amount) {
+      return NextResponse.json({ success: false, message: 'El monto debe ser mayor a cero.' }, { status: 400 });
+    }
+
     const currency = (bodyCurrency || 'COP').toString().toUpperCase();
     const orderId = (bodyOrderId || `order-${Date.now()}`).toString();
 
@@ -42,7 +47,7 @@ export async function POST(request: Request) {
     // Construir payload según documentación Bold
     const payload: Record<string, any> = {
       apiKey: identityKey,
-      amount,
+      amount: orderSummary.total, // <-- así es más directo
       currency,
       orderId,
       integritySignature,
