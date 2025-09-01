@@ -169,43 +169,42 @@ export default function CheckoutPage() {
   const getValidatedOrderInput = async () => {
     const isShippingValid = await shippingForm.trigger();
     if (!isShippingValid) {
-      toast({ 
-        title: "Información Incompleta", 
-        description: "Por favor, completa los detalles de envío correctamente.", 
-        variant: "destructive" 
-      });
+      toast({ title: "Información Incompleta", description: "Por favor, completa los detalles de envío correctamente.", variant: "destructive" });
       return null;
     }
     if (orderSummary.items.length === 0) {
-      toast({ 
-        title: "Carrito Vacío", 
-        description: "Tu carrito está vacío.", 
-        variant: "destructive" 
-      });
+      toast({ title: "Carrito Vacío", description: "Tu carrito está vacío.", variant: "destructive" });
       return null;
     }
-    if (orderSummary.total <= 0) {
-      toast({
-        title: "Total inválido",
-        description: "El total de la orden debe ser mayor a cero.",
-        variant: "destructive"
-      });
+
+    // Asegurar amount entero y > 0 (solo subtotal + envío)
+    const amount = Math.round(Number(orderSummary.total) || 0);
+    if (amount <= 0) {
+      toast({ title: "Total inválido", description: "El total de la orden debe ser mayor a cero.", variant: "destructive" });
       return null;
     }
-    // Prepara datos para Bold
+
+    // Normalizar items: incluir solo campos necesarios
+    const items = orderSummary.items.map(i => ({
+      id: i.id,
+      name: i.name,
+      quantity: Number(i.quantity) || 1,
+      price: Math.round(Number(i.price) || 0)
+    }));
+
     const shipping = shippingForm.getValues();
     return {
       shippingDetails: shipping,
-      cartItems: orderSummary.items,
-      amount: orderSummary.total, // Solo subtotal + envío, sin impuestos
+      cartItems: items,
+      amount, // entero
       currency: 'COP',
       orderId: `order-${Date.now()}`,
       customerData: {
         email: shipping.email,
         fullName: shipping.fullName,
         phone: shipping.phone,
-        documentNumber: '', // agrega si tienes
-        documentType: '',   // agrega si tienes
+        documentNumber: '',
+        documentType: '',
       },
       billingAddress: {
         address: shipping.address,
@@ -225,15 +224,29 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Agrega este log para depuración
-    console.log('Enviando a backend:', orderInput);
+    // Construir payload final
+    const payload = { ...orderInput, redirectUrl: boldRedirect };
+
+    // LOG detallado antes de enviar
+    console.log('Payload to backend:', JSON.stringify(payload, null, 2));
+
+    // Validaciones extra (previene envíos incompletos)
+    if (!payload.amount || payload.amount <= 0) {
+      toast({ title: "Error", description: "Monto inválido antes de enviar al servidor.", variant: "destructive" });
+      setIsBoldLoading(false);
+      return;
+    }
+    if (!Array.isArray(payload.cartItems) || payload.cartItems.length === 0) {
+      toast({ title: "Error", description: "No hay productos en el pedido.", variant: "destructive" });
+      setIsBoldLoading(false);
+      return;
+    }
 
     try {
-      // Enviar todos los datos necesarios al endpoint
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...orderInput, redirectUrl: boldRedirect }),
+        body: JSON.stringify(payload),
       });
 
       const contentType = res.headers.get('content-type') || '';

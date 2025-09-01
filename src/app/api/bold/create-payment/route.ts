@@ -4,60 +4,79 @@ import crypto from 'crypto';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    console.log('Body recibido en backend:', body);
 
-    // Extraer valores del body
-    const amount = Math.round(Number(body.amount) || 0);
+    // LOG: ver exactamente qué llega al backend
+    console.log('Body recibido en backend:', JSON.stringify(body, null, 2));
+
+    // Comprobaciones explícitas para detectar lo que falta
+    const received = {
+      hasAmount: typeof body.amount !== 'undefined' && body.amount !== null,
+      amountValue: Number(body.amount || 0),
+      hasCartItems: Array.isArray(body.cartItems) && body.cartItems.length > 0,
+      cartItemsLength: Array.isArray(body.cartItems) ? body.cartItems.length : 0,
+      hasOrderId: !!body.orderId,
+      hasRedirectUrl: !!body.redirectUrl,
+    };
+
+    if (!received.hasAmount || received.amountValue <= 0) {
+      console.warn('Falta amount o es cero en el body recibido', received);
+      return NextResponse.json({
+        success: false,
+        message: 'Campo amount faltante o inválido (debe ser > 0).',
+        missing: 'amount',
+        received,
+        bodyPreview: body
+      }, { status: 400 });
+    }
+
+    if (!received.hasCartItems) {
+      console.warn('Faltan cartItems en el body recibido', received);
+      return NextResponse.json({
+        success: false,
+        message: 'Campo cartItems faltante o vacío.',
+        missing: 'cartItems',
+        received,
+        bodyPreview: body
+      }, { status: 400 });
+    }
+
+    // Valores básicos
+    const amount = Math.round(Number(body.amount));
     const currency = (body.currency || 'COP').toString().toUpperCase();
     const orderId = (body.orderId || `order-${Date.now()}`).toString();
 
-    // Validaciones básicas
-    if (!amount || amount <= 0) {
-      return NextResponse.json({ success: false, message: 'El monto debe ser mayor a cero.' }, { status: 400 });
-    }
-
-    // Variables de entorno
+    // Credenciales
     const secret = process.env.BOLD_SECRET_KEY;
     const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY;
-    
     if (!secret || !apiKey) {
       console.error('Missing Bold credentials');
       return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
     }
 
-    // Generar hash de integridad exactamente como Bold lo requiere
+    // Generar signature
     const concatenated = `${orderId}${amount}${currency}${secret}`;
     const integritySignature = crypto.createHash('sha256').update(concatenated, 'utf8').digest('hex');
 
-    // URL de redirección
     const redirectionUrl = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || body.redirectUrl;
     if (!redirectionUrl) {
       return NextResponse.json({ success: false, message: 'Redirection URL not configured' }, { status: 400 });
     }
 
-    // Payload SIMPLIFICADO según documentación Bold
-    const payload = {
-      apiKey: apiKey,
-      amount: amount,
-      currency: currency,
-      orderId: orderId,
-      integritySignature: integritySignature,
-      redirectionUrl: redirectionUrl,
-      description: `Pedido ${orderId}`
+    const payload: Record<string, any> = {
+      apiKey,
+      amount,
+      currency,
+      orderId,
+      integritySignature,
+      redirectionUrl,
+      description: body.description || `Pedido ${orderId}`
     };
 
-    // Agregar datos opcionales solo si existen
-    if (body.customerData && Object.keys(body.customerData).length > 0) {
-      payload.customerData = JSON.stringify(body.customerData);
-    }
-    
-    if (body.billingAddress && Object.keys(body.billingAddress).length > 0) {
-      payload.billingAddress = JSON.stringify(body.billingAddress);
-    }
+    if (body.customerData) payload.customerData = JSON.stringify(body.customerData);
+    if (body.billingAddress) payload.billingAddress = JSON.stringify(body.billingAddress);
 
-    console.log('Payload enviado a Bold:', payload);
+    console.log('Payload enviado a Bold:', JSON.stringify(payload));
 
-    // Llamar a Bold con headers correctos
     const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
       method: 'POST',
       headers: {
@@ -71,12 +90,11 @@ export async function POST(request: Request) {
     console.log('Respuesta de Bold:', boldRes.status, result);
 
     if (!boldRes.ok) {
-      const message = result?.message || result?.error || `Bold API error (${boldRes.status})`;
-      return NextResponse.json({ 
-        success: false, 
-        message, 
+      return NextResponse.json({
+        success: false,
+        message: result?.message || `Bold API error (${boldRes.status})`,
         detail: result,
-        debug: { payload, status: boldRes.status }
+        debug: { received, payload, status: boldRes.status }
       }, { status: boldRes.status });
     }
 
