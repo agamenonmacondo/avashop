@@ -53,9 +53,16 @@ export async function POST(request: Request) {
     const cadena = `${orderId}${amount}${currency}${process.env.BOLD_SECRET_KEY}`;
     const integritySignature = crypto.createHash('sha256').update(cadena).digest('hex');
 
-    // redirection URL: usar la URL exacta sin modificaciones
-    const redirectionUrl = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || 'http://localhost/order/success';
-
+    // redirection URL: preferir la enviada por el cliente, luego la env correcta (o el typo antiguo),
+    // y por último la URL definitiva del sitio en Vercel.
+    const clientRedirect = body?.redirectUrl;
+    const envRedirect = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_BOLD_REDIRECT_UR;
+    const fallbackRedirect = 'https://avashop.vercel.app/order/success';
+    const redirectionUrl =
+      (typeof clientRedirect === 'string' && clientRedirect.startsWith('http')) 
+        ? clientRedirect 
+        : (envRedirect && envRedirect.startsWith('http') ? envRedirect : fallbackRedirect);
+ 
     // Preparar payload para Bold (sin exponer secrets)
     const data = {
       apiKey: process.env.NEXT_PUBLIC_BOLD_API_KEY,
