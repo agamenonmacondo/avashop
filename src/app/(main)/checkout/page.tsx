@@ -201,10 +201,11 @@ export default function CheckoutPage() {
     }
 
     try {
+      // enviar también la url de redirección al endpoint para que la use Bold
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderInput),
+        body: JSON.stringify({ ...orderInput, redirectUrl: boldRedirect }),
       });
 
       const contentType = res.headers.get('content-type') || '';
@@ -218,6 +219,9 @@ export default function CheckoutPage() {
       const result = await res.json();
 
       if (res.ok && result.success && result.data) {
+        // forzar la URL absoluta de redirección para el botón (clave usada por el script)
+        result.data.redirect_url = boldRedirect;
+        result.data['data-redirection-url'] = boldRedirect;
         setBoldButtonData(result.data);
       } else {
         toast({ title: 'Error al preparar el pago', description: result?.message || 'No se pudo preparar el pago.', variant: 'destructive' });
