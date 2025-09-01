@@ -44,14 +44,12 @@ const mockCartItems = [
 
 const calculateOrderSummary = () => {
   if (mockCartItems.length === 0) {
-    return { items: [], subtotal: 0, shipping: 0, tax: 0, total: 0 };
+    return { items: [], subtotal: 0, shipping: 0, total: 0 };
   }
   const subtotal = mockCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const taxRate = 0.19;
-  const tax = subtotal * taxRate;
   const shipping = subtotal > 200000 ? 0 : 15000;
-  const total = subtotal + tax + shipping;
-  return { items: mockCartItems, subtotal, shipping, tax, total };
+  const total = subtotal + shipping; // Solo subtotal + envío
+  return { items: mockCartItems, subtotal, shipping, total };
 };
 
 // Construir APP_URL como string seguro (usar la env definitiva)
@@ -191,7 +189,7 @@ export default function CheckoutPage() {
     return {
       shippingDetails: shipping,
       cartItems: orderSummary.items,
-      amount: orderSummary.total, // <-- así es más directo
+      amount: orderSummary.total, // Solo subtotal + envío, sin impuestos
       currency: 'COP',
       orderId: `order-${Date.now()}`,
       customerData: {
@@ -469,10 +467,6 @@ export default function CheckoutPage() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
                 <span>{orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Impuestos (19%)</span>
-                <span>{formatColombianCurrency(orderSummary.tax)}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold text-xl">
