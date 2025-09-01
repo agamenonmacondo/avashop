@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { formatColombianCurrency } from '@/lib/utils';
 import { products as allProductsForSummary } from '@/lib/placeholder-data';
 import { createCoinbaseCharge } from '@/lib/actions/order.actions';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/navigation';
 import BoldButton from '@/components/checkout/BoldButton';
@@ -318,19 +318,6 @@ export default function CheckoutPage() {
 
   const isPaymentProcessing = isBoldLoading || isCoinbaseLoading;
 
-  const ref = useRef(null);
-
-  useEffect(() => {
-    // Cargar el script de Bold solo una vez
-    if (!document.getElementById('bold-script')) {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.bold.co/library/boldPaymentButton.js';
-      script.id = 'bold-script';
-      document.head.appendChild(script);
-    }
-  }, []);
-
-  // Renderiza el botón con los atributos requeridos
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
       <h1 className="text-3xl md:text-4xl font-bold font-headline mb-8">Finalizar Compra</h1>
@@ -549,20 +536,6 @@ export default function CheckoutPage() {
             </CardFooter>
           </Card>
         </div>
-      </div>
-      <div ref={ref}>
-        <script
-          data-bold-button
-          data-api-key={boldButtonData?.apiKey}
-          data-order-id={boldButtonData?.orderId}
-          data-currency={boldButtonData?.currency}
-          data-amount={boldButtonData?.amount}
-          data-integrity-signature={boldButtonData?.integritySignature}
-          data-redirection-url={boldButtonData?.redirectionUrl}
-          data-description={boldButtonData?.description}
-          data-render-mode="embedded"
-          // Puedes agregar más atributos opcionales aquí
-        ></script>
       </div>
     </div>
   );
