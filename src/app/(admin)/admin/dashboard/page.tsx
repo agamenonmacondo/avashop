@@ -27,11 +27,14 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     setProducts(
-      initialProducts.map(p => ({
-        ...p,
-        currentStock: p.stock,
-        newStockInput: p.stock.toString(),
-      }))
+      initialProducts.map(p => {
+        const stock = p.stock ?? 0;
+        return {
+          ...p,
+          currentStock: stock,
+          newStockInput: stock.toString(),
+        };
+      })
     );
   }, []);
 

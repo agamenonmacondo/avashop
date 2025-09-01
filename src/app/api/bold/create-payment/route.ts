@@ -68,7 +68,9 @@ export async function POST(request: Request) {
       body: JSON.stringify(payload),
     });
 
+    // ...después de recibir la respuesta de Bold:
     const result = await boldRes.json().catch(() => null);
+    console.log('Respuesta de Bold:', boldRes.status, result); // <--- AGREGA ESTO
 
     // LOG de respuesta
     console.log('Respuesta de Bold:', boldRes.status, result);
