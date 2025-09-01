@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, User as UserIcon, LogIn, UserPlus, ShoppingBag, LayoutDashboard } from 'lucide-react'; // Renamed User to UserIcon, Added LogIn, UserPlus
 import { useState, useEffect } from 'react';
-import { auth } from '@/lib/firebase/firebaseConfig'; 
+import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth'; 
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -27,14 +27,22 @@ export default function UserNav() {
   const router = useRouter();
 
   useEffect(() => {
+    const auth = getFirebaseAuth();
+    if (!auth) {
+      // no auth available (build/SSR or env missing)
+      setFirebaseUser(null);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setFirebaseUser(user);
+      setFirebaseUser(user as FirebaseUser | null);
     });
-    return () => unsubscribe(); 
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = async () => {
     try {
+      const auth = getFirebaseAuth();
+      if (!auth) return;
       await signOut(auth);
       toast({
         title: "Sesión Cerrada",

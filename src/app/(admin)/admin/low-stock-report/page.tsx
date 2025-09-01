@@ -30,7 +30,7 @@ export default function LowStockReportPage() {
   useEffect(() => {
     // Simulate fetching and preparing low stock products
     const preparedProducts = allProducts
-      .filter(p => p.stock < 10)
+      .filter(p => (p.stock ?? 0) < 10)
       .map(p => ({ ...p })); // Create a new array of product objects
     setLowStockProducts(preparedProducts);
   }, []);

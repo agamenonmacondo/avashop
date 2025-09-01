@@ -15,12 +15,12 @@ import { formatColombianCurrency } from '@/lib/utils';
 import { products as allProductsForSummary } from '@/lib/placeholder-data';
 import { createCoinbaseCharge } from '@/lib/actions/order.actions';
 import { useState, useEffect } from 'react';
+import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/navigation';
 import BoldButton from '@/components/checkout/BoldButton';
 import { onAuthStateChanged, type User } from 'firebase/auth';
-import { auth } from '@/lib/firebase/firebaseConfig';
-import { useProfile } from '@/hooks/useProfile';
-import { supabase } from '@/lib/supabaseClient'; // Asegúrate de importar tu cliente
+import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
+import { getSupabase } from '@/lib/supabaseClient';
 
 const shippingFormSchema = z.object({
   fullName: z.string().min(2, "El nombre completo es requerido (mín. 2 caracteres)."),
@@ -83,6 +83,11 @@ export default function CheckoutPage() {
 
   // Cargar usuario autenticado
   useEffect(() => {
+    const auth = getFirebaseAuth();
+    if (!auth) {
+      setUser(null);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser || null);
     });
@@ -107,6 +112,8 @@ export default function CheckoutPage() {
     const fetchProfile = async () => {
       try {
         const normalizedEmail = user.email.toLowerCase().trim();
+        const supabase = getSupabase();
+        if (!supabase) throw new Error('Supabase not initialized');
         const { data, error } = await supabase
           .from('profiles')
           .select('*')
@@ -143,7 +150,7 @@ export default function CheckoutPage() {
     };
 
     fetchProfile();
-  }, [user, supabase, shippingForm]);
+  }, [user, shippingForm]);
 
   useEffect(() => {
     if (orderSummary.items.length === 0) {
