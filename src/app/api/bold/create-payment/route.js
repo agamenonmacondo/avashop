@@ -109,6 +109,13 @@ export async function POST(request) {
     }
 
     const redirectFromBold = boldResponse?.redirect_url || boldResponse?.data?.redirect_url || boldResponse?.redirectUrl || null;
+    if (boldResponse.ok && boldResponse.success && boldResponse.data) {
+      // forzar la URL absoluta de redirección para el botón (clave usada por el script)
+      boldResponse.data.redirect_url = redirectFromBold;
+      boldResponse.data['data-redirection-url'] = redirectFromBold;
+      // Agrega el modo embedded
+      boldResponse.data['renderMode'] = 'embedded'; // <--- ESTA LÍNEA
+    }
     return NextResponse.json({ success: true, data: boldResponse, redirectUrl: redirectFromBold }, { status: 200 });
 
   } catch (err) {
