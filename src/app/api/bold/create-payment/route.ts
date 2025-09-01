@@ -53,16 +53,22 @@ export async function POST(request: Request) {
     const cadena = `${orderId}${amount}${currency}${process.env.BOLD_SECRET_KEY}`;
     const integritySignature = crypto.createHash('sha256').update(cadena).digest('hex');
 
-    // redirection URL: preferir la enviada por el cliente, luego la env correcta (o el typo antiguo),
-    // y por último la URL definitiva del sitio en Vercel.
+    // redirection URL: usar PRIMERO la variable de entorno (definitiva),
+    // si no existe, aceptar la enviada por el cliente; si ninguna existe, devolver error.
     const clientRedirect = body?.redirectUrl;
     const envRedirect = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_BOLD_REDIRECT_UR;
-    const fallbackRedirect = 'https://avashop.vercel.app/order/success';
-    const redirectionUrl =
-      (typeof clientRedirect === 'string' && clientRedirect.startsWith('http')) 
-        ? clientRedirect 
-        : (envRedirect && envRedirect.startsWith('http') ? envRedirect : fallbackRedirect);
- 
+    const isValidUrl = (u: any) => typeof u === 'string' && /^https?:\/\//i.test(u);
+
+    let redirectionUrl: string | null = null;
+    if (isValidUrl(envRedirect)) {
+      redirectionUrl = envRedirect;
+    } else if (isValidUrl(clientRedirect)) {
+      redirectionUrl = clientRedirect;
+    } else {
+      console.error('Redirection URL not configured (env or client).');
+      return NextResponse.json({ success: false, message: 'Redirection URL not configured' }, { status: 500 });
+    }
+
     // Preparar payload para Bold (sin exponer secrets)
     const data = {
       apiKey: process.env.NEXT_PUBLIC_BOLD_API_KEY,
