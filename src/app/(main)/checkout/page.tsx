@@ -184,6 +184,14 @@ export default function CheckoutPage() {
       });
       return null;
     }
+    if (orderSummary.total <= 0) {
+      toast({
+        title: "Total inválido",
+        description: "El total de la orden debe ser mayor a cero.",
+        variant: "destructive"
+      });
+      return null;
+    }
     // Prepara datos para Bold
     const shipping = shippingForm.getValues();
     return {
@@ -216,6 +224,9 @@ export default function CheckoutPage() {
       setIsBoldLoading(false);
       return;
     }
+
+    // Agrega este log para depuración
+    console.log('Enviando a backend:', orderInput);
 
     try {
       // Enviar todos los datos necesarios al endpoint
