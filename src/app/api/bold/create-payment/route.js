@@ -16,7 +16,6 @@ export async function POST(request) {
     const orderId = (body.orderId || `order-${Date.now()}`).toString();
     const redirectUrl = body.redirectUrl || process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '';
 
-    // Env check (mascarado)
     const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY || '';
     const secret = process.env.BOLD_SECRET_KEY || '';
     const mask = s => s ? `${s.slice(0,4)}...${s.slice(-4)}` : 'null';
@@ -25,7 +24,6 @@ export async function POST(request) {
     if (!apiKey || !secret) {
       return NextResponse.json({ success: false, message: 'Missing Bold credentials' }, { status: 500 });
     }
-
     if (amount <= 0) return NextResponse.json({ success: false, message: 'Invalid amount' }, { status: 400 });
     if (!redirectUrl) return NextResponse.json({ success: false, message: 'Missing redirectUrl' }, { status: 400 });
 
@@ -42,26 +40,50 @@ export async function POST(request) {
       redirection_url: redirectUrl,
       description: body.description || `Pedido ${orderId}`,
     };
+    console.log('payload (sent):', JSON.stringify(payload));
 
-    console.log('payload:', JSON.stringify(payload));
+    const headerVariants = [
+      { 'Content-Type': 'application/json', 'x-api-key': apiKey },
+      { 'Content-Type': 'application/json', 'Authorization': `x-api-key ${apiKey}` },
+    ];
 
-    const res = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey },
-      body: JSON.stringify(payload),
-    });
+    let lastText = '';
+    let finalRes = null;
+    for (const hdr of headerVariants) {
+      try {
+        console.log('Probando headers:', Object.keys(hdr));
+        const res = await fetch('https://payments.api.bold.co/v2/payment-btn', {
+          method: 'POST',
+          headers: hdr,
+          body: JSON.stringify(payload),
+        });
+        const text = await res.text().catch(() => '');
+        console.log('Bold status', res.status, ' body:', text);
+        lastText = text || lastText;
+        if (res.ok) {
+          finalRes = { status: res.status, text };
+          break;
+        }
+      } catch (e) {
+        console.error('Fetch error:', e);
+        lastText = String(e);
+      }
+    }
 
-    const text = await res.text().catch(() => '');
-    console.log('Bold status:', res.status, ' body:', text);
-
-    if (!res.ok) {
-      return NextResponse.json({ success: false, message: 'Bold API error', status: res.status, detail: text }, { status: 502 });
+    if (!finalRes) {
+      // devolver detalle crudo para depurar (no incluir secret)
+      return NextResponse.json({
+        success: false,
+        message: 'Bold API error - todas las variantes fallaron',
+        detail: lastText,
+        debug: { orderId, amount, currency, apiKeyMasked: mask(apiKey) }
+      }, { status: 502 });
     }
 
     let data;
-    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-
+    try { data = finalRes.text ? JSON.parse(finalRes.text) : null; } catch { data = finalRes.text; }
     return NextResponse.json({ success: true, data }, { status: 200 });
+
   } catch (err) {
     console.error('Handler error:', err);
     return NextResponse.json({ success: false, message: 'Internal server error', error: String(err) }, { status: 500 });
