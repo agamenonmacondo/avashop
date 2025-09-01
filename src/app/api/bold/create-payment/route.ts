@@ -87,9 +87,7 @@ export async function POST(request: Request) {
     // LOG antes de enviar
     console.log('Payload enviado a Bold (sin items):', JSON.stringify(payload, null, 2));
 
-    const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-      method: 'POST',
-      headers: {
+    const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', { method: 'POST', headers: {
         'Content-Type': 'application/json',
         'Authorization': `x-api-key ${apiKey}`,
       },
