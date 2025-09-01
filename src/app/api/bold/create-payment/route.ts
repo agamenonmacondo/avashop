@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const { shippingDetails, cartItems, totalAmount, currency: bodyCurrency, orderId: bodyOrderId, tax, customerData, billingAddress } = body ?? {};
 
     // Validar y preparar campos obligatorios
-    const amount = Math.round(Number(body.totalAmount) || 0); // <-- usa totalAmount del frontend
+    const amount = Math.round(Number(body.amount) || 0); // <-- usa el campo correcto
 
     if (!amount) {
       return NextResponse.json({ success: false, message: 'El monto debe ser mayor a cero.' }, { status: 400 });
