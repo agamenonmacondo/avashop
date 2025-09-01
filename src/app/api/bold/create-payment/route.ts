@@ -54,29 +54,32 @@ export async function POST(request: Request) {
     // Credenciales
     const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY;
     const secret = process.env.BOLD_SECRET_KEY;
+    // LOG mascarado (no exponer entero en consola pública)
+    const mask = (s?: string) => s ? `${s.slice(0,4)}...${s.slice(-4)}` : 'null';
+    console.log('Using apiKey:', mask(apiKey), ' secret:', mask(secret));
+
     if (!apiKey || !secret) {
       console.error('Missing Bold credentials');
       return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
     }
 
-    // Generar integritySignature: SHA256(orderId + amount + currency + secret)
-    const concatenated = `${orderId}${amount}${currency}${secret}`;
+    // Generar integritySignature SHA256(orderId + amount + currency + secret)
+    const concatenated = `${String(orderId)}${String(amount)}${String(currency)}${String(secret)}`;
     const integritySignature = crypto.createHash('sha256').update(concatenated, 'utf8').digest('hex');
 
-    // Construir payload EXACTO para Bold (no incluir items)
+    // Construir payload requerido por Bold (no incluir items)
     const payload: Record<string, any> = {
       apiKey,
       amount,
       currency,
       orderId,
       integritySignature,
-      // enviar ambas variantes por si la API exige snake_case
       redirectionUrl,
       redirection_url: redirectionUrl,
       description: body.description || `Pedido ${orderId}`,
     };
-    
-    // Opcionales: customerData y billingAddress deben ser strings JSON si existen
+
+    // Opcionales formateados como strings cuando aplica
     if (body.customerData && Object.keys(body.customerData).length > 0) {
       payload.customerData = typeof body.customerData === 'string' ? body.customerData : JSON.stringify(body.customerData);
     }
@@ -88,25 +91,31 @@ export async function POST(request: Request) {
 
     // LOG antes de enviar
     console.log('Payload enviado a Bold (sin items):', JSON.stringify(payload, null, 2));
-    
-    // Usar header x-api-key (no "Authorization")
-    const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey, // llave de identidad
-      },
-      body: JSON.stringify(payload),
-    });
-    
-    const result = await boldRes.json().catch(() => null);
-    console.log('Respuesta de Bold:', boldRes.status, result);
+
+    // Intento 1: header x-api-key
+    const headers1 = { 'Content-Type': 'application/json', 'x-api-key': apiKey };
+    let boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', { method: 'POST', headers: headers1, body: JSON.stringify(payload) });
+
+    // Si 401, reintentar con Authorization (algunas integraciones requieren este formato)
+    if (boldRes.status === 401) {
+      console.warn('Bold returned 401 with x-api-key header, retrying with Authorization header');
+      const headers2 = { 'Content-Type': 'application/json', 'Authorization': `x-api-key ${apiKey}` };
+      boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', { method: 'POST', headers: headers2, body: JSON.stringify(payload) });
+    }
+
+    // Obtener texto crudo y parse seguro
+    const boldResText = await boldRes.text().catch(() => '');
+    let result: any = null;
+    try { result = boldResText ? JSON.parse(boldResText) : null; } catch { result = boldResText; }
+
+    console.log('Bold response status:', boldRes.status);
+    console.log('Bold response body:', boldResText);
 
     if (!boldRes.ok) {
       return NextResponse.json({
         success: false,
         message: result?.message || `Bold API error (${boldRes.status})`,
-        detail: result,
+        detail: result ?? boldResText,
         debug: { received, payload, status: boldRes.status }
       }, { status: boldRes.status });
     }
