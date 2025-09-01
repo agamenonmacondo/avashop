@@ -4,6 +4,10 @@ import crypto from 'crypto';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
+    // LOG para ver lo que recibe el backend
+    console.log('Body recibido en backend:', body);
+
     const { shippingDetails, cartItems, totalAmount, currency: bodyCurrency, orderId: bodyOrderId, tax, customerData, billingAddress } = body ?? {};
 
     // Validar y preparar campos obligatorios
@@ -47,7 +51,7 @@ export async function POST(request: Request) {
     // Construir payload según documentación Bold
     const payload: Record<string, any> = {
       apiKey: identityKey,
-      amount: orderSummary.total, // <-- así es más directo
+      amount, // <-- asegúrate de que este campo exista y sea > 0
       currency,
       orderId,
       integritySignature,
