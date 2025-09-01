@@ -176,42 +176,23 @@ export default function CheckoutPage() {
       toast({ title: "Carrito Vacío", description: "Tu carrito está vacío.", variant: "destructive" });
       return null;
     }
-
-    // Asegurar amount entero y > 0 (solo subtotal + envío)
-    const amount = Math.round(Number(orderSummary.total) || 0);
-    if (amount <= 0) {
-      toast({ title: "Total inválido", description: "El total de la orden debe ser mayor a cero.", variant: "destructive" });
-      return null;
-    }
-
-    // Normalizar items: incluir solo campos necesarios
-    const items = orderSummary.items.map(i => ({
-      id: i.id,
-      name: i.name,
-      quantity: Number(i.quantity) || 1,
-      price: Math.round(Number(i.price) || 0)
-    }));
-
-    const shipping = shippingForm.getValues();
     return {
-      shippingDetails: shipping,
-      cartItems: items,
-      amount, // entero
+      shippingDetails: shippingForm.getValues(),
+      cartItems: orderSummary.items,
+      amount: orderSummary.total,
       currency: 'COP',
       orderId: `order-${Date.now()}`,
       customerData: {
-        email: shipping.email,
-        fullName: shipping.fullName,
-        phone: shipping.phone,
-        documentNumber: '',
-        documentType: '',
+        email: shippingForm.getValues().email,
+        fullName: shippingForm.getValues().fullName,
+        phone: shippingForm.getValues().phone || '',
       },
       billingAddress: {
-        address: shipping.address,
-        city: shipping.city,
-        zipCode: shipping.zipCode,
-        state: shipping.state,
-        country: 'CO',
+        address: shippingForm.getValues().address,
+        city: shippingForm.getValues().city,
+        state: shippingForm.getValues().state,
+        zipCode: shippingForm.getValues().zipCode || '',
+        country: shippingForm.getValues().country,
       },
     };
   };
@@ -288,8 +269,13 @@ export default function CheckoutPage() {
       setIsCoinbaseLoading(false);
       return;
     }
+    
+    // AGREGA ESTE LOG PARA VER QUÉ ENVÍAS
+    console.log('Datos enviados a createCoinbaseCharge:', JSON.stringify(orderInput, null, 2));
+    
     try {
       const result = await createCoinbaseCharge(orderInput);
+
       if (result.success && result.redirectUrl) {
         window.location.href = result.redirectUrl;
       } else {
@@ -536,5 +522,4 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
-  );
-}
+    );
