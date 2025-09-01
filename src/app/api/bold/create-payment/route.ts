@@ -8,60 +8,70 @@ export async function POST(request: Request) {
     // LOG: ver exactamente qué llega al backend
     console.log('Body recibido en backend:', JSON.stringify(body, null, 2));
 
-    // Comprobaciones explícitas para detectar lo que falta
+    // Normalizar amount (acepta `amount` o `totalAmount`)
+    const rawAmount = body.amount ?? body.totalAmount ?? 0;
+    const amount = Math.round(Number(rawAmount) || 0);
+
+    // Normalizar cartItems
+    const cartItems = Array.isArray(body.cartItems)
+      ? body.cartItems.map((it: any) => ({
+          id: it.id,
+          name: it.name,
+          quantity: Number(it.quantity) || 1,
+          price: Math.round(Number(it.price) || 0),
+        }))
+      : [];
+
+    const currency = (body.currency || 'COP').toString().toUpperCase();
+    const orderId = (body.orderId || `order-${Date.now()}`).toString();
+    const redirectionUrl = body.redirectUrl || process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '';
+
+    // Validaciones rápidas
     const received = {
-      hasAmount: typeof body.amount !== 'undefined' && body.amount !== null,
-      amountValue: Number(body.amount || 0),
-      hasCartItems: Array.isArray(body.cartItems) && body.cartItems.length > 0,
-      cartItemsLength: Array.isArray(body.cartItems) ? body.cartItems.length : 0,
+      rawAmount,
+      amount,
+      cartItemsLength: cartItems.length,
       hasOrderId: !!body.orderId,
-      hasRedirectUrl: !!body.redirectUrl,
+      redirectionUrl,
     };
 
-    if (!received.hasAmount || received.amountValue <= 0) {
-      console.warn('Falta amount o es cero en el body recibido', received);
+    if (amount <= 0) {
+      console.warn('Falta amount o es cero', received);
       return NextResponse.json({
         success: false,
         message: 'Campo amount faltante o inválido (debe ser > 0).',
-        missing: 'amount',
         received,
         bodyPreview: body
       }, { status: 400 });
     }
 
-    if (!received.hasCartItems) {
-      console.warn('Faltan cartItems en el body recibido', received);
+    if (cartItems.length === 0) {
+      console.warn('cartItems vacío', received);
       return NextResponse.json({
         success: false,
         message: 'Campo cartItems faltante o vacío.',
-        missing: 'cartItems',
         received,
         bodyPreview: body
       }, { status: 400 });
     }
 
-    // Valores básicos
-    const amount = Math.round(Number(body.amount));
-    const currency = (body.currency || 'COP').toString().toUpperCase();
-    const orderId = (body.orderId || `order-${Date.now()}`).toString();
-
-    // Credenciales
-    const secret = process.env.BOLD_SECRET_KEY;
-    const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY;
-    if (!secret || !apiKey) {
-      console.error('Missing Bold credentials');
-      return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
-    }
-
-    // Generar signature
-    const concatenated = `${orderId}${amount}${currency}${secret}`;
-    const integritySignature = crypto.createHash('sha256').update(concatenated, 'utf8').digest('hex');
-
-    const redirectionUrl = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || body.redirectUrl;
     if (!redirectionUrl) {
       return NextResponse.json({ success: false, message: 'Redirection URL not configured' }, { status: 400 });
     }
 
+    // Credenciales
+    const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY;
+    const secret = process.env.BOLD_SECRET_KEY;
+    if (!apiKey || !secret) {
+      console.error('Missing Bold credentials');
+      return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 });
+    }
+
+    // Generar signature SHA256(orderId + amount + currency + secret)
+    const concatenated = `${orderId}${amount}${currency}${secret}`;
+    const integritySignature = crypto.createHash('sha256').update(concatenated, 'utf8').digest('hex');
+
+    // Construir payload mínimo requerido por Bold
     const payload: Record<string, any> = {
       apiKey,
       amount,
@@ -69,13 +79,21 @@ export async function POST(request: Request) {
       orderId,
       integritySignature,
       redirectionUrl,
-      description: body.description || `Pedido ${orderId}`
+      description: body.description || `Pedido ${orderId}`,
     };
 
-    if (body.customerData) payload.customerData = JSON.stringify(body.customerData);
-    if (body.billingAddress) payload.billingAddress = JSON.stringify(body.billingAddress);
+    // Agregar opcionales en el formato que Bold espera
+    // customerData y billingAddress deben ser strings (JSON) si existen
+    if (body.customerData && Object.keys(body.customerData).length > 0) {
+      payload.customerData = typeof body.customerData === 'string' ? body.customerData : JSON.stringify(body.customerData);
+    }
+    if (body.billingAddress && Object.keys(body.billingAddress).length > 0) {
+      payload.billingAddress = typeof body.billingAddress === 'string' ? body.billingAddress : JSON.stringify(body.billingAddress);
+    }
+    // adjuntar items para debug (Bold no requiere items en payload; se incluye para trazabilidad)
+    payload.items = cartItems;
 
-    console.log('Payload enviado a Bold:', JSON.stringify(payload));
+    console.log('Payload enviado a Bold:', JSON.stringify(payload, null, 2));
 
     const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
       method: 'POST',
@@ -102,6 +120,6 @@ export async function POST(request: Request) {
 
   } catch (err) {
     console.error('Error en create-payment:', err);
-    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, message: 'Internal server error', error: String(err) }, { status: 500 });
   }
 }
