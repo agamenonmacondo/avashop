@@ -244,7 +244,15 @@ export default function CheckoutPage() {
         result.data['data-redirection-url'] = boldRedirect;
         setBoldButtonData(result.data);
       } else {
-        toast({ title: 'Error al preparar el pago', description: result?.message || 'No se pudo preparar el pago.', variant: 'destructive' });
+        // Mostrar mensaje de error más detallado si existe
+        let errorMsg = result?.message || 'No se pudo preparar el pago.';
+        if (result?.detail) {
+          errorMsg += ` (${typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)})`;
+        }
+        if (result?.debug) {
+          errorMsg += ` [Debug: ${JSON.stringify(result.debug)}]`;
+        }
+        toast({ title: 'Error al preparar el pago', description: errorMsg, variant: 'destructive' });
       }
     } catch (err) {
       toast({ title: 'Error al preparar el pago', description: 'Ocurrió un error al comunicar con el servidor.', variant: 'destructive' });
