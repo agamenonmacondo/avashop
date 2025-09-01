@@ -286,27 +286,25 @@ export default function CheckoutPage() {
     const orderInput = await getValidatedOrderInput();
     if (!orderInput) {
       setIsCoinbaseLoading(false);
-      return; // Agregado el return que faltaba
+      return;
     }
-    
     try {
       const result = await createCoinbaseCharge(orderInput);
-
       if (result.success && result.redirectUrl) {
         window.location.href = result.redirectUrl;
       } else {
-        toast({ 
-          title: "Problema con el Pedido", 
-          description: result.message || "No se pudo procesar el pedido con Coinbase.", 
-          variant: "destructive" 
+        toast({
+          title: "Problema con el Pedido",
+          description: result.message || "No se pudo procesar el pedido con Coinbase.",
+          variant: "destructive"
         });
         setIsCoinbaseLoading(false);
       }
     } catch (error) {
-      toast({ 
-        title: "Error al procesar el pago", 
-        description: "Ocurrió un error al comunicar con Coinbase.", 
-        variant: "destructive" 
+      toast({
+        title: "Error al procesar el pago",
+        description: "Ocurrió un error al comunicar con Coinbase.",
+        variant: "destructive"
       });
       setIsCoinbaseLoading(false);
     }
