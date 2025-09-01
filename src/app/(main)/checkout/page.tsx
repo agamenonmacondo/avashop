@@ -54,7 +54,7 @@ const calculateOrderSummary = () => {
   return { items: mockCartItems, subtotal, shipping, tax, total };
 };
 
-const APP_URL = 'https://avashop.vercel.app';
+const APP_URL = process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL as string;
 
 const boldRedirect = `${APP_URL.replace(/\/$/, '')}/order/success`;
 
