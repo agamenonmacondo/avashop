@@ -77,7 +77,16 @@ export async function POST(request: Request) {
 
     if (!boldRes.ok) {
       const message = result?.message || result?.error || 'Bold API returned an error';
-      return NextResponse.json({ success: false, message, detail: result }, { status: boldRes.status });
+      // Devuelve el mensaje y el body completo para debug
+      return NextResponse.json({ 
+        success: false, 
+        message, 
+        detail: result, 
+        debug: {
+          payload,
+          status: boldRes.status
+        }
+      }, { status: boldRes.status });
     }
 
     return NextResponse.json({ success: true, data: result }, { status: 200 });
