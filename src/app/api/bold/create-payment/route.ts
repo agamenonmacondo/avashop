@@ -68,8 +68,12 @@ export async function POST(request: Request) {
     }
 
     // Credenciales (trim para evitar espacios invisibles)
-    const apiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
+    // Nota: para pruebas temporales puedes enviar body.testingApiKey con la llave de identidad
+    const envApiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
     const secret = (process.env.BOLD_SECRET_KEY || '').trim();
+    const testingApiKey = typeof body.testingApiKey === 'string' ? body.testingApiKey.trim() : '';
+    // prioridad: testingApiKey (temporal) -> envApiKey
+    const apiKey = testingApiKey || envApiKey;
 
     if (!apiKey || !secret) {
       console.error('Missing Bold credentials (NEXT_PUBLIC_BOLD_API_KEY or BOLD_SECRET_KEY)');
@@ -123,59 +127,64 @@ export async function POST(request: Request) {
       payload.description = `Pedido ${orderId}`;
     }
 
-    // LOG antes de enviar
-    console.log('Payload enviado a Bold (sin items):', JSON.stringify(payload, null, 2));
+    // LOG antes de enviar (mask apiKey)
+    console.log('Payload enviado a Bold (sin items):', JSON.stringify({ ...payload, apiKey: mask(apiKey), integritySignature: integritySignature.slice(0,8) + '...' }, null, 2));
 
-    // Headers según documentación Bold - tipado seguro
-    // Usar únicamente 'x-api-key' (evita variantes que pueden provocar 500)
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-    };
+    // Probar variantes seguras de header (x-api-key y api-key)
+    const headerVariants: Record<string, string>[] = [
+      { 'Content-Type': 'application/json', 'x-api-key': apiKey },
+      { 'Content-Type': 'application/json', 'api-key': apiKey },
+    ];
 
+    let lastText = '';
+    let lastStatus = 0;
     let boldResponse: any = null;
-    let lastError = '';
-    try {
-      console.log('Probando header x-api-key');
-      const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-      });
-      const responseText = await boldRes.text();
-      console.log(`Respuesta Bold (status ${boldRes.status}):`, responseText);
+    const tried: string[][] = [];
 
-      if (boldRes.ok) {
-        try { boldResponse = JSON.parse(responseText); } catch { boldResponse = responseText; }
-      } else {
-        // detectar 401 para dar pista (BTN-000)
-        if (boldRes.status === 401) {
-          lastError = responseText || 'Unauthorized (401) from Bold - check identity key';
-          console.error('Bold returned 401 - identity key likely invalid');
-        } else {
-          lastError = responseText || `Bold error status ${boldRes.status}`;
+    for (const hdr of headerVariants) {
+      try {
+        tried.push(Object.keys(hdr));
+        console.log('Probando headers:', Object.keys(hdr));
+        const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
+          method: 'POST',
+          headers: hdr,
+          body: JSON.stringify(payload),
+        });
+        const responseText = await boldRes.text().catch(() => '');
+        console.log(`Respuesta Bold (status ${boldRes.status}):`, responseText);
+        lastText = responseText || lastText;
+        lastStatus = boldRes.status || lastStatus;
+
+        if (boldRes.ok) {
+          try { boldResponse = JSON.parse(responseText); } catch { boldResponse = responseText; }
+          break;
+        } else if (boldRes.status === 401) {
+          // feedback inmediato para 401
+          console.error('Bold returned 401 - identity key likely invalid. Tried headers:', Object.keys(hdr));
+          lastText = responseText || 'Unauthorized (401) from Bold - check identity key';
+          // no break: try next header variant
         }
+      } catch (fetchErr) {
+        console.error('Error en fetch hacia Bold:', fetchErr);
+        lastText = String(fetchErr) || lastText;
       }
-    } catch (fetchErr) {
-      console.error('Error en fetch hacia Bold:', fetchErr);
-      lastError = String(fetchErr);
     }
 
     if (!boldResponse) {
       return NextResponse.json({
         success: false,
-        message: 'Bold API error',
-        detail: lastError,
-        hint: boldResHint(lastError),
-        debug: { received, payload: { ...payload, apiKey: mask(apiKey), integritySignature: integritySignature.slice(0,8) + '...' } }
+        message: 'Bold API error - todas las variantes fallaron o 401 recibido',
+        detail: lastText,
+        boldStatus: lastStatus,
+        hint: lastStatus === 401 ? 'BTN-000 probable: revisa que la identity key (NEXT_PUBLIC_BOLD_API_KEY) en Vercel coincida exactamente con la del panel Bold. Si usaste body.testingApiKey, confirma esa llave.' : undefined,
+        debug: {
+          received,
+          triedHeaders: tried,
+          apiKeyMasked: mask(apiKey),
+          envApiKeyMasked: mask(envApiKey),
+          testingApiKeyUsed: !!testingApiKey
+        }
       }, { status: 502 });
-    }
-    // helper para sugerir causa simple
-    function boldResHint(detail: string) {
-      if (!detail) return null;
-      if (detail.toLowerCase().includes('unauthorized') || detail.includes('401')) return 'BTN-000: identity key invalid or wrong environment (test vs production).';
-      if (detail.toLowerCase().includes('integrity') || detail.toLowerCase().includes('integrity key')) return 'BTN-002: integrity signature mismatch.';
-      return null;
     }
 
     // Extraer URL de redirección que Bold devuelva
