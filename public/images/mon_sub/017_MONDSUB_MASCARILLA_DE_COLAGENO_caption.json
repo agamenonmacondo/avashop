@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 50,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_50_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "MONDSUB MASCARILLA DE COLAGENO",
+  "precio": "$20.000",
+  "descripcion": "Mascarilla de hidrogel con colágeno para hidratación y reafirmación de la piel",
+  "categoria": "mascarilla facial",
+  "width": 466,
+  "height": 469,
+  "color_principal": "blanco"
+}
+```

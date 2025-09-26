@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 100,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_100_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-533",
+  "precio": 120000,
+  "descripcion": "Power Bank de 10000mAh con carga rápida de 20W y 22.5W PD+QC, tipo C",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro"
+}
+```

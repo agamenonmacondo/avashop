@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 50,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_50_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "AC67W",
+  "precio": 90000,
+  "descripcion": "Cargador de 67 vatios con tecnología GAN, pantalla digital y puertos Type C y USB",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro"
+}
+```

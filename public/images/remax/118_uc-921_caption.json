@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 42,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_42_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "UC-921",
+  "precio": 120000,
+  "descripcion": "Estación de acoplamiento multifuncional USB-C con capacidad para 4K y compatibilidad con Mac y Windows",
+  "categoria": "docking station",
+  "width": 804,
+  "height": 804,
+  "color_principal": "gris"
+}
+```

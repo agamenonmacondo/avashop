@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 7,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_7_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "P5",
+  "precio": 120000,
+  "descripcion": "Auriculares Bluetooth con conducción de aire, para música y llamadas, con batería extra de hasta 12 horas",
+  "categoria": "auriculares",
+  "width": 800,
+  "height": 800,
+  "color_principal": "blanco"
+}
+```

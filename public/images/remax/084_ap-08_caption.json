@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 30,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_30_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "AP-08",
+  "precio": 100000,
+  "descripcion": "Stylus activo para dispositivos Apple y Android",
+  "categoria": "stylus",
+  "width": 644,
+  "height": 724,
+  "color_principal": "negro/blanco"
+}
+```

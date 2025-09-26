@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 2,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_2_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-C04",
+  "precio": 75000,
+  "descripcion": "Soporte para automóvil con cargador inalámbrico de 15W y montaje en ventilación de aire",
+  "categoria": "soporte/cargador",
+  "width": 666,
+  "height": 666,
+  "color_principal": "negro"
+}
+```

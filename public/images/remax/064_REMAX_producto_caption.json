@@ -1,0 +1,15 @@
+```json
+{
+  "pagina": 23,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_23_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "VELOCITY3.5",
+  "precio": 15.000,
+  "descripcion": "Adaptador de audio con conector de 3.5mm a 3.5mm y cable de 1.2 metros",
+  "categoria": "cable/adaptador",
+  "width": 683,
+  "height": 683,
+  "color_principal": "negro/blanco"
+}
+```
