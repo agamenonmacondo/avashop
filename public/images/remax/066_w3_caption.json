@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 24,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador/soporte",
   "width": 600,
   "height": 1020,
-  "color_principal": "plateado/aluminio"
+  "color_principal": "plateado/aluminio",
+  "nombre_generado_llm": "W3 Cargador Inalámbrico 3 en 1 Plegable con Soporte de Aleación de Aluminio para Escritorio",
+  "descripcion_generada_llm": "El W3 es un cargador inalámbrico 3 en 1 diseñado para ofrecer una solución de carga versátil y elegante para tu escritorio. Fabricado con un robusto soporte de aleación de aluminio, este dispositivo es capaz de cargar múltiples dispositivos de manera simultánea de forma inalámbrica. Su diseño plegable permite una fácil transportación y almacenamiento, manteniendo tu espacio de trabajo organizado. Ideal para aquellos que buscan una forma eficiente y moderna de mantener sus dispositivos cargados, el W3 es compatible con una amplia gama de dispositivos que soportan carga inalámbrica. Su construcción de alta calidad asegura durabilidad y un rendimiento óptimo. Características principales: - Carga inalámbrica para hasta 3 dispositivos simultáneamente. - Soporte de aleación de aluminio para una mayor durabilidad. - Diseño plegable para fácil almacenamiento y transporte. - Compatible con dispositivos que soportan carga inalámbrica. - Ideal para uso en escritorio, proporcionando una solución de carga organizada y eficiente.",
+  "precio_final_llm": 208000
 }
-```

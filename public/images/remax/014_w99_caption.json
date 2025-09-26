@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 6,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 526,
   "height": 883,
-  "color_principal": "negro/plata"
+  "color_principal": "negro/plata",
+  "nombre_generado_llm": "W99 Cargador Inalámbrico Magnético de Aleación de Zinc con Reloj",
+  "descripcion_generada_llm": "El W99 es un cargador inalámbrico de alta calidad fabricado en aleación de zinc, diseñado para cargar dispositivos compatibles de manera eficiente y segura. Su diseño incorpora un reloj magnético, ofreciendo una solución de carga y visualización de hora en un solo dispositivo. Fabricado con materiales resistentes y duraderos, este producto es ideal para aquellos que buscan una forma moderna y elegante de mantener sus dispositivos cargados y sincronizados con su estilo de vida. Compatible con relojes y dispositivos que soportan carga inalámbrica, el W99 combina funcionalidad y estilo, proporcionando una experiencia de usuario superior. Sus características magnéticas aseguran una conexión segura y estable, mientras que su construcción en aleación de zinc le confiere un aspecto premium y robusto.",
+  "precio_final_llm": 64000
 }
-```

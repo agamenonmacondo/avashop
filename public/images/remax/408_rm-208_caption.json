@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 144,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 370,
   "height": 376,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-208 Audífonos Manos Libres con Sonido 3 Tonos y Mega Bass",
+  "descripcion_generada_llm": "Disfruta de una experiencia de audio inmersiva con los audífonos manos libres RM-208. Estos audífonos ofrecen un sonido de alta calidad con tres tonos distintos y un potente Mega Bass que te permitirá sumergirte en tu música favorita. Diseñados para ser cómodos y fáciles de usar, son ideales para llamadas y sesiones de música en cualquier lugar. Su tecnología de sonido avanzada y su diseño ergonómico los hacen perfectos para aquellos que buscan una excelente calidad de audio sin comprometer la comodidad.",
+  "precio_final_llm": 40000
 }
-```

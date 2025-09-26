@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 112,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_112_img_1.png",
- "tipo": "producto",
- "nombre_producto": "RM-616A",
- "precio": 50000,
- "descripcion": "Auriculares manos libres tipo C con control de música y llamadas",
- "categoria": "auriculares",
- "width": 761,
- "height": 761,
- "color_principal": "blanco/negro"
+  "pagina": 112,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_112_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-616A",
+  "precio": 50000,
+  "descripcion": "Auriculares manos libres tipo C con control de música y llamadas",
+  "categoria": "auriculares",
+  "width": 761,
+  "height": 761,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RM-616A Auriculares Manos Libres Tipo C con Control de Música y Llamadas",
+  "descripcion_generada_llm": "Auriculares manos libres diseñados para ofrecer una experiencia de audio superior y comodidad. Conectividad tipo C para una integración perfecta con dispositivos compatibles. Control de música y llamadas para una gestión sencilla de tus contenidos de audio. Características principales: conectividad tipo C, control de música y llamadas, diseño ergonómico para un ajuste cómodo. Materiales de alta calidad para una durabilidad óptima. Compatibles con dispositivos que cuenten con puerto tipo C. Ventajas: disfruta de tu música y gestiona tus llamadas de manera sencilla y sin distracciones. Ideal para uso diario, ejercicio o viajes.",
+  "precio_final_llm": 80000
 }
-```

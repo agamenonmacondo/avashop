@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "W39",
+  "nombre_ia": "W39 Auriculares Inalámbricos con Pantalla Digital",
+  "referencia": "w39",
+  "descripciones_originales": [
+    "Auriculares inalámbricos con pantalla digital",
+    "Auriculares inalámbricos con pantalla digital",
+    "Auriculares inalámbricos con pantalla digital"
+  ],
+  "precio_original": 65000,
+  "precio_final": 104000,
+  "descripcion_ia": "Auriculares inalámbricos de última generación equipados con una pantalla digital para una experiencia de usuario superior. Estos auriculares ofrecen una conexión inalámbrica estable y de alta calidad, permitiendo una libertad de movimiento sin precedentes. La pantalla digital integrada proporciona información en tiempo real sobre el estado de la conexión, el nivel de batería y el control de volumen, entre otros. Diseñados para ser compatibles con la mayoría de dispositivos móviles y sistemas operativos, estos auriculares son ideales para aquellos que buscan una combinación de tecnología avanzada y comodidad. Sus materiales de alta calidad aseguran una durabilidad y confort prolongados, haciendo de estos auriculares una excelente opción para uso diario, ya sea para escuchar música, realizar llamadas o participar en videoconferencias.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\023_w39.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\024_w39.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\025_w39.png"
+  ]
+}

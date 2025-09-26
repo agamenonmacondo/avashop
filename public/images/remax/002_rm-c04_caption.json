@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 2,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "soporte/cargador",
   "width": 666,
   "height": 666,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C04 Soporte de Coche con Carga Inalámbrica y Montaje en Rejilla de Aire",
+  "descripcion_generada_llm": "El RM-C04 es un soporte de coche diseñado para ofrecer una experiencia de carga inalámbrica segura y conveniente mientras conduce. Con capacidad de carga inalámbrica de hasta 15W, este dispositivo es compatible con la mayoría de los teléfonos inteligentes modernos que soportan esta tecnología. Su montaje en la rejilla de aire del vehículo proporciona una instalación firme y estable, manteniendo su dispositivo a la vista y al alcance de la mano.\nEspecificaciones técnicas:\n- Carga inalámbrica de hasta 15W.\n- Montaje en rejilla de aire del vehículo.\n- Diseño robusto y duradero.\nMateriales y construcción: Fabricado con materiales de alta calidad para asegurar su durabilidad y resistencia a los rigores del uso diario en el automóvil.\nCompatibilidad: Compatible con dispositivos que soportan carga inalámbrica de hasta 15W.\nVentajas:\n- Mantiene su teléfono a la vista y accesible mientras conduce.\n- Carga rápida y eficiente de su dispositivo.\n- Fácil instalación en la rejilla de aire del vehículo.\nUso recomendado: Para conductores que buscan una forma segura y conveniente de mantener su teléfono cargado y visible durante el viaje.",
+  "precio_final_llm": 120000
 }
-```

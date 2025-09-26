@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 64,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 666,
   "height": 715,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "U161 Cargador Rápido GAN de 35 Vatios con Tecnología Avanzada",
+  "descripcion_generada_llm": "El U161 es un cargador rápido de alta eficiencia que utiliza tecnología GAN (Nitruro de Galio) y un chip inteligente para ofrecer una carga rápida y segura de hasta 35 vatios. Diseñado para ser compatible con una amplia gama de dispositivos, este cargador es ideal para aquellos que buscan una solución de carga rápida y eficiente. Su tecnología GAN permite una mayor densidad de potencia y una menor generación de calor, lo que lo hace más seguro y fiable. El chip inteligente integrado garantiza una carga óptima y protege contra sobretensiones y sobrecargas. Con su diseño compacto y avanzadas características, el U161 es la opción perfecta para quienes necesitan una carga rápida y segura en cualquier momento.",
+  "precio_final_llm": 96000
 }
-```

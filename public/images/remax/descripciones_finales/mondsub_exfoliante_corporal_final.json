@@ -1,0 +1,16 @@
+{
+  "nombre_producto": "MONDSUB EXFOLIANTE CORPORAL",
+  "nombre_ia": "MONDSUB_EXFOLIANTE_CORPORAL MONDSUB EXFOLIANTE CORPORAL - Exfoliante Corporal Suavizante y Brillante",
+  "referencia": "mondsub_exfoliante_corporal",
+  "descripciones_originales": [
+    "Exfoliante corporal que mejora la piel áspera, brilla y suaviza",
+    "Exfoliante y limpiador corporal que mejora la piel áspera, brilla y suaviza"
+  ],
+  "precio_original": 13000,
+  "precio_final": 20800,
+  "descripcion_ia": "El MONDSUB EXFOLIANTE CORPORAL es un producto diseñado para mejorar la textura y apariencia de la piel. Actúa como exfoliante y limpiador corporal, eliminando células muertas y dejando la piel suave y radiante. Su fórmula está pensada para tratar la piel áspera, brindando una solución efectiva para aquellos que buscan mejorar la salud y el aspecto de su piel. Al incorporar este producto en tu rutina de cuidado personal, podrás disfrutar de una piel más suave, brillante y saludable. Es ideal para uso diario y se adapta a las necesidades de cuidado corporal de cualquier persona que busque una piel más radiante y saludable.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\002_MONDSUB_EXFOLIANTE_CORPORAL.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\003_MONDSUB_EXFOLIANTE_CORPORAL.png"
+  ]
+}

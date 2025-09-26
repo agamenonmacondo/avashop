@@ -1,15 +1,16 @@
-```
 {
- "pagina": 13,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_13_img_1.png",
- "tipo": "producto",
- "nombre_producto": "RB-M10",
- "precio": 120000,
- "descripcion": "Altavoz portátil inalámbrico impermeable de 20W",
- "categoria": "altavoz",
- "width": 669,
- "height": 716,
- "color_principal": "negro"
+  "pagina": 13,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_13_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-M10",
+  "precio": 120000,
+  "descripcion": "Altavoz portátil inalámbrico impermeable de 20W",
+  "categoria": "altavoz",
+  "width": 669,
+  "height": 716,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-M10 Altavoz Portátil Inalámbrico Impermeable de 20W",
+  "descripcion_generada_llm": "El RB-M10 es un altavoz portátil inalámbrico diseñado para ofrecer una experiencia de sonido de alta calidad en cualquier lugar. Con una potencia de salida de 20W, este altavoz es perfecto para disfrutar de tu música favorita al aire libre o en interiores. Su diseño impermeable lo hace resistente a la lluvia y al agua, lo que lo convierte en un compañero ideal para actividades al aire libre. \nEspecificaciones técnicas:\n- Potencia de salida: 20W\n- Conexión inalámbrica\n- Diseño impermeable\nMateriales y construcción:\n- El altavoz está construido con materiales de alta calidad que garantizan su durabilidad y resistencia.\nCompatibilidad:\n- Compatible con dispositivos que tengan tecnología de conexión inalámbrica.\nUsos y ventajas:\n- Ideal para actividades al aire libre como camping, playa, senderismo.\n- Perfecto para uso en interiores como hogares, oficinas, fiestas.\n- Su diseño impermeable ofrece protección contra la lluvia y el agua.\nCaracterísticas adicionales:\n- El altavoz RB-M10 ha sido diseñado pensando en la comodidad y la calidad de sonido. Su portabilidad y resistencia lo hacen una excelente opción para aquellos que buscan un altavoz que se adapte a su estilo de vida activo.",
+  "precio_final_llm": 192000
 }
-```

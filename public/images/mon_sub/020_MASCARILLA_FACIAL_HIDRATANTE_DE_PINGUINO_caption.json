@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 57,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cuidado personal",
   "width": 1050,
   "height": 1050,
-  "color_principal": "blanco/azul"
+  "color_principal": "blanco/azul",
+  "nombre_generado_llm": "MASCARILLA_FACIAL_HIDRATANTE_DE_PINGUINO - Mascarilla Facial Hidratante Refrescante",
+  "descripcion_generada_llm": "La MASCARILLA FACIAL HIDRATANTE DE PINGUINO es un producto de cuidado facial diseñado para proporcionar hidratación intensa y refrescar la piel. Su fórmula está pensada para dejar la piel suave y nutrida. Ideal para todos los tipos de piel, esta mascarilla facial es perfecta para aquellos que buscan mantener su piel hidratada y saludable. Su aplicación es sencilla y su uso regular puede ayudar a mejorar la apariencia y la textura de la piel.",
+  "precio_final_llm": 32000
 }
-```

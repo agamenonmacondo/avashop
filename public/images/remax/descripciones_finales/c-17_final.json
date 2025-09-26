@@ -1,0 +1,14 @@
+{
+  "nombre_producto": "C-17",
+  "nombre_ia": "C-17 Cable de datos de aluminio con carga rápida de 240W",
+  "referencia": "c-17",
+  "descripciones_originales": [
+    "Cable de datos de aluminio con carga rápida de 240W y longitud de 1.2M"
+  ],
+  "precio_original": 27000,
+  "precio_final": 43200,
+  "descripcion_ia": "Cable de datos de aluminio de alta calidad y durabilidad, diseñado para ofrecer una carga rápida de hasta 240W. Con una longitud de 1.2 metros, este cable es ideal para usuarios que necesitan una conexión fiable y rápida para sus dispositivos. Fabricado con materiales de aluminio, garantiza una excelente transmisión de datos y una gran resistencia a la corrosión y al desgaste. Compatible con dispositivos que soporten carga rápida, este cable es perfecto para cargar baterías de alta capacidad en un abrir y cerrar de ojos. Su diseño robusto y su construcción de alta calidad aseguran un rendimiento óptimo y una larga vida útil.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\062_c-17.png"
+  ]
+}

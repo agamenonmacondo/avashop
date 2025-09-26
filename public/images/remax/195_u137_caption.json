@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 68,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 569,
   "height": 967,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "U137 Cargador Rápido Universal 25W para Apple y Android",
+  "descripcion_generada_llm": "Cargador rápido de 25 vatios diseñado para cargar dispositivos Apple y Android de manera eficiente. Compatible con una amplia gama de dispositivos, este cargador ofrece una carga rápida y segura. Fabricado con materiales de alta calidad, garantiza un rendimiento óptimo y duradero. Ideal para aquellos que buscan una solución de carga rápida y universal para sus dispositivos móviles. Características principales: carga rápida de 25 vatios, compatible con dispositivos Apple y Android, diseño universal para una amplia compatibilidad.",
+  "precio_final_llm": 64000
 }
-```

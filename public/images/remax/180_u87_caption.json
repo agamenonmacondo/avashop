@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 63,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 728,
   "height": 727,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "U87 Cargador Rápido GAN Doble Salida Tipo C PD QC",
+  "descripcion_generada_llm": "Cargador rápido de alta eficiencia con tecnología GAN y doble salida tipo C, compatible con protocolos de carga rápida PD y QC. Diseñado para ofrecer una carga rápida y segura a tus dispositivos, este cargador es ideal para aquellos que necesitan cargar múltiples dispositivos al mismo tiempo sin sacrificar la velocidad. Su tecnología GAN (Nitruro de Galio) permite una carga más eficiente y reduce el calor generado durante el proceso, lo que lo hace más seguro y duradero. Compatible con una amplia gama de dispositivos que soportan carga tipo C, incluyendo smartphones, tablets y laptops. Su diseño compacto y ligero lo hace perfecto para llevarlo contigo a cualquier lugar.",
+  "precio_final_llm": 96000
 }
-```

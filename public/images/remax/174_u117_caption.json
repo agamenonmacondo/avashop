@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 61,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_61_img_1.png",
- "tipo": "producto",
- "nombre_producto": "RP-U117",
- "precio": 100000,
- "descripcion": "Cargador rápido de 65W con tecnología PD y QC, compatible con Apple y Android",
- "categoria": "cargador",
- "width": 633,
- "height": 699,
- "color_principal": "negro/blanco/gris"
+  "pagina": 61,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_61_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U117",
+  "precio": 100000,
+  "descripcion": "Cargador rápido de 65W con tecnología PD y QC, compatible con Apple y Android",
+  "categoria": "cargador",
+  "width": 633,
+  "height": 699,
+  "color_principal": "negro/blanco/gris",
+  "nombre_generado_llm": "U117 Cargador Rápido 65W con Tecnología PD y QC",
+  "descripcion_generada_llm": "Cargador rápido de alta eficiencia y compatibilidad universal. Características principales:\n- Potencia de carga: 65W\n- Tecnologías de carga rápida soportadas: PD y QC\n- Compatibilidad: Apple y Android\n- Diseño compacto y seguro\nEspecificaciones técnicas:\n- Voltaje de entrada: No especificado\n- Voltaje de salida: Compatible con dispositivos que requieren hasta 65W\n- Conectividad: Compatible con dispositivos que utilizan cargadores con tecnología PD y QC\nVentajas:\n- Carga rápida y eficiente para dispositivos compatibles\n- Compatible con una amplia gama de dispositivos Apple y Android\n- Tecnología de carga inteligente para proteger su dispositivo durante la carga\nUso recomendado:\n- Para cargar dispositivos móviles, tabletas y otros dispositivos compatibles de manera rápida y segura.\n- Ideal para uso diario y en situaciones donde la velocidad de carga es crucial.\nMateriales y construcción:\n- Los detalles específicos sobre los materiales utilizados en la construcción del cargador no están disponibles, pero se espera que cumplan con los estándares de calidad y seguridad para cargadores de dispositivos electrónicos.",
+  "precio_final_llm": 160000
 }
-```

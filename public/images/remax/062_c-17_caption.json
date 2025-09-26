@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 22,
   "index": 3,
@@ -10,6 +9,8 @@
   "categoria": "cable",
   "width": 836,
   "height": 881,
-  "color_principal": "plateado"
+  "color_principal": "plateado",
+  "nombre_generado_llm": "C-17 Cable de datos de aluminio con carga rápida de 240W",
+  "descripcion_generada_llm": "Cable de datos de aluminio de alta calidad y durabilidad, diseñado para ofrecer una carga rápida de hasta 240W. Con una longitud de 1.2 metros, este cable es ideal para usuarios que necesitan una conexión fiable y rápida para sus dispositivos. Fabricado con materiales de aluminio, garantiza una excelente transmisión de datos y una gran resistencia a la corrosión y al desgaste. Compatible con dispositivos que soporten carga rápida, este cable es perfecto para cargar baterías de alta capacidad en un abrir y cerrar de ojos. Su diseño robusto y su construcción de alta calidad aseguran un rendimiento óptimo y una larga vida útil.",
+  "precio_final_llm": 43200
 }
-```

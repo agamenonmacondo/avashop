@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RM-C02",
+  "nombre_ia": "RM-C02 Soporte para Auto con Ventilación de Aire",
+  "referencia": "rm-c02",
+  "descripciones_originales": [
+    "Soporte para auto con ventilación de aire",
+    "Soporte para auto con ventilación de aire",
+    "Soporte para auto con ventilación de aire"
+  ],
+  "precio_original": 35000,
+  "precio_final": 56000,
+  "descripcion_ia": "El RM-C02 es un soporte diseñado para proporcionar una ventilación de aire efectiva en su vehículo. Fabricado con materiales de alta calidad, este soporte es compatible con una amplia gama de automóviles. Sus características incluyen un diseño ergonómico y una construcción robusta que garantiza un uso prolongado. Entre sus ventajas se destacan su capacidad para mejorar la circulación del aire dentro del vehículo, proporcionando un ambiente más cómodo para el conductor y los pasajeros. El RM-C02 es ideal para aquellos que buscan mejorar la experiencia de conducción con un accesorio práctico y eficiente.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\267_rm-c02.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\268_rm-c02.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\269_rm-c02.png"
+  ]
+}

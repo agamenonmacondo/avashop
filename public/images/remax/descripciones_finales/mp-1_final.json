@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "MP-1",
+  "nombre_ia": "MP-1 Power Bank Metálico Plegable con Soporte Magnético y Carga Inalámbrica MagSafe",
+  "referencia": "mp-1",
+  "descripciones_originales": [
+    "Power Bank metálico plegable con soporte magnético para cargador inalámbrico MagSafe de 10000mAh y carga rápida PD 20W",
+    "Power bank metálico plegable con soporte magnético para cargador inalámbrico Magsafe de 10000mAh y carga rápida PD 20W",
+    "Power bank magnético plegable con cargador inalámbrico MagSafe y soporte para teléfono"
+  ],
+  "precio_original": 140000,
+  "precio_final": 224000,
+  "descripcion_ia": "El MP-1 es un power bank metálico plegable diseñado para ofrecer una solución de carga portátil y versátil. Con una capacidad de 10000mAh, este dispositivo cuenta con soporte magnético para cargadores inalámbricos MagSafe, permitiendo una carga cómoda y segura para teléfonos compatibles. Además, ofrece carga rápida PD20W, lo que garantiza una recarga eficiente de tu dispositivo en cualquier momento y lugar. Fabricado con materiales metálicos de alta calidad, el MP-1 combina durabilidad y estilo, siendo ideal para aquellos que buscan una solución de carga potente y elegante. Compatible con dispositivos que soportan MagSafe y carga rápida PD, este power bank es perfecto para uso diario, viajes y situaciones en las que la energía es crucial.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\011_mp-1.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\012_mp-1.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\013_mp-1.png"
+  ]
+}

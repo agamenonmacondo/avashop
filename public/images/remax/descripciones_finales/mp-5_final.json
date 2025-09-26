@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "MP-5",
+  "nombre_ia": "MP-5 Power Bank Inalámbrico con Carga Rápida PD",
+  "referencia": "mp-5",
+  "descripciones_originales": [
+    "Power bank con carga inalámbrica de 15W y salida PD de 20W",
+    "Power bank con carga inalámbrica de 15W y salida PD de 20W",
+    "Power bank con carga inalámbrica y salida PD 20W"
+  ],
+  "precio_original": 100000,
+  "precio_final": 160000,
+  "descripcion_ia": "El MP-5 es un power bank de alta capacidad con tecnología de carga inalámbrica de 15W y salida de carga rápida PD de 20W. Diseñado para proporcionar energía en cualquier momento y lugar, este dispositivo es ideal para aquellos que necesitan mantener sus dispositivos móviles cargados durante todo el día. Con su capacidad para cargar dispositivos de forma inalámbrica, elimina la necesidad de cables y ofrece una experiencia de carga más conveniente y organizada. Compatible con una amplia gama de dispositivos que soportan carga inalámbrica, como smartphones y otros dispositivos compatibles con el estándar Qi. Fabricado con materiales de alta calidad que garantizan su durabilidad y resistencia. Sus características clave incluyen: carga inalámbrica de 15W para una carga eficiente sin cables, salida de carga rápida PD de 20W para cargar tus dispositivos rápidamente a través de cable. Es la solución perfecta para viajeros, profesionales y cualquier persona que necesite una fuente de energía fiable y versátil.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\008_mp-5.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\009_mp-5.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\010_mp-5.png"
+  ]
+}

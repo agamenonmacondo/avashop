@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 39,
- "index": 0,
- "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_39_img_0.png",
- "tipo": "producto",
- "nombre_producto": "MONDSUB CREMA DIA & NOCHE",
- "precio": "$22.000",
- "descripcion": "Cuidado de la piel de dia y noche. Crema de dia para hidratación y humectación. Crema de noche reparadora e iluminadora.",
- "categoria": "cuidado personal",
- "width": 939,
- "height": 1074,
- "color_principal": "crema"
+  "pagina": 39,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_39_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "MONDSUB CREMA DIA & NOCHE",
+  "precio": "$22.000",
+  "descripcion": "Cuidado de la piel de dia y noche. Crema de dia para hidratación y humectación. Crema de noche reparadora e iluminadora.",
+  "categoria": "cuidado personal",
+  "width": 939,
+  "height": 1074,
+  "color_principal": "crema",
+  "nombre_generado_llm": "MONDSUB_CREMA_DIA_&_NOCHE - Crema Hidratante y Reparadora para Día y Noche",
+  "descripcion_generada_llm": "La crema de día y noche MONDSUB CREMA DIA & NOCHE es un producto innovador diseñado para proporcionar hidratación y reparación intensa a la piel en cualquier momento del día. Con una fórmula enriquecida con péptido azul, pantenol, Vitamina C y Vitamina A, esta crema ofrece múltiples beneficios para el cuidado de la piel.\nEspecificaciones técnicas:\n- Crema hidratante y humectante para día y noche\n- Contiene péptido azul y pantenol para una hidratación profunda\n- Enriquecida con Vitamina C y Vitamina A para un efecto antioxidante y blanqueador\n- Reafirma y repara la piel\n- Compatible con todos los tipos de piel\nVentajas:\n- Proporciona hidratación intensa y duradera\n- Repara y reafirma la piel\n- Antioxidante y blanqueador gracias a las vitaminas C y A\n- Fácil de aplicar y absorber\nUso recomendado:\n- Aplicar sobre la piel limpia del rostro y cuello\n- Utilizar tanto de día como de noche para obtener los mejores resultados\nLa crema MONDSUB CREMA DIA & NOCHE es ideal para aquellos que buscan un producto completo para el cuidado de la piel, proporcionando beneficios tanto estéticos como de salud para la piel.",
+  "precio_final_llm": 35200
 }
-```

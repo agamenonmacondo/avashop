@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-U120",
+  "nombre_ia": "U120 Cargador Rápido USB/Tipo C 20W Compatible con Apple y Android",
+  "referencia": "u120",
+  "descripciones_originales": [
+    "Cargador rápido USB/Tipo C de 20W compatible con Apple y Android",
+    "Cargador rápido USB/Tipo C de 20W para Apple y Android",
+    "Cargador rápido USB/Tipo C de 20W compatible con Apple y Android"
+  ],
+  "precio_original": 45000,
+  "precio_final": 72000,
+  "descripcion_ia": "Cargador rápido USB/Tipo C de alta velocidad y compatibilidad universal. Diseñado para cargar tus dispositivos Apple y Android de manera rápida y eficiente, este cargador ofrece una potencia de salida de 20W. Su diseño compacto y tecnología de carga rápida lo hacen ideal para uso diario, ya sea en casa, en la oficina o en movimiento. Compatible con una amplia gama de dispositivos, garantiza una carga segura y rápida gracias a su tecnología de carga inteligente. No requiere configuración adicional, simplemente conéctalo y comienza a cargar tus dispositivos. Su construcción robusta y materiales de alta calidad aseguran una larga vida útil y un rendimiento óptimo.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\203_u120.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\204_u120.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\205_u120.png"
+  ]
+}

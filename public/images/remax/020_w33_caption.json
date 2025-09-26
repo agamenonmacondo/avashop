@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 8,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_8_img_1.png",
- "tipo": "producto",
- "nombre_producto": "W33",
- "precio": 75000,
- "descripcion": "Auriculares inalámbricos con tecnología True Wireless para música y llamadas",
- "categoria": "auriculares",
- "width": 750,
- "height": 750,
- "color_principal": "blanco"
+  "pagina": 8,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_8_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "W33",
+  "precio": 75000,
+  "descripcion": "Auriculares inalámbricos con tecnología True Wireless para música y llamadas",
+  "categoria": "auriculares",
+  "width": 750,
+  "height": 750,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W33 Auriculares Inalámbricos True Wireless para Música y Llamadas",
+  "descripcion_generada_llm": "Experimenta la libertad de la tecnología True Wireless con nuestros auriculares W33, diseñados para ofrecer una experiencia de audio superior tanto para música como para llamadas. Estos auriculares inalámbricos destacan por su capacidad para proporcionar una conexión estable y de alta calidad, permitiéndote disfrutar de tu música favorita sin interrupciones ni distracciones.\nCaracterísticas principales:\n- Tecnología True Wireless para una mayor libertad y comodidad.\n- Ideal para escuchar música y realizar llamadas con claridad.\n- Diseño inalámbrico que elimina la necesidad de cables, facilitando su uso en movimiento.\nEspecificaciones técnicas:\n- Tipo de conexión: Inalámbrica True Wireless.\n- Uso recomendado: Música y llamadas.\nMateriales y construcción:\n- Los detalles específicos sobre los materiales utilizados no están disponibles, pero se espera que sean duraderos y cómodos para el uso diario.\nCompatibilidad:\n- Compatible con dispositivos que soportan tecnología inalámbrica True Wireless.\nVentajas:\n- Ofrece una experiencia de audio sin interrupciones.\n- Cómodo y fácil de usar.\n- Ideal para el uso diario, ya sea para escuchar música, realizar llamadas o ambas cosas.\nUsos recomendados:\n- Escuchar música.\n- Realizar y recibir llamadas.\n- Uso durante actividades físicas o en movimiento.",
+  "precio_final_llm": 120000
 }
-```

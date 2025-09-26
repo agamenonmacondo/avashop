@@ -1,15 +1,16 @@
-```
 {
- "pagina": 24,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_24_img_1.png",
- "tipo": "producto",
- "nombre_producto": "MONDSUB MASCARILLA DE BRAZOS X3 UNIDADES",
- "precio": "$25.000",
- "descripcion": "Mascarilla de brazos hidratante y refrescante para dejar por 15 a 20 minutos",
- "categoria": "mascarilla",
- "width": 900,
- "height": 750,
- "color_principal": "null"
+  "pagina": 24,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_24_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "MONDSUB MASCARILLA DE BRAZOS X3 UNIDADES",
+  "precio": "$25.000",
+  "descripcion": "Mascarilla de brazos hidratante y refrescante para dejar por 15 a 20 minutos",
+  "categoria": "mascarilla",
+  "width": 900,
+  "height": 750,
+  "color_principal": "null",
+  "nombre_generado_llm": "MONDSUB_MASCARILLA_DE_BRAZOS_X3_UNIDADES - Mascarilla Hidratante y Refrescante para Brazos",
+  "descripcion_generada_llm": "Mascarilla de brazos hidratante y refrescante diseñada para proporcionar una experiencia de cuidado intensivo para tus brazos. Cada unidad está pensada para ser utilizada durante 15 a 20 minutos, permitiendo una absorción óptima de sus ingredientes beneficiosos. Ideal para aquellos que buscan hidratar y refrescar la piel de sus brazos de manera efectiva. Presentada en un paquete que contiene 3 unidades para un tratamiento prolongado.",
+  "precio_final_llm": 40000
 }
-```

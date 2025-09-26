@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 119,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 800,
   "height": 800,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-620HB Auriculares Inalámbricos Bluetooth con Hasta 18 Horas de Reproducción y Llamadas",
+  "descripcion_generada_llm": "Auriculares inalámbricos Bluetooth diseñados para ofrecer una experiencia de audio sin interrupciones y con una excelente calidad de sonido. Con hasta 18 horas de reproducción y llamadas, estos auriculares son ideales para aquellos que buscan disfrutar de su música o realizar llamadas sin la molestia de cables. Su tecnología Bluetooth permite una conexión estable y rápida con dispositivos compatibles, asegurando una experiencia de uso fluida. Perfectos para uso diario, viajes o sesiones de ejercicio, estos auriculares ofrecen comodidad y versatilidad. Características principales: conexión inalámbrica Bluetooth, hasta 18 horas de reproducción y llamadas, diseño cómodo y ligero. Compatibles con la mayoría de dispositivos Bluetooth, incluyendo teléfonos inteligentes y tabletas.",
+  "precio_final_llm": 256000
 }
-```

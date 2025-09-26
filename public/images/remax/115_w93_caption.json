@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 41,
- "index": 2,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_41_img_2.png",
- "tipo": "producto",
- "nombre_producto": "RP-W93",
- "precio": 90000,
- "descripcion": "Soporte de coche con carga inalámbrica de 15W y compatibilidad con MagSafe",
- "categoria": "soporte",
- "width": 611,
- "height": 642,
- "color_principal": "negro"
+  "pagina": 41,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_41_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-W93",
+  "precio": 90000,
+  "descripcion": "Soporte de coche con carga inalámbrica de 15W y compatibilidad con MagSafe",
+  "categoria": "soporte",
+  "width": 611,
+  "height": 642,
+  "color_principal": "negro",
+  "nombre_generado_llm": "W93 Soporte de Coche con Carga Inalámbrica y Compatibilidad MagSafe",
+  "descripcion_generada_llm": "El W93 es un soporte de coche diseñado para ofrecer una experiencia de carga inalámbrica segura y eficiente para tus dispositivos móviles compatibles. Con una potencia de carga de hasta 15W, este soporte garantiza una carga rápida y sin cables. Además, su compatibilidad con la tecnología MagSafe asegura una conexión magnética segura y precisa para dispositivos compatibles. Fabricado con materiales de alta calidad, este soporte de coche es duradero y resistente. Su diseño ergonómico permite una fácil instalación y ajuste en tu vehículo, manteniendo tu dispositivo a la vista y al alcance. Ideal para aquellos que buscan comodidad y tecnología de vanguardia en su vehículo.",
+  "precio_final_llm": 144000
 }
-```

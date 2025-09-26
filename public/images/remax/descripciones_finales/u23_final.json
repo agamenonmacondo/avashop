@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-U23",
+  "nombre_ia": "U23 Cargador Universal Multifuncional de 12W para Dispositivos Electrónicos",
+  "referencia": "u23",
+  "descripciones_originales": [
+    "Cargador universal multifuncional de 12W compatible con voltajes de 100V a 240V",
+    "Cargador universal multifuncional de 12W compatible con voltajes entre 100V-240V",
+    "Cargador universal multifuncional de 12W compatible con voltajes entre 100V-240V"
+  ],
+  "precio_original": 50000,
+  "precio_final": 80000,
+  "descripcion_ia": "El U23 es un cargador universal multifuncional diseñado para cargar tus dispositivos electrónicos de manera eficiente y segura. Con una potencia de salida de 12W, este cargador es compatible con una amplia gama de voltajes, desde 100V hasta 240V, lo que lo hace ideal para viajar o usar en diferentes regiones sin preocuparte por la compatibilidad de voltaje. Su diseño multifuncional te permite cargar varios tipos de dispositivos, ofreciendo versatilidad y comodidad. Fabricado con materiales de alta calidad, garantiza durabilidad y un rendimiento óptimo. Es la solución perfecta para mantener tus dispositivos cargados y listos para usar en cualquier momento.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\264_u23.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\265_u23.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\266_u23.png"
+  ]
+}

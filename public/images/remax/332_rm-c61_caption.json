@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 115,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "soporte",
   "width": 760,
   "height": 752,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C61 Soporte de Auto con Carga Inalámbrica y Sensor Inteligente",
+  "descripcion_generada_llm": "El RM-C61 es un soporte de auto diseñado para ofrecer una experiencia de carga inalámbrica eficiente y segura para dispositivos Apple y Android. Con una potencia de carga de hasta 15W, este soporte garantiza una carga rápida y sin cables. Su avanzado sensor permite una detección precisa del dispositivo, asegurando una carga óptima y evitando sobrecargas. Fabricado con materiales de alta calidad, este soporte es duradero y resistente. Es ideal para conductores que buscan mantener su dispositivo cargado y accesible durante el viaje. Compatible con una amplia gama de dispositivos, el RM-C61 es una solución práctica y moderna para la carga en el automóvil.",
+  "precio_final_llm": 144000
 }
-```

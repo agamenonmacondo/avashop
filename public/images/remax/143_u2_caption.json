@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 50,
   "index": 3,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 741,
   "height": 762,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "U2 - Cargador Rápido GAN con Pantalla Digital y Salida USB-C",
+  "descripcion_generada_llm": "Cargador de alta eficiencia con tecnología GAN y pantalla digital. Disponible en varias configuraciones de potencia y conexiones. Características principales:\n- Potencia: 35, 45 o 67 vatios según la versión.\n- Tecnología GAN para carga rápida y eficiente.\n- Pantalla digital para mostrar información de carga.\n- Conexiones: USB, Type C o ambas según la versión.\n- Materiales de alta calidad para durabilidad y seguridad.\n- Compatible con dispositivos que soportan carga rápida a través de USB-C.\n- Ventajas: carga rápida, eficiencia energética, diseño compacto y pantalla informativa.\n- Uso recomendado para cargar smartphones, tablets y otros dispositivos compatibles de manera rápida y segura.",
+  "precio_final_llm": 144000
 }
-```

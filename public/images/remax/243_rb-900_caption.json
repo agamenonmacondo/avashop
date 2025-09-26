@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 84,
- "index": 2,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_84_img_2.png",
- "tipo": "producto",
- "nombre_producto": "RB-900",
- "precio": 130000,
- "descripcion": "Auriculares inalámbricos con cancelación de ruido activa y batería de hasta 20 horas",
- "categoria": "auriculares",
- "width": 900,
- "height": 916,
- "color_principal": "negro"
+  "pagina": 84,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_84_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-900",
+  "precio": 130000,
+  "descripcion": "Auriculares inalámbricos con cancelación de ruido activa y batería de hasta 20 horas",
+  "categoria": "auriculares",
+  "width": 900,
+  "height": 916,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-900 Auriculares Inalámbricos con Cancelación de Ruido Activa",
+  "descripcion_generada_llm": "Experimenta la libertad de escuchar tu música favorita sin interrupciones con los auriculares inalámbricos RB-900. Estos auriculares cuentan con tecnología de cancelación de ruido activa, lo que te permite sumergirte en un mundo de sonido puro y sin distracciones. Con una batería de hasta 20 horas, podrás disfrutar de tu música durante todo el día sin necesidad de recargar. Los auriculares RB-900 son ideales para aquellos que buscan una experiencia de audio de alta calidad y comodidad en un diseño elegante y sofisticado. Disfruta de tu música en cualquier lugar, ya sea en el trabajo, en el gimnasio o durante tus viajes.",
+  "precio_final_llm": 208000
 }
-```

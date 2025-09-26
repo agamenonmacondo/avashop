@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 28,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 225,
   "height": 225,
-  "color_principal": "blanco/negro"
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RB-S18 Auriculares de Conducción Ósea para Deportes con Función de Llamada",
+  "descripcion_generada_llm": "Auriculares de conducción ósea diseñados para acompañarte en tus sesiones deportivas y mantenerte conectado. Estos auriculares ofrecen una experiencia de sonido única a través de la conducción ósea, permitiendo que tus oídos permanezcan libres para escuchar tu entorno. Con la función de llamada, puedes recibir y realizar llamadas sin interrupciones. Ideales para corredores, ciclistas y cualquier persona que busque una alternativa cómoda y segura a los auriculares tradicionales. Características principales: tecnología de conducción ósea para una experiencia de sonido envolvente, función de llamada para una comunicación sin interrupciones, diseño ligero y cómodo para uso prolongado durante el ejercicio. Materiales de alta calidad para una durabilidad óptima. Compatibles con la mayoría de dispositivos móviles con tecnología Bluetooth. Uso recomendado para actividades al aire libre y deportes.",
+  "precio_final_llm": 176000
 }
-```

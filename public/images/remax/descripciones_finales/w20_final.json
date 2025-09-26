@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "W20",
+  "nombre_ia": "W20 Auriculares Táctiles con Pantalla LCD a Todo Color",
+  "referencia": "w20",
+  "descripciones_originales": [
+    "Auriculares táctiles con pantalla LCD a todo color, compatibles con música y llamadas",
+    "Auriculares con pantalla táctil LCD a todo color, compatible con música y llamadas",
+    "Auriculares con pantalla táctil LCD a todo color, compatible con música y llamadas"
+  ],
+  "precio_original": 65000,
+  "precio_final": 104000,
+  "descripcion_ia": "Experimenta la innovación en audio con nuestros auriculares táctiles W20, equipados con una impresionante pantalla LCD a todo color. Estos auriculares ofrecen una experiencia de usuario excepcional, permitiendo controlar tanto la música como las llamadas de manera intuitiva a través de su pantalla táctil. La pantalla LCD a todo color proporciona una visualización nítida y vibrante, mejorando tu interacción con el dispositivo. Diseñados para aquellos que buscan una combinación perfecta de tecnología y comodidad, estos auriculares son ideales para uso diario, ya sea para disfrutar de tu música favorita o para mantenerse conectado durante las llamadas. Sus características avanzadas y su diseño elegante los convierten en un accesorio imprescindible para cualquier dispositivo compatible.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\124_w20.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\125_w20.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\126_w20.png"
+  ]
+}

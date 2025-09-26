@@ -1,0 +1,24 @@
+{
+  "nombre_producto": "MONDSUB CREMA DIA & NOCHE",
+  "nombre_ia": "MONDSUB_CREMA_DIA_&_NOCHE - Crema Hidratante y Reparadora para Día y Noche",
+  "referencia": "mondsub_crema_dia_&_noche",
+  "descripciones_originales": [
+    "Cuidado de la piel de dia y noche. Crema de dia para hidratación y humectación. Crema de noche reparadora e iluminadora.",
+    "Cuidado de la piel de dia y noche. Crema de dia para hidratación y humectación. Crema de noche reparadora e iluminadora.",
+    "Crema hidratante para día y noche con péptido azul y pantenol",
+    "Crema hidratante para día y noche con péptido azul y pantenol",
+    "Crema de día y noche con Vitamina C y Vitamina A, para hidratar y reafirmar la piel",
+    "Crema de día y noche con Vitamina C y Vitamina A, antioxidante, blanqueadora, reafirmante y reparadora"
+  ],
+  "precio_original": 22000,
+  "precio_final": 35200,
+  "descripcion_ia": "La crema de día y noche MONDSUB CREMA DIA & NOCHE es un producto innovador diseñado para proporcionar hidratación y reparación intensa a la piel en cualquier momento del día. Con una fórmula enriquecida con péptido azul, pantenol, Vitamina C y Vitamina A, esta crema ofrece múltiples beneficios para el cuidado de la piel.\nEspecificaciones técnicas:\n- Crema hidratante y humectante para día y noche\n- Contiene péptido azul y pantenol para una hidratación profunda\n- Enriquecida con Vitamina C y Vitamina A para un efecto antioxidante y blanqueador\n- Reafirma y repara la piel\n- Compatible con todos los tipos de piel\nVentajas:\n- Proporciona hidratación intensa y duradera\n- Repara y reafirma la piel\n- Antioxidante y blanqueador gracias a las vitaminas C y A\n- Fácil de aplicar y absorber\nUso recomendado:\n- Aplicar sobre la piel limpia del rostro y cuello\n- Utilizar tanto de día como de noche para obtener los mejores resultados\nLa crema MONDSUB CREMA DIA & NOCHE es ideal para aquellos que buscan un producto completo para el cuidado de la piel, proporcionando beneficios tanto estéticos como de salud para la piel.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\008_MONDSUB_CREMA_DIA_&_NOCHE.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\009_MONDSUB_CREMA_DIA_&_NOCHE.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\010_MONDSUB_CREMA_DIA_&_NOCHE.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\011_MONDSUB_CREMA_DIA_&_NOCHE.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\012_MONDSUB_CREMA_DIA_&_NOCHE.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\013_MONDSUB_CREMA_DIA_&_NOCHE.png"
+  ]
+}

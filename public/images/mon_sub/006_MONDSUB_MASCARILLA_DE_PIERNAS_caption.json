@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 26,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "mascarilla",
   "width": 900,
   "height": 750,
-  "color_principal": "null"
+  "color_principal": "null",
+  "nombre_generado_llm": "MONDSUB_MASCARILLA_DE_PIERNAS - Mascarilla Exfoliante y Hidratante para Piernas con Extractos Naturales",
+  "descripcion_generada_llm": "La Mascarilla de Piernas MONDSUB_MASCARILLA_DE_PIERNAS es un tratamiento intensivo diseñado para nutrir y hidratar profundamente las piernas. Con una fórmula enriquecida con extracto de plantas naturales y células activas, esta mascarilla ofrece una exfoliación suave y una hidratación duradera. Sus propiedades exfoliantes ayudan a eliminar las células muertas de la piel, mientras que los extractos naturales y las células activas trabajan juntos para dejar la piel de las piernas suave, hidratada y revitalizada. Ideal para personas que buscan mejorar la apariencia y la salud de la piel de sus piernas, esta mascarilla es perfecta para usar en cualquier momento que se necesite un impulso de hidratación y cuidado. No contiene información específica sobre materiales o compatibilidades en los datos proporcionados, pero se deduce que es apta para su uso en piel humana. Sus ventajas incluyen una fácil aplicación y una acción intensiva de hidratación y exfoliación.",
+  "precio_final_llm": 43200
 }
-```

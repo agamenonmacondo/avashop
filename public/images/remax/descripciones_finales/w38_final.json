@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "W38",
+  "nombre_ia": "W38 Auriculares Inalámbricos True Wireless con Cancelación de Ruido",
+  "referencia": "w38",
+  "descripciones_originales": [
+    "Auriculares inalámbricos con cancelación de ruido y llamada",
+    "Auriculares inalámbricos con tecnología True Wireless Stereo",
+    "Auriculares inalámbricos con cancelación de ruido y llamada"
+  ],
+  "precio_original": 45000,
+  "precio_final": 72000,
+  "descripcion_ia": "Experimenta la libertad de la música sin interrupciones con los auriculares inalámbricos W38. Estos auriculares ofrecen tecnología True Wireless Stereo para una experiencia de sonido envolvente y sin cables. La cancelación de ruido activa te permite sumergirte en tu música favorita sin distracciones del entorno. Además, están diseñados para llamadas de alta calidad, asegurando que tu voz se escuche clara y nítida. Los auriculares W38 son ideales para aquellos que buscan una combinación de comodidad, tecnología avanzada y excelente calidad de sonido. Son compatibles con dispositivos que soportan tecnología Bluetooth, lo que te permite conectarlos fácilmente a tu teléfono, tableta o reproductor de música. Disfruta de tu música en cualquier momento y lugar con la comodidad y la versatilidad que ofrecen estos auriculares innovadores.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\029_w38.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\030_w38.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\031_w38.png"
+  ]
+}

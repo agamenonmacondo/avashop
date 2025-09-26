@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 16,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "altavoz",
   "width": 800,
   "height": 800,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-M69 Altavoz Inalámbrico Portátil con Luces RGB y Resistencia al Agua IPX6",
+  "descripcion_generada_llm": "Disfruta de un sonido envolvente y una experiencia visual única con el altavoz inalámbrico portátil RB-M69. Equipado con luces RGB que crean un ambiente vibrante, este altavoz ofrece una salida de audio de 3.6W para una experiencia de sonido rica y clara. Su resistencia al agua IPX6 lo hace ideal para usar en cualquier entorno, ya sea en interiores o exteriores, sin preocuparte por la lluvia o el sudor. Perfecto para fiestas, reuniones al aire libre o simplemente para disfrutar de tu música favorita en cualquier lugar. Su diseño portátil te permite llevarlo contigo a donde quieras, siendo compatible con dispositivos que soportan conectividad inalámbrica. No requiere de cables para funcionar, lo que te da la libertad de moverte sin restricciones mientras disfrutas de tu música.",
+  "precio_final_llm": 136000
 }
-```

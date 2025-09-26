@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-U161",
+  "nombre_ia": "U161 Cargador Rápido GAN de 35 Vatios con Tecnología Avanzada",
+  "referencia": "u161",
+  "descripciones_originales": [
+    "Cargador rápido de 35 vatios con tecnología GAN y chip inteligente",
+    "Cargador rápido de 35 vatios con tecnología GAN y chip inteligente",
+    "Cargador rápido de 35 vatios con tecnología GAN y chip inteligente"
+  ],
+  "precio_original": 60000,
+  "precio_final": 96000,
+  "descripcion_ia": "El U161 es un cargador rápido de alta eficiencia que utiliza tecnología GAN (Nitruro de Galio) y un chip inteligente para ofrecer una carga rápida y segura de hasta 35 vatios. Diseñado para ser compatible con una amplia gama de dispositivos, este cargador es ideal para aquellos que buscan una solución de carga rápida y eficiente. Su tecnología GAN permite una mayor densidad de potencia y una menor generación de calor, lo que lo hace más seguro y fiable. El chip inteligente integrado garantiza una carga óptima y protege contra sobretensiones y sobrecargas. Con su diseño compacto y avanzadas características, el U161 es la opción perfecta para quienes necesitan una carga rápida y segura en cualquier momento.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\183_u161.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\184_u161.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\185_u161.png"
+  ]
+}

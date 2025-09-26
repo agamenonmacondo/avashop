@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 25,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 1000,
   "height": 1000,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W90 Cargador Inalámbrico Plegable 3 en 1 MagSafe Compatible",
+  "descripcion_generada_llm": "Cargador inalámbrico plegable y multifuncional de alta calidad, diseñado para ofrecer una experiencia de carga eficiente y segura. Compatible con tecnología MagSafe, este dispositivo permite cargar su teléfono inteligente y otros dispositivos compatibles de manera inalámbrica. Su diseño plegable y compacto lo hace ideal para llevarlo consigo en cualquier momento y lugar. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia. Especificaciones técnicas: Carga inalámbrica de hasta 22W, compatible con dispositivos que soportan carga inalámbrica, incluyendo aquellos con tecnología MagSafe. Ventajas: Multifuncional, plegable, alta eficiencia de carga, compatible con una amplia gama de dispositivos. Uso recomendado: Carga de teléfonos inteligentes, auriculares inalámbricos y otros dispositivos compatibles. Material: Plásticos y componentes electrónicos de alta calidad.",
+  "precio_final_llm": 208000
 }
-```

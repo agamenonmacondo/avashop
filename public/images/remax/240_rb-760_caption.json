@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 83,
- "index": 2,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_83_img_2.png",
- "tipo": "producto",
- "nombre_producto": "RB-760 HB",
- "precio": 140000,
- "descripcion": "Auriculares inalámbricos REMAX BINCOURI SERIES con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
- "categoria": "auriculares",
- "width": 705,
- "height": 699,
- "color_principal": "negro"
+  "pagina": 83,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_83_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-760 HB",
+  "precio": 140000,
+  "descripcion": "Auriculares inalámbricos REMAX BINCOURI SERIES con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
+  "categoria": "auriculares",
+  "width": 705,
+  "height": 699,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-760 Auriculares Inalámbricos REMAX BINCOURI SERIES con Tecnología Bluetooth 5.3",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos REMAX BINCOURI SERIES. Equipados con la última tecnología Bluetooth 5.3, ofrecen una conexión estable y de alta calidad para una experiencia de audio inmersiva. Diseñados para aquellos que buscan alta fidelidad tanto para música como para llamadas, estos auriculares proporcionan un sonido nítido y claro. Con una batería de larga duración de hasta 45 horas, podrás disfrutar de tu música favorita durante todo el día sin interrupciones. Perfectos para uso diario, viajes o sesiones de ejercicio, los auriculares REMAX BINCOURI SERIES combinan funcionalidad y estilo. Su diseño ergonómico se adapta cómodamente a tus oídos, asegurando un ajuste seguro y confortable. Disfruta de la música sin límites con estos innovadores auriculares inalámbricos.",
+  "precio_final_llm": 224000
 }
-```

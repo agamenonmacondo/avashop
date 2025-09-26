@@ -1,15 +1,16 @@
-```json
 {
   "pagina": 93,
   "index": 1,
   "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_93_img_1.png",
   "tipo": "producto",
   "nombre_producto": "RM-C41",
-  "precio": 60.000,
+  "precio": 60.0,
   "descripcion": "Cargador para auto con soporte magnético y diseño plegable 360 grados",
   "categoria": "cargador/soporte",
   "width": 573,
   "height": 800,
-  "color_principal": "negro/metal"
+  "color_principal": "negro/metal",
+  "nombre_generado_llm": "RM-C41 Cargador Magnético Plegable 360 Grados para Automóvil",
+  "descripcion_generada_llm": "El RM-C41 es un cargador para automóvil con soporte magnético y diseño plegable 360 grados, ideal para mantener tu dispositivo cargado y a mano mientras conduces. Su diseño plegable y soporte magnético ofrecen una gran flexibilidad y comodidad, permitiendo ajustar el ángulo de visión según tus necesidades. Fabricado con materiales de alta calidad, este cargador es compatible con la mayoría de los dispositivos móviles que soportan carga rápida. Su diseño compacto y ligero lo hace fácil de transportar y almacenar. Ventajas: fácil de usar, diseño versátil, compatible con carga rápida y seguro para tu dispositivo. Especificaciones técnicas: diseño plegable 360 grados, soporte magnético, compatible con dispositivos móviles con carga rápida. Materiales: materiales de alta calidad. Uso recomendado: para uso en automóviles.",
+  "precio_final_llm": 96
 }
-```

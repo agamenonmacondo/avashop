@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 26,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 960,
   "height": 941,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "W87 Cargador Inalámbrico Multifuncional REMAX Serie VUKEY 22.5W 4 en 1",
+  "descripcion_generada_llm": "Cargador inalámbrico multifuncional de alta eficiencia de la serie VUKEY de REMAX, diseñado para ofrecer una experiencia de carga rápida y segura. Con una capacidad de carga de 22.5W y soporte para 4 dispositivos en 1, este cargador es ideal para hogares y oficinas con múltiples dispositivos. Su diseño multifuncional permite cargar varios dispositivos al mismo tiempo sin la necesidad de cables, lo que reduce el desorden y aumenta la comodidad. Fabricado con materiales de alta calidad, garantiza durabilidad y seguridad durante el uso. Compatible con una amplia gama de dispositivos móviles y otros productos que soportan carga inalámbrica. Su tecnología avanzada asegura una carga eficiente y rápida, protegiendo tus dispositivos con funciones de seguridad integradas. Perfecto para aquellos que buscan una solución de carga práctica y eficiente para sus múltiples dispositivos.",
+  "precio_final_llm": 160000
 }
-```

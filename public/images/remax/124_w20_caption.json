@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 44,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 198,
   "height": 200,
-  "color_principal": "blanco/negro"
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "W20 Auriculares Táctiles con Pantalla LCD a Todo Color",
+  "descripcion_generada_llm": "Experimenta la innovación en audio con nuestros auriculares táctiles W20, equipados con una impresionante pantalla LCD a todo color. Estos auriculares ofrecen una experiencia de usuario excepcional, permitiendo controlar tanto la música como las llamadas de manera intuitiva a través de su pantalla táctil. La pantalla LCD a todo color proporciona una visualización nítida y vibrante, mejorando tu interacción con el dispositivo. Diseñados para aquellos que buscan una combinación perfecta de tecnología y comodidad, estos auriculares son ideales para uso diario, ya sea para disfrutar de tu música favorita o para mantenerse conectado durante las llamadas. Sus características avanzadas y su diseño elegante los convierten en un accesorio imprescindible para cualquier dispositivo compatible.",
+  "precio_final_llm": 104000
 }
-```

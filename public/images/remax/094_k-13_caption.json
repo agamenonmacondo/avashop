@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 34,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "micrófono",
   "width": 600,
   "height": 600,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "K-13 Micrófono Inalámbrico para Streaming en Vivo",
+  "descripcion_generada_llm": "El K-13 es un micrófono inalámbrico 1 en 1 diseñado para streaming en vivo, compatible con dispositivos Apple y Android. Ofrece una solución de audio de alta calidad para creadores de contenido y usuarios que buscan una experiencia de streaming profesional. Con su tecnología inalámbrica, proporciona libertad de movimiento y reduce la complejidad de las conexiones. Ideal para transmisiones en vivo, grabaciones de video y aplicaciones de audio donde la calidad y la fiabilidad son fundamentales.",
+  "precio_final_llm": 136000
 }
-```

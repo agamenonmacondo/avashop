@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 12,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 640,
   "height": 640,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W26 Auriculares Inalámbricos True Wireless REMAX KEYZOU",
+  "descripcion_generada_llm": "Auriculares inalámbricos True Wireless de la serie KEYZOU de REMAX, diseñados para ofrecer una experiencia de audio superior tanto para música como para llamadas. Estos auriculares ofrecen una conexión inalámbrica estable y una calidad de sonido nítida, lo que los hace ideales para aquellos que buscan disfrutar de su música o realizar llamadas sin la molestia de cables. La tecnología True Wireless proporciona una total libertad de movimiento, permitiendo a los usuarios disfrutar de su música o atender llamadas con comodidad y sin restricciones.",
+  "precio_final_llm": 72000
 }
-```

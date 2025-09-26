@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 53,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cable",
   "width": 700,
   "height": 896,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "C-25 Cable Adaptador de Audio 3.5mm a Lightning/Type C",
+  "descripcion_generada_llm": "Cable adaptador de audio diseñado para conectar dispositivos con conector de 3.5mm a dispositivos con puerto Lightning o Type C. Ideal para usuarios que buscan disfrutar de su música o contenido de audio en dispositivos más recientes que no cuentan con conector de 3.5mm. Fabricado con materiales de alta calidad que garantizan una conexión estable y duradera. Compatible con una amplia gama de dispositivos, incluyendo teléfonos, tabletas y reproductores de audio. Su diseño compacto y ligero lo hace fácil de transportar. Ventajas: permite la conexión de auriculares o altavoces con conector de 3.5mm a dispositivos con tecnología más reciente, sin comprometer la calidad del sonido.",
+  "precio_final_llm": 40000
 }
-```

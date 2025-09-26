@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 43,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "cuidado personal",
   "width": 486,
   "height": 485,
-  "color_principal": "crema"
+  "color_principal": "crema",
+  "nombre_generado_llm": "MONDSUB_CREMA_EFECTO_DUAL_CERAMIDA_+_RETINOL - Crema Facial Reafirmante y Rejuvenecedora",
+  "descripcion_generada_llm": "La Crema Facial Efecto Dual Ceramida + Retinol de MONDSUB es una solución innovadora para el cuidado de la piel. Esta crema está diseñada para aliviar y reparar zonas secas y sensibles, mientras reafirma y reduce las líneas de expresión. Su fórmula dual combina los beneficios de la ceramida y el retinol, proporcionando una acción intensiva y duradera. Ideal para pieles maduras o que buscan prevenir los signos del envejecimiento, esta crema hidrata y nutre la piel, dejándola suave y radiante. Su textura suave y no grasa la hace adecuada para un uso diario, tanto por la mañana como por la noche.",
+  "precio_final_llm": 38400
 }
-```

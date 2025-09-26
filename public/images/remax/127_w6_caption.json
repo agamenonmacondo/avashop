@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 45,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 790,
   "height": 943,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W6 Auriculares Inalámbricos Bluetooth 5.3 con Tecnología Touch",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos W6. Equipados con la última tecnología Bluetooth 5.3, ofrecen una conexión estable y de alta calidad. La tecnología touch permite un control intuitivo de tus listas de reproducción y llamadas. Diseñados para ofrecer una experiencia de audio inmersiva, son ideales para uso diario, ejercicio o viajes. Compatibles con la mayoría de dispositivos móviles y tabletas, estos auriculares son una excelente opción para aquellos que buscan comodidad y calidad de sonido.",
+  "precio_final_llm": 144000
 }
-```

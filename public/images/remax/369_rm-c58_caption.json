@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 127,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "soporte",
   "width": 480,
   "height": 456,
-  "color_principal": "desconocido"
+  "color_principal": "desconocido",
+  "nombre_generado_llm": "RM-C58 Soporte Universal para Móviles con Temática de Aliens",
+  "descripcion_generada_llm": "El RM-C58 es un soporte diseñado para ofrecer una experiencia única y divertida a los usuarios de dispositivos móviles. Con una temática de aliens, este soporte universal es compatible con una amplia gama de dispositivos Apple y Android. Su diseño innovador y atractivo lo convierte en un accesorio ideal para aquellos que buscan personalizar su teléfono con un toque de ciencia ficción.\nEspecificaciones técnicas:\n- Compatibilidad: Móviles universales Apple y Android\n- Temática: Aliens\n- Material: No especificado\nVentajas:\n- Soporte universal para una amplia compatibilidad\n- Diseño temático único y atractivo\n- Ideal para personalizar tu dispositivo móvil\nUso recomendado:\n- Para usuarios de dispositivos móviles que buscan un accesorio divertido y funcional\n- Para aquellos que disfrutan de la ciencia ficción y desean reflejar su interés en sus dispositivos",
+  "precio_final_llm": 64000
 }
-```

@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 130,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 701,
   "height": 669,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RM-711 Manos Libres Clásico para Música y Llamadas",
+  "descripcion_generada_llm": "El RM-711 es un dispositivo manos libres clásico diseñado para disfrutar de música y realizar llamadas de manera cómoda y segura. Compatible con dispositivos Apple y Android, este producto ofrece una experiencia de audio nítida y sin complicaciones. Su diseño clásico y ergonómico lo hace ideal para usar en diferentes entornos, ya sea durante el ejercicio, en el trabajo o simplemente relajándose. Con su tecnología de compatibilidad universal, garantiza una conexión estable y de alta calidad para llamadas y reproducción de música. Disfruta de tu música favorita y mantén tus manos libres para otras actividades con el RM-711.",
+  "precio_final_llm": 40000
 }
-```

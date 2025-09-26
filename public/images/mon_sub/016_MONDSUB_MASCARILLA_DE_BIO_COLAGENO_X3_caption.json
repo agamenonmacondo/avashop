@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 49,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cuidado personal",
   "width": 500,
   "height": 500,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "MONDSUB_MASCARILLA_DE_BIO_COLAGENO_X3 - Mascarilla Reafirmante de Bio Colágeno para un Rostro Alisado y Radiante",
+  "descripcion_generada_llm": "La mascarilla de bio colágeno MONDSUB_MASCARILLA_DE_BIO_COLAGENO_X3 es un tratamiento facial diseñado para proporcionar una absorción intensiva de bio colágeno, reafirmando y alisando la piel. Esta mascarilla está formulada con bio colágeno, un ingrediente conocido por sus propiedades hidratantes y reafirmantes. Su uso regular puede ayudar a mejorar la elasticidad de la piel, reducir la aparición de líneas finas y arrugas, y dejar la piel con un aspecto radiante y saludable. La mascarilla se presenta en un formato fácil de aplicar y está diseñada para ser compatible con todos los tipos de piel. Sus beneficios incluyen una hidratación profunda, un efecto alisado y una mejora en la firmeza de la piel. Para un cuidado facial completo, se recomienda usar en combinación con otros productos de cuidado de la piel adecuados a tu tipo de piel.",
+  "precio_final_llm": 33600
 }
-```

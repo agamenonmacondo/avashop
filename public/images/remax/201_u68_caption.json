@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 70,
- "index": 1,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_70_img_1.png",
- "tipo": "producto",
- "nombre_producto": "RP-U68",
- "precio": 50000,
- "descripcion": "Cargador rápido de 20W con PD y QC, incluye cargador y cable",
- "categoria": "cargador",
- "width": 750,
- "height": 750,
- "color_principal": "negro"
+  "pagina": 70,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_70_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U68",
+  "precio": 50000,
+  "descripcion": "Cargador rápido de 20W con PD y QC, incluye cargador y cable",
+  "categoria": "cargador",
+  "width": 750,
+  "height": 750,
+  "color_principal": "negro",
+  "nombre_generado_llm": "U68 Cargador Rápido 20W con PD y QC - Incluye Cargador y Cable",
+  "descripcion_generada_llm": "El U68 es un cargador rápido de 20W diseñado para ofrecer una carga eficiente y rápida a tus dispositivos. Compatible con tecnología PD y QC, este cargador asegura una carga óptima para una amplia gama de dispositivos móviles y otros aparatos electrónicos. Incluye tanto el cargador como el cable necesario, proporcionando una solución completa para tus necesidades de carga. Fabricado con materiales de alta calidad, garantiza durabilidad y seguridad durante su uso. Ideal para aquellos que buscan una forma rápida y segura de mantener sus dispositivos cargados y listos para usar.",
+  "precio_final_llm": 80000
 }
-```

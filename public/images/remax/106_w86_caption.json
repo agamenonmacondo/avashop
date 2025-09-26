@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 38,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 647,
   "height": 679,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W86 Cargador Inalámbrico 4 en 1 para iPhone, AirPod y Apple Watch",
+  "descripcion_generada_llm": "Cargador inalámbrico diseñado para ofrecer una experiencia de carga eficiente y conveniente para tus dispositivos Apple. Soporta carga rápida de hasta 22.5W para iPhone, carga inalámbrica para Apple Watch y carga simultánea para AirPod, todo en un solo dispositivo. Fabricado con materiales de alta calidad que garantizan durabilidad y seguridad durante el uso. Compatible con modelos de iPhone, AirPod y Apple Watch que soportan carga inalámbrica. Ideal para aquellos que buscan simplificar su espacio de trabajo o escritorio eliminando cables innecesarios y manteniendo todos sus dispositivos cargados de manera organizada y segura.",
+  "precio_final_llm": 288000
 }
-```

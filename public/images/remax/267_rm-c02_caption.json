@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 92,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "soporte",
   "width": 900,
   "height": 993,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C02 Soporte para Auto con Ventilación de Aire",
+  "descripcion_generada_llm": "El RM-C02 es un soporte diseñado para proporcionar una ventilación de aire efectiva en su vehículo. Fabricado con materiales de alta calidad, este soporte es compatible con una amplia gama de automóviles. Sus características incluyen un diseño ergonómico y una construcción robusta que garantiza un uso prolongado. Entre sus ventajas se destacan su capacidad para mejorar la circulación del aire dentro del vehículo, proporcionando un ambiente más cómodo para el conductor y los pasajeros. El RM-C02 es ideal para aquellos que buscan mejorar la experiencia de conducción con un accesorio práctico y eficiente.",
+  "precio_final_llm": 56000
 }
-```

@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RB-S11",
+  "nombre_ia": "RB-S11 Auriculares Inalámbricos Deportivos con Conducción Ósea y Resistencia al Agua",
+  "referencia": "rb-s11",
+  "descripciones_originales": [
+    "Auriculares inalámbricos deportivos con conducción ósea y resistencia al agua",
+    "Auriculares inalámbricos deportivos con conducción ósea y resistencia al agua",
+    "Auriculares inalámbricos deportivos con conducción ósea y resistencia al agua"
+  ],
+  "precio_original": 170000,
+  "precio_final": 272000,
+  "descripcion_ia": "Auriculares inalámbricos deportivos diseñados para ofrecer una experiencia de audio única mediante tecnología de conducción ósea. Estos auriculares son ideales para aquellos que buscan disfrutar de su música mientras realizan actividades deportivas o al aire libre. Su resistencia al agua los hace perfectos para uso en diversas condiciones climáticas. Características principales: tecnología de conducción ósea, diseño inalámbrico para mayor comodidad, resistencia al agua para uso en diferentes entornos. Materiales de alta calidad y construcción duradera. Compatibles con dispositivos que soportan conexión inalámbrica. Ventajas: comodidad durante el ejercicio, sonido claro y nítido, y durabilidad en condiciones adversas.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\133_rb-s11.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\134_rb-s11.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\135_rb-s11.png"
+  ]
+}

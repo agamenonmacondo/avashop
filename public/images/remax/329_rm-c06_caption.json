@@ -1,15 +1,16 @@
-```json
 {
- "pagina": 114,
- "index": 0,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_114_img_0.png",
- "tipo": "producto",
- "nombre_producto": "RM-C06",
- "precio": 35000,
- "descripcion": "Soporte para automóvil con ajuste 360 grados y clip de seguridad para móviles Apple y Android",
- "categoria": "soporte",
- "width": 692,
- "height": 700,
- "color_principal": "negro"
+  "pagina": 114,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_114_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-C06",
+  "precio": 35000,
+  "descripcion": "Soporte para automóvil con ajuste 360 grados y clip de seguridad para móviles Apple y Android",
+  "categoria": "soporte",
+  "width": 692,
+  "height": 700,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C06 Soporte para Automóvil 360 Grados con Clip de Seguridad para Móviles",
+  "descripcion_generada_llm": "El RM-C06 es un soporte para automóvil diseñado para ofrecer una experiencia de uso cómoda y segura. Con su ajuste de 360 grados, permite colocar tu móvil en la posición más conveniente para ti mientras conduces. El clip de seguridad garantiza que tu dispositivo permanezca firmemente sujeto, evitando movimientos indeseados.\nEspecificaciones técnicas:\n- Ajuste de 360 grados para una orientación óptima.\n- Clip de seguridad para una sujeción firme del móvil.\n- Compatible con móviles Apple y Android.\nMateriales y construcción: Aunque no se proporcionan detalles específicos sobre los materiales, el diseño sugiere una construcción robusta y duradera.\nCompatibilidad: Diseñado para ser compatible con una amplia gama de dispositivos móviles, incluyendo modelos de Apple y Android.\nUso recomendado: Ideal para uso en automóvil, proporcionando una forma segura y conveniente de sostener tu móvil mientras conduces.\nVentajas:\n- Fácil de usar y ajustar.\n- Proporciona una visión clara y sin obstáculos del móvil.\n- Clip de seguridad para evitar que el móvil se caiga.\nEste soporte para automóvil es una excelente opción para aquellos que buscan comodidad y seguridad al usar su móvil mientras conducen.",
+  "precio_final_llm": 56000
 }
-```

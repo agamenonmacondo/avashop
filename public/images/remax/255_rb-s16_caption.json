@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 88,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 800,
   "height": 800,
-  "color_principal": "negro"
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-S16 Auriculares Inalámbricos con Control Táctil y Cuello Flexible",
+  "descripcion_generada_llm": "Auriculares inalámbricos diseñados para ofrecer una experiencia de audio superior en cualquier momento y lugar. Con un diseño ergonómico y cuello flexible, estos auriculares se adaptan perfectamente a tus necesidades, especialmente durante actividades deportivas o de ejercicio. Características principales: control táctil intuitivo, batería de larga duración de hasta 15 horas, y compatibilidad con dispositivos que soportan tecnología inalámbrica. Ideales para aquellos que buscan comodidad, libertad y calidad de sonido. Materiales de alta calidad para una durabilidad óptima. Fáciles de usar y configurar, estos auriculares son perfectos para disfrutar de tu música favorita sin interrupciones.",
+  "precio_final_llm": 112000
 }
-```

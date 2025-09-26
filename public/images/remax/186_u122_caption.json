@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 65,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "cargador",
   "width": 546,
   "height": 546,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "U122 Cargador Rápido 33W Dual USB para Apple y Android",
+  "descripcion_generada_llm": "Cargador rápido de alta eficiencia con doble puerto USB diseñado para cargar dispositivos Apple y Android simultáneamente. Con una potencia de salida de 33W, este cargador ofrece una carga rápida y segura para tus dispositivos. Su diseño compacto y ligero lo hace ideal para uso en casa, oficina o en movimiento. Compatible con una amplia gama de dispositivos, incluyendo teléfonos y tabletas de las principales marcas del mercado. Fabricado con materiales de alta calidad que garantizan durabilidad y fiabilidad. Características principales: carga rápida, doble puerto USB, compatible con Apple y Android, diseño compacto y ligero.",
+  "precio_final_llm": 72000
 }
-```

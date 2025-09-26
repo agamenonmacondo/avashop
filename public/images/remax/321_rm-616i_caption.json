@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 111,
   "index": 0,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 448,
   "height": 768,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RM-616I Auriculares para iPhone con Chip Original, Llamadas y Música HD",
+  "descripcion_generada_llm": "Auriculares diseñados para iPhone con chip original que ofrecen una experiencia de audio de alta definición tanto para llamadas como para música. Estos auriculares son compatibles con modelos de iPhone y aprovechan al máximo la tecnología del chip original para proporcionar una calidad de sonido superior. Con un diseño pensado para la comodidad y la claridad en la comunicación, son ideales para aquellos que buscan una experiencia de audio nítida y sin interrupciones. Características principales: - Compatibilidad garantizada con iPhone. - Chip original para una calidad de sonido óptima. - Ideal para llamadas y disfrute de música en alta definición. - Materiales de alta calidad para una durabilidad superior. - Fácil de usar y compatible con la mayoría de los modelos de iPhone.",
+  "precio_final_llm": 112000
 }
-```

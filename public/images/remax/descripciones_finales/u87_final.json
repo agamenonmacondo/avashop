@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-U87",
+  "nombre_ia": "U87 Cargador Rápido GAN Doble Salida Tipo C PD QC",
+  "referencia": "u87",
+  "descripciones_originales": [
+    "Cargador rápido con tecnología GAN, doble salida tipo C, compatible con PD y QC",
+    "Cargador rápido con doble salida tipo C y tecnología GAN",
+    "Cargador rápido con tecnología GAN, doble salida tipo C, compatible con PD y QC"
+  ],
+  "precio_original": 60000,
+  "precio_final": 96000,
+  "descripcion_ia": "Cargador rápido de alta eficiencia con tecnología GAN y doble salida tipo C, compatible con protocolos de carga rápida PD y QC. Diseñado para ofrecer una carga rápida y segura a tus dispositivos, este cargador es ideal para aquellos que necesitan cargar múltiples dispositivos al mismo tiempo sin sacrificar la velocidad. Su tecnología GAN (Nitruro de Galio) permite una carga más eficiente y reduce el calor generado durante el proceso, lo que lo hace más seguro y duradero. Compatible con una amplia gama de dispositivos que soportan carga tipo C, incluyendo smartphones, tablets y laptops. Su diseño compacto y ligero lo hace perfecto para llevarlo contigo a cualquier lugar.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\180_u87.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\181_u87.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\182_u87.png"
+  ]
+}

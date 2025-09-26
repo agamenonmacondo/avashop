@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 10,
   "index": 1,
@@ -10,6 +9,8 @@
   "categoria": "auriculares",
   "width": 679,
   "height": 1000,
-  "color_principal": "blanco"
+  "color_principal": "blanco",
+  "nombre_generado_llm": "TWS-19 Auriculares Inalámbricos Estéreo Remax Marsh Mallow Series",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos TWS-19 de Remax, parte de la serie Marsh Mallow. Diseñados para ofrecer una experiencia de audio estéreo de alta calidad, estos auriculares son ideales tanto para disfrutar de tu música favorita como para realizar llamadas con claridad. Su tecnología true wireless elimina la molestia de los cables, permitiéndote moverte con total libertad. Compatibles con la mayoría de dispositivos móviles y reproductores de música, estos auriculares ofrecen una conexión inalámbrica estable y segura. Su diseño ergonómico se adapta cómodamente a tus oídos, asegurando un ajuste seguro y cómodo durante períodos prolongados de uso. Disfruta de tu música sin interrupciones y con una calidad de sonido excepcional.",
+  "precio_final_llm": 96000
 }
-```

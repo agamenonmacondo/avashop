@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-W80",
+  "nombre_ia": "W80 Cargador Inalámbrico Rápido 15W Multi-Puerto Compatible con Apple y Android",
+  "referencia": "w80",
+  "descripciones_originales": [
+    "Cargador inalámbrico 15W con múltiples puertos compatible con Apple y Android",
+    "Cargador inalámbrico 15W con múltiples puertos compatible con Apple y Android",
+    "Cargador inalámbrico 15W con múltiples puertos compatible con Apple y Android"
+  ],
+  "precio_original": 60000,
+  "precio_final": 96000,
+  "descripcion_ia": "Cargador inalámbrico de alta velocidad y capacidad, diseñado para ofrecer una experiencia de carga eficiente y segura para dispositivos compatibles con Apple y Android. Con su tecnología de carga rápida de 15W, permite cargar tus dispositivos rápidamente sin la necesidad de cables. Su diseño multi-puerto facilita la carga simultánea de varios dispositivos, manteniendo organizado tu espacio y reduciendo la cantidad de cables necesarios. Fabricado con materiales de alta calidad, este cargador inalámbrico es duradero y fiable. Compatible con una amplia gama de dispositivos, es ideal para hogares y oficinas donde se requiere una solución de carga versátil y eficiente.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\316_w80.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\317_w80.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\318_w80.png"
+  ]
+}

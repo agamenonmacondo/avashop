@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 44,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "cuidado personal",
   "width": 486,
   "height": 485,
-  "color_principal": "crema"
+  "color_principal": "crema",
+  "nombre_generado_llm": "MONDSUB_CREMA_EFECTO - Crema Facial Reafirmante con Ácido Hialurónico y Retinol",
+  "descripcion_generada_llm": "La crema facial MONDSUB CREMA EFECTO es un tratamiento de alta eficacia diseñado para hidratar y reafirmar la piel. Gracias a su fórmula enriquecida con ácido hialurónico y retinol, esta crema proporciona una hidratación intensa y ayuda a reducir las señales de envejecimiento, mejorando la firmeza y elasticidad de la piel. Su textura suave y absorbente la hace ideal para un uso diario, tanto por la mañana como por la noche, en cualquier tipo de piel. Entre sus beneficios se incluyen la reducción de líneas finas y arrugas, mejora en la textura de la piel y un aspecto más luminoso y rejuvenecido. No contiene información específica sobre compatibilidades o materiales, pero se deduce que es apta para su aplicación tópica en el rostro.",
+  "precio_final_llm": 38400
 }
-```

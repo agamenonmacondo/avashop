@@ -1,4 +1,3 @@
-```json
 {
   "pagina": 20,
   "index": 2,
@@ -10,6 +9,8 @@
   "categoria": "cable",
   "width": 740,
   "height": 740,
-  "color_principal": "plateado"
+  "color_principal": "plateado",
+  "nombre_generado_llm": "REMAX_PRODUCTO REMAX VELOCITY65W - Cable de Carga Rápida y Datos USB con Aleación de Aluminio",
+  "descripcion_generada_llm": "El REMAX VELOCITY65W es un cable de carga rápida y transferencia de datos diseñado para ofrecer una experiencia de usuario superior. Fabricado con aleación de aluminio de alta calidad, este cable es resistente y duradero. Soporta carga rápida de hasta 65W, lo que permite cargar tus dispositivos compatibles rápidamente. Además, cuenta con una construcción trenzada que reduce la interferencia electromagnética y mejora la velocidad de transferencia de datos. Compatible con dispositivos USB-C, este cable es ideal para cargar y sincronizar tus smartphones, tablets y otros dispositivos. Su diseño elegante y robusto lo hace perfecto para uso diario y en movimiento.",
+  "precio_final_llm": 43200
 }
-```
