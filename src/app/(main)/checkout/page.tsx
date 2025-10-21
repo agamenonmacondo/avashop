@@ -207,59 +207,46 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Construir payload final
-    const payload = { ...orderInput, redirectUrl: boldRedirect };
-
-    // LOG detallado antes de enviar
-    console.log('Payload to backend:', JSON.stringify(payload, null, 2));
-
-    // Validaciones extra (previene envíos incompletos)
-    if (!payload.amount || payload.amount <= 0) {
-      toast({ title: "Error", description: "Monto inválido antes de enviar al servidor.", variant: "destructive" });
-      setIsBoldLoading(false);
-      return;
-    }
-    if (!Array.isArray(payload.cartItems) || payload.cartItems.length === 0) {
-      toast({ title: "Error", description: "No hay productos en el pedido.", variant: "destructive" });
-      setIsBoldLoading(false);
-      return;
-    }
-
     try {
+      // Solo pedimos el hash al backend
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          orderId: orderInput.orderId,
+          amount: orderInput.amount,
+          currency: orderInput.currency,
+        }),
       });
-
-      const contentType = res.headers.get('content-type') || '';
-      if (!contentType.includes('application/json')) {
-        const text = await res.text();
-        toast({ title: 'Error al preparar el pago', description: 'Respuesta no JSON del servidor.', variant: 'destructive' });
-        setIsBoldLoading(false);
-        return;
-      }
 
       const result = await res.json();
 
       if (res.ok && result.success && result.data) {
-        // forzar la URL absoluta de redirección para el botón (clave usada por el script)
-        result.data.redirect_url = boldRedirect;
-        result.data['data-redirection-url'] = boldRedirect;
-        setBoldButtonData(result.data);
+        // Preparar datos para el componente BoldButton
+        setBoldButtonData({
+          orderId: result.data.orderId,
+          amount: result.data.amount,
+          currency: result.data.currency,
+          integritySignature: result.data.integritySignature,
+          redirectionUrl: boldRedirect,
+          description: `Pedido AVA Shop - ${orderInput.cartItems.length} items`,
+          customerData: orderInput.customerData,
+          billingAddress: orderInput.billingAddress,
+        });
       } else {
-        // Mostrar mensaje de error más detallado si existe
-        let errorMsg = result?.message || 'No se pudo preparar el pago.';
-        if (result?.detail) {
-          errorMsg += ` (${typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)})`;
-        }
-        if (result?.debug) {
-          errorMsg += ` [Debug: ${JSON.stringify(result.debug)}]`;
-        }
-        toast({ title: 'Error al preparar el pago', description: errorMsg, variant: 'destructive' });
+        toast({ 
+          title: 'Error al preparar el pago', 
+          description: result.message || 'No se pudo preparar el pago.', 
+          variant: 'destructive' 
+        });
       }
     } catch (err) {
-      toast({ title: 'Error al preparar el pago', description: 'Ocurrió un error al comunicar con el servidor.', variant: 'destructive' });
+      console.error('Error en handleBoldCheckout:', err);
+      toast({ 
+        title: 'Error al preparar el pago', 
+        description: 'Ocurrió un error al comunicar con el servidor.', 
+        variant: 'destructive' 
+      });
     }
     setIsBoldLoading(false);
   }
@@ -300,62 +287,6 @@ export default function CheckoutPage() {
 
   const handleBoldClose = () => {
     setBoldButtonData(null);
-  };
-
-  const handleBoldPayment = async () => {
-    try {
-      setIsProcessing(true);
-      
-      const orderId = `order-${Date.now()}`;
-      
-      // Solo pedimos el hash al backend
-      const response = await fetch('/api/bold/create-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId,
-          amount: orderSummary.total,
-          currency: 'COP',
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error(result.message || 'Error al preparar el pago');
-      }
-
-      // Mostrar el botón de Bold con los datos
-      setBoldButtonData({
-        apiKey: process.env.NEXT_PUBLIC_BOLD_API_KEY!,
-        orderId: result.data.orderId,
-        amount: result.data.amount,
-        currency: result.data.currency,
-        integritySignature: result.data.integritySignature,
-        redirectionUrl: `${window.location.origin}/order/success`,
-        description: `Pedido ${orderId}`,
-        customerData: {
-          email: shippingForm.getValues().email,
-          fullName: shippingForm.getValues().fullName,
-          phone: shippingForm.getValues().phone || '',
-        },
-        billingAddress: {
-          address: shippingForm.getValues().address,
-          city: shippingForm.getValues().city,
-          state: shippingForm.getValues().state,
-          zipCode: shippingForm.getValues().zipCode || '',
-          country: shippingForm.getValues().country,
-        },
-      });
-      
-      setShowBoldButton(true);
-      
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error al procesar el pago');
-    } finally {
-      setIsProcessing(false);
-    }
   };
 
   const isPaymentProcessing = isBoldLoading || isCoinbaseLoading;

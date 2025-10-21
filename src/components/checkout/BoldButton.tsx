@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 
 interface BoldButtonProps {
-  apiKey: string;
   orderId: string;
   amount: number;
   currency: string;
@@ -22,37 +21,42 @@ interface BoldButtonProps {
     zipCode?: string;
     country?: string;
   };
+  onClose?: () => void;
 }
 
 const BoldButton: React.FC<BoldButtonProps> = ({
-  apiKey,
   orderId,
   amount,
   currency,
   integritySignature,
   redirectionUrl,
-  description,
+  description = '',
   customerData,
   billingAddress,
+  onClose,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
-    // Cargar el script de Bold si no está cargado
-    if (!scriptLoadedRef.current) {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.bold.co/library/boldPaymentButton.js';
-      script.async = true;
-      document.head.appendChild(script);
-      scriptLoadedRef.current = true;
+    // Cargar script de Bold
+    if (!document.querySelector('script[src*="boldPaymentButton.js"]')) {
+      const boldScript = document.createElement('script');
+      boldScript.src = 'https://checkout.bold.co/library/boldPaymentButton.js';
+      boldScript.async = true;
+      document.head.appendChild(boldScript);
     }
 
-    // Crear el botón de Bold
+    // Crear el botón
     if (containerRef.current) {
+      // Limpiar contenedor
+      containerRef.current.innerHTML = '';
+
+      // Crear script con atributos data-*
       const buttonScript = document.createElement('script');
+
+      // Atributos obligatorios
       buttonScript.setAttribute('data-bold-button', 'dark-L');
-      buttonScript.setAttribute('data-api-key', apiKey);
+      buttonScript.setAttribute('data-api-key', process.env.NEXT_PUBLIC_BOLD_API_KEY || '');
       buttonScript.setAttribute('data-order-id', orderId);
       buttonScript.setAttribute('data-amount', amount.toString());
       buttonScript.setAttribute('data-currency', currency);
@@ -60,19 +64,40 @@ const BoldButton: React.FC<BoldButtonProps> = ({
       buttonScript.setAttribute('data-redirection-url', redirectionUrl);
       buttonScript.setAttribute('data-render-mode', 'embedded');
 
+      // Atributos opcionales
       if (description) {
         buttonScript.setAttribute('data-description', description);
       }
 
       if (customerData) {
-        buttonScript.setAttribute('data-customer-data', JSON.stringify(customerData));
+        const customerDataStr = JSON.stringify({
+          email: customerData.email || '',
+          fullName: customerData.fullName || '',
+          phone: customerData.phone || '',
+        });
+        buttonScript.setAttribute('data-customer-data', customerDataStr);
       }
 
       if (billingAddress) {
-        buttonScript.setAttribute('data-billing-address', JSON.stringify(billingAddress));
+        const billingAddressStr = JSON.stringify({
+          address: billingAddress.address || '',
+          city: billingAddress.city || '',
+          state: billingAddress.state || '',
+          zipCode: billingAddress.zipCode || '',
+          country: billingAddress.country || 'CO',
+        });
+        buttonScript.setAttribute('data-billing-address', billingAddressStr);
       }
 
+      // Agregar al contenedor
       containerRef.current.appendChild(buttonScript);
+
+      // Forzar re-evaluación del script
+      setTimeout(() => {
+        if (window.BoldCheckout && typeof window.BoldCheckout.init === 'function') {
+          window.BoldCheckout.init();
+        }
+      }, 100);
     }
 
     return () => {
@@ -80,9 +105,31 @@ const BoldButton: React.FC<BoldButtonProps> = ({
         containerRef.current.innerHTML = '';
       }
     };
-  }, [apiKey, orderId, amount, currency, integritySignature, redirectionUrl, description, customerData, billingAddress]);
+  }, [orderId, amount, currency, integritySignature, redirectionUrl, description, customerData, billingAddress]);
 
-  return <div ref={containerRef} />;
+  return (
+    <div className="w-full space-y-2">
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="text-sm text-muted-foreground underline hover:text-primary transition-colors"
+          type="button"
+        >
+          ← Cambiar método de pago
+        </button>
+      )}
+      <div ref={containerRef} className="w-full min-h-[60px]" />
+    </div>
+  );
 };
+
+// Declaración global para TypeScript
+declare global {
+  interface Window {
+    BoldCheckout?: {
+      init: () => void;
+    };
+  }
+}
 
 export default BoldButton;
