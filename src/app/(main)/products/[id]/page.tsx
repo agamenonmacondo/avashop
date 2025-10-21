@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { products } from '@/lib/placeholder-data';
 import { Button } from '@/components/ui/button';
@@ -10,13 +10,14 @@ import Image from 'next/image';
 import { formatColombianCurrency } from '@/lib/utils';
 import type { CartItem } from '@/types';
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const router = useRouter();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   
-  const product = products.find(p => p.id === params.id);
+  const product = products.find(p => p.id === resolvedParams.id);
 
   if (!product) {
     return <div className="container mx-auto px-4 py-12 text-center">Producto no encontrado</div>;
@@ -26,18 +27,14 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
     setIsAdding(true);
     
     try {
-      // Leer carrito actual de localStorage
       const cartData = localStorage.getItem('cart');
       const currentCart: CartItem[] = cartData ? JSON.parse(cartData) : [];
       
-      // Buscar si el producto ya existe
       const existingItemIndex = currentCart.findIndex(item => item.id === product.id);
       
       if (existingItemIndex >= 0) {
-        // Actualizar cantidad
         currentCart[existingItemIndex].quantity += quantity;
       } else {
-        // Agregar nuevo producto
         const newItem: CartItem = {
           ...product,
           quantity,
@@ -48,10 +45,8 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         currentCart.push(newItem);
       }
       
-      // Guardar en localStorage
       localStorage.setItem('cart', JSON.stringify(currentCart));
       
-      // Disparar evento para actualizar otras pestañas
       window.dispatchEvent(new StorageEvent('storage', {
         key: 'cart',
         newValue: JSON.stringify(currentCart),
@@ -62,7 +57,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         description: `${product.name} x${quantity}`,
       });
       
-      // Redirigir inmediatamente al checkout
+      // Redirigir al checkout
       setTimeout(() => {
         router.push('/checkout');
       }, 500);
@@ -74,6 +69,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         description: "No se pudo agregar el producto al carrito.",
         variant: "destructive",
       });
+    } finally {
       setIsAdding(false);
     }
   };
@@ -81,7 +77,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Imagen del producto */}
         <div className="relative aspect-square rounded-lg overflow-hidden bg-muted">
           <Image
             src={product.imageUrls[0]}
@@ -89,10 +84,10 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             fill
             className="object-cover"
             priority
+            unoptimized
           />
         </div>
 
-        {/* Detalles del producto */}
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold font-headline mb-2">{product.name}</h1>
@@ -114,7 +109,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             </span>
           </div>
 
-          {/* Cantidad */}
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium">Cantidad:</span>
             <div className="flex items-center gap-2">
@@ -138,7 +132,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             </div>
           </div>
 
-          {/* Botón de agregar al carrito */}
           <Button
             size="lg"
             className="w-full"
