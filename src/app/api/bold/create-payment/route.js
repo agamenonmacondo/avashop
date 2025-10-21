@@ -9,117 +9,99 @@ function generateBoldHash(orderId, amount, currency, secret) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    console.log('Body recib:', JSON.stringify(body, null, 2));
+    console.log('Body recibido:', JSON.stringify(body, null, 2));
 
     const rawAmount = body.amount ?? body.totalAmount ?? 0;
     const amount = Math.round(Number(rawAmount) || 0);
     const currency = (body.currency || 'COP').toString().toUpperCase();
     const orderId = (body.orderId || `order-${Date.now()}`).toString();
-    const redirectUrl = body.redirectUrl || process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '';
+    const redirectUrl = body.redirectUrl || process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || '';
 
-    // Validaciones básicas
+    // Validaciones
     if (amount <= 0) {
-      return NextResponse.json({ success: false, message: 'Invalid amount (must be > 0).' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Monto inválido' }, { status: 400 });
     }
     if (!redirectUrl) {
-      return NextResponse.json({ success: false, message: 'Missing redirectUrl' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'URL de redirección faltante' }, { status: 400 });
     }
 
-    // Credenciales (trim para evitar espacios invisibles)
-    const envApiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
+    const apiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
     const secret = (process.env.BOLD_SECRET_KEY || '').trim();
-    const testingApiKey = typeof body.testingApiKey === 'string' ? body.testingApiKey.trim() : '';
-    const apiKey = testingApiKey || envApiKey;
-
-    const mask = s => s ? `${s.slice(0,4)}...${s.slice(-4)}` : 'null';
-    console.log('ENV (masked) apiKey:', mask(apiKey), ' secret: (hidden)');
 
     if (!apiKey || !secret) {
-      console.error('Missing Bold credentials (NEXT_PUBLIC_BOLD_API_KEY or BOLD_SECRET_KEY)');
-      return NextResponse.json({ success: false, message: 'Server not configured: missing Bold keys' }, { status: 500 });
+      console.error('Credenciales Bold faltantes');
+      return NextResponse.json({ success: false, message: 'Servidor no configurado' }, { status: 500 });
     }
 
     const integritySignature = generateBoldHash(orderId, amount, currency, secret);
-    console.log('Hash generado:', integritySignature.slice(0,8) + '...');
 
+    // Payload correcto según documentación Bold
     const payload = {
       apiKey,
+      orderId,
       amount,
       currency,
-      orderId,
       integritySignature,
       redirectionUrl: redirectUrl,
-      redirection_url: redirectUrl,
       description: body.description || `Pedido ${orderId}`,
     };
 
-    if (body.customerData && typeof body.customerData === 'object') payload.customerData = JSON.stringify(body.customerData);
-    if (body.billingAddress && typeof body.billingAddress === 'object') payload.billingAddress = JSON.stringify(body.billingAddress);
+    console.log('Enviando a Bold:', { ...payload, apiKey: '***', integritySignature: integritySignature.slice(0,8) + '...' });
 
-    console.log('Payload enviado a Bold (mask apiKey):', JSON.stringify({ ...payload, apiKey: mask(apiKey), integritySignature: integritySignature.slice(0,8) + '...' }));
+    const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+      },
+      body: JSON.stringify(payload),
+    });
 
-    const headerVariants = [
-      { 'Content-Type': 'application/json', 'x-api-key': apiKey },
-      { 'Content-Type': 'application/json', 'api-key': apiKey },
-    ];
+    const responseText = await boldRes.text();
+    console.log(`Respuesta Bold (${boldRes.status}):`, responseText);
 
-    let lastText = '';
-    let lastStatus = 0;
-    let boldResponse = null;
-    const tried = [];
-
-    for (const hdr of headerVariants) {
+    if (!boldRes.ok) {
+      let errorDetail = responseText;
       try {
-        tried.push(Object.keys(hdr));
-        console.log('Probando headers:', Object.keys(hdr));
-        const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
-          method: 'POST',
-          headers: hdr,
-          body: JSON.stringify(payload),
-        });
-        const text = await boldRes.text().catch(() => '');
-        console.log(`Respuesta Bold (status ${boldRes.status}):`, text);
-        lastText = text || lastText;
-        lastStatus = boldRes.status || lastStatus;
+        const errorJson = JSON.parse(responseText);
+        errorDetail = errorJson.message || errorJson.error || responseText;
+      } catch {}
 
-        if (boldRes.ok) {
-          try { boldResponse = JSON.parse(text); } catch { boldResponse = text; }
-          break;
-        } else if (boldRes.status === 401) {
-          // pista clara para BTN-000
-          console.error('Bold returned 401 - identity key likely invalid. Tried headers:', Object.keys(hdr));
-          lastText = text || 'Unauthorized (401) from Bold - check identity key';
-          // seguir probando otras variantes
-        }
-      } catch (fetchErr) {
-        console.error('Fetch error hacia Bold:', fetchErr);
-        lastText = String(fetchErr) || lastText;
-      }
-    }
-
-    if (!boldResponse) {
       return NextResponse.json({
         success: false,
-        message: 'Bold API error - todas las variantes fallaron',
-        detail: lastText,
-        boldStatus: lastStatus,
-        hint: lastStatus === 401 ? 'BTN-000 probable: revisa identity key (NEXT_PUBLIC_BOLD_API_KEY) o usa testingApiKey en el body para aislar.' : undefined,
-        debug: { orderId, amount, currency, apiKeyMasked: mask(apiKey), envApiKeyMasked: mask(envApiKey), triedHeaders: tried, testingApiKeyUsed: !!testingApiKey }
+        message: 'Error de Bold API',
+        detail: errorDetail,
+        status: boldRes.status,
       }, { status: 502 });
     }
 
-    const redirectFromBold = boldResponse?.redirect_url || boldResponse?.data?.redirect_url || boldResponse?.redirectUrl || null;
-    if (boldResponse.ok && boldResponse.success && boldResponse.data) {
-      // forzar la URL absoluta de redirección para el botón (clave usada por el script)
-      boldResponse.data.redirect_url = redirectFromBold;
-      boldResponse.data['data-redirection-url'] = redirectFromBold;
-      // Agrega el modo embedded
-      boldResponse.data['renderMode'] = 'embedded'; // <--- ESTA LÍNEA
-    }
-    return NextResponse.json({ success: true, data: boldResponse, redirectUrl: redirectFromBold }, { status: 200 });
+    const boldResponse = JSON.parse(responseText);
+
+    // Preparar respuesta para el botón
+    const buttonData = {
+      apiKey,
+      orderId,
+      amount,
+      currency,
+      signature: integritySignature,
+      redirectionUrl: redirectUrl,
+      description: payload.description,
+      customerData: JSON.stringify(body.customerData || {}),
+      billingAddress: JSON.stringify(body.billingAddress || {}),
+    };
+
+    return NextResponse.json({ 
+      success: true, 
+      data: buttonData,
+      redirectUrl: boldResponse.redirect_url || redirectUrl 
+    }, { status: 200 });
 
   } catch (err) {
-    console.error('Handler error:', err);
-    return NextResponse.json({ success: false, message: 'Internal server error', error: String(err) }, { status: 500 });
+    console.error('Error interno:', err);
+    return NextResponse.json({ 
+      success: false, 
+      message: 'Error interno del servidor', 
+      error: String(err) 
+    }, { status: 500 });
   }
 }
