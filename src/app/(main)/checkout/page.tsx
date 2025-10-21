@@ -45,14 +45,17 @@ const getCartFromLocalStorage = () => {
   }
 };
 
+const IVA_RATE = 0.19; // 18%
+
 const calculateOrderSummary = (cartItems: any[]) => {
   if (cartItems.length === 0) {
-    return { items: [], subtotal: 0, shipping: 0, total: 0 };
+    return { items: [], subtotal: 0, iva: 0, shipping: 0, total: 0 };
   }
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const iva = subtotal * IVA_RATE;
   const shipping = subtotal > 200000 ? 0 : 15000;
-  const total = subtotal + shipping;
-  return { items: cartItems, subtotal, shipping, total };
+  const total = subtotal + iva + shipping;
+  return { items: cartItems, subtotal, iva, shipping, total };
 };
 
 const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
@@ -484,6 +487,10 @@ export default function CheckoutPage() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>{formatColombianCurrency(orderSummary.subtotal)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">IVA (19%)</span>
+                <span>{formatColombianCurrency(orderSummary.iva)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
