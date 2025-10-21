@@ -34,14 +34,13 @@ const shippingFormSchema = z.object({
 
 type ShippingFormValues = z.infer<typeof shippingFormSchema>;
 
-// Función para obtener el carrito real desde localStorage
+// Nueva función para obtener el carrito real
 const getCartFromLocalStorage = () => {
   if (typeof window === 'undefined') return [];
   try {
     const cartData = localStorage.getItem('cart');
     return cartData ? JSON.parse(cartData) : [];
-  } catch (error) {
-    console.error('Error al leer el carrito:', error);
+  } catch {
     return [];
   }
 };
@@ -56,11 +55,6 @@ const calculateOrderSummary = (cartItems: any[]) => {
   return { items: cartItems, subtotal, shipping, total };
 };
 
-// Construir APP_URL como string seguro (usar la env definitiva)
-const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
-// asegurar que no sea empty antes de llamar replace
-const boldRedirect = APP_URL ? `${APP_URL.replace(/\/$/, '')}/order/success` : '/order/success';
-
 export default function CheckoutPage() {
   const { toast } = useToast();
   const router = useRouter();
@@ -70,6 +64,8 @@ export default function CheckoutPage() {
   const [isCoinbaseLoading, setIsCoinbaseLoading] = useState(false);
   const [boldButtonData, setBoldButtonData] = useState<any>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [showBoldButton, setShowBoldButton] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const shippingForm = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingFormSchema),
@@ -86,26 +82,8 @@ export default function CheckoutPage() {
     mode: 'onChange',
   });
 
+  // Usar el hook personalizado para manejar el perfil
   const { profile, isLoading: isProfileLoading, error: profileError } = useProfile(user);
-
-  // Cargar carrito desde localStorage
-  useEffect(() => {
-    const cart = getCartFromLocalStorage();
-    setCartItems(cart);
-    setOrderSummary(calculateOrderSummary(cart));
-
-    // Escuchar cambios en el carrito
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'cart') {
-        const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
-        setCartItems(updatedCart);
-        setOrderSummary(calculateOrderSummary(updatedCart));
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
   // Cargar usuario autenticado
   useEffect(() => {
@@ -132,6 +110,7 @@ export default function CheckoutPage() {
   }, [profile]);
 
   useEffect(() => {
+    // si no hay usuario, salir
     if (!user?.email) return;
 
     const fetchProfile = async () => {
@@ -166,6 +145,7 @@ export default function CheckoutPage() {
             phone: data.phone ?? '',
           };
 
+          // si el tipo del form no coincide con el objeto, castear temporalmente
           shippingForm.reset(shippingData as any);
         }
       } catch (err) {
@@ -176,9 +156,25 @@ export default function CheckoutPage() {
     fetchProfile();
   }, [user, shippingForm]);
 
-  // Redirigir si el carrito está vacío
   useEffect(() => {
-    if (cartItems.length === 0) {
+    const cart = getCartFromLocalStorage();
+    setCartItems(cart);
+    setOrderSummary(calculateOrderSummary(cart));
+
+    // Escuchar cambios en el carrito (por si se modifica en otra pestaña)
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'cart') {
+        const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
+        setCartItems(updatedCart);
+        setOrderSummary(calculateOrderSummary(updatedCart));
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  useEffect(() => {
+    if (orderSummary.items.length === 0) {
       toast({ 
         title: "Carrito Vacío", 
         description: "No puedes proceder al pago con un carrito vacío.", 
@@ -186,7 +182,7 @@ export default function CheckoutPage() {
       });
       router.push('/cart');
     }
-  }, [cartItems, router, toast]);
+  }, [orderSummary.items, router, toast]);
 
   const getValidatedOrderInput = async () => {
     const isShippingValid = await shippingForm.trigger();
@@ -332,6 +328,11 @@ export default function CheckoutPage() {
               {profileError && (
                 <div className="text-sm text-red-600 mb-4">
                   Error: {profileError}
+                </div>
+              )}
+              {!profile && !isProfileLoading && !profileError && (
+                <div className="text-sm text-muted-foreground mb-4">
+                  Perfil no encontrado. Completa tus datos de envío manualmente.
                 </div>
               )}
               <Form {...shippingForm}>
