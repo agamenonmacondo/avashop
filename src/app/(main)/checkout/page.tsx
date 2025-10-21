@@ -65,6 +65,8 @@ export default function CheckoutPage() {
   const [isCoinbaseLoading, setIsCoinbaseLoading] = useState(false);
   const [boldButtonData, setBoldButtonData] = useState<any>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [showBoldButton, setShowBoldButton] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const shippingForm = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingFormSchema),
@@ -298,6 +300,62 @@ export default function CheckoutPage() {
 
   const handleBoldClose = () => {
     setBoldButtonData(null);
+  };
+
+  const handleBoldPayment = async () => {
+    try {
+      setIsProcessing(true);
+      
+      const orderId = `order-${Date.now()}`;
+      
+      // Solo pedimos el hash al backend
+      const response = await fetch('/api/bold/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          amount: orderSummary.total,
+          currency: 'COP',
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || 'Error al preparar el pago');
+      }
+
+      // Mostrar el botón de Bold con los datos
+      setBoldButtonData({
+        apiKey: process.env.NEXT_PUBLIC_BOLD_API_KEY!,
+        orderId: result.data.orderId,
+        amount: result.data.amount,
+        currency: result.data.currency,
+        integritySignature: result.data.integritySignature,
+        redirectionUrl: `${window.location.origin}/order/success`,
+        description: `Pedido ${orderId}`,
+        customerData: {
+          email: shippingForm.getValues().email,
+          fullName: shippingForm.getValues().fullName,
+          phone: shippingForm.getValues().phone || '',
+        },
+        billingAddress: {
+          address: shippingForm.getValues().address,
+          city: shippingForm.getValues().city,
+          state: shippingForm.getValues().state,
+          zipCode: shippingForm.getValues().zipCode || '',
+          country: shippingForm.getValues().country,
+        },
+      });
+      
+      setShowBoldButton(true);
+      
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar el pago');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const isPaymentProcessing = isBoldLoading || isCoinbaseLoading;
