@@ -1,0 +1,16 @@
+{
+  "pagina": 106,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_106_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-192I",
+  "precio": 27000,
+  "descripcion": "Cable USB Gaming con conector Type-C a Lightning para iPhone/iPad",
+  "categoria": "cable",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "RC-192I Cable USB Gaming Type-C a Lightning para iPhone/iPad",
+  "descripcion_generada_llm": "Cable USB Gaming diseñado para ofrecer una experiencia de carga y transferencia de datos superior. Conectividad Type-C a Lightning, compatible con dispositivos iPhone y iPad. Características principales: carga rápida de hasta 20W, diseñado para gaming con materiales de alta calidad que aseguran durabilidad y resistencia. Ideal para gamers y usuarios que buscan una conexión fiable y rápida para sus dispositivos. Compatible con iPhone y iPad, este cable ofrece una solución integral para necesidades de carga y datos en un solo producto.",
+  "precio_final_llm": 43200
+}

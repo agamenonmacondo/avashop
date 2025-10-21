@@ -1,0 +1,16 @@
+{
+  "pagina": 81,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_81_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RCC-351",
+  "precio": 60000,
+  "descripcion": "Cargador de carro rápido con display transparente, compatible con PD y QC",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 755,
+  "color_principal": "transparente",
+  "nombre_generado_llm": "RCC-351 Cargador de Carro Rápido con Display Transparente PD QC",
+  "descripcion_generada_llm": "El RCC-351 es un cargador de carro rápido con display transparente diseñado para ofrecer una carga eficiente y segura para tus dispositivos. Compatible con los estándares de carga rápida PD y QC, este cargador garantiza una experiencia de carga rápida y fiable. Su display transparente proporciona información en tiempo real sobre el estado de carga, permitiendo un control total sobre el proceso. Ideal para vehículos, este cargador es una solución práctica y avanzada para mantener tus dispositivos cargados durante tus viajes. Con su diseño innovador y tecnología de carga rápida, el RCC-351 es la elección perfecta para aquellos que buscan una solución de carga eficiente y segura en movimiento.",
+  "precio_final_llm": 96000
+}

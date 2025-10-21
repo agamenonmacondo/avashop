@@ -1,18 +1,18 @@
 {
   "nombre_producto": "RM-C04",
-  "nombre_ia": "RM-C04 Soporte de Coche con Carga Inalámbrica y Montaje en Rejilla de Aire",
+  "nombre_ia": "RM-C04 Soporte para Automóvil con Carga Inalámbrica de 15W y Montaje en Ventilación de Aire",
   "referencia": "rm-c04",
   "descripciones_originales": [
-    "Soporte para automóvil con cargador inalámbrico de 15W y montaje en ventilación de aire",
     "Soporte para automóvil con carga inalámbrica de 15W y montaje en ventilación de aire",
-    "Soporte de coche con carga inalámbrica de 15W y montaje en rejilla de aire"
+    "Soporte para automóvil con cargador inalámbrico de 15W y montaje en ventilación de aire",
+    "Soporte para automóvil con carga inalámbrica de 15W y montaje en ventilación de aire"
   ],
   "precio_original": 75000,
   "precio_final": 120000,
-  "descripcion_ia": "El RM-C04 es un soporte de coche diseñado para ofrecer una experiencia de carga inalámbrica segura y conveniente mientras conduce. Con capacidad de carga inalámbrica de hasta 15W, este dispositivo es compatible con la mayoría de los teléfonos inteligentes modernos que soportan esta tecnología. Su montaje en la rejilla de aire del vehículo proporciona una instalación firme y estable, manteniendo su dispositivo a la vista y al alcance de la mano.\nEspecificaciones técnicas:\n- Carga inalámbrica de hasta 15W.\n- Montaje en rejilla de aire del vehículo.\n- Diseño robusto y duradero.\nMateriales y construcción: Fabricado con materiales de alta calidad para asegurar su durabilidad y resistencia a los rigores del uso diario en el automóvil.\nCompatibilidad: Compatible con dispositivos que soportan carga inalámbrica de hasta 15W.\nVentajas:\n- Mantiene su teléfono a la vista y accesible mientras conduce.\n- Carga rápida y eficiente de su dispositivo.\n- Fácil instalación en la rejilla de aire del vehículo.\nUso recomendado: Para conductores que buscan una forma segura y conveniente de mantener su teléfono cargado y visible durante el viaje.",
+  "descripcion_ia": "El RM-C04 es un soporte para automóvil diseñado para ofrecer una experiencia de carga inalámbrica segura y conveniente mientras conduce. Con una capacidad de carga inalámbrica de hasta 15W, este soporte es compatible con la mayoría de los dispositivos móviles que soportan esta tecnología. Su montaje en la ventilación de aire del automóvil proporciona una sujeción firme y ajustable, permitiendo una fácil visualización del dispositivo mientras se conduce.\nEspecificaciones técnicas:\n- Carga inalámbrica de hasta 15W\n- Montaje en ventilación de aire del automóvil\n- Compatibilidad con dispositivos que soportan carga inalámbrica\nMateriales y construcción de alta calidad que garantizan durabilidad y resistencia. Fácil de instalar y usar, este soporte es ideal para aquellos que buscan comodidad y seguridad al usar su dispositivo móvil mientras conduce. Su diseño permite una fácil extracción y colocación del dispositivo, facilitando su uso diario.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\002_rm-c04.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\003_rm-c04.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\004_rm-c04.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\097_RM-C04.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\098_RM-C04.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\099_RM-C04.png"
   ]
 }

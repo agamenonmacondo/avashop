@@ -1,0 +1,16 @@
+{
+  "pagina": 11,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_11_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U87",
+  "precio": 60000,
+  "descripcion": "Cargador REMAX SERIES IPHONE 17 con tecnología de carga rápida PD+QC de 35 watts",
+  "categoria": "cargador",
+  "width": 728,
+  "height": 727,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RP-U87 Cargador Rápido REMAX para iPhone 17 con Tecnología PD+QC de 35W",
+  "descripcion_generada_llm": "Cargador REMAX diseñado específicamente para iPhone 17, equipado con tecnología de carga rápida PD+QC que ofrece una potencia de hasta 35 watts. Fabricado con materiales de alta calidad, este cargador Tipo C garantiza una carga eficiente y segura para tu dispositivo. Compatible exclusivamente con iPhone 17, este cargador es ideal para aquellos que buscan una solución de carga rápida y fiable. Su diseño compacto lo hace fácil de transportar, permitiendo una carga rápida en cualquier momento y lugar. La tecnología PD+QC asegura una carga más rápida en comparación con cargadores convencionales, minimizando el tiempo de espera y maximizando el uso de tu dispositivo.",
+  "precio_final_llm": 96000
+}

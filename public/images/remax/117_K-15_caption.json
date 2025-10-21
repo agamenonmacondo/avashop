@@ -1,0 +1,16 @@
+{
+  "pagina": 42,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_42_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "K-15",
+  "precio": 120000,
+  "descripcion": "Micrófono inalámbrico 2 en 1 para transmisión en vivo compatible con Apple y Android",
+  "categoria": "micrófono",
+  "width": 720,
+  "height": 720,
+  "color_principal": "negro",
+  "nombre_generado_llm": "K-15 Micrófono Inalámbrico 2 en 1 para Transmisión en Vivo",
+  "descripcion_generada_llm": "El K-15 es un micrófono inalámbrico versátil diseñado para ofrecer una excelente calidad de audio en transmisiones en vivo. Compatible con dispositivos Apple y Android, este micrófono 2 en 1 se adapta a tus necesidades de grabación. Sus características clave incluyen:\n- Diseño inalámbrico para una mayor libertad de movimiento.\n- Compatibilidad con dispositivos Apple y Android para una amplia gama de aplicaciones.\n- Función 2 en 1 para adaptarse a diferentes escenarios de uso.\nIdeal para creadores de contenido, streamers, y profesionales que buscan una solución de audio confiable y de alta calidad. Su diseño avanzado y tecnología de vanguardia aseguran una experiencia de usuario superior.",
+  "precio_final_llm": 192000
+}

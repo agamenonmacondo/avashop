@@ -1,0 +1,16 @@
+{
+  "pagina": 135,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_135_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-063",
+  "precio": 20000,
+  "descripcion": "Cable de datos con carga rápida de la serie King de REMAX, con aleación metálica",
+  "categoria": "cable",
+  "width": 640,
+  "height": 640,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RC-063 Cable de Carga Rápida REMAX King Series con Aleación Metálica",
+  "descripcion_generada_llm": "Cable de datos REMAX King Series diseñado para carga rápida y transferencia de datos. Fabricado con aleación metálica para una mayor durabilidad y resistencia. Compatible con dispositivos que soportan carga rápida. Ideal para usuarios que buscan una solución de carga eficiente y segura. Características principales: carga rápida, aleación metálica, compatible con dispositivos de carga rápida. Uso recomendado: carga de dispositivos móviles y transferencia de datos.",
+  "precio_final_llm": 32000
+}

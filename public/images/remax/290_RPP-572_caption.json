@@ -1,0 +1,16 @@
+{
+  "pagina": 100,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_100_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-572",
+  "precio": 120000,
+  "descripcion": "Power Bank de la serie Prime con carga rápida de 10000mAh",
+  "categoria": "cargador",
+  "width": 700,
+  "height": 700,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RPP-572 Power Bank Serie Prime 10000mAh Carga Rápida",
+  "descripcion_generada_llm": "El RPP-572 Power Bank Serie Prime es un dispositivo de carga portátil de alta capacidad diseñado para proporcionar energía sobre la marcha. Con una capacidad de 10000mAh, este Power Bank ofrece carga rápida con tecnología PD de hasta 22.5W y QC, permitiendo cargar tus dispositivos compatibles de manera eficiente y rápida. Su diseño compacto y robusto lo hace ideal para uso diario, viajes y situaciones en las que no tienes acceso a una fuente de alimentación fija. Compatible con una amplia gama de dispositivos, incluyendo smartphones, tablets y otros dispositivos que requieran carga vía USB. Fabricado con materiales de alta calidad que garantizan su durabilidad y fiabilidad. Características principales: capacidad de 10000mAh, carga rápida PD 22.5W, tecnología QC, diseño portátil y compatible con múltiples dispositivos.",
+  "precio_final_llm": 192000
+}

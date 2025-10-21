@@ -1,0 +1,16 @@
+{
+  "pagina": 84,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_84_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RCC-338",
+  "precio": 30000,
+  "descripcion": "Cargador de coche rápido con tecnología PD+QC",
+  "categoria": "cargador",
+  "width": 726,
+  "height": 1000,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RCC-338 Cargador Rápido para Automóvil con Tecnología PD+QC",
+  "descripcion_generada_llm": "El RCC-338 es un cargador rápido para automóvil diseñado para ofrecer una carga rápida y segura a tus dispositivos. Incorpora tecnología avanzada PD (Power Delivery) y QC (Quick Charge), permitiendo una carga más rápida que los cargadores convencionales. Ideal para aquellos que necesitan mantener sus dispositivos cargados mientras están en movimiento, este cargador es compatible con una amplia gama de dispositivos que soportan estas tecnologías. Su diseño compacto y robusto lo hace perfecto para su uso en automóviles, facilitando la carga de smartphones, tablets y otros dispositivos compatibles. Con su avanzada tecnología, asegura una carga eficiente y segura, protegiendo tus dispositivos contra sobretensiones y sobrecargas. Es la solución ideal para conductores que necesitan mantenerse conectados durante sus viajes.",
+  "precio_final_llm": 48000
+}

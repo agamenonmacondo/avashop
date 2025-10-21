@@ -1,0 +1,16 @@
+{
+  "pagina": 117,
+  "index": 5,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_117_img_5.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-093 AL",
+  "precio": "$20.000",
+  "descripcion": "Cable de datos siliconado con carga rápida PD y 2.4AMP compatible con iPhone/iPad",
+  "categoria": "cable",
+  "width": 433,
+  "height": 433,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RC-093_AL RC-093 AL - Cable de Datos Siliconado con Carga Rápida PD",
+  "descripcion_generada_llm": "Cable de datos siliconado de alta calidad diseñado para ofrecer una carga rápida y segura a tus dispositivos. Compatible con iPhone y iPad, este cable cuenta con tecnología de carga rápida PD y una corriente de hasta 2.4AMP, lo que garantiza un suministro de energía eficiente y rápido. Su construcción en silicona proporciona flexibilidad y durabilidad, haciéndolo ideal para el uso diario. Perfecto para aquellos que buscan un cable fiable y de alto rendimiento para mantener sus dispositivos cargados y listos para usar.",
+  "precio_final_llm": 32000
+}

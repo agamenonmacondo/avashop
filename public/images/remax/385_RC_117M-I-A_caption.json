@@ -1,0 +1,16 @@
+{
+  "pagina": 133,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_133_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RC 117M-I-A",
+  "precio": 18000,
+  "descripcion": "Cable de datos USB con carga rápida para Apple, Micro y Type C",
+  "categoria": "cable",
+  "width": 700,
+  "height": 700,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RC_117M-I-A RC 117M-I-A Cable de Datos USB con Carga Rápida Multi-Compatibilidad",
+  "descripcion_generada_llm": "Cable de datos USB diseñado para ofrecer carga rápida y transferencia de datos eficiente. Compatible con dispositivos Apple, Micro y Type C, lo que lo hace ideal para usuarios con múltiples dispositivos. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia. Su diseño versátil permite su uso en una amplia gama de situaciones, desde la carga diaria hasta la transferencia de archivos grandes. Es una solución práctica y eficiente para mantener sus dispositivos conectados y cargados.",
+  "precio_final_llm": 28800
+}

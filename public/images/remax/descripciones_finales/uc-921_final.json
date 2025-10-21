@@ -1,18 +1,18 @@
 {
   "nombre_producto": "UC-921",
-  "nombre_ia": "UC-921 Estación de Acoplamiento USB-C Multifuncional 4K para Mac y Windows",
+  "nombre_ia": "UC-921 Estación de Acoplamiento USB-C Multifuncional 8 en 1 con Salida 4K",
   "referencia": "uc-921",
   "descripciones_originales": [
-    "Estación de acoplamiento multifuncional USB-C con capacidad para 4K y compatibilidad con Mac y Windows",
-    "Estación de acoplamiento multifuncional USB-C con capacidad para 4K y compatibilidad con Mac y Windows",
-    "Docking Station USB-C multifunción para Mac y Windows con salida 4K y conexión plug-and-play"
+    "Estación de acoplamiento multifuncional USB-C con capacidad para 4K, plug-and-play, compatible con Mac y Windows",
+    "Docking station USB-C multifunción 8 en 1 con salida 4K, compatible con Mac y Windows",
+    "Estación de acoplamiento multifuncional USB-C con capacidad para 4K, plug-and-play, compatible con Mac y Windows"
   ],
   "precio_original": 120000,
   "precio_final": 192000,
-  "descripcion_ia": "La UC-921 es una estación de acoplamiento USB-C multifuncional diseñada para ofrecer una solución integral de conectividad para tus dispositivos Mac y Windows. Con su capacidad para manejar señales de video 4K, esta docking station proporciona una experiencia visual de alta calidad. Su compatibilidad con sistemas operativos Mac y Windows la hace versátil y adecuada para una amplia gama de usuarios. La conexión plug-and-play facilita su uso sin necesidad de instalar drivers adicionales, lo que la hace ideal para entornos de trabajo y uso personal. Esta estación de acoplamiento está diseñada para expandir las capacidades de tu dispositivo, ofreciendo múltiples opciones de conectividad y mejorando tu productividad. Su construcción robusta y diseño funcional aseguran un rendimiento fiable y duradero.",
+  "descripcion_ia": "La estación de acoplamiento UC-921 es una solución integral y versátil diseñada para expandir las capacidades de conexión de tus dispositivos equipados con USB-C. Compatible con Mac y Windows, esta docking station multifuncional ofrece una experiencia plug-and-play, permitiendo una conexión instantánea y sin complicaciones.\n**Características Principales:**\n- **Resolución 4K:** Disfruta de una calidad de imagen superior con la capacidad de salida de video 4K, ideal para monitores y televisores compatibles.\n- **8 en 1 Multifuncional:** Esta docking station ofrece múltiples puertos para conectar una variedad de dispositivos y accesorios, maximizando la utilidad de tu equipo.\n- **Compatibilidad Universal:** Diseñada para funcionar sin problemas con sistemas Mac y Windows, garantizando una experiencia fluida y sin necesidad de drivers adicionales.\n- **Plug-and-Play:** Simplemente conecta la UC-921 a tu dispositivo y comienza a usarla sin necesidad de configuraciones complicadas.\n**Ventajas:**\n- Amplía las capacidades de tu dispositivo con múltiples conexiones.\n- Mejora tu productividad y experiencia multimedia con la salida de video de alta calidad.\n- Compatible con una amplia gama de dispositivos, tanto Mac como Windows.\n**Especificaciones Técnicas:**\n- Tipo de conector: USB-C.\n- Resolución máxima de salida: 4K.\n- Compatibilidad: Mac y Windows.\n- Número de puertos: 8.\n- Tipo de producto: Estación de acoplamiento multifuncional.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\118_uc-921.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\119_uc-921.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\120_uc-921.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\144_UC-921.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\145_UC-921.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\146_UC-921.png"
   ]
 }

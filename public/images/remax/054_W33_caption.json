@@ -1,0 +1,16 @@
+{
+  "pagina": 20,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_20_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "W33",
+  "precio": 75000,
+  "descripcion": "Auriculares inalámbricos con tecnología True Wireless para música y llamadas",
+  "categoria": "auriculares",
+  "width": 750,
+  "height": 750,
+  "color_principal": "blanco/rosa",
+  "nombre_generado_llm": "W33 Auriculares Inalámbricos True Wireless para Música y Llamadas",
+  "descripcion_generada_llm": "Experimenta la libertad de la tecnología True Wireless con los auriculares W33, diseñados para ofrecer una experiencia de audio inmersiva tanto para música como para llamadas. Estos auriculares inalámbricos proporcionan una conexión estable y de alta calidad, permitiendo disfrutar de tu contenido favorito sin la molestia de cables. Con un diseño ergonómico pensado para adaptarse cómodamente a tus oídos, los W33 son ideales para uso diario, ya sea durante el ejercicio, en el trabajo o simplemente para relajarte. Su tecnología avanzada asegura una reproducción de sonido nítida y clara, mientras que su batería de larga duración te permite disfrutar de horas de música sin interrupciones. Compatibles con la mayoría de dispositivos móviles y reproductores de música, los auriculares W33 son la elección perfecta para aquellos que buscan comodidad, calidad y libertad para disfrutar de su música favorita en cualquier momento y lugar.",
+  "precio_final_llm": 120000
+}

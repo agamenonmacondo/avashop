@@ -1,0 +1,16 @@
+{
+  "pagina": 68,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_68_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U83",
+  "precio": 90000,
+  "descripcion": "Cargador plegable de 3 dispositivos con tecnología GAN y carga rápida QC",
+  "categoria": "cargador",
+  "width": 500,
+  "height": 1000,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RP-U83 Cargador Plegable de 3 Dispositivos con Tecnología GAN y Carga Rápida QC 65W",
+  "descripcion_generada_llm": "Cargador plegable de alta eficiencia y compacto diseñado para cargar hasta 3 dispositivos simultáneamente. Equipado con tecnología GAN (Nitruro de Galio) que proporciona una carga rápida y segura, y es compatible con la tecnología de carga rápida QC. Con una potencia de salida de 65W y 3 puertos USB, este cargador es ideal para usuarios que necesitan cargar varios dispositivos al mismo tiempo, ya sea en casa, en la oficina o en movimiento. Su diseño plegable lo hace fácil de transportar y almacenar, lo que lo convierte en un accesorio práctico y versátil para cualquier situación. Fabricado con materiales de alta calidad que garantizan su durabilidad y fiabilidad.",
+  "precio_final_llm": 144000
+}

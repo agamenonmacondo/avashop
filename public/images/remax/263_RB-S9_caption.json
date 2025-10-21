@@ -1,0 +1,16 @@
+{
+  "pagina": 91,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_91_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-S9",
+  "precio": 55000,
+  "descripcion": "Auriculares inalámbricos con cuello flexible y Bluetooth 5.3",
+  "categoria": "auriculares",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-S9 Auriculares Inalámbricos con Cuello Flexible Bluetooth 5.3",
+  "descripcion_generada_llm": "Disfruta de una experiencia de audio superior con los auriculares inalámbricos RB-S9, diseñados para ofrecerte libertad y comodidad. Estos auriculares cuentan con un cuello flexible que se adapta a tus necesidades, permitiéndote disfrutar de tu música favorita sin restricciones. Con la tecnología Bluetooth 5.3, podrás conectar tus auriculares a cualquier dispositivo compatible de manera rápida y segura, garantizando una transmisión de audio nítida y sin interrupciones. Ideales para uso diario, ya sea durante tus entrenamientos, desplazamientos o simplemente para relajarte, los RB-S9 son la elección perfecta para aquellos que buscan calidad y comodidad en un mismo producto.",
+  "precio_final_llm": 88000
+}

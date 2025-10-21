@@ -1,0 +1,16 @@
+{
+  "pagina": 76,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_76_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-183C",
+  "precio": 32000,
+  "descripcion": "Cargador rápido de 100W y cable de datos de 2 metros compatible con Apple y Android",
+  "categoria": "cargador/cable",
+  "width": 750,
+  "height": 750,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "RC-183C Cargador Rápido 100W y Cable de Datos de 2 Metros para Apple y Android",
+  "descripcion_generada_llm": "El RC-183C es un conjunto de cargador rápido de 100W y cable de datos de 2 metros diseñado para ser compatible con dispositivos Apple y Android. Este producto ofrece una solución integral para la carga rápida y la transferencia de datos. El cargador rápido proporciona una potencia de hasta 100W, permitiendo cargar dispositivos compatibles rápidamente. El cable de datos de 2 metros es ideal para conectar sus dispositivos a una fuente de alimentación o a un ordenador para la transferencia de datos. Fabricado con materiales de alta calidad, este conjunto es duradero y fiable. Es perfecto para usuarios que necesitan una carga rápida y eficiente para sus dispositivos móviles, tabletas o laptops compatibles. Compatible con una amplia gama de dispositivos, este producto es una excelente opción para aquellos que buscan una solución de carga y transferencia de datos versátil y potente.",
+  "precio_final_llm": 51200
+}

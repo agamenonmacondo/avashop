@@ -1,18 +1,18 @@
 {
   "nombre_producto": "RM-C69",
-  "nombre_ia": "RM-C69 Soporte de Coche con Carga Inalámbrica de 15W y Sujeción Tri-eje",
+  "nombre_ia": "RM-C69 Soporte para Automóvil con Carga Inalámbrica de 15W y Ajuste Tri-eje",
   "referencia": "rm-c69",
   "descripciones_originales": [
-    "Soporte de coche con carga inalámbrica de 15W y sistema de sujeción tri-eje",
     "Soporte para automóvil con carga inalámbrica de 15W y sistema de sujeción tri-eje",
-    "Soporte para automóvil con carga inalámbrica de 15W y sistema de sujeción tri-eje"
+    "Soporte para automóvil con carga inalámbrica de 15W y sistema de sujeción tri-eje",
+    "Soporte para automóvil con carga inalámbrica de 15W y sistema de ajuste tri-eje"
   ],
   "precio_original": 70000,
   "precio_final": 112000,
-  "descripcion_ia": "El RM-C69 es un soporte para automóvil diseñado para ofrecer una experiencia de carga inalámbrica segura y eficiente. Con una capacidad de carga de hasta 15W, este soporte garantiza una carga rápida y sin cables para dispositivos compatibles. Su sistema de sujeción tri-eje proporciona una estabilidad y flexibilidad excepcionales, permitiendo ajustar el dispositivo a la posición deseada para una visualización óptima mientras se conduce. Fabricado con materiales de alta calidad, este soporte es duradero y resistente. Compatible con la mayoría de los teléfonos inteligentes y dispositivos que admiten carga inalámbrica, el RM-C69 es ideal para conductores que buscan comodidad y seguridad al usar su dispositivo mientras están en la carretera. Su diseño inteligente y funcionalidad avanzada lo convierten en un accesorio indispensable para cualquier vehículo.",
+  "descripcion_ia": "El RM-C69 es un soporte para automóvil diseñado para ofrecer una experiencia de carga inalámbrica eficiente y segura. Con una potencia de carga de hasta 15W, este dispositivo garantiza que tu teléfono esté siempre cargado durante tus viajes. Su sistema de sujeción tri-eje proporciona una estabilidad y flexibilidad excepcionales, permitiendo ajustar el soporte en múltiples direcciones para una visualización óptima. Fabricado con materiales de alta calidad, este soporte es compatible con la mayoría de los teléfonos inteligentes que admiten carga inalámbrica. Su diseño robusto y ergonómico asegura que tu dispositivo permanezca seguro y accesible mientras conduces. Ideal para aquellos que pasan mucho tiempo en el automóvil, el RM-C69 combina funcionalidad y comodidad, haciendo de tus viajes una experiencia más placentera y conectada.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\005_rm-c69.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\006_rm-c69.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\007_rm-c69.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\100_RM-C69.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\101_RM-C69.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\102_RM-C69.png"
   ]
 }

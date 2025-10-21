@@ -1,0 +1,16 @@
+{
+  "pagina": 18,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_18_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-171",
+  "precio": 27000,
+  "descripcion": "Cable de datos para iPhone con carga rápida PD de 30W",
+  "categoria": "cable",
+  "width": 835,
+  "height": 1000,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RC-171 Cable de Datos iPhone con Carga Rápida PD 30W",
+  "descripcion_generada_llm": "Cable de datos diseñado para iPhone, compatible con carga rápida PD de hasta 30W. Fabricado con materiales de alta calidad, garantiza una conexión estable y segura para la transferencia de datos y carga de dispositivos. Ideal para usuarios que buscan una solución de carga rápida y eficiente. Compatible con dispositivos iPhone que soportan carga rápida PD. Características principales: carga rápida de hasta 30W, transferencia de datos segura y estable, compatible con iPhone. Ventajas: carga rápida, eficiente y segura, ideal para uso diario.",
+  "precio_final_llm": 43200
+}

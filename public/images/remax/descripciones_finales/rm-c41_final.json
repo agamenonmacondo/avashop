@@ -1,18 +1,18 @@
 {
   "nombre_producto": "RM-C41",
-  "nombre_ia": "RM-C41 Cargador Magnético Plegable 360 Grados para Automóvil",
+  "nombre_ia": "RM-C41 Cargador para Auto con Soporte Magnético y Giro 360 Grados",
   "referencia": "rm-c41",
   "descripciones_originales": [
-    "Cargador para auto con soporte magnético y diseño plegable 360 grados",
-    "Cargador de coche con soporte magnético y diseño plegable 360 grados",
-    "Cargador para automóvil con soporte magnético y diseño plegable 360 grados"
+    "Cargador para automóvil con soporte magnético y diseño plegable 360 grados",
+    "Cargador para automóvil con soporte magnético y diseño plegable 360 grados",
+    "Cargador para auto con soporte magnético y giro 360 grados, compatible con Apple y Android"
   ],
-  "precio_original": 60,
-  "precio_final": 96,
-  "descripcion_ia": "El RM-C41 es un cargador para automóvil con soporte magnético y diseño plegable 360 grados, ideal para mantener tu dispositivo cargado y a mano mientras conduces. Su diseño plegable y soporte magnético ofrecen una gran flexibilidad y comodidad, permitiendo ajustar el ángulo de visión según tus necesidades. Fabricado con materiales de alta calidad, este cargador es compatible con la mayoría de los dispositivos móviles que soportan carga rápida. Su diseño compacto y ligero lo hace fácil de transportar y almacenar. Ventajas: fácil de usar, diseño versátil, compatible con carga rápida y seguro para tu dispositivo. Especificaciones técnicas: diseño plegable 360 grados, soporte magnético, compatible con dispositivos móviles con carga rápida. Materiales: materiales de alta calidad. Uso recomendado: para uso en automóviles.",
+  "precio_original": 60000,
+  "precio_final": 96000,
+  "descripcion_ia": "El RM-C41 es un cargador para automóvil diseñado con un soporte magnético y un innovador diseño plegable que permite un giro de 360 grados. Este producto ofrece una solución de carga segura y conveniente para dispositivos móviles mientras se conduce. Compatible con dispositivos Apple y Android, este cargador se adapta a diversas necesidades de carga en el automóvil.\n**Especificaciones Técnicas:**\n- Diseño plegable con giro de 360 grados para una visualización óptima.\n- Soporte magnético para una sujeción segura de dispositivos.\n- Compatible con dispositivos Apple y Android.\n- Material duradero diseñado para soportar el uso diario.\n**Ventajas:**\n- Cómodo y fácil de usar mientras se conduce.\n- Diseño versátil que se adapta a diferentes preferencias de visualización.\n- Sujeción magnética segura que protege su dispositivo.\n**Uso Recomendado:**\nIdeal para conductores que necesitan mantener su dispositivo cargado durante viajes largos o uso diario. Su diseño flexible y sujeción segura lo hacen perfecto para uso en automóviles.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\270_rm-c41.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\271_rm-c41.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\272_rm-c41.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\272_RM-C41.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\273_RM-C41.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\274_RM-C41.png"
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "pagina": 101,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_101_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-69",
+  "precio": 110000,
+  "descripcion": "Power Bank con carga rápida y pantalla, capacidad de 10000mAh",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RPP-69 Power Bank Carga Rápida 10000mAh con Pantalla",
+  "descripcion_generada_llm": "El RPP-69 es un Power Bank de alta capacidad diseñado para proporcionar energía en el momento y lugar que la necesites. Con una capacidad de 10000mAh, este dispositivo cuenta con tecnología de carga rápida que te permite recargar tus dispositivos compatibles de manera eficiente y rápida. Su pantalla integrada te muestra información importante como el nivel de carga actual y otros datos relevantes para una mejor experiencia de uso. Ideal para viajes, uso diario o en situaciones de emergencia, este Power Bank es compatible con una amplia gama de dispositivos móviles y otros gadgets. Fabricado con materiales de alta calidad, ofrece una solución de carga portátil y fiable. Sus características clave incluyen: carga rápida para dispositivos compatibles, pantalla para monitoreo del estado de carga, alta capacidad para múltiples recargas de tu dispositivo, diseño portátil para fácil transporte. Es la opción perfecta para aquellos que necesitan mantenerse conectados sin interrupciones.",
+  "precio_final_llm": 176000
+}

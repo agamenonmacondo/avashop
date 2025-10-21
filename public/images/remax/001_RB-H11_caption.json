@@ -1,0 +1,16 @@
+{
+  "pagina": 1,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_1_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-H11",
+  "precio": null,
+  "descripcion": "Auriculares inalámbricos con diseño elegante",
+  "categoria": "auriculares",
+  "width": 738,
+  "height": 714,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-H11 Auriculares Inalámbricos Elegantes",
+  "descripcion_generada_llm": "Disfruta de la libertad de la música sin cables con los auriculares inalámbricos RB-H11. Su diseño elegante y moderno los hace perfectos para cualquier ocasión. Estos auriculares ofrecen una experiencia de audio de alta calidad, permitiendo una conexión inalámbrica estable y cómoda. Ideales para uso diario, ejercicio o viajes, los RB-H11 combinan estilo y funcionalidad para satisfacer tus necesidades de audio.",
+  "precio_final_llm": 40000
+}

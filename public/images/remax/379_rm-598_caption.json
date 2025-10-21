@@ -1,16 +1,16 @@
 {
-  "pagina": 132,
+  "pagina": 131,
   "index": 0,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_132_img_0.png",
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_131_img_0.png",
   "tipo": "producto",
   "nombre_producto": "RM-598",
-  "precio": 35000,
-  "descripcion": "Auriculares metálicos con manos libres para Apple y Android",
+  "precio": "$35.000",
+  "descripcion": "Auriculares manos libres para Apple y Android",
   "categoria": "auriculares",
   "width": 512,
   "height": 646,
-  "color_principal": "metal",
-  "nombre_generado_llm": "RM-598 Auriculares Metálicos con Manos Libres para Apple y Android",
-  "descripcion_generada_llm": "Auriculares metálicos diseñados para ofrecer una experiencia de audio superior con manos libres. Compatibles con dispositivos Apple y Android, estos auriculares combinan tecnología y estilo. Sus características incluyen:\n- Material metálico para una durabilidad superior.\n- Función manos libres para una mayor comodidad durante llamadas y actividades.\n- Compatibilidad con una amplia gama de dispositivos, tanto Apple como Android.\nDisfruta de una calidad de sonido nítida y una experiencia de uso sin interrupciones gracias a su diseño metálico y su funcionalidad manos libres. Ideales para aquellos que buscan combinar estilo, durabilidad y tecnología en sus accesorios móviles.",
+  "color_principal": "negro/metal",
+  "nombre_generado_llm": "RM-598 Auriculares Manos Libres Metálicos para Apple y Android",
+  "descripcion_generada_llm": "Auriculares metálicos con tecnología manos libres diseñados para ser compatibles con dispositivos Apple y Android. Estos auriculares ofrecen una experiencia de audio de alta calidad gracias a su construcción metálica que garantiza durabilidad y un rendimiento óptimo. Ideales para llamadas, música y cualquier otro uso que requiera una conexión de audio confiable y clara. Su diseño metálico no solo les da un aspecto elegante y moderno, sino que también contribuye a una mejor disipación del calor y resistencia a la corrosión. Compatibles con una amplia gama de dispositivos, estos auriculares son perfectos para aquellos que buscan una solución de audio versátil y de alta calidad.",
   "precio_final_llm": 56000
 }

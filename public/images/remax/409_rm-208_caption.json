@@ -1,15 +1,13 @@
-```json
 {
-  "pagina": 144,
-  "index": 1,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_144_img_1.png",
-  "tipo": "producto",
-  "nombre_producto": "RM-208",
-  "precio": 25000,
-  "descripcion": "Audifonos manos libres con sonido 3 tonos y mega bass",
-  "categoria": "auriculares",
-  "width": 360,
-  "height": 344,
-  "color_principal": "negro"
+    "pagina": 143,
+    "index": 1,
+    "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_143_img_1.png",
+    "tipo": "producto",
+    "nombre_producto": "RM-208",
+    "precio": "$25.000",
+    "descripcion": "Audífonos manos libres con sonido 3 tonos y mega bass",
+    "categoria": "auriculares",
+    "width": 360,
+    "height": 344,
+    "color_principal": "negro"
 }
-```

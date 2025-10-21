@@ -1,0 +1,16 @@
+{
+  "pagina": 57,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_57_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-S8",
+  "precio": 105000,
+  "descripcion": "Auriculares inalámbricos con tecnología de conducción de aire, batería de 7 horas, compatible con Bluetooth para música y llamadas",
+  "categoria": "auriculares",
+  "width": 400,
+  "height": 400,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RB-S8 Auriculares Inalámbricos con Tecnología de Conducción de Aire",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con nuestros auriculares inalámbricos RB-S8. Estos auriculares cuentan con tecnología de conducción de aire que proporciona una experiencia de sonido envolvente y de alta calidad. Con una batería de hasta 7 horas de duración, podrás disfrutar de tu música favorita durante todo el día sin interrupciones. La compatibilidad con Bluetooth te permite conectar tus auriculares a cualquier dispositivo compatible, ya sea tu teléfono, tableta o computadora, para disfrutar de música y llamadas con claridad. Diseñados para ofrecer comodidad y calidad de sonido, estos auriculares son ideales para aquellos que buscan una experiencia de audio inalámbrica sin compromisos.",
+  "precio_final_llm": 168000
+}

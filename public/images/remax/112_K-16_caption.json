@@ -1,0 +1,16 @@
+{
+  "pagina": 40,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_40_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "K-16",
+  "precio": 130000,
+  "descripcion": "Micrófono inalámbrico lavalier magnético compatible con Apple y Android",
+  "categoria": "micrófono",
+  "width": 509,
+  "height": 789,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "K-16 Micrófono Inalámbrico Lavalier Magnético 2 en 1 para Apple y Android",
+  "descripcion_generada_llm": "El K-16 es un micrófono inalámbrico lavalier magnético 2 en 1 diseñado para ser compatible con dispositivos Apple y Android. Su diseño magnético permite una fácil fijación a la ropa, asegurando una captura de audio nítida y sin interferencias. Ideal para entrevistas, presentaciones, grabaciones de video y cualquier situación en la que se requiera una buena calidad de audio sin la restricción de cables. Su compatibilidad dual lo hace versátil y práctico para usuarios de diferentes ecosistemas. El micrófono inalámbrico ofrece una solución compacta y ligera, perfecta para uso diario o profesional. Con su tecnología de conexión inalámbrica, proporciona libertad de movimiento y reduce el ruido ambiental, asegurando que tu voz se escuche clara y fuerte.",
+  "precio_final_llm": 208000
+}

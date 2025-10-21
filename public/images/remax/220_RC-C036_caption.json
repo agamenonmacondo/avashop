@@ -1,0 +1,16 @@
+{
+  "pagina": 77,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_77_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-C036",
+  "precio": 27000,
+  "descripcion": "Cable de datos con carga rápida de 30W compatible con Apple y Android",
+  "categoria": "cable",
+  "width": 251,
+  "height": 270,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "RC-C036 - Cable de Carga Rápida 30W USB Compatible con Apple y Android",
+  "descripcion_generada_llm": "Cable de datos con carga rápida de 30W diseñado para ser compatible con dispositivos Apple y Android. Fabricado con materiales de alta calidad, este cable ofrece una conexión estable y segura para la transferencia de datos y carga de dispositivos. Su diseño robusto y flexible permite un uso cómodo y duradero. Es ideal para usuarios que buscan una solución de carga rápida y eficiente para sus dispositivos móviles. Compatible con una amplia gama de dispositivos, este cable es una excelente opción para aquellos que necesitan una conexión fiable y rápida.",
+  "precio_final_llm": 43200
+}

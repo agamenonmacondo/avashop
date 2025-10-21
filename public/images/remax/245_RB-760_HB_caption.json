@@ -1,0 +1,16 @@
+{
+  "pagina": 85,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_85_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-760 HB",
+  "precio": 140000,
+  "descripcion": "Auriculares inalámbricos con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
+  "categoria": "auriculares",
+  "width": 705,
+  "height": 699,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-760_HB RB-760 HB Auriculares Inalámbricos de Alta Fidelidad con Tecnología 5.3",
+  "descripcion_generada_llm": "Auriculares inalámbricos REMAX HEADPHONE BINCOURI SERIES con tecnología 5.3, diseñados para ofrecer una experiencia de sonido de alta fidelidad tanto para música como para llamadas. Con una batería de larga duración de hasta 45 horas, estos auriculares son ideales para uso diario, viajes o sesiones de trabajo prolongadas. Su tecnología de conexión avanzada garantiza una transmisión de audio estable y de alta calidad, mientras que su diseño ergonómico proporciona comodidad durante períodos prolongados de uso. Compatibles con la mayoría de dispositivos que soportan tecnología Bluetooth 5.3, estos auriculares ofrecen una gran versatilidad y facilidad de uso.",
+  "precio_final_llm": 224000
+}

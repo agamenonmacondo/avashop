@@ -1,0 +1,16 @@
+{
+  "pagina": 35,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_35_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-C04",
+  "precio": 75000,
+  "descripcion": "Soporte para automóvil con carga inalámbrica de 15W y montaje en ventilación de aire",
+  "categoria": "soporte",
+  "width": 666,
+  "height": 666,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C04 Soporte para Automóvil con Carga Inalámbrica de 15W y Montaje en Ventilación de Aire",
+  "descripcion_generada_llm": "El RM-C04 es un soporte para automóvil diseñado para ofrecer una experiencia de carga inalámbrica segura y conveniente mientras conduce. Con una capacidad de carga inalámbrica de hasta 15W, este soporte es compatible con la mayoría de los dispositivos móviles que soportan esta tecnología. Su montaje en la ventilación de aire del automóvil proporciona una sujeción firme y ajustable, permitiendo una fácil visualización del dispositivo mientras se conduce.\nEspecificaciones técnicas:\n- Carga inalámbrica de hasta 15W\n- Montaje en ventilación de aire del automóvil\n- Compatibilidad con dispositivos que soportan carga inalámbrica\nMateriales y construcción de alta calidad que garantizan durabilidad y resistencia. Fácil de instalar y usar, este soporte es ideal para aquellos que buscan comodidad y seguridad al usar su dispositivo móvil mientras conduce. Su diseño permite una fácil extracción y colocación del dispositivo, facilitando su uso diario.",
+  "precio_final_llm": 120000
+}

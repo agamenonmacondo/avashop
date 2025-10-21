@@ -1,18 +1,18 @@
 {
   "nombre_producto": "RM-805",
-  "nombre_ia": "RM-805 Audífonos con Conector Audio 3.5mm y Manos Libres para Llamadas y Música",
+  "nombre_ia": "RM-805 Audífonos con Conector 3.5mm y Manos Libres para Llamadas y Música",
   "referencia": "rm-805",
   "descripciones_originales": [
-    "Audifonos con conector audio 3.5mm y manos libres para llamadas y música",
-    "Audifonos con conector audio 3.5mm y capsula 4D, incluye manos libres para llamadas y musica",
+    "Audífonos con conector audio 3.5mm y función manos libres",
+    "Audífonos con conector audio 3.5mm y manos libres para llamadas y música",
     "Audífonos con conector audio 3.5mm y función manos libres"
   ],
   "precio_original": 65000,
   "precio_final": 104000,
-  "descripcion_ia": "Los audífonos RM-805 ofrecen una experiencia de audio inmersiva y versátil con su conector de audio de 3.5mm compatible con la mayoría de dispositivos. Equipados con tecnología de manos libres, permiten realizar llamadas y disfrutar de la música con claridad y comodidad. Su diseño está pensado para proporcionar un ajuste cómodo y seguro, ideal para uso diario. Características principales: conector de audio de 3.5mm, función manos libres para llamadas, tecnología de sonido envolvente. Materiales de alta calidad para una durabilidad óptima. Compatibles con una amplia gama de dispositivos que cuenten con conector de audio de 3.5mm. Ventajas: comodidad, claridad en las llamadas, experiencia de audio de alta calidad.",
+  "descripcion_ia": "Los audífonos RM-805 ofrecen una experiencia de audio envolvente y comodidad para llamadas y disfrute de música. Equipados con un conector de audio de 3.5mm, son compatibles con la mayoría de dispositivos móviles y de audio. La función de manos libres integrada permite una comunicación clara y segura mientras se realizan otras actividades. Diseñados para proporcionar una excelente calidad de sonido, estos audífonos son ideales para uso diario, ya sea en el trabajo, durante el ejercicio o simplemente para relajarse. Su diseño práctico y su funcionalidad los convierten en un accesorio indispensable para aquellos que buscan comodidad y calidad de audio.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\352_rm-805.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\353_rm-805.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\354_rm-805.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\349_RM-805.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\350_RM-805.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\351_RM-805.png"
   ]
 }

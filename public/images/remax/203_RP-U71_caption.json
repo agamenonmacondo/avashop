@@ -1,0 +1,16 @@
+{
+  "pagina": 71,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_71_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U71",
+  "precio": 50000,
+  "descripcion": "Cargador de 30W con tecnología GAN y cable USB-C para Apple y Android",
+  "categoria": "cargador",
+  "width": 500,
+  "height": 500,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RP-U71 Cargador Rápido 30W con Tecnología GAN y Cable USB-C",
+  "descripcion_generada_llm": "Cargador de alta eficiencia y rápida carga diseñado para dispositivos Apple y Android. Equipado con tecnología GAN (Nitruro de Galio) que proporciona una carga rápida y segura de hasta 30W. Incluye un cable USB-C para una conexión fácil y rápida. Compatible con una amplia gama de dispositivos móviles y tablets. Su diseño compacto y ligero lo hace ideal para llevarlo en cualquier momento y lugar. Características principales: carga rápida de hasta 30W, tecnología GAN para mayor eficiencia, cable USB-C incluido, compatible con dispositivos Apple y Android.",
+  "precio_final_llm": 80000
+}

@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RP-U117",
+  "nombre_ia": "RP-U117 Cargador Rápido 6 en 1 con Tecnología PD y QC",
+  "referencia": "rp-u117",
+  "descripciones_originales": [
+    "Cargador rápido de 65W con tecnología PD y QC, compatible con Apple y Android",
+    "Cargador rápido de 65W con tecnología PD y QC, compatible con Apple y Android",
+    "Cargador rápido 6 en 1 compatible con Apple y Android"
+  ],
+  "precio_original": 100000,
+  "precio_final": 160000,
+  "descripcion_ia": "El RP-U117 es un cargador rápido 6 en 1 diseñado para ofrecer una carga rápida y eficiente a tus dispositivos. Compatible con Apple y Android, este cargador utiliza tecnología PD y QC para garantizar una carga segura y veloz. Con una potencia de 65W, es ideal para cargar tus dispositivos en cualquier momento y lugar. Su diseño versátil y compacto lo hace perfecto para uso diario, viajes o en el hogar. El cargador RP-U117 es una excelente opción para aquellos que buscan una solución de carga rápida y confiable para todos sus dispositivos.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\191_RP-U117.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\192_RP-U117.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\193_RP-U117.png"
+  ]
+}

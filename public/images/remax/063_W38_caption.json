@@ -1,0 +1,16 @@
+{
+  "pagina": 23,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_23_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "W38",
+  "precio": 45000,
+  "descripcion": "Auriculares inalámbricos con tecnología True Wireless Stereo",
+  "categoria": "auriculares",
+  "width": 740,
+  "height": 843,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W38 Auriculares Inalámbricos True Wireless Stereo",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos W38 True Wireless Stereo. Diseñados para ofrecer una experiencia de sonido envolvente y sin interrupciones, estos auriculares cuentan con tecnología True Wireless Stereo que te permite disfrutar de tu música favorita sin la molestia de cables. Ideales para uso diario, ejercicio o viajes, los auriculares W38 son compatibles con la mayoría de dispositivos móviles y ofrecen una conexión estable y de alta calidad. Su diseño ergonómico se adapta cómodamente a tus oídos, permitiéndote disfrutar de tu música durante horas sin fatiga. Disfruta de la comodidad y la calidad de sonido superior con los auriculares inalámbricos W38.",
+  "precio_final_llm": 72000
+}

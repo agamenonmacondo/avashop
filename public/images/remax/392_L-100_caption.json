@@ -1,0 +1,16 @@
+{
+  "pagina": 136,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_136_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "L-100",
+  "precio": 10000,
+  "descripcion": "Cable auxiliar de audio stereo de 3.5mm y 1 metro de longitud",
+  "categoria": "cable",
+  "width": 656,
+  "height": 684,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "L-100 Cable Auxiliar de Audio Stereo 3.5mm 1 Metro",
+  "descripcion_generada_llm": "Cable auxiliar de audio diseñado para conectar dispositivos de audio a parlantes, auriculares o sistemas de sonido. Con un conector jack stereo de 3.5mm en ambos extremos y una longitud de 1 metro, este cable ofrece una conexión estable y de alta calidad para disfrutar de tu música favorita. Fabricado con materiales de alta calidad, garantiza una transmisión de audio nítida y sin interferencias. Compatible con la mayoría de dispositivos que cuentan con conector de 3.5mm, es ideal para uso en hogares, oficinas o en cualquier lugar donde se necesite conectar un dispositivo de audio a un sistema de sonido. Su longitud de 1 metro es perfecta para conexiones cercanas sin exceso de cable. Disfruta de una experiencia de audio superior con este cable auxiliar de audio stereo.",
+  "precio_final_llm": 16000
+}

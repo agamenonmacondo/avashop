@@ -1,15 +1,13 @@
-```json
 {
-  "pagina": 131,
-  "index": 1,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_131_img_1.png",
-  "tipo": "producto",
-  "nombre_producto": "RM-202",
-  "precio": 22000,
-  "descripcion": "Audifonos manos libres con Deep Bass para llamadas y música",
-  "categoria": "auriculares",
-  "width": 710,
-  "height": 969,
-  "color_principal": "negro"
+    "pagina": 130,
+    "index": 1,
+    "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_130_img_1.png",
+    "tipo": "producto",
+    "nombre_producto": "RM-202",
+    "precio": 22000,
+    "descripcion": "Audifonos manos libres con Deep Bass para llamadas y música",
+    "categoria": "auriculares",
+    "width": 710,
+    "height": 969,
+    "color_principal": "negro"
 }
-```

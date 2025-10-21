@@ -1,0 +1,16 @@
+{
+  "pagina": 65,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_65_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-C115",
+  "precio": 27000,
+  "descripcion": "Cable de datos con carga rápida inteligente de 100W y apagado automático",
+  "categoria": "cable",
+  "width": 800,
+  "height": 800,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RC-C115 Cable de Carga Rápida Inteligente 100W con Apagado Automático",
+  "descripcion_generada_llm": "Cable de datos diseñado para carga rápida inteligente de hasta 100W y función de apagado automático. Ideal para dispositivos compatibles con carga rápida, este cable ofrece una solución eficiente y segura para mantener tus dispositivos cargados. Fabricado con materiales de alta calidad, garantiza durabilidad y un rendimiento óptimo. Compatible con una amplia gama de dispositivos que soportan carga rápida, es perfecto para uso diario y ofrece la ventaja de evitar el sobrecalentamiento gracias a su función de apagado automático.",
+  "precio_final_llm": 43200
+}

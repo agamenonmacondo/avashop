@@ -1,0 +1,16 @@
+{
+  "pagina": 31,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_31_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "C02-CL30W",
+  "precio": 27000,
+  "descripcion": "Cable de datos de aleación de aluminio con succión magnética y trenzado fácil",
+  "categoria": "cable",
+  "width": 702,
+  "height": 756,
+  "color_principal": "plateado",
+  "nombre_generado_llm": "C02-CL30W - Cable de datos de aleación de aluminio con succión magnética y trenzado",
+  "descripcion_generada_llm": "Cable de datos de alta calidad fabricado con aleación de aluminio, diseñado con tecnología de succión magnética y trenzado para una mayor eficiencia y durabilidad. Ideal para conexiones de datos seguras y rápidas, este cable ofrece una excelente transmisión de datos y es compatible con una amplia gama de dispositivos. Sus materiales de alta calidad aseguran una larga vida útil y su diseño trenzado reduce las interferencias electromagnéticas, proporcionando una conexión estable y fiable. Perfecto para uso en entornos que requieren una conexión de datos robusta y segura.",
+  "precio_final_llm": 43200
+}

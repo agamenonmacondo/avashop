@@ -1,15 +1,16 @@
-```
 {
- "pagina": 92,
- "index": 3,
- "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_92_img_3.png",
- "tipo": "producto",
- "nombre_producto": "RM-C02",
- "precio": 35000,
- "descripcion": "Soporte para auto con ventilación de aire",
- "categoria": "soporte",
- "width": 800,
- "height": 800,
- "color_principal": "negro"
+  "pagina": 93,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_93_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-C02",
+  "precio": 35000,
+  "descripcion": "Soporte para auto con ventilación de aire",
+  "categoria": "soporte",
+  "width": 900,
+  "height": 993,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C02 Soporte para Auto con Ventilación de Aire",
+  "descripcion_generada_llm": "El RM-C02 es un soporte diseñado para proporcionar una ventilación de aire efectiva en su vehículo. Fabricado con materiales de alta calidad, este soporte está pensado para ofrecer durabilidad y resistencia. Su diseño permite una fácil instalación y compatibilidad con una amplia gama de vehículos. Entre sus características destacadas se incluyen su capacidad para mejorar la ventilación dentro del auto, proporcionando un ambiente más cómodo para el conductor y los pasajeros. Ideal para aquellos que buscan mejorar la experiencia de conducción, este soporte es una excelente opción gracias a su funcionalidad y diseño práctico.",
+  "precio_final_llm": 56000
 }
-```

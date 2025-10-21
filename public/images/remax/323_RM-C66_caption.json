@@ -1,0 +1,16 @@
+{
+  "pagina": 112,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_112_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-C66",
+  "precio": 50000,
+  "descripcion": "Soporte para auto con clip para teléfono o tablet, giratorio 360 grados",
+  "categoria": "soporte",
+  "width": 770,
+  "height": 773,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C66 Soporte Giratorio 360 Grados para Teléfono o Tablet en Automóvil",
+  "descripcion_generada_llm": "El RM-C66 es un soporte para automóvil diseñado para proporcionar una sujeción segura y ajustable para teléfonos o tablets. Con su capacidad de girar 360 grados, ofrece una flexibilidad total para que puedas visualizar tu dispositivo desde cualquier ángulo mientras conduces. Fabricado con materiales de alta calidad, este soporte cuenta con un clip robusto que se adapta a diferentes tamaños de dispositivos, asegurando una compatibilidad amplia. Su diseño giratorio facilita el acceso a las funciones de tu teléfono o tablet sin necesidad de retirarlo del soporte, lo que contribuye a una experiencia de conducción más segura y cómoda. Ideal para uso diario, este soporte es perfecto para conductores que dependen de sus dispositivos para la navegación, el entretenimiento o la comunicación durante sus viajes.",
+  "precio_final_llm": 80000
+}

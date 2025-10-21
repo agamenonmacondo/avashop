@@ -1,0 +1,16 @@
+{
+  "pagina": 85,
+  "index": 4,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_85_img_4.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-760",
+  "precio": 140000,
+  "descripcion": "Auriculares inalámbricos con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
+  "categoria": "auriculares",
+  "width": 665,
+  "height": 665,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-760 Auriculares Inalámbricos 5.3 Alta Fidelidad",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos RB-760. Equipados con la última tecnología 5.3, ofrecen una conexión estable y de alta calidad para una experiencia de audio inmersiva. Diseñados para los amantes de la música y las llamadas de alta fidelidad, estos auriculares proporcionan un sonido nítido y claro. Con una batería de larga duración de hasta 45 horas, podrás disfrutar de tu música favorita durante todo el día sin interrupciones. Perfectos para uso diario, viajes o sesiones de ejercicio, los RB-760 son la elección ideal para aquellos que buscan calidad y comodidad en un solo dispositivo.",
+  "precio_final_llm": 224000
+}

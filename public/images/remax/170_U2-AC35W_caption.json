@@ -1,0 +1,16 @@
+{
+  "pagina": 60,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_60_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "U2-AC35W",
+  "precio": 60000,
+  "descripcion": "Cargador con tecnología GAN, pantalla digital, 35 vatios, con puerto USB",
+  "categoria": "cargador",
+  "width": 608,
+  "height": 893,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "U2-AC35W Cargador Rápido GAN con Pantalla Digital de 35 Vatios y Puerto USB",
+  "descripcion_generada_llm": "Cargador avanzado con tecnología GAN que ofrece una carga rápida y eficiente. Equipado con una pantalla digital para una fácil visualización del estado de carga, este cargador de 35 vatios proporciona una solución de carga potente y versátil. Incorpora un puerto USB para conectar sus dispositivos, lo que lo hace compatible con una amplia gama de productos electrónicos. Su diseño y tecnología permiten un uso seguro y eficiente, ideal para aquellos que buscan una solución de carga rápida y fiable para sus dispositivos móviles y otros aparatos electrónicos. La tecnología GAN (Nitruro de Galio) asegura una mayor eficiencia energética y un menor calentamiento, lo que prolonga la vida útil del cargador y reduce el impacto ambiental. Perfecto para uso en hogar, oficina o en movimiento.",
+  "precio_final_llm": 96000
+}

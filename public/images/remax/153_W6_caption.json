@@ -1,0 +1,16 @@
+{
+  "pagina": 54,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_54_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "W6",
+  "precio": 90000,
+  "descripcion": "Auriculares inalámbricos con Bluetooth 5.3 y tecnología touch",
+  "categoria": "auriculares",
+  "width": 790,
+  "height": 943,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "W6 Auriculares Inalámbricos Bluetooth 5.3 con Control Táctil",
+  "descripcion_generada_llm": "Experimenta la libertad de la música sin cables con nuestros auriculares inalámbricos W6. Equipados con la última tecnología Bluetooth 5.3, ofrecen una conexión estable y de alta calidad. El control táctil intuitivo te permite manejar tu música y llamadas con un simple toque. Diseñados para ofrecer una experiencia auditiva inmersiva, son perfectos para uso diario, ejercicio o viajes. Compatibles con la mayoría de dispositivos móviles y tabletas, estos auriculares son una excelente opción para aquellos que buscan comodidad y tecnología de vanguardia.",
+  "precio_final_llm": 144000
+}

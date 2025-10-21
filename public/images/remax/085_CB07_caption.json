@@ -1,0 +1,16 @@
+{
+  "pagina": 30,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_30_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "CB07",
+  "precio": 27000,
+  "descripcion": "Cable de datos con aleación de aluminio y atracción magnética, fácil de usar y trenzado, de 1.2 metros",
+  "categoria": "cable",
+  "width": 740,
+  "height": 740,
+  "color_principal": "plateado",
+  "nombre_generado_llm": "CB07 - Cable de Datos Trenzado con Aleación de Aluminio y Atracción Magnética",
+  "descripcion_generada_llm": "Cable de datos de alta calidad fabricado en aleación de aluminio, diseñado con un trenzado que facilita su uso y cuenta con atracción magnética. Con una longitud de 1.2 metros, este cable es ideal para conectar dispositivos de manera segura y eficiente. Su diseño trenzado no solo mejora la durabilidad sino que también reduce las interferencias electromagnéticas, asegurando una transmisión de datos estable y fiable. Compatible con una amplia gama de dispositivos, este cable es perfecto para usuarios que buscan una solución de conexión robusta y fácil de usar.",
+  "precio_final_llm": 43200
+}

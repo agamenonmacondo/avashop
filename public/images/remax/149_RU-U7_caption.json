@@ -1,0 +1,16 @@
+{
+  "pagina": 52,
+  "index": 3,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_52_img_3.png",
+  "tipo": "producto",
+  "nombre_producto": "RU-U7",
+  "precio": 35000,
+  "descripcion": "Hub USB 3.0 con conector TYPE C, lector de tarjetas SD y 5 puertos en total",
+  "categoria": "hub",
+  "width": 606,
+  "height": 931,
+  "color_principal": "plata/aluminio",
+  "nombre_generado_llm": "RU-U7 Hub USB 3.0 con Lector de Tarjetas SD y Conector TYPE C",
+  "descripcion_generada_llm": "El RU-U7 es un hub USB 3.0 diseñado para expandir tus opciones de conectividad con un conector TYPE C y un lector de tarjetas SD integrado. Con un total de 5 puertos, este dispositivo ofrece una solución práctica para conectar múltiples dispositivos al mismo tiempo. Ideal para usuarios que necesitan ampliar la capacidad de sus ordenadores o dispositivos portátiles, el RU-U7 proporciona una conexión rápida y estable gracias a su tecnología USB 3.0. Su diseño compacto y funcional lo hace perfecto para entornos de trabajo y uso diario. Compatible con dispositivos que cuentan con puerto USB TYPE C, este hub es una excelente opción para aquellos que buscan una forma eficiente de organizar y conectar sus dispositivos periféricos.",
+  "precio_final_llm": 56000
+}

@@ -1,0 +1,16 @@
+{
+  "pagina": 61,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_61_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "C-25 / C-26",
+  "precio": "$25.000",
+  "descripcion": "Cable adaptador de audio con conector 3.5 mm a Lightning o Type C",
+  "categoria": "cable",
+  "width": 687,
+  "height": 861,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "C-25__C-26 C-25 / C-26 Cable Adaptador de Audio 3.5mm a Lightning/Type C",
+  "descripcion_generada_llm": "Cable adaptador de audio diseñado para conectar dispositivos con conector de 3.5 mm a dispositivos con puerto Lightning o Type C. Ideal para usuarios que buscan disfrutar de su música o contenido de audio en dispositivos más recientes que no cuentan con conector de 3.5 mm. Fabricado con materiales de alta calidad que aseguran una conexión estable y duradera. Compatible con una amplia gama de dispositivos, incluyendo teléfonos, tabletas y reproductores de audio. Su diseño compacto y ligero lo hace fácil de transportar. Entre sus ventajas se encuentran la capacidad de mantener la calidad de audio original y su facilidad de uso, permitiendo a los usuarios conectar sus auriculares o altavoces favoritos sin necesidad de dispositivos adicionales.",
+  "precio_final_llm": 40000
+}

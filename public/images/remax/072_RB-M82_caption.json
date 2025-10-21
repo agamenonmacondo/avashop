@@ -1,0 +1,16 @@
+{
+  "pagina": 26,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_26_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-M82",
+  "precio": 100000,
+  "descripcion": "Altavoz portátil inalámbrico con 14W de potencia, compatible con USB, tarjeta TF y FM",
+  "categoria": "altavoz",
+  "width": 696,
+  "height": 1000,
+  "color_principal": "desconocido",
+  "nombre_generado_llm": "RB-M82 Altavoz Portátil Inalámbrico de 14W con Conectividad USB, Tarjeta TF y FM",
+  "descripcion_generada_llm": "Disfruta de un sonido nítido y potente con el altavoz portátil inalámbrico RB-M82. Con una potencia de 14W, este altavoz ofrece una excelente calidad de audio para tus momentos de entretenimiento. Es compatible con USB, tarjeta TF y FM, lo que te permite reproducir tu música favorita desde diferentes fuentes. Su diseño portátil te permite llevarlo contigo a cualquier lugar, ya sea al aire libre o en el interior. Ideal para reuniones, viajes o simplemente para disfrutar de tu música en cualquier momento. Con su tecnología inalámbrica, puedes conectar tus dispositivos sin la necesidad de cables, lo que te brinda mayor libertad y comodidad.",
+  "precio_final_llm": 160000
+}

@@ -1,0 +1,16 @@
+{
+  "pagina": 57,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR (1)\\page_57_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "MASCARILLA FACIAL HIDRATANTE DE PINGUINO MONDSUB",
+  "precio": "$20.000",
+  "descripcion": "Mascarilla hidratante para refrescar e hidratar la piel",
+  "categoria": "cuidado personal",
+  "width": 1050,
+  "height": 1050,
+  "color_principal": "blanco/azul",
+  "nombre_generado_llm": "MASCARILLA_FACIAL_HIDRATANTE_DE_PINGUINO_MONDSUB - Mascarilla Facial Hidratante Refrescante",
+  "descripcion_generada_llm": "La MASCARILLA FACIAL HIDRATANTE DE PINGUINO MONDSUB es un producto de cuidado facial diseñado para proporcionar hidratación intensa y refrescar la piel. Esta mascarilla está formulada para satisfacer las necesidades de las pieles que requieren una hidratación profunda y un toque refrescante. Su fórmula única ayuda a mantener la piel suave, hidratada y con un aspecto saludable. Ideal para usar en cualquier momento del día, especialmente después de la limpieza facial, para maximizar su eficacia. Compatible con todos los tipos de piel, esta mascarilla facial es una excelente opción para aquellos que buscan mantener su piel hidratada y saludable.",
+  "precio_final_llm": 32000
+}

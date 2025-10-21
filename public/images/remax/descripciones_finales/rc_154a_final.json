@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RC 154a",
+  "nombre_ia": "RC_154A - Cable USB Tipo C con Carga Rápida de 2.4 AMP",
+  "referencia": "rc_154a",
+  "descripciones_originales": [
+    "Cable USB tipo C con carga rápida de 2.4 AMP",
+    "Cable USB tipo C con carga rápida de 2.4 AMP",
+    "Cable USB tipo C con carga rápida de 2.4 AMP"
+  ],
+  "precio_original": 15000,
+  "precio_final": 24000,
+  "descripcion_ia": "Cable USB Tipo C diseñado para carga rápida a 2.4 AMP, ideal para dispositivos compatibles con esta tecnología. Fabricado con materiales de alta calidad que garantizan durabilidad y eficiencia en la transferencia de datos y carga. Compatible con dispositivos que cuentan con puerto USB Tipo C. Ventajas: carga rápida, compatible con una amplia gama de dispositivos, duradero. Especificaciones técnicas: tipo de conector - USB Tipo C, corriente máxima - 2.4 AMP, tecnología de carga - carga rápida. Uso recomendado: carga y transferencia de datos en dispositivos móviles y otros equipos compatibles.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\352_RC_154a.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\353_RC_154a.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\354_RC_154a.png"
+  ]
+}

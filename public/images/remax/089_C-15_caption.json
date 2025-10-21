@@ -1,0 +1,16 @@
+{
+  "pagina": 32,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_32_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "C-15",
+  "precio": 27000,
+  "descripcion": "Cable de datos de aluminio con carga rápida de 30W",
+  "categoria": "cable",
+  "width": 395,
+  "height": 401,
+  "color_principal": "plateado",
+  "nombre_generado_llm": "C-15 Cable de Datos de Aluminio con Carga Rápida de 30W",
+  "descripcion_generada_llm": "Cable de datos fabricado en aluminio, diseñado para ofrecer una carga rápida de hasta 30W. Ideal para dispositivos compatibles con esta tecnología, proporciona una conexión segura y eficiente. Su construcción en aluminio le confiere durabilidad y resistencia a la corrosión, asegurando un rendimiento óptimo a lo largo del tiempo. Compatible con una amplia gama de dispositivos que soportan carga rápida, este cable es perfecto para usuarios que buscan una solución de carga rápida y fiable. Sus características incluyen: carga rápida de hasta 30W, material de aluminio de alta calidad, y una conexión de datos segura. Es una excelente opción para aquellos que necesitan una carga eficiente y rápida para sus dispositivos móviles o tablets compatibles.",
+  "precio_final_llm": 43200
+}

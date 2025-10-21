@@ -1,16 +1,16 @@
 {
-  "pagina": 130,
+  "pagina": 129,
   "index": 0,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_130_img_0.png",
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_129_img_0.png",
   "tipo": "producto",
   "nombre_producto": "RM-711",
-  "precio": 25000,
+  "precio": "$25.000",
   "descripcion": "Manos libres clásico para música y llamadas compatible con Apple y Android",
   "categoria": "auriculares",
   "width": 701,
   "height": 669,
   "color_principal": "blanco",
   "nombre_generado_llm": "RM-711 Manos Libres Clásico para Música y Llamadas",
-  "descripcion_generada_llm": "El RM-711 es un dispositivo manos libres clásico diseñado para disfrutar de música y realizar llamadas de manera cómoda y segura. Compatible con dispositivos Apple y Android, este producto ofrece una experiencia de audio nítida y sin complicaciones. Su diseño clásico y ergonómico lo hace ideal para usar en diferentes entornos, ya sea durante el ejercicio, en el trabajo o simplemente relajándose. Con su tecnología de compatibilidad universal, garantiza una conexión estable y de alta calidad para llamadas y reproducción de música. Disfruta de tu música favorita y mantén tus manos libres para otras actividades con el RM-711.",
+  "descripcion_generada_llm": "El RM-711 es un dispositivo manos libres diseñado para disfrutar de música y realizar llamadas de manera cómoda y segura. Compatible con dispositivos Apple y Android, este producto ofrece una experiencia de audio de alta calidad sin la necesidad de sostener el teléfono. Ideal para conductores, deportistas y cualquier persona que busque comodidad y seguridad al usar su dispositivo móvil. Sus características incluyen compatibilidad universal con la mayoría de los teléfonos inteligentes del mercado, permitiendo una conexión fácil y rápida. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia al uso diario. Su diseño clásico y ergonómico se adapta perfectamente a diferentes entornos de uso, desde el automóvil hasta durante el ejercicio físico.",
   "precio_final_llm": 40000
 }

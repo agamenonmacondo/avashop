@@ -1,0 +1,16 @@
+{
+  "pagina": 96,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_96_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-226",
+  "precio": "$150.000",
+  "descripcion": "Power bank magnético inalámbrico con carga rápida QC 22.5W y PD 20W, capacidad de 10000mAh",
+  "categoria": "cargador",
+  "width": 320,
+  "height": 320,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RPP-226 Power Bank Magnético Inalámbrico con Carga Rápida 10000mAh",
+  "descripcion_generada_llm": "El RPP-226 es un power bank magnético inalámbrico diseñado para proporcionar carga rápida y eficiente a tus dispositivos compatibles. Con una capacidad de 10000mAh, este power bank ofrece una carga prolongada para tus dispositivos en cualquier momento y lugar. Soporta carga rápida QC 22.5W y PD 20W, lo que garantiza una carga rápida y segura para tus dispositivos compatibles. Su diseño magnético permite una fácil adhesión a superficies metálicas, manteniéndolo firmemente en su lugar. Ideal para aquellos que necesitan una fuente de energía portátil y fiable para sus dispositivos móviles, este power bank es perfecto para uso diario, viajes o en situaciones de emergencia. Con su tecnología de carga inalámbrica, puedes cargar tus dispositivos sin la necesidad de cables, lo que lo hace muy conveniente para el uso diario.",
+  "precio_final_llm": 240000
+}

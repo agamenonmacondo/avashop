@@ -1,15 +1,16 @@
-```json
 {
-  "pagina": 94,
-  "index": 3,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_94_img_3.png",
+  "pagina": 95,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_95_img_1.png",
   "tipo": "producto",
   "nombre_producto": "RM-C32",
-  "precio": 25000,
-  "descripcion": "Soporte giratorio multifuncional para desktop, tablet y teléfono",
+  "precio": "$25.000",
+  "descripcion": "Soporte giratorio multifuncional para escritorio, compatible con tablet y teléfono",
   "categoria": "soporte",
-  "width": 900,
-  "height": 912,
-  "color_principal": "negro"
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-C32 Soporte Giratorio Multifuncional para Escritorio",
+  "descripcion_generada_llm": "El RM-C32 es un soporte giratorio multifuncional diseñado para proporcionar una experiencia de uso óptima en escritorios. Compatible con tablets y teléfonos, este soporte ofrece versatilidad y comodidad para diversas necesidades. Su diseño giratorio permite ajustar el dispositivo a la posición deseada, facilitando su uso en diferentes contextos. Ideal para entornos de trabajo, estudio o entretenimiento, el RM-C32 es una solución práctica y eficiente para mantener el dispositivo en una posición óptima. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia. Sus características multifuncionales lo convierten en un accesorio esencial para aquellos que buscan maximizar la funcionalidad de sus dispositivos en un entorno de escritorio.",
+  "precio_final_llm": 40000
 }
-```

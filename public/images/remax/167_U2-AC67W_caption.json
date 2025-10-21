@@ -1,0 +1,16 @@
+{
+  "pagina": 59,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_59_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "U2-AC67W",
+  "precio": 90000,
+  "descripcion": "Cargador de 67 vatios con tecnología GAN y pantalla digital",
+  "categoria": "cargador",
+  "width": 711,
+  "height": 1209,
+  "color_principal": "negro",
+  "nombre_generado_llm": "U2-AC67W - Cargador USB-C de 67W con Tecnología GAN y Pantalla Digital",
+  "descripcion_generada_llm": "Cargador compacto y eficiente con tecnología GAN (Nitruro de Galio) que ofrece una carga rápida y segura. Equipado con un puerto USB-C, este cargador proporciona hasta 67 vatios de potencia, lo que lo hace ideal para cargar dispositivos compatibles de manera rápida. La pantalla digital integrada muestra información importante durante el proceso de carga. Fabricado con materiales de alta calidad, este cargador es compatible con una amplia gama de dispositivos que soportan carga USB-C. Sus ventajas incluyen una mayor eficiencia energética, menor generación de calor y un diseño compacto que lo hace fácil de transportar. Es perfecto para uso en casa, en la oficina o durante el viaje.",
+  "precio_final_llm": 144000
+}

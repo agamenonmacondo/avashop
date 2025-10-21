@@ -1,18 +1,14 @@
 {
-  "nombre_producto": "RB-760 HB",
-  "nombre_ia": "RB-760 Auriculares Inalámbricos REMAX BINCOURI SERIES con Tecnología Bluetooth 5.3",
+  "nombre_producto": "RB-760",
+  "nombre_ia": "RB-760 Auriculares Inalámbricos 5.3 Alta Fidelidad",
   "referencia": "rb-760",
   "descripciones_originales": [
-    "Auriculares inalámbricos REMAX BINCOURI SERIES con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
-    "Auriculares inalámbricos REMAX HEADPHONE BINCOURI SERIES con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas",
-    "Auriculares inalámbricos REMAX HEADPHONE BINCOURI SERIES con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas"
+    "Auriculares inalámbricos con tecnología 5.3, alta fidelidad para música y llamadas, batería de hasta 45 horas"
   ],
   "precio_original": 140000,
   "precio_final": 224000,
-  "descripcion_ia": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos REMAX BINCOURI SERIES. Equipados con la última tecnología Bluetooth 5.3, ofrecen una conexión estable y de alta calidad para una experiencia de audio inmersiva. Diseñados para aquellos que buscan alta fidelidad tanto para música como para llamadas, estos auriculares proporcionan un sonido nítido y claro. Con una batería de larga duración de hasta 45 horas, podrás disfrutar de tu música favorita durante todo el día sin interrupciones. Perfectos para uso diario, viajes o sesiones de ejercicio, los auriculares REMAX BINCOURI SERIES combinan funcionalidad y estilo. Su diseño ergonómico se adapta cómodamente a tus oídos, asegurando un ajuste seguro y confortable. Disfruta de la música sin límites con estos innovadores auriculares inalámbricos.",
+  "descripcion_ia": "Experimenta la libertad de la música sin cables con los auriculares inalámbricos RB-760. Equipados con la última tecnología 5.3, ofrecen una conexión estable y de alta calidad para una experiencia de audio inmersiva. Diseñados para los amantes de la música y las llamadas de alta fidelidad, estos auriculares proporcionan un sonido nítido y claro. Con una batería de larga duración de hasta 45 horas, podrás disfrutar de tu música favorita durante todo el día sin interrupciones. Perfectos para uso diario, viajes o sesiones de ejercicio, los RB-760 son la elección ideal para aquellos que buscan calidad y comodidad en un solo dispositivo.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\240_rb-760.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\241_rb-760.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\242_rb-760.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\247_RB-760.png"
   ]
 }

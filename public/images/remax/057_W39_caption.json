@@ -1,0 +1,16 @@
+{
+  "pagina": 21,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_21_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "W39",
+  "precio": "$65.000",
+  "descripcion": "Auriculares inalámbricos con pantalla digital",
+  "categoria": "auriculares",
+  "width": 450,
+  "height": 756,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "W39 Auriculares Inalámbricos con Pantalla Digital",
+  "descripcion_generada_llm": "Auriculares inalámbricos con pantalla digital de última generación. Estos auriculares ofrecen una experiencia de audio inmersiva y sin interrupciones gracias a su tecnología inalámbrica avanzada. La pantalla digital proporciona información en tiempo real sobre el nivel de batería, el volumen y la conexión, lo que facilita su uso. Diseñados para ser compatibles con la mayoría de dispositivos móviles y reproductores de música, estos auriculares son ideales para aquellos que buscan comodidad y calidad de sonido en sus actividades diarias, ya sea durante el ejercicio, el trabajo o el entretenimiento. Su diseño ergonómico asegura un ajuste cómodo y seguro, permitiendo un uso prolongado sin fatiga. Con su tecnología de cancelación de ruido y sonido de alta fidelidad, estos auriculares ofrecen una experiencia de audio superior.",
+  "precio_final_llm": 104000
+}

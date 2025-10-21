@@ -1,0 +1,16 @@
+{
+  "pagina": 46,
+  "index": 3,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_46_img_3.png",
+  "tipo": "producto",
+  "nombre_producto": "SMART WATCH 9 CZHIWO",
+  "precio": "$130.000",
+  "descripcion": "Reloj inteligente con batería de larga duración, monitor y llamadas inalámbricas",
+  "categoria": "reloj inteligente",
+  "width": 566,
+  "height": 942,
+  "color_principal": "negro/blanco/gris",
+  "nombre_generado_llm": "SMART_WATCH_9_CZHIWO - Reloj Inteligente de Alta Duración con Conectividad Inalámbrica",
+  "descripcion_generada_llm": "El SMART_WATCH_9_CZHIWO es un reloj inteligente diseñado para ofrecer una experiencia de usuario superior gracias a su batería de larga duración y funcionalidades de monitor y llamadas inalámbricas. Este dispositivo está pensado para aquellos que buscan un accesorio inteligente que se adapte a su estilo de vida activo. Con su avanzada tecnología, permite una conectividad inalámbrica estable para llamadas y sincronización de datos. Ideal para uso diario, deportivo y como complemento de estilo. Características principales: batería de larga duración, monitor de actividad y salud, llamadas inalámbricas. Compatible con dispositivos móviles para una experiencia integrada. Materiales de alta calidad para una durabilidad óptima. Fácil de usar gracias a su interfaz intuitiva.",
+  "precio_final_llm": 208000
+}

@@ -1,0 +1,16 @@
+{
+  "pagina": 50,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_50_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-W93",
+  "precio": "$90.000",
+  "descripcion": "Soporte de coche con carga inalámbrica y compatibilidad con MagSafe",
+  "categoria": "soporte",
+  "width": 611,
+  "height": 642,
+  "color_principal": "negro/blanco",
+  "nombre_generado_llm": "RP-W93 Soporte de Coche con Carga Inalámbrica y Función Plegable MagSafe",
+  "descripcion_generada_llm": "El RP-W93 es un soporte de coche diseñado para ofrecer una experiencia de carga inalámbrica segura y conveniente. Compatible con la tecnología MagSafe, este soporte permite una carga rápida de hasta 15W para dispositivos compatibles. Su función plegable facilita su almacenamiento cuando no está en uso, manteniendo el interior del vehículo organizado. Fabricado con materiales de alta calidad, este soporte es duradero y está diseñado para soportar el uso diario. Ideal para conductores que buscan mantener su dispositivo cargado y a mano mientras conducen, el RP-W93 combina funcionalidad y diseño innovador. Sus características clave incluyen compatibilidad con MagSafe, carga inalámbrica de 15W y un diseño plegable para mayor comodidad.",
+  "precio_final_llm": 144000
+}

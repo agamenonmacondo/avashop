@@ -1,0 +1,16 @@
+{
+  "pagina": 19,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_19_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-C170C",
+  "precio": 27000,
+  "descripcion": "Cable de datos serie Explore con carga rápida PD 2ª Gen",
+  "categoria": "cable",
+  "width": 641,
+  "height": 849,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RC-C170C Cable de Datos REMAX Serie Explore con Carga Rápida PD 2ª Gen",
+  "descripcion_generada_llm": "Cable de datos de alta calidad diseñado para ofrecer una conexión estable y rápida entre dispositivos. Fabricado por REMAX, este cable pertenece a la serie Explore y cuenta con tecnología de carga rápida PD de 2ª generación, permitiendo una carga más eficiente de tus dispositivos compatibles. Ideal para aquellos que buscan un cable duradero y compatible con una amplia gama de dispositivos, este cable de datos es perfecto para uso diario. Sus materiales de alta calidad aseguran una larga vida útil y su diseño ergonómico facilita su manejo. Compatible con dispositivos que soportan carga rápida PD, este cable es una excelente opción para quienes necesitan una conexión fiable y rápida.",
+  "precio_final_llm": 43200
+}

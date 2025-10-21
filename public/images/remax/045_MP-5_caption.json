@@ -1,0 +1,16 @@
+{
+  "pagina": 17,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_17_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "MP-5",
+  "precio": 100000,
+  "descripcion": "Power bank con carga inalámbrica y carga rápida PD 20W",
+  "categoria": "cargador",
+  "width": 503,
+  "height": 883,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "MP-5 Power Bank con Carga Inalámbrica y Carga Rápida PD 20W",
+  "descripcion_generada_llm": "El MP-5 es un power bank avanzado que combina la comodidad de la carga inalámbrica con la eficiencia de la carga rápida PD 20W. Con una capacidad de carga inalámbrica de hasta 15W, este dispositivo es ideal para usuarios que buscan una solución de carga versátil y rápida para sus dispositivos compatibles. Fabricado con materiales de alta calidad, el MP-5 es duradero y fiable. Es compatible con una amplia gama de dispositivos que soportan carga inalámbrica y carga rápida PD. Sus ventajas incluyen la capacidad de cargar dispositivos sin la necesidad de cables, lo que reduce el desorden y facilita el uso en diversas situaciones. Además, su diseño compacto lo hace fácil de transportar. El MP-5 es perfecto para uso diario, viajes y situaciones en las que se requiere una fuente de energía portátil y eficiente.",
+  "precio_final_llm": 160000
+}

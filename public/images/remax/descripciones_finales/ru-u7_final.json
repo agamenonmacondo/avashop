@@ -1,18 +1,14 @@
 {
   "nombre_producto": "RU-U7",
-  "nombre_ia": "RU-U7 Hub USB 5 en 1 con Conector Type C, USB 3.0 y Ranura para Tarjeta SD",
+  "nombre_ia": "RU-U7 Hub USB 3.0 con Lector de Tarjetas SD y Conector TYPE C",
   "referencia": "ru-u7",
   "descripciones_originales": [
-    "Hub USB 5 en 1 con conector Type C, USB 3.0 y ranura para tarjeta SD",
-    "Hub USB 5 en 1 con conector Type C, USB 3.0 y ranura para tarjeta SD",
-    "Hub USB 5 en 1 con conector TYPE C, USB 3.0 y ranura para tarjeta SD"
+    "Hub USB 3.0 con conector TYPE C, lector de tarjetas SD y 5 puertos en total"
   ],
   "precio_original": 35000,
   "precio_final": 56000,
-  "descripcion_ia": "El RU-U7 es un hub USB versátil y práctico diseñado para expandir tus opciones de conectividad. Con su conector Type C y puerto USB 3.0, ofrece una transferencia de datos rápida y eficiente. Además, cuenta con una ranura para tarjeta SD, lo que te permite acceder a tus archivos de almacenamiento de manera sencilla. Ideal para usuarios que necesitan conectar múltiples dispositivos a su computadora o dispositivo móvil. Fabricado con materiales de alta calidad, garantiza durabilidad y un rendimiento óptimo. Compatible con una amplia gama de dispositivos que cuenten con puerto USB Type C. Sus dimensiones compactas lo hacen ideal para llevarlo contigo a cualquier lugar. Características principales: - 5 puertos en uno: Type C, USB 3.0 y ranura para tarjeta SD. - Transferencia de datos rápida a través de USB 3.0. - Compatible con dispositivos que tengan puerto USB Type C. - Diseño compacto y ligero para una fácil transportación. - Materiales de alta calidad para una mayor durabilidad.",
+  "descripcion_ia": "El RU-U7 es un hub USB 3.0 diseñado para expandir tus opciones de conectividad con un conector TYPE C y un lector de tarjetas SD integrado. Con un total de 5 puertos, este dispositivo ofrece una solución práctica para conectar múltiples dispositivos al mismo tiempo. Ideal para usuarios que necesitan ampliar la capacidad de sus ordenadores o dispositivos portátiles, el RU-U7 proporciona una conexión rápida y estable gracias a su tecnología USB 3.0. Su diseño compacto y funcional lo hace perfecto para entornos de trabajo y uso diario. Compatible con dispositivos que cuentan con puerto USB TYPE C, este hub es una excelente opción para aquellos que buscan una forma eficiente de organizar y conectar sus dispositivos periféricos.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\121_ru-u7.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\122_ru-u7.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\123_ru-u7.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\149_RU-U7.png"
   ]
 }

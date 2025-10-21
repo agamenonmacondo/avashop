@@ -1,0 +1,16 @@
+{
+  "pagina": 98,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_98_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-213",
+  "precio": 130000,
+  "descripcion": "Power Bank con carga rápida QC2.5W y PD20W, tipo C, 20000mAh",
+  "categoria": "cargador",
+  "width": 1000,
+  "height": 1000,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RPP-213 Power Bank de 20000mAh con Carga Rápida QC y PD",
+  "descripcion_generada_llm": "El RPP-213 es un power bank de alta capacidad diseñado para mantener tus dispositivos cargados durante todo el día. Con una capacidad de 20000mAh, ofrece una gran autonomía para tus necesidades diarias. Cuenta con tecnología de carga rápida QC 2.5W y PD 20W a través de su puerto tipo C, lo que te permite cargar tus dispositivos compatibles de manera rápida y eficiente. Ideal para aquellos que necesitan una fuente de energía portátil y fiable, ya sea para uso diario o en situaciones de emergencia. Su diseño compacto y su capacidad para cargar varios dispositivos al mismo tiempo lo convierten en un accesorio indispensable para cualquier persona que dependa de sus dispositivos electrónicos.",
+  "precio_final_llm": 208000
+}

@@ -1,0 +1,18 @@
+{
+  "nombre_producto": "RC-081",
+  "nombre_ia": "RC-081 Cable de Carga REMAX Serie Weave 2.1A",
+  "referencia": "rc-081",
+  "descripciones_originales": [
+    "Cable de carga o línea textil flexible de la serie Weave de REMAX con 2.1 AMP",
+    "Cable o línea textil flexible de la serie Weave de REMAX, con 2.1 amperios de capacidad",
+    "Cable o línea de carga flexible de la serie Weave de REMAX"
+  ],
+  "precio_original": 15000,
+  "precio_final": 24000,
+  "descripcion_ia": "Cable de carga flexible de la serie Weave de REMAX, diseñado para ofrecer una experiencia de carga segura y eficiente. Con una capacidad de 2.1 amperios, este cable es ideal para cargar tus dispositivos rápidamente. Su diseño textil flexible proporciona durabilidad y comodidad, evitando daños y roturas comunes en cables convencionales. Compatible con dispositivos que requieran carga por USB, este cable es una excelente opción para uso diario. Fabricado con materiales de alta calidad, garantiza un rendimiento óptimo y una larga vida útil. Su diseño versátil y resistente lo hace perfecto para uso en cualquier entorno, ya sea en casa, en la oficina o en movimiento.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\397_RC-081.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\398_RC-081.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\399_RC-081.png"
+  ]
+}

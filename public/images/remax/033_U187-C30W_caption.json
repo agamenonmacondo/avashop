@@ -1,0 +1,16 @@
+{
+  "pagina": 13,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_13_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "U187-C30W",
+  "precio": 40000,
+  "descripcion": "Cargador de 30W con tecnología GAN para iPhone y Android",
+  "categoria": "cargador",
+  "width": 633,
+  "height": 642,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "U187-C30W Cargador Rápido 30W con Tecnología GAN para iPhone y Android",
+  "descripcion_generada_llm": "Cargador rápido de 30W con tecnología GAN compatible con dispositivos iPhone y Android. Diseñado para ofrecer una carga eficiente y segura, este cargador utiliza la avanzada tecnología GAN para minimizar el tamaño y maximizar el rendimiento. Ideal para usuarios que buscan una solución de carga rápida y fiable para sus dispositivos móviles. Características principales: Tecnología GAN para una mayor eficiencia y menor tamaño, compatible con iPhone y Android, cargador rápido de 30W.",
+  "precio_final_llm": 64000
+}

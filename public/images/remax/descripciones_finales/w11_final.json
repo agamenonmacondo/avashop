@@ -1,22 +1,18 @@
 {
   "nombre_producto": "W11",
-  "nombre_ia": "W11 Auriculares Inalámbricos True Wireless con Cargador Inalámbrico Rápido",
+  "nombre_ia": "W11 Auriculares Inalámbricos True Wireless con Bluetooth 5.3",
   "referencia": "w11",
   "descripciones_originales": [
-    "Auriculares inalámbricos con tecnología True Wireless y Bluetooth 5.3",
-    "Auriculares inalámbricos con tecnología True Wireless y Bluetooth 5.3",
-    "Auriculares inalámbricos con tecnología True Wireless y Bluetooth 5.3",
-    "Cargador inalámbrico rápido de 10 watts compatible con iPhone, Samsung, Huawei y Xiaomi",
-    "Cargador inalámbrico Linon Series Fast Charge de 10 watts compatible con iPhone, Samsung, Huawei y Xiaomi"
+    "Auriculares inalámbricos con tecnología True Wireless y versión Bluetooth 5.3",
+    "Auriculares inalámbricos con tecnología True Wireless y versión Bluetooth 5.3",
+    "Auriculares inalámbricos con tecnología True Wireless y versión Bluetooth 5.3"
   ],
   "precio_original": 70000,
   "precio_final": 112000,
-  "descripcion_ia": "Experimenta la libertad de la tecnología True Wireless con los auriculares W11, equipados con Bluetooth 5.3 para una conexión estable y de alta calidad. Además, incluye un cargador inalámbrico rápido de 10 watts compatible con una amplia gama de dispositivos de las principales marcas como iPhone, Samsung, Huawei y Xiaomi. \n**Especificaciones Técnicas:**\n- Tecnología True Wireless para una total libertad de movimiento.\n- Conexión Bluetooth 5.3 para una transmisión de audio nítida y estable.\n- Cargador inalámbrico rápido de 10 watts para una carga eficiente.\n- Compatible con iPhone, Samsung, Huawei y Xiaomi.\n**Ventajas:**\n- Diseño inalámbrico para una mayor comodidad y facilidad de uso.\n- Alta compatibilidad con diferentes dispositivos móviles.\n- Carga rápida inalámbrica para mantener tus dispositivos siempre listos.\n**Uso Recomendado:**\nIdeal para aquellos que buscan la comodidad de la tecnología inalámbrica tanto para escuchar música como para cargar sus dispositivos sin la necesidad de cables. Perfecto para el uso diario, ejercicio o viajes.",
+  "descripcion_ia": "Experimenta la libertad de la música sin cables con nuestros auriculares inalámbricos W11. Equipados con tecnología True Wireless y versión Bluetooth 5.3, ofrecen una conexión estable y de alta calidad para una experiencia de audio inmersiva. Diseñados para proporcionar una comodidad superior y un sonido nítido, son ideales para uso diario, ejercicio o viajes. Su tecnología avanzada asegura una compatibilidad amplia con la mayoría de dispositivos móviles y reproductores de música. Disfruta de tu música favorita sin interrupciones y con una calidad de sonido excepcional.",
   "imagenes": [
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\130_w11.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\131_w11.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\132_w11.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\306_w11.png",
-    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\307_w11.png"
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\156_W11.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\157_W11.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\158_W11.png"
   ]
 }

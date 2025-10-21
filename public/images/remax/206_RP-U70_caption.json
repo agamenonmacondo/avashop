@@ -1,0 +1,16 @@
+{
+  "pagina": 72,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_72_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U70",
+  "precio": 35000,
+  "descripcion": "Cargador rápido de 20 watts con tecnología PD y chip inteligente compatible con dispositivos Apple y Android",
+  "categoria": "cargador",
+  "width": 752,
+  "height": 752,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RP-U70 Cargador Rápido USB de 20W con Tecnología PD",
+  "descripcion_generada_llm": "Cargador rápido de 20 watts diseñado para cargar tus dispositivos Apple y Android de manera eficiente. Incorpora tecnología PD (Power Delivery) y un chip inteligente que garantiza una carga segura y rápida. Compatible con una amplia gama de dispositivos, este cargador es ideal para uso diario y ofrece una solución de carga potente y fiable. Su diseño compacto lo hace fácil de transportar, permitiendo mantener tus dispositivos cargados en cualquier momento y lugar.",
+  "precio_final_llm": 56000
+}

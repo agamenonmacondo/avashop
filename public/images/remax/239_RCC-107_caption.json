@@ -1,0 +1,16 @@
+{
+  "pagina": 83,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_83_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RCC-107",
+  "precio": "$32.000",
+  "descripcion": "Cargador de carro inteligente con tecnología PD/QC 3.0 y chip inteligente USB/Tipo C",
+  "categoria": "cargador",
+  "width": 1000,
+  "height": 1000,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RCC-107 Cargador de Carro Inteligente USB/Tipo C con Tecnología PD/QC 3.0",
+  "descripcion_generada_llm": "El RCC-107 es un cargador de carro inteligente diseñado para ofrecer una carga rápida y segura a tus dispositivos. Incorpora tecnología PD/QC 3.0 y un chip inteligente USB/Tipo C que garantiza una carga eficiente y compatible con una amplia gama de dispositivos, incluyendo aquellos de Apple y Android. Sus características clave incluyen carga rápida, compatibilidad universal y un diseño pensado para el uso en vehículos. Es ideal para aquellos que necesitan mantener sus dispositivos cargados durante largos viajes o desplazamientos. Con su avanzada tecnología, asegura una carga segura y rápida, protegiendo tus dispositivos y optimizando el tiempo de carga.",
+  "precio_final_llm": 51200
+}

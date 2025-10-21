@@ -1,15 +1,13 @@
-```json
 {
-  "pagina": 145,
-  "index": 1,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_145_img_1.png",
-  "tipo": "producto",
-  "nombre_producto": "RM-625",
-  "precio": 27000,
-  "descripcion": "Audifonos manos libres con sonido HD y control inteligente",
-  "categoria": "auriculares",
-  "width": 416,
-  "height": 416,
-  "color_principal": "negro"
+    "pagina": 144,
+    "index": 1,
+    "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_144_img_1.png",
+    "tipo": "producto",
+    "nombre_producto": "RM-625",
+    "precio": "$27.000",
+    "descripcion": "Audifonos manos libres con sonido HD y control inteligente",
+    "categoria": "auriculares",
+    "width": 416,
+    "height": 416,
+    "color_principal": "negro"
 }
-```

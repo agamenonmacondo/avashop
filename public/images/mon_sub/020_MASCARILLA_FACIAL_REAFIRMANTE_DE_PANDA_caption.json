@@ -1,0 +1,16 @@
+{
+  "pagina": 56,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR (1)\\page_56_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "MASCARILLA FACIAL REAFIRMANTE DE PANDA",
+  "precio": "$20.000",
+  "descripcion": "Mascarilla reafirmante que mejora la apariencia de las líneas de expresión y revitaliza la piel apagada y deshidratada.",
+  "categoria": "cuidado personal",
+  "width": 1050,
+  "height": 1050,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "MASCARILLA_FACIAL_REAFIRMANTE_DE_PANDA - Mascarilla Facial Reafirmante con Extracto de Panda para Pieles Deshidratadas",
+  "descripcion_generada_llm": "La MASCARILLA FACIAL REAFIRMANTE DE PANDA es una mascarilla facial diseñada para mejorar la apariencia de las líneas de expresión y revitalizar la piel apagada y deshidratada. Esta mascarilla reafirmante está formulada con ingredientes que hidratan y tonifican la piel, dejándola suave y radiante. Ideal para pieles que necesitan un impulso de hidratación y firmeza, esta mascarilla facial es perfecta para uso diario o semanal según sea necesario. Su fórmula única ayuda a reducir la apariencia de las líneas finas y arrugas, promoviendo una piel más saludable y rejuvenecida. Compatible con todos los tipos de piel, incluyendo las más sensibles, esta mascarilla facial reafirmante es una excelente adición a cualquier rutina de cuidado de la piel.",
+  "precio_final_llm": 32000
+}

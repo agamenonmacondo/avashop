@@ -1,0 +1,16 @@
+{
+  "pagina": 87,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_87_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-660HB",
+  "precio": 120000,
+  "descripcion": "Auriculares inalámbricos Bluetooth con hasta 12 horas de reproducción de música y llamadas",
+  "categoria": "auriculares",
+  "width": 647,
+  "height": 709,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-660HB Auriculares Inalámbricos Bluetooth con Alta Autonomía",
+  "descripcion_generada_llm": "Auriculares inalámbricos Bluetooth RB-660HB diseñados para ofrecer una experiencia de audio superior. Con hasta 12 horas de reproducción de música y llamadas, estos auriculares son ideales para aquellos que buscan libertad y comodidad durante sus actividades diarias. Su tecnología Bluetooth permite una conexión estable y de alta calidad con dispositivos compatibles. Perfectos para uso en viajes, deportes o simplemente para disfrutar de tu música favorita sin la molestia de cables. Su diseño ergonómico se adapta a la forma de tu oído, asegurando un ajuste cómodo durante períodos prolongados de uso.",
+  "precio_final_llm": 192000
+}

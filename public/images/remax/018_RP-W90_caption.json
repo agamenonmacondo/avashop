@@ -1,0 +1,16 @@
+{
+  "pagina": 8,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_8_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-W90",
+  "precio": 130000,
+  "descripcion": "Cargador inalámbrico multifuncional plegable con compatibilidad MagSafe",
+  "categoria": "cargador",
+  "width": 1000,
+  "height": 1000,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RP-W90 Cargador Inalámbrico Multifuncional Plegable con Compatibilidad MagSafe",
+  "descripcion_generada_llm": "El RP-W90 es un cargador inalámbrico multifuncional plegable diseñado para ofrecer una experiencia de carga conveniente y versátil. Compatible con la tecnología MagSafe, este dispositivo permite una carga inalámbrica eficiente y segura para tus dispositivos compatibles. Su diseño plegable lo hace ideal para llevarlo contigo a cualquier lugar, asegurando que tus dispositivos siempre estén cargados. Con su función 3 en 1, puedes cargar múltiples dispositivos al mismo tiempo, lo que lo convierte en un accesorio esencial para aquellos con múltiples dispositivos o para uso compartido. Fabricado con materiales de alta calidad, el RP-W90 es duradero y fiable. Su compatibilidad con MagSafe garantiza una conexión segura y una carga eficiente, mientras que su diseño multifuncional se adapta a tus necesidades diarias de carga.",
+  "precio_final_llm": 208000
+}

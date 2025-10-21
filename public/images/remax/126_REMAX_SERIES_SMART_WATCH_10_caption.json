@@ -1,0 +1,16 @@
+{
+  "pagina": 45,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_45_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "REMAX SERIES SMART WATCH 10",
+  "precio": "$140.000",
+  "descripcion": "Smartwatch con pantalla AMOLED, batería de hasta 7 días y llamadas de voz HD",
+  "categoria": "smartwatch",
+  "width": 350,
+  "height": 350,
+  "color_principal": "desconocido",
+  "nombre_generado_llm": "REMAX_SERIES_SMART_WATCH_10 - Smartwatch AMOLED con Llamadas de Voz HD y Batería de hasta 7 Días",
+  "descripcion_generada_llm": "Experimenta la última tecnología en smartwatches con el REMAX SERIES SMART WATCH 10. Este dispositivo cuenta con una impresionante pantalla AMOLED que ofrece una visualización nítida y vibrante. Con la capacidad de realizar llamadas de voz HD, podrás mantener conversaciones claras y sin interrupciones. Además, su batería de larga duración te permite disfrutar de hasta 7 días de uso continuo sin necesidad de recargarlo. Ideal para aquellos que buscan un reloj inteligente que combine estilo, funcionalidad y tecnología de vanguardia. Compatible con diversos sistemas operativos, este smartwatch es perfecto para uso diario, deportivo y profesional. Sus características avanzadas y su diseño elegante lo convierten en un accesorio indispensable para cualquier persona que busque estar siempre conectado.",
+  "precio_final_llm": 224000
+}

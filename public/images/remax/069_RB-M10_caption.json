@@ -1,0 +1,16 @@
+{
+  "pagina": 25,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_25_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RB-M10",
+  "precio": 120000,
+  "descripcion": "Altavoz portátil inalámbrico impermeable de 20W",
+  "categoria": "altavoz",
+  "width": 669,
+  "height": 716,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RB-M10 Altavoz Portátil Inalámbrico Impermeable de 20W",
+  "descripcion_generada_llm": "Disfruta de un sonido nítido y potente con nuestro altavoz portátil inalámbrico RB-M10. Con una potencia de salida de 20W, este altavoz ofrece una experiencia auditiva excepcional. Su diseño impermeable te permite disfrutar de tu música en cualquier lugar, ya sea en interiores o exteriores, sin preocuparte por la lluvia o el agua. La tecnología inalámbrica te da la libertad de conectar tus dispositivos sin cables, facilitando su uso en diversas situaciones. Ideal para actividades al aire libre, reuniones, piscinas o playas, este altavoz es versátil y fácil de transportar. Su construcción robusta y materiales de alta calidad aseguran una larga durabilidad y resistencia a los elementos. Conecta tu smartphone, tableta o cualquier otro dispositivo compatible y disfruta de tu música favorita con claridad y potencia.",
+  "precio_final_llm": 192000
+}

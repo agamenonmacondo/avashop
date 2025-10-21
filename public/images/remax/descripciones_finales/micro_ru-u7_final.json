@@ -1,0 +1,16 @@
+{
+  "nombre_producto": "MICRO RU-U7",
+  "nombre_ia": "MICRO_RU-U7 MICRO RU-U7 - Hub USB 3.0 con Conector Type C y Lector de Tarjetas SD",
+  "referencia": "micro_ru-u7",
+  "descripciones_originales": [
+    "Hub USB 3.0 con conector Type C y lector de tarjetas SD",
+    "Hub USB 3.0 con conector Type C y ranura para tarjeta SD"
+  ],
+  "precio_original": 35000,
+  "precio_final": 56000,
+  "descripcion_ia": "El MICRO RU-U7 es un hub USB 3.0 versátil y compacto diseñado para expandir tus opciones de conectividad. Equipado con un conector Type C, ofrece una conexión rápida y reversible, mientras que su lector de tarjetas SD permite acceder y transferir datos desde tus tarjetas de memoria de manera eficiente. Ideal para usuarios que necesitan ampliar las capacidades de sus dispositivos, este hub es perfecto para laptops, tablets y otros dispositivos compatibles con USB 3.0 y Type C. Su diseño compacto lo hace fácil de transportar, manteniendo tu espacio de trabajo organizado. Compatible con una amplia gama de dispositivos, este hub es una solución práctica para tus necesidades de conectividad y transferencia de datos.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\147_MICRO_RU-U7.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\148_MICRO_RU-U7.png"
+  ]
+}

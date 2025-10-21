@@ -1,15 +1,13 @@
-```
 {
- "pagina": 40,
- "index": 0,
- "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR\\page_40_img_0.png",
- "tipo": "producto",
- "nombre_producto": "MONDSUB CREMA DIA & NOCHE",
- "precio": "$22.000",
- "descripcion": "Crema hidratante para día y noche con péptido azul y pantenol",
- "categoria": "cuidado personal",
- "width": 939,
- "height": 1008,
- "color_principal": "crema/azul"
+    "pagina": 40,
+    "index": 0,
+    "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR (1)\\page_40_img_0.png",
+    "tipo": "producto",
+    "nombre_producto": "MONDSUB CREMA DIA & NOCHE",
+    "precio": "$22.000",
+    "descripcion": "Crema hidratante para día y noche con péptido azul y pantenol",
+    "categoria": "cuidado personal",
+    "width": 939,
+    "height": 1008,
+    "color_principal": "crema/azul"
 }
-```

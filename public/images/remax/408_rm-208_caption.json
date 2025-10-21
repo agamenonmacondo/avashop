@@ -1,16 +1,16 @@
 {
-  "pagina": 144,
+  "pagina": 143,
   "index": 0,
-  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW AGOSTO2025 -3\\page_144_img_0.png",
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_143_img_0.png",
   "tipo": "producto",
   "nombre_producto": "RM-208",
-  "precio": 25000,
+  "precio": "$25.000",
   "descripcion": "Audífonos manos libres con sonido 3 tonos y mega bass",
   "categoria": "auriculares",
   "width": 370,
   "height": 376,
   "color_principal": "negro",
   "nombre_generado_llm": "RM-208 Audífonos Manos Libres con Sonido 3 Tonos y Mega Bass",
-  "descripcion_generada_llm": "Disfruta de una experiencia de audio inmersiva con los audífonos manos libres RM-208. Estos audífonos ofrecen un sonido de alta calidad con tres tonos distintos y un potente Mega Bass que te permitirá sumergirte en tu música favorita. Diseñados para ser cómodos y fáciles de usar, son ideales para llamadas y sesiones de música en cualquier lugar. Su tecnología de sonido avanzada y su diseño ergonómico los hacen perfectos para aquellos que buscan una excelente calidad de audio sin comprometer la comodidad.",
+  "descripcion_generada_llm": "Disfruta de una experiencia de audio superior con los audífonos manos libres RM-208. Estos audífonos ofrecen un sonido envolvente con tres tonos distintos y un potente mega bass que te permitirá sumergirte en tu música favorita. Diseñados para ser cómodos y fáciles de usar, son ideales para llamadas y sesiones de música en cualquier lugar. Su tecnología de sonido avanzada y su diseño ergonómico los hacen perfectos para aquellos que buscan calidad y comodidad en un mismo producto.",
   "precio_final_llm": 40000
 }

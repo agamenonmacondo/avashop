@@ -1,0 +1,16 @@
+{
+  "pagina": 99,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_99_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "RPP-533",
+  "precio": 120000,
+  "descripcion": "Power Bank con carga rápida de 10000mAh y tecnología PD+QC",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 800,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RPP-533 Power Bank de 10000mAh con Carga Rápida PD+QC",
+  "descripcion_generada_llm": "El RPP-533 es un Power Bank de alta capacidad diseñado para proporcionar energía sobre la marcha. Con una capacidad de 10000mAh, este dispositivo ofrece carga rápida gracias a su tecnología PD+QC, lo que te permite cargar tus dispositivos compatibles de manera rápida y eficiente. Ideal para aquellos que necesitan mantener sus dispositivos cargados durante todo el día, ya sea en viajes, en el trabajo o en cualquier situación en la que no tengas acceso a una fuente de alimentación. Su diseño compacto y su alta capacidad lo hacen una excelente opción para usuarios exigentes. Compatible con una amplia gama de dispositivos, incluyendo smartphones y tablets, este Power Bank es una solución práctica y fiable para tus necesidades de carga.",
+  "precio_final_llm": 192000
+}

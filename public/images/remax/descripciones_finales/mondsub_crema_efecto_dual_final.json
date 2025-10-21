@@ -1,0 +1,16 @@
+{
+  "nombre_producto": "MONDSUB CREMA EFECTO DUAL",
+  "nombre_ia": "MONDSUB_CREMA_EFECTO_DUAL - Crema Facial Antiarrugas con Ácido Hialurónico y Retinol",
+  "referencia": "mondsub_crema_efecto_dual",
+  "descripciones_originales": [
+    "Crema facial con ácido hialurónico y retinol para hidratar y reafirmar la piel",
+    "Crema con Niacinamida y Retinol que ilumina y blanquea el tono de la piel, repara y reafirma reduciendo arrugas"
+  ],
+  "precio_original": 24000,
+  "precio_final": 38400,
+  "descripcion_ia": "La Crema Facial Efecto Dual de MONDSUB es un tratamiento avanzado para el cuidado de la piel que combina los beneficios del ácido hialurónico, retinol y niacinamida. Esta crema está diseñada para hidratar profundamente, reafirmar y mejorar la textura de la piel, reduciendo la aparición de arrugas y líneas finas. Con su fórmula dual, ilumina y blanquea el tono de la piel, proporcionando un aspecto más radiante y uniforme. Ideal para pieles que buscan combatir los signos del envejecimiento y mejorar su elasticidad y firmeza. Compatible con todos los tipos de piel, esta crema es una solución integral para un cuidado facial completo.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\015_MONDSUB_CREMA_EFECTO_DUAL.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\mon_sub\\016_MONDSUB_CREMA_EFECTO_DUAL.png"
+  ]
+}

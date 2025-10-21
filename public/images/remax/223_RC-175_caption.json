@@ -1,0 +1,16 @@
+{
+  "pagina": 78,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_78_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RC-175",
+  "precio": 27000,
+  "descripcion": "Cable USB C con carga rápida PD de 100W compatible con iPhone, iPad y MacBook",
+  "categoria": "cable",
+  "width": 665,
+  "height": 177,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RC-175 Cable USB C con Carga Rápida PD 100W",
+  "descripcion_generada_llm": "Cable USB C diseñado para ofrecer carga rápida PD de hasta 100W, compatible con dispositivos iPhone, iPad y MacBook. Fabricado con materiales de alta calidad, este cable garantiza una conexión estable y segura para la transferencia de datos y carga de dispositivos. Su diseño robusto y duradero asegura un uso prolongado sin comprometer su rendimiento. Ideal para aquellos que buscan una solución de carga rápida y eficiente para sus dispositivos compatibles. El cable es fácil de usar y no requiere configuración adicional, simplemente conéctalo a tu dispositivo y comienza a cargar.",
+  "precio_final_llm": 43200
+}

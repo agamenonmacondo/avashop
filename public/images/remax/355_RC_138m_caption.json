@@ -1,0 +1,16 @@
+{
+  "pagina": 122,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_122_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RC 138m",
+  "precio": 15000,
+  "descripcion": "Cable USB carga rápida 2.4Amp compatible con Apple/Android/iPhone/Tipo C",
+  "categoria": "cable",
+  "width": 800,
+  "height": 928,
+  "color_principal": "blanco/negro",
+  "nombre_generado_llm": "RC_138M - Cable USB Carga Rápida 2.4Amp Compatible con Apple y Android",
+  "descripcion_generada_llm": "Cable USB de carga rápida diseñado para ser compatible con una amplia gama de dispositivos, incluyendo Apple, Android e iPhone, así como aquellos con puerto Tipo C. Con una corriente de carga de hasta 2.4Amp, este cable ofrece una carga rápida y eficiente para mantener tus dispositivos listos cuando más los necesitas.\nEspecificaciones técnicas:\n- Corriente de carga: 2.4Amp\n- Compatibilidad: Apple, Android, iPhone, Tipo C\n- Tipo de conector: USB\n- Función de carga rápida\nMateriales y construcción de alta calidad que aseguran durabilidad y resistencia al uso diario. Ideal para aquellos que buscan una solución de carga rápida y fiable para sus dispositivos móviles.",
+  "precio_final_llm": 24000
+}

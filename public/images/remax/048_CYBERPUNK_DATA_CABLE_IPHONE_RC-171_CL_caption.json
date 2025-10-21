@@ -1,0 +1,16 @@
+{
+  "pagina": 18,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_18_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "CYBERPUNK DATA CABLE IPHONE RC-171 CL",
+  "precio": 27000,
+  "descripcion": "Cable de datos para iPhone con carga rápida de 30W PD",
+  "categoria": "cable",
+  "width": 556,
+  "height": 944,
+  "color_principal": "negro",
+  "nombre_generado_llm": "CYBERPUNK_DATA_CABLE_IPHONE_RC-171_CL - Cable de Datos iPhone con Carga Rápida 30W PD",
+  "descripcion_generada_llm": "Cable de datos CYBERPUNK_DATA_CABLE_IPHONE_RC-171_CL diseñado para iPhone, compatible con carga rápida de 30W PD. Ideal para sincronizar datos y cargar tu dispositivo de manera eficiente. Fabricado con materiales de alta calidad que garantizan durabilidad y resistencia. Compatible con modelos de iPhone que soportan carga rápida. Características principales: carga rápida de 30W PD, sincronización de datos, compatibilidad con iPhone. Ventajas: carga tu dispositivo en menos tiempo, transferencia de datos segura y eficiente. Uso recomendado: carga diaria, sincronización de datos entre dispositivos.",
+  "precio_final_llm": 43200
+}

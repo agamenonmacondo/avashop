@@ -1,0 +1,16 @@
+{
+  "pagina": 24,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\MÔND'SUB CATALOGO AL POR MAYOR (1)\\page_24_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "MONDSUB MASCARILLA DE BRAZOS X 3 UNIDADES",
+  "precio": "$25.000",
+  "descripcion": "Mascarilla de brazos hidratante y refrescante",
+  "categoria": "mascarilla",
+  "width": 900,
+  "height": 750,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "MONDSUB_MASCARILLA_DE_BRAZOS_X_3_UNIDADES - Mascarilla Hidratante y Refrescante para Brazos",
+  "descripcion_generada_llm": "La mascarilla de brazos hidratante y refrescante MONDSUB está diseñada para proporcionar una experiencia de cuidado intensivo para tus brazos. Presentada en un paquete de 3 unidades, esta mascarilla está formulada para hidratar y refrescar la piel de tus brazos, dejándola suave y nutrida. Ideal para personas que buscan mantener la salud y la apariencia de su piel, especialmente en áreas propensas a resecarse. Su fórmula única y su fácil aplicación la convierten en un producto esencial para tu rutina de cuidado personal.",
+  "precio_final_llm": 40000
+}

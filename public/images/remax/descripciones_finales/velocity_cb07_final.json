@@ -1,0 +1,14 @@
+{
+  "nombre_producto": "VELOCITY CB07",
+  "nombre_ia": "VELOCITY_CB07 - Cable de Datos de Aleación de Aluminio con Trenzado Magnético de 1.2 Metros",
+  "referencia": "velocity_cb07",
+  "descripciones_originales": [
+    "Cable de datos con aleación de aluminio y atracción magnética, fácil de usar y trenzado, de 1.2 metros"
+  ],
+  "precio_original": 27000,
+  "precio_final": 43200,
+  "descripcion_ia": "Cable de datos VELOCITY_CB07 diseñado para ofrecer una conexión fiable y duradera. Fabricado con una aleación de aluminio y con un trenzado que reduce las interferencias electromagnéticas gracias a su atracción magnética. Su longitud de 1.2 metros lo hace ideal para conectar dispositivos sin restricciones. Características principales: Material de aleación de aluminio para durabilidad y ligereza, trenzado magnético para minimizar interferencias, longitud de 1.2 metros para una amplia compatibilidad. Compatible con una amplia gama de dispositivos que requieran conexión por cable de datos. Ventajas: fácil de usar, resistente a daños y con una excelente transmisión de datos. Perfecto para usuarios que buscan una solución de conexión fiable y de alta calidad.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\084_VELOCITY_CB07.png"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "pagina": 44,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_44_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "REMAX SERIES SMART WATCH 17",
+  "precio": "$170.000",
+  "descripcion": "Reloj inteligente con sensor, resistente al agua (IP67), NFC y control de 1W de potencia",
+  "categoria": "reloj inteligente",
+  "width": 860,
+  "height": 565,
+  "color_principal": "no determinado",
+  "nombre_generado_llm": "REMAX_SERIES_SMART_WATCH_17 - Reloj Inteligente Deportivo con NFC y Resistencia al Agua IP67",
+  "descripcion_generada_llm": "El REMAX SERIES SMART WATCH 17 es un reloj inteligente diseñado para aquellos que buscan un estilo de vida activo y conectado. Con su avanzado sensor, este smartwatch ofrece un seguimiento preciso de tus actividades diarias y deportivas. Su resistencia al agua IP67 te permite usarlo sin preocupaciones en diversas condiciones, ya sea en la piscina, en el gimnasio o en tu día a día. Además, cuenta con tecnología NFC para pagos móviles y otras funciones de conectividad. Ideal para controlar tu salud y rendimiento deportivo, este reloj inteligente es perfecto para cualquier persona que busque un dispositivo versátil y fiable.",
+  "precio_final_llm": 272000
+}

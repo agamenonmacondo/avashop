@@ -1,0 +1,16 @@
+{
+  "pagina": 69,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_69_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U161",
+  "precio": 55000,
+  "descripcion": "Cargador rápido de 35 watts con tecnología GAN y chip inteligente",
+  "categoria": "cargador",
+  "width": 666,
+  "height": 715,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RP-U161 Cargador Rápido de 35W con Tecnología GAN y Chip Inteligente",
+  "descripcion_generada_llm": "Cargador rápido de alta eficiencia y seguridad, diseñado para cargar tus dispositivos móviles y otros compatibles a máxima velocidad. Equipado con tecnología GAN (Nitruro de Galio) y un chip inteligente que garantiza un rendimiento óptimo y una carga segura. Su tecnología avanzada permite una carga rápida y eficiente, minimizando el tiempo de espera y maximizando el rendimiento de tus dispositivos. Compatible con una amplia gama de dispositivos que soportan carga rápida, este cargador es ideal para aquellos que buscan una solución de carga rápida y segura para su día a día. Sus características clave incluyen: carga rápida de hasta 35 watts, tecnología GAN para una mayor eficiencia energética, chip inteligente para una gestión de carga segura y eficiente. Fabricado con materiales de alta calidad que aseguran durabilidad y fiabilidad. Perfecto para uso en casa, en la oficina o en movimiento.",
+  "precio_final_llm": 88000
+}

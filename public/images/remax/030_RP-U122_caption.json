@@ -1,0 +1,16 @@
+{
+  "pagina": 12,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_12_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-U122",
+  "precio": "$45.000",
+  "descripcion": "Cargador rápido de 33W con 2 puertos para dispositivos Apple y Android",
+  "categoria": "cargador",
+  "width": 546,
+  "height": 546,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RP-U122 Cargador Rápido Dual de 33W para Dispositivos Apple y Android",
+  "descripcion_generada_llm": "Cargador rápido de alta eficiencia diseñado para cargar simultáneamente dos dispositivos, compatible con una amplia gama de productos Apple y Android. Con una potencia de salida de 33W, este cargador ofrece una carga rápida y segura para tus dispositivos. Su diseño compacto y ligero lo hace ideal para uso diario, ya sea en casa, en la oficina o en movimiento. Fabricado con materiales de alta calidad, garantiza durabilidad y fiabilidad. Compatible con una amplia variedad de dispositivos, este cargador es una excelente opción para aquellos que buscan una solución de carga rápida y eficiente para sus necesidades diarias.",
+  "precio_final_llm": 72000
+}

@@ -1,0 +1,16 @@
+{
+  "pagina": 43,
+  "index": 2,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_43_img_2.png",
+  "tipo": "producto",
+  "nombre_producto": "K-13",
+  "precio": "$85.000",
+  "descripcion": "Micrófono inalámbrico para streaming compatible con Apple y Android",
+  "categoria": "micrófono",
+  "width": 600,
+  "height": 600,
+  "color_principal": "negro",
+  "nombre_generado_llm": "K-13 Micrófono Inalámbrico para Streaming de Alta Calidad",
+  "descripcion_generada_llm": "El K-13 es un micrófono inalámbrico diseñado para streaming en vivo de alta calidad, compatible con dispositivos Apple y Android. Ofrece una conexión estable y una excelente calidad de audio, lo que lo hace ideal para creadores de contenido, podcasters y profesionales que buscan una solución de audio confiable y de alta fidelidad. Su diseño inalámbrico proporciona libertad de movimiento y reduce la cantidad de cables necesarios, lo que facilita su uso en diferentes entornos. El K-13 es perfecto para transmisiones en vivo, grabaciones de audio y cualquier aplicación que requiera una excelente calidad de sonido.",
+  "precio_final_llm": 136000
+}

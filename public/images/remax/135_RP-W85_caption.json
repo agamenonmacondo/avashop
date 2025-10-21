@@ -1,0 +1,16 @@
+{
+  "pagina": 48,
+  "index": 1,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_48_img_1.png",
+  "tipo": "producto",
+  "nombre_producto": "RP-W85",
+  "precio": 130000,
+  "descripcion": "Cargador inalámbrico 3 en 1 para iPhone, AirPod y Watch",
+  "categoria": "cargador",
+  "width": 800,
+  "height": 800,
+  "color_principal": "blanco",
+  "nombre_generado_llm": "RP-W85 Cargador Inalámbrico 3 en 1 para iPhone, AirPod y Apple Watch",
+  "descripcion_generada_llm": "Cargador inalámbrico 3 en 1 diseñado para cargar simultáneamente tu iPhone, AirPod y Apple Watch. Con soporte magnético para una fijación segura y fácil de usar. Compatible con dispositivos Apple, este cargador ofrece una solución de carga organizada y eficiente. Fabricado con materiales de alta calidad, garantiza una carga rápida y segura para tus dispositivos. Ideal para aquellos que buscan simplificar su experiencia de carga y mantener sus dispositivos al día sin la complicación de múltiples cables.",
+  "precio_final_llm": 208000
+}

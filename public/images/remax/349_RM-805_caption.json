@@ -1,0 +1,16 @@
+{
+  "pagina": 120,
+  "index": 0,
+  "image_path": "C:\\Users\\h\\Downloads\\REMAX NEW OCTUBRE  2025\\page_120_img_0.png",
+  "tipo": "producto",
+  "nombre_producto": "RM-805",
+  "precio": "$65.000",
+  "descripcion": "Audífonos con conector audio 3.5mm y función manos libres",
+  "categoria": "auriculares",
+  "width": 981,
+  "height": 921,
+  "color_principal": "negro",
+  "nombre_generado_llm": "RM-805 Audífonos con Conector 3.5mm y Manos Libres para Llamadas y Música",
+  "descripcion_generada_llm": "Los audífonos RM-805 ofrecen una experiencia de audio envolvente y comodidad para llamadas y disfrute de música. Equipados con un conector de audio de 3.5mm, son compatibles con la mayoría de dispositivos móviles y de audio. La función de manos libres integrada permite una comunicación clara y segura mientras se realizan otras actividades. Diseñados para proporcionar una excelente calidad de sonido, estos audífonos son ideales para uso diario, ya sea en el trabajo, durante el ejercicio o simplemente para relajarse. Su diseño práctico y su funcionalidad los convierten en un accesorio indispensable para aquellos que buscan comodidad y calidad de audio.",
+  "precio_final_llm": 104000
+}

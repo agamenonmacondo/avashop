@@ -1,0 +1,16 @@
+{
+  "nombre_producto": "RB S33",
+  "nombre_ia": "RB_S33 Audífonos Bluetooth Inalámbricos Conducción Ósea Impermeables",
+  "referencia": "rb_s33",
+  "descripciones_originales": [
+    "Audífonos Bluetooth waterproof con conducción ósea",
+    "Audífonos Bluetooth waterproof con conducción ósea"
+  ],
+  "precio_original": 130000,
+  "precio_final": 208000,
+  "descripcion_ia": "Los audífonos RB_S33 son dispositivos de audio inalámbricos que utilizan tecnología de conducción ósea para transmitir el sonido a través de los huesos del cráneo, permitiendo una experiencia de escucha sin obstruir los oídos. Estos audífonos son resistentes al agua, lo que los hace ideales para actividades al aire libre y deportivas. Características principales: tecnología de conducción ósea, conexión Bluetooth para emparejamiento con dispositivos compatibles, diseño impermeable. Compatibles con la mayoría de dispositivos que cuentan con tecnología Bluetooth. Ventajas: permiten escuchar música y tomar llamadas mientras se mantiene la conciencia del entorno, son cómodos para usar durante actividades físicas y en entornos húmedos. Uso recomendado para deportes acuáticos, correr, ciclismo y otras actividades al aire libre.",
+  "imagenes": [
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\165_RB_S33.png",
+    "C:\\Users\\h\\Downloads\\ecomerce\\e-comerce\\public\\images\\remax\\166_RB_S33.png"
+  ]
+}
