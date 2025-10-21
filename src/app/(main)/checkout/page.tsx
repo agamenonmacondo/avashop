@@ -70,7 +70,10 @@ export default function CheckoutPage() {
   const [isCoinbaseLoading, setIsCoinbaseLoading] = useState(false);
   const [boldButtonData, setBoldButtonData] = useState<any>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [isCartLoaded, setIsCartLoaded] = useState(false); // 🔑 NUEVO: Flag para saber si el carrito ya se cargó
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
+
+  // NUEVO: Flag para saber si ya se determinó el estado de autenticación
+  const [authChecked, setAuthChecked] = useState(false);
 
   const shippingForm = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingFormSchema),
@@ -114,10 +117,12 @@ export default function CheckoutPage() {
     const auth = getFirebaseAuth();
     if (!auth) {
       setUser(null);
+      setAuthChecked(true);
       return;
     }
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser || null);
+      setAuthChecked(true);
     });
     return () => unsubscribe();
   }, []);
@@ -192,6 +197,20 @@ export default function CheckoutPage() {
       }, 1500);
     }
   }, [cartItems, isCartLoaded, router, toast]); // 🔑 Agregar isCartLoaded a las dependencias
+
+  // Redirigir si NO está autenticado
+  useEffect(() => {
+    if (isCartLoaded && authChecked && user === null) {
+      toast({
+        title: "Debes iniciar sesión",
+        description: "Por favor inicia sesión para finalizar tu compra.",
+        variant: "destructive"
+      });
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 1500);
+    }
+  }, [user, isCartLoaded, authChecked, router, toast]);
 
   const getValidatedOrderInput = async () => {
     const isShippingValid = await shippingForm.trigger();
@@ -312,12 +331,12 @@ export default function CheckoutPage() {
   const isPaymentProcessing = isBoldLoading || isCoinbaseLoading;
 
   // 🔑 NUEVO: Mostrar loading mientras se carga el carrito
-  if (!isCartLoaded) {
+  if (!isCartLoaded || !authChecked) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
         <div className="animate-pulse">
           <ShoppingCart className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
-          <p>Cargando carrito...</p>
+          <p>Cargando...</p>
         </div>
       </div>
     );
@@ -510,7 +529,7 @@ export default function CheckoutPage() {
                       onClick={handleBoldCheckout} 
                       size="lg" 
                       className="w-full text-base" 
-                      disabled={isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
+                      disabled={!user || isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
                     >
                         <CreditCard className="mr-2 h-5 w-5" />
                         {isBoldLoading ? 'Preparando...' : 'Pago con Bold'}
