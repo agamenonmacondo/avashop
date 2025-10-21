@@ -16,16 +16,6 @@ export const categories: Category[] = [
 ];
 
 
-
-
-
-
-
-
-
-
-const now = new Date();
-
 const now = new Date();
 
 export const products: Product[] = [
