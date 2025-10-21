@@ -27,6 +27,7 @@ export async function POST(request) {
 
     const apiKey = (process.env.NEXT_PUBLIC_BOLD_API_KEY || '').trim();
     const secret = (process.env.BOLD_SECRET_KEY || '').trim();
+    const isSandbox = process.env.BOLD_SANDBOX === 'true';
 
     if (!apiKey || !secret) {
       console.error('Credenciales Bold faltantes');
@@ -35,9 +36,13 @@ export async function POST(request) {
 
     const integritySignature = generateBoldHash(orderId, amount, currency, secret);
 
+    // URL según ambiente
+    const boldUrl = isSandbox 
+      ? 'https://sandbox.api.bold.co/v1/payment-btn'
+      : 'https://api.bold.co/v1/payment-btn';
+
     // Payload correcto según documentación Bold
     const payload = {
-      apiKey,
       orderId,
       amount,
       currency,
@@ -46,12 +51,18 @@ export async function POST(request) {
       description: body.description || `Pedido ${orderId}`,
     };
 
-    console.log('Enviando a Bold:', { ...payload, apiKey: '***', integritySignature: integritySignature.slice(0,8) + '...' });
+    console.log('Enviando a Bold:', { 
+      url: boldUrl,
+      ...payload, 
+      integritySignature: integritySignature.slice(0,8) + '...',
+      apiKeyLength: apiKey.length 
+    });
 
-    const boldRes = await fetch('https://payments.api.bold.co/v2/payment-btn', {
+    const boldRes = await fetch(boldUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
         'x-api-key': apiKey,
       },
       body: JSON.stringify(payload),
@@ -86,8 +97,6 @@ export async function POST(request) {
       signature: integritySignature,
       redirectionUrl: redirectUrl,
       description: payload.description,
-      customerData: JSON.stringify(body.customerData || {}),
-      billingAddress: JSON.stringify(body.billingAddress || {}),
     };
 
     return NextResponse.json({ 
