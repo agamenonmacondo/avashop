@@ -52,12 +52,14 @@ function SuccessContent() {
     setLoading(true);
     fetch(`/api/orders/${orderId}`)
       .then(res => {
-        console.log('📡 Respuesta del API:', res.status);
+        console.log('📡 Status de respuesta:', res.status);
         if (!res.ok) throw new Error('Order not found');
         return res.json();
       })
       .then(data => {
-        console.log('✅ Datos de orden recibidos:', data);
+        console.log('✅ Datos completos de la orden:', data);
+        console.log('📦 Items recibidos:', data.items);
+        console.log('📦 Cantidad de items:', data.items?.length || 0);
         setOrder(data);
         setLoading(false);
       })

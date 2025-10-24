@@ -251,16 +251,11 @@ function CheckoutContent() {
       return;
     }
 
-    try {
-      console.log('📤 [CHECKOUT] Enviando datos al endpoint:', {
-        orderId: orderInput.orderId,
-        amount: orderInput.amount,
-        currency: orderInput.currency,
-        cartItems: orderInput.cartItems, // ⭐ VERIFICAR QUE ESTO EXISTA
-        shippingData: orderInput.shippingDetails, // ⭐ VERIFICAR QUE ESTO EXISTA
-        userEmail: user?.email || orderInput.customerData.email,
-      });
+    // ⭐ AGREGAR LOG PARA VER QUÉ SE ESTÁ ENVIANDO
+    console.log('📤 [CHECKOUT] orderInput completo:', orderInput);
+    console.log('📤 [CHECKOUT] cartItems a enviar:', orderInput.cartItems);
 
+    try {
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -268,15 +263,14 @@ function CheckoutContent() {
           orderId: orderInput.orderId,
           amount: orderInput.amount,
           currency: orderInput.currency,
-          // ⭐ ASEGURAR QUE ESTOS DATOS SE ENVÍEN
-          cartItems: orderInput.cartItems,
+          cartItems: orderInput.cartItems, // ⭐ Verificar que esto tenga datos
           shippingData: orderInput.shippingDetails,
           userEmail: user?.email || orderInput.customerData.email,
         }),
       });
 
       const result = await res.json();
-      console.log('📥 [CHECKOUT] Respuesta del endpoint:', result);
+      console.log('📥 [CHECKOUT] Respuesta del servidor:', result);
 
       if (res.ok && result.success && result.data) {
         setBoldButtonData({
@@ -297,7 +291,7 @@ function CheckoutContent() {
         });
       }
     } catch (err) {
-      console.error('Error en handleBoldCheckout:', err);
+      console.error('❌ [CHECKOUT] Error:', err);
       toast({ 
         title: 'Error al preparar el pago', 
         description: 'Ocurrió un error al comunicar con el servidor.', 
