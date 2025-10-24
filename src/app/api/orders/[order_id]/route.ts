@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: Promise<{ order_id: string }> }
 ) {
   try {
-    // ⭐ Await params en Next.js 15
     const { order_id } = await params;
 
     console.log('🔍 [GET ORDER] Buscando orden:', order_id);
@@ -56,6 +55,7 @@ export async function GET(
     }
 
     console.log('✅ [GET ORDER] Items encontrados:', items?.length || 0);
+    console.log('📦 [GET ORDER] Items detallados:', items);
 
     // Formatear la respuesta
     const response = {
@@ -77,6 +77,12 @@ export async function GET(
       createdAt: order.created_at,
       paidAt: order.paid_at,
     };
+
+    console.log('📤 [GET ORDER] Respuesta formateada:', {
+      orderId: response.orderId,
+      itemsCount: response.items.length,
+      items: response.items,
+    });
 
     return NextResponse.json(response);
 

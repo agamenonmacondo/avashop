@@ -47,24 +47,55 @@ function SuccessContent() {
       return;
     }
 
-    console.log('🔍 Cargando orden:', orderId, '- Estado Bold:', txStatus);
+    console.log('🔍 [SUCCESS] Cargando orden:', orderId, '- Estado Bold:', txStatus);
 
     setLoading(true);
+
+    // Actualizar estado si Bold indica aprobado
+    if (txStatus === 'approved') {
+      console.log('✅ [SUCCESS] Bold indica pago aprobado, actualizando estado...');
+      
+      fetch('/api/bold/webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: orderId,
+          status: 'approved',
+          transactionDate: new Date().toISOString(),
+        }),
+      })
+        .then(res => res.json())
+        .then(webhookResult => {
+          console.log('✅ [SUCCESS] Webhook ejecutado:', webhookResult);
+        })
+        .catch(err => {
+          console.error('⚠️ [SUCCESS] Error llamando webhook:', err);
+        });
+    }
+
+    // Cargar los datos de la orden
     fetch(`/api/orders/${orderId}`)
       .then(res => {
-        console.log('📡 Status de respuesta:', res.status);
+        console.log('📡 [SUCCESS] Status de respuesta:', res.status);
         if (!res.ok) throw new Error('Order not found');
         return res.json();
       })
       .then(data => {
-        console.log('✅ Datos completos de la orden:', data);
-        console.log('📦 Items recibidos:', data.items);
-        console.log('📦 Cantidad de items:', data.items?.length || 0);
+        console.log('✅ [SUCCESS] Datos completos de la orden:', data);
+        console.log('📦 [SUCCESS] Items recibidos:', data.items);
+        console.log('📦 [SUCCESS] Cantidad de items:', data.items?.length || 0);
+        
+        // Si Bold dice approved pero la orden está pending, usar el estado de Bold
+        if (txStatus === 'approved' && data.status === 'pending') {
+          data.status = 'approved';
+          console.log('✅ [SUCCESS] Estado actualizado a approved');
+        }
+        
         setOrder(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error('❌ Error cargando orden:', err);
+        console.error('❌ [SUCCESS] Error cargando orden:', err);
         setError(true);
         setLoading(false);
       });
@@ -124,9 +155,9 @@ function SuccessContent() {
               </div>
             )}
 
+            {/* Renderizar items */}
             {!loading && !error && order && (
               <div className="space-y-6">
-                {/* Productos comprados */}
                 {order.items && order.items.length > 0 ? (
                   <div>
                     <h3 className="font-semibold text-lg mb-3">Productos comprados:</h3>
