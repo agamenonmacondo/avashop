@@ -4,16 +4,35 @@ import { getSupabase } from '@/lib/supabaseClient';
 export async function POST(request) {
   try {
     const body = await request.json();
-    console.log('📦 [CREATE-PAYMENT] Datos recibidos:', JSON.stringify(body, null, 2));
-
+    
+    // Log completo del body recibido
+    console.log('📦 [CREATE-PAYMENT] Body completo recibido:');
+    console.log('Keys del body:', Object.keys(body));
+    console.log('Body stringify:', JSON.stringify(body, null, 2));
+    
     const { shippingData, cartItems, totalAmount, userEmail } = body;
+    
+    console.log('📦 [CREATE-PAYMENT] Datos extraídos:');
+    console.log('- shippingData:', shippingData ? 'EXISTE' : 'UNDEFINED');
+    console.log('- cartItems:', cartItems);
+    console.log('- totalAmount:', totalAmount);
+    console.log('- userEmail:', userEmail);
 
     // Validar datos requeridos
     if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
-      console.error('❌ [CREATE-PAYMENT] cartItems inválido:', cartItems);
+      console.error('❌ [CREATE-PAYMENT] cartItems inválido');
+      console.error('Tipo de cartItems:', typeof cartItems);
+      console.error('Es array?:', Array.isArray(cartItems));
+      console.error('Valor de cartItems:', cartItems);
+      
       return NextResponse.json({ 
         success: false, 
-        message: 'El carrito está vacío o es inválido' 
+        message: 'El carrito está vacío o es inválido',
+        debug: {
+          receivedKeys: Object.keys(body),
+          cartItemsType: typeof cartItems,
+          cartItemsValue: cartItems
+        }
       }, { status: 400 });
     }
 
@@ -97,7 +116,6 @@ export async function POST(request) {
         }
       } catch (dbError) {
         console.error('❌ [SUPABASE] Error en base de datos:', dbError);
-        // No bloqueamos el flujo de pago
       }
     }
 
@@ -117,6 +135,7 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('💥 [CREATE-PAYMENT] Error general:', error);
+    console.error('Stack:', error.stack);
     return NextResponse.json({ 
       success: false,
       message: 'Error interno del servidor',
