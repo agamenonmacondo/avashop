@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense, useState, useEffect } from 'react'; // ✅ Agregar Suspense aquí
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -13,7 +14,6 @@ import { Home, ShoppingCart, Mail, CreditCard, Bitcoin } from 'lucide-react';
 import Link from 'next/link';
 import { formatColombianCurrency } from '@/lib/utils';
 import { createCoinbaseCharge } from '@/lib/actions/order.actions';
-import { useState, useEffect } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/navigation';
 import BoldButton from '@/components/checkout/BoldButton';
@@ -45,7 +45,7 @@ const getCartFromLocalStorage = () => {
   }
 };
 
-const IVA_RATE = 0.19; // 18%
+const IVA_RATE = 0.19;
 
 const calculateOrderSummary = (cartItems: any[]) => {
   if (cartItems.length === 0) {
@@ -71,8 +71,6 @@ function CheckoutContent() {
   const [boldButtonData, setBoldButtonData] = useState<any>(null);
   const [user, setUser] = useState<User | null>(null);
   const [isCartLoaded, setIsCartLoaded] = useState(false);
-
-  // NUEVO: Flag para saber si ya se determinó el estado de autenticación
   const [authChecked, setAuthChecked] = useState(false);
 
   const shippingForm = useForm<ShippingFormValues>({
@@ -97,9 +95,8 @@ function CheckoutContent() {
     const cart = getCartFromLocalStorage();
     setCartItems(cart);
     setOrderSummary(calculateOrderSummary(cart));
-    setIsCartLoaded(true); // 🔑 NUEVO: Marcar que el carrito ya se cargó
+    setIsCartLoaded(true);
 
-    // Escuchar cambios en el carrito
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'cart') {
         const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
@@ -138,13 +135,18 @@ function CheckoutContent() {
   }, [profile, shippingForm]);
 
   useEffect(() => {
-    if (!user?.email) return;
+    // ✅ Agregar validación explícita
+    if (!user?.email) {
+      console.log('No hay usuario autenticado o email no disponible');
+      return;
+    }
 
     const fetchProfile = async () => {
       try {
-        const normalizedEmail = user.email.toLowerCase().trim();
+        const normalizedEmail = user.email!.toLowerCase().trim(); // ✅ Usar ! para indicar que email existe
         const supabase = getSupabase();
         if (!supabase) throw new Error('Supabase not initialized');
+        
         const { data, error } = await supabase
           .from('profiles')
           .select('*')
@@ -182,9 +184,8 @@ function CheckoutContent() {
     fetchProfile();
   }, [user, shippingForm]);
 
-  // 🔑 MODIFICADO: Verificar carrito vacío SOLO después de que se haya cargado
   useEffect(() => {
-    if (!isCartLoaded) return; // No hacer nada hasta que el carrito se haya cargado
+    if (!isCartLoaded) return;
 
     if (cartItems.length === 0) {
       toast({ 
@@ -196,9 +197,8 @@ function CheckoutContent() {
         router.push('/cart');
       }, 1500);
     }
-  }, [cartItems, isCartLoaded, router, toast]); // 🔑 Agregar isCartLoaded a las dependencias
+  }, [cartItems, isCartLoaded, router, toast]);
 
-  // Redirigir si NO está autenticado
   useEffect(() => {
     if (isCartLoaded && authChecked && user === null) {
       toast({
@@ -330,7 +330,6 @@ function CheckoutContent() {
 
   const isPaymentProcessing = isBoldLoading || isCoinbaseLoading;
 
-  // 🔑 NUEVO: Mostrar loading mientras se carga el carrito
   if (!isCartLoaded || !authChecked) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
@@ -566,7 +565,12 @@ function CheckoutContent() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-12 text-center">
+        <ShoppingCart className="mx-auto h-16 w-16 text-muted-foreground mb-4 animate-pulse" />
+        <p>Cargando checkout...</p>
+      </div>
+    }>
       <CheckoutContent />
     </Suspense>
   );
