@@ -61,7 +61,7 @@ const calculateOrderSummary = (cartItems: any[]) => {
 const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
 const boldRedirect = APP_URL ? `${APP_URL.replace(/\/$/, '')}/order/success` : '/order/success';
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const { toast } = useToast();
   const router = useRouter();
   const [cartItems, setCartItems] = useState<any[]>([]);
@@ -561,5 +561,13 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 }

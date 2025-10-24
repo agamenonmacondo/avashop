@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSupabase } from '@/lib/supabaseClient';
+import crypto from 'crypto';
 
 export async function POST(request) {
   try {
@@ -18,20 +18,38 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    console.log('✅ [CREATE-PAYMENT] Datos válidos recibidos:', { orderId, amount, currency });
+    // **GENERAR EL HASH DE INTEGRIDAD**
+    const secretKey = process.env.BOLD_SECRET_KEY;
+    
+    if (!secretKey) {
+      console.error('❌ [CREATE-PAYMENT] BOLD_SECRET_KEY no está configurada');
+      return NextResponse.json({ 
+        success: false, 
+        message: 'Configuración del servidor incompleta' 
+      }, { status: 500 });
+    }
 
-    // **GENERAR EL APPLINK DE BOLD**
-    const merchantId = process.env.NEXT_PUBLIC_BOLD_MERCHANT_ID || 'CKKA859CGE';
-    const boldApplink = `https://bold.co/deeplink?action=start_payment&value_to_collect=${amount}&description=${encodeURIComponent(`Pedido-${orderId}`)}&merchant_id=${merchantId}&reference=${orderId}`;
+    // Concatenar: {orderId}{amount}{currency}{secretKey}
+    const dataToHash = `${orderId}${amount}${currency || 'COP'}${secretKey}`;
+    
+    // Generar hash SHA256
+    const integritySignature = crypto
+      .createHash('sha256')
+      .update(dataToHash)
+      .digest('hex');
 
-    console.log('✅ [BOLD] Applink generado:', boldApplink);
+    console.log('🔐 [CREATE-PAYMENT] Hash generado:', integritySignature);
 
-    // **RETORNAR RESPUESTA CON URL DE PAGO**
+    // **RETORNAR DATOS PARA EL BOTÓN DE BOLD**
     return NextResponse.json({
       success: true,
-      orderId: orderId,
-      paymentUrl: boldApplink,
-      message: 'Enlace de pago generado exitosamente',
+      data: {
+        orderId: orderId,
+        amount: amount,
+        currency: currency || 'COP',
+        integritySignature: integritySignature,
+      },
+      message: 'Datos de pago preparados exitosamente',
     }, { status: 200 });
 
   } catch (error) {

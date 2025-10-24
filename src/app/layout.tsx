@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { cn } from '@/lib/utils';
+import Script from 'next/script';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -49,6 +50,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <Script 
+          src="https://checkout.bold.co/library/boldPaymentButton.js" 
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={cn("font-body antialiased", fontSans.variable, fontMono.variable)}>
         <ThemeProvider
           attribute="class"
