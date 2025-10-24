@@ -11,8 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { User, Mail, Phone, MapPin, Save, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
-import { auth } from '@/lib/firebase/firebaseConfig';
+import { getSupabase } from '@/lib/supabaseClient';
+import { getAuth } from 'firebase/auth';
 import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 
 const profileFormSchema = z.object({
@@ -51,8 +51,8 @@ export default function AccountPage() {
     defaultValues: { street: '', city: '', state: '', zipCode: '', country: 'Colombia' },
   });
 
-  // Cargar usuario de Firebase y perfil de Supabase directamente
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (!firebaseUser?.email) {
@@ -61,7 +61,13 @@ export default function AccountPage() {
         return;
       }
       try {
-        // Buscar perfil por email en Supabase
+        const supabase = getSupabase();
+        if (!supabase) {
+          console.error('Supabase no está inicializado');
+          setLoading(false);
+          return;
+        }
+
         const { data, error } = await supabase
           .from('profiles')
           .select('*')
@@ -85,7 +91,6 @@ export default function AccountPage() {
             addressForm.reset(data.addresses[0]);
           }
         } else {
-          // Si no hay perfil, usar datos de Firebase
           profileForm.reset({
             name: firebaseUser.displayName ?? '',
             email: firebaseUser.email ?? '',
@@ -103,11 +108,17 @@ export default function AccountPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Guardar perfil directamente en Supabase
   async function onProfileSubmit(profileValues: ProfileFormValues) {
     if (!user?.email) return;
     setLoading(true);
     try {
+      const supabase = getSupabase();
+      if (!supabase) {
+        toast({ title: 'Error', description: 'No se pudo conectar con la base de datos', variant: 'destructive' });
+        setLoading(false);
+        return;
+      }
+
       const { error } = await supabase
         .from('profiles')
         .upsert({
@@ -127,11 +138,17 @@ export default function AccountPage() {
     setLoading(false);
   }
 
-  // Guardar dirección directamente en Supabase (ajusta según tu modelo)
   async function onAddressSubmit(formValues: AddressFormValues) {
     if (!user?.email) return;
     setLoading(true);
     try {
+      const supabase = getSupabase();
+      if (!supabase) {
+        toast({ title: 'Error', description: 'No se pudo conectar con la base de datos', variant: 'destructive' });
+        setLoading(false);
+        return;
+      }
+
       const { error } = await supabase
         .from('profiles')
         .upsert({

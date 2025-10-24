@@ -92,66 +92,27 @@ async function handleApprovedPayment(payload: BoldWebhookPayload) {
       throw new Error('Supabase no está inicializado');
     }
 
-    // 1. Crear/actualizar la orden principal
+    // **ACTUALIZAR solo el estado, no insertar de nuevo**
     const { data: order, error: orderError } = await supabase
       .from('orders')
-      .upsert({
-        order_id: payload.orderId,
-        user_email: payload.userEmail || 'unknown@example.com',
-        amount: payload.amount,
-        currency: payload.currency,
+      .update({
         status: 'approved',
         payment_status: 'approved',
-        payment_method: payload.paymentMethod,
-        transaction_id: payload.transactionId,
-        shipping_details: payload.shippingDetails || {},
-        metadata: {
-          reference: payload.reference,
-          description: payload.description,
-        },
-        subtotal: payload.subtotal || 0,
-        iva: payload.iva || 0,
-        shipping_cost: payload.shipping || 0,
-        total_amount: payload.amount,
         paid_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      }, {
-        onConflict: 'order_id'
       })
+      .eq('order_id', payload.orderId)
       .select()
       .single();
 
     if (orderError) {
-      console.error('❌ [BOLD] Error guardando orden:', orderError);
+      console.error('❌ [BOLD] Error actualizando orden:', orderError);
       throw orderError;
     }
 
-    console.log('✅ [BOLD] Orden guardada:', order);
+    console.log('✅ [BOLD] Orden actualizada a APPROVED:', order);
 
-    // 2. Guardar los items de la orden
-    if (payload.cartItems && payload.cartItems.length > 0) {
-      const orderItems = payload.cartItems.map((item: any) => ({
-        order_id: payload.orderId,
-        product_id: item.id,
-        product_name: item.name,
-        quantity: item.quantity,
-        price: item.price,
-        image_url: item.imageUrls?.[0] || null,
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) {
-        console.error('❌ [BOLD] Error guardando items:', itemsError);
-        throw itemsError;
-      }
-
-      console.log('✅ [BOLD] Items guardados:', orderItems.length);
-    }
-
-    console.log(`✅ [BOLD] Pago aprobado procesado exitosamente`);
+    // Aquí puedes enviar email de confirmación, limpiar carrito, etc.
 
   } catch (error) {
     console.error(`❌ [BOLD] Error procesando pago aprobado:`, error);
