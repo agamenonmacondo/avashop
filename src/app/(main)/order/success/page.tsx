@@ -31,33 +31,42 @@ interface OrderData {
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const orderId = searchParams?.get('order_id') || null;
+  
+  // ⭐ CAMBIO: Buscar 'bold-order-id' primero, luego 'order_id'
+  const orderId = searchParams?.get('bold-order-id') || searchParams?.get('order_id') || null;
+  const txStatus = searchParams?.get('bold-tx-status') || 'approved';
+  
   const [order, setOrder] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!orderId) {
+      console.warn('⚠️ No se encontró order_id en la URL');
       setLoading(false);
       return;
     }
 
+    console.log('🔍 Cargando orden:', orderId, '- Estado Bold:', txStatus);
+
     setLoading(true);
     fetch(`/api/orders/${orderId}`)
       .then(res => {
+        console.log('📡 Respuesta del API:', res.status);
         if (!res.ok) throw new Error('Order not found');
         return res.json();
       })
       .then(data => {
+        console.log('✅ Datos de orden recibidos:', data);
         setOrder(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error('Error cargando orden:', err);
+        console.error('❌ Error cargando orden:', err);
         setError(true);
         setLoading(false);
       });
-  }, [orderId]);
+  }, [orderId, txStatus]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -94,10 +103,20 @@ function SuccessContent() {
 
             {error && (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground mb-4">
                   No pudimos cargar los detalles de tu pedido, pero tu compra fue procesada correctamente.
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">
+                {orderId && (
+                  <div className="bg-muted p-4 rounded-lg inline-block">
+                    <p className="text-sm font-mono">
+                      <strong>Referencia:</strong> {orderId}
+                    </p>
+                    <p className="text-sm font-mono mt-1">
+                      <strong>Estado:</strong> <span className="text-green-600">{txStatus}</span>
+                    </p>
+                  </div>
+                )}
+                <p className="text-sm text-muted-foreground mt-4">
                   Te enviaremos una confirmación por correo electrónico pronto.
                 </p>
               </div>
@@ -106,29 +125,37 @@ function SuccessContent() {
             {!loading && !error && order && (
               <div className="space-y-6">
                 {/* Productos comprados */}
-                <div>
-                  <h3 className="font-semibold text-lg mb-3">Productos comprados:</h3>
-                  <div className="border rounded-lg overflow-hidden">
-                    <table className="w-full">
-                      <thead className="bg-muted">
-                        <tr>
-                          <th className="text-left p-3 font-medium">Producto</th>
-                          <th className="text-center p-3 font-medium">Cantidad</th>
-                          <th className="text-right p-3 font-medium">Precio</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {order.items.map((item, idx) => (
-                          <tr key={idx} className="border-t">
-                            <td className="p-3">{item.name}</td>
-                            <td className="text-center p-3">{item.quantity}</td>
-                            <td className="text-right p-3">{formatCurrency(item.price)}</td>
+                {order.items && order.items.length > 0 ? (
+                  <div>
+                    <h3 className="font-semibold text-lg mb-3">Productos comprados:</h3>
+                    <div className="border rounded-lg overflow-hidden">
+                      <table className="w-full">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 font-medium">Producto</th>
+                            <th className="text-center p-3 font-medium">Cantidad</th>
+                            <th className="text-right p-3 font-medium">Precio</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {order.items.map((item, idx) => (
+                            <tr key={idx} className="border-t">
+                              <td className="p-3">{item.name}</td>
+                              <td className="text-center p-3">{item.quantity}</td>
+                              <td className="text-right p-3">{formatCurrency(item.price * item.quantity)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                      Los detalles de los productos se están procesando. Recibirás la información completa por correo.
+                    </p>
+                  </div>
+                )}
 
                 <Separator />
 
@@ -136,15 +163,15 @@ function SuccessContent() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal:</span>
-                    <span>{formatCurrency(order.subtotal)}</span>
+                    <span>{formatCurrency(order.subtotal || 0)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">IVA (18%):</span>
-                    <span>{formatCurrency(order.iva)}</span>
+                    <span className="text-muted-foreground">IVA (19%):</span>
+                    <span>{formatCurrency(order.iva || 0)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Envío:</span>
-                    <span>{order.envio === 0 ? 'Gratis' : formatCurrency(order.envio)}</span>
+                    <span>{order.envio === 0 ? 'Gratis' : formatCurrency(order.envio || 0)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-bold text-lg pt-2">
@@ -160,11 +187,13 @@ function SuccessContent() {
                   <div>
                     <h3 className="font-semibold mb-2">Información de envío:</h3>
                     <div className="bg-muted p-4 rounded-lg text-sm space-y-1">
-                      {order.shipping.name && <p className="font-medium">{order.shipping.name}</p>}
+                      {order.shipping.fullName && <p className="font-medium">{order.shipping.fullName}</p>}
                       {order.shipping.address && <p>{order.shipping.address}</p>}
-                      {order.shipping.city && order.shipping.country && (
-                        <p>{order.shipping.city}, {order.shipping.country}</p>
+                      {order.shipping.city && order.shipping.state && (
+                        <p>{order.shipping.city}, {order.shipping.state}</p>
                       )}
+                      {order.shipping.country && <p>{order.shipping.country}</p>}
+                      {order.shipping.email && <p className="text-muted-foreground">{order.shipping.email}</p>}
                     </div>
                   </div>
                 )}
@@ -191,7 +220,7 @@ function SuccessContent() {
             {/* Botones de acción */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button asChild size="lg" className="flex-1">
-                <Link href="/dashboard">Ver Mis Pedidos</Link>
+                <Link href="/account/orders">Ver Mis Pedidos</Link>
               </Button>
               <Button variant="outline" size="lg" asChild className="flex-1">
                 <Link href="/">Continuar Comprando</Link>
