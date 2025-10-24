@@ -259,6 +259,10 @@ function CheckoutContent() {
           orderId: orderInput.orderId,
           amount: orderInput.amount,
           currency: orderInput.currency,
+          // ⭐ AGREGAR ESTOS DATOS:
+          cartItems: orderInput.cartItems,
+          shippingData: orderInput.shippingDetails,
+          userEmail: user?.email || orderInput.customerData.email,
         }),
       });
 
