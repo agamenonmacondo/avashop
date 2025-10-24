@@ -252,6 +252,15 @@ function CheckoutContent() {
     }
 
     try {
+      console.log('📤 [CHECKOUT] Enviando datos al endpoint:', {
+        orderId: orderInput.orderId,
+        amount: orderInput.amount,
+        currency: orderInput.currency,
+        cartItems: orderInput.cartItems, // ⭐ VERIFICAR QUE ESTO EXISTA
+        shippingData: orderInput.shippingDetails, // ⭐ VERIFICAR QUE ESTO EXISTA
+        userEmail: user?.email || orderInput.customerData.email,
+      });
+
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -259,7 +268,7 @@ function CheckoutContent() {
           orderId: orderInput.orderId,
           amount: orderInput.amount,
           currency: orderInput.currency,
-          // ⭐ AGREGAR ESTOS DATOS:
+          // ⭐ ASEGURAR QUE ESTOS DATOS SE ENVÍEN
           cartItems: orderInput.cartItems,
           shippingData: orderInput.shippingDetails,
           userEmail: user?.email || orderInput.customerData.email,
@@ -267,6 +276,7 @@ function CheckoutContent() {
       });
 
       const result = await res.json();
+      console.log('📥 [CHECKOUT] Respuesta del endpoint:', result);
 
       if (res.ok && result.success && result.data) {
         setBoldButtonData({
