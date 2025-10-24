@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
+import { getSupabase } from '@/lib/supabaseClient';
 
 // Tipos para el webhook de Bold
 interface BoldWebhookPayload {
@@ -14,27 +15,29 @@ interface BoldWebhookPayload {
   transactionId?: string;
   createdAt: string;
   updatedAt: string;
+  shippingDetails?: any;
+  cartItems?: any[];
+  subtotal?: number;
+  iva?: number;
+  shipping?: number;
+  userEmail?: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
     console.log('🔔 [BOLD WEBHOOK] Recibiendo notificación...');
 
-    // Leer el body del webhook
     const payload: BoldWebhookPayload = await request.json();
     
     console.log('📦 [BOLD WEBHOOK] Payload recibido:', JSON.stringify(payload, null, 2));
 
-    // Validar que el webhook venga de Bold (opcional: agregar verificación de firma)
-    const headersList = headers();
+    const headersList = await headers();
     const boldSignature = headersList.get('x-bold-signature');
     
     if (boldSignature) {
       console.log('🔐 [BOLD WEBHOOK] Signature:', boldSignature);
-      // Aquí puedes validar la firma si Bold la proporciona
     }
 
-    // Validar campos requeridos
     if (!payload.orderId || !payload.status) {
       console.error('❌ [BOLD WEBHOOK] Payload inválido - faltan campos requeridos');
       return NextResponse.json(
@@ -43,7 +46,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Procesar según el estado de la transacción
     switch (payload.status) {
       case 'APPROVED':
         console.log('✅ [BOLD WEBHOOK] Pago APROBADO');
@@ -69,13 +71,11 @@ export async function POST(request: NextRequest) {
         console.log('❓ [BOLD WEBHOOK] Estado desconocido:', payload.status);
     }
 
-    // Responder 200 OK a Bold para confirmar recepción
     return NextResponse.json({ received: true, orderId: payload.orderId }, { status: 200 });
 
   } catch (error) {
     console.error('💥 [BOLD WEBHOOK] Error procesando webhook:', error);
     
-    // Aún así, responder 200 para evitar reintentos innecesarios
     return NextResponse.json(
       { error: 'Internal server error', received: false },
       { status: 500 }
@@ -83,28 +83,73 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Función para manejar pagos aprobados
 async function handleApprovedPayment(payload: BoldWebhookPayload) {
   try {
     console.log(`💳 [BOLD] Procesando pago aprobado para orden: ${payload.orderId}`);
 
-    // Aquí puedes:
-    // 1. Actualizar el estado de la orden en tu base de datos
-    // 2. Limpiar el carrito del usuario
-    // 3. Enviar email de confirmación
-    // 4. Generar factura
-    // 5. Notificar al usuario
+    const supabase = getSupabase();
+    if (!supabase) {
+      throw new Error('Supabase no está inicializado');
+    }
 
-    // Ejemplo: Guardar en Supabase (si usas Supabase)
-    // const { getSupabase } = await import('@/lib/supabaseClient');
-    // const supabase = getSupabase();
-    // 
-    // await supabase.from('orders').update({
-    //   status: 'paid',
-    //   payment_status: 'approved',
-    //   transaction_id: payload.transactionId,
-    //   paid_at: new Date().toISOString()
-    // }).eq('order_id', payload.orderId);
+    // 1. Crear/actualizar la orden principal
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .upsert({
+        order_id: payload.orderId,
+        user_email: payload.userEmail || 'unknown@example.com',
+        amount: payload.amount,
+        currency: payload.currency,
+        status: 'approved',
+        payment_status: 'approved',
+        payment_method: payload.paymentMethod,
+        transaction_id: payload.transactionId,
+        shipping_details: payload.shippingDetails || {},
+        metadata: {
+          reference: payload.reference,
+          description: payload.description,
+        },
+        subtotal: payload.subtotal || 0,
+        iva: payload.iva || 0,
+        shipping_cost: payload.shipping || 0,
+        total_amount: payload.amount,
+        paid_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'order_id'
+      })
+      .select()
+      .single();
+
+    if (orderError) {
+      console.error('❌ [BOLD] Error guardando orden:', orderError);
+      throw orderError;
+    }
+
+    console.log('✅ [BOLD] Orden guardada:', order);
+
+    // 2. Guardar los items de la orden
+    if (payload.cartItems && payload.cartItems.length > 0) {
+      const orderItems = payload.cartItems.map((item: any) => ({
+        order_id: payload.orderId,
+        product_id: item.id,
+        product_name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        image_url: item.imageUrls?.[0] || null,
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) {
+        console.error('❌ [BOLD] Error guardando items:', itemsError);
+        throw itemsError;
+      }
+
+      console.log('✅ [BOLD] Items guardados:', orderItems.length);
+    }
 
     console.log(`✅ [BOLD] Pago aprobado procesado exitosamente`);
 
@@ -114,60 +159,84 @@ async function handleApprovedPayment(payload: BoldWebhookPayload) {
   }
 }
 
-// Función para manejar pagos rechazados
 async function handleDeclinedPayment(payload: BoldWebhookPayload) {
   try {
     console.log(`❌ [BOLD] Procesando pago rechazado para orden: ${payload.orderId}`);
 
-    // Aquí puedes:
-    // 1. Actualizar el estado de la orden como "failed"
-    // 2. Notificar al usuario del rechazo
-    // 3. Ofrecer métodos de pago alternativos
+    const supabase = getSupabase();
+    if (!supabase) return;
+
+    await supabase
+      .from('orders')
+      .upsert({
+        order_id: payload.orderId,
+        status: 'declined',
+        payment_status: 'declined',
+        transaction_id: payload.transactionId,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'order_id'
+      });
 
     console.log(`⚠️ [BOLD] Pago rechazado procesado`);
 
   } catch (error) {
     console.error(`❌ [BOLD] Error procesando pago rechazado:`, error);
-    throw error;
   }
 }
 
-// Función para manejar pagos pendientes
 async function handlePendingPayment(payload: BoldWebhookPayload) {
   try {
     console.log(`⏳ [BOLD] Procesando pago pendiente para orden: ${payload.orderId}`);
 
-    // Aquí puedes:
-    // 1. Actualizar el estado como "pending"
-    // 2. Enviar notificación de espera al usuario
+    const supabase = getSupabase();
+    if (!supabase) return;
+
+    await supabase
+      .from('orders')
+      .upsert({
+        order_id: payload.orderId,
+        status: 'pending',
+        payment_status: 'pending',
+        transaction_id: payload.transactionId,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'order_id'
+      });
 
     console.log(`⏳ [BOLD] Pago pendiente procesado`);
 
   } catch (error) {
     console.error(`❌ [BOLD] Error procesando pago pendiente:`, error);
-    throw error;
   }
 }
 
-// Función para manejar errores de pago
 async function handleErrorPayment(payload: BoldWebhookPayload) {
   try {
     console.log(`⚠️ [BOLD] Procesando error de pago para orden: ${payload.orderId}`);
 
-    // Aquí puedes:
-    // 1. Registrar el error
-    // 2. Notificar al equipo de soporte
-    // 3. Intentar un reintento automático si aplica
+    const supabase = getSupabase();
+    if (!supabase) return;
+
+    await supabase
+      .from('orders')
+      .upsert({
+        order_id: payload.orderId,
+        status: 'error',
+        payment_status: 'error',
+        transaction_id: payload.transactionId,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'order_id'
+      });
 
     console.log(`⚠️ [BOLD] Error de pago procesado`);
 
   } catch (error) {
     console.error(`❌ [BOLD] Error procesando error de pago:`, error);
-    throw error;
   }
 }
 
-// Permitir solo POST
 export async function GET() {
   return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
 }
