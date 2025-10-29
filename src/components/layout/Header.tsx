@@ -1,8 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, Search, ShoppingCart } from 'lucide-react';
+import { Menu, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import UserNav from './UserNav';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -83,14 +84,7 @@ export default function Header() {
 
         {/* Right container for actions */}
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Buscar..."
-              className="w-full rounded-lg bg-muted pl-8 md:w-[150px] lg:w-[250px]"
-            />
-          </div>
+          {/* Barra de búsqueda ELIMINADA */}
           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Carrito de Compras">

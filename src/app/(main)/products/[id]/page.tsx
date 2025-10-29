@@ -16,6 +16,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
+  const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   
   const product = products.find(p => p.id === resolvedParams.id);
 
@@ -77,12 +78,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+        <div className="relative aspect-square rounded-lg overflow-hidden bg-muted max-w-xl mx-auto">
           <Image
-            src={product.imageUrls[0]}
+            src={product.imageUrls[selectedImageIdx]}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-contain"
             priority
             unoptimized
           />
@@ -142,6 +143,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {isAdding ? 'Agregando...' : 'Comprar Ahora'}
           </Button>
         </div>
+      </div>
+
+      <div className="flex gap-4 overflow-x-auto mb-6">
+        {product.imageUrls && product.imageUrls.length > 0 ? (
+          product.imageUrls.map((imgUrl, idx) => (
+            <button
+              key={imgUrl}
+              type="button"
+              className={`relative aspect-square w-24 h-24 rounded-lg overflow-hidden bg-muted border-2 ${selectedImageIdx === idx ? 'border-primary' : 'border-transparent'}`}
+              onClick={() => setSelectedImageIdx(idx)}
+              style={{ cursor: 'pointer' }}
+            >
+              <Image
+                src={imgUrl}
+                alt={`${product.name} imagen ${idx + 1}`}
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </button>
+          ))
+        ) : (
+          <div className="w-24 h-24 bg-muted flex items-center justify-center">Sin imágenes</div>
+        )}
       </div>
     </div>
   );

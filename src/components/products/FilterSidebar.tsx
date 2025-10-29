@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -34,17 +34,34 @@ export default function FilterSidebar({
   maxPrice = 5000000,
   priceStep = 100000
 }: FilterSidebarProps) {
-  // Detectar categorías presentes en los productos actuales
-  const visibleCategoryIds = new Set(
-    products.map(p =>
-      typeof p.category === 'object' && p.category !== null
-        ? p.category.id
-        : p.category
-    )
-  );
-  const filteredCategories = categories.filter(cat =>
-    visibleCategoryIds.has(cat.id) || visibleCategoryIds.has(cat.name) || visibleCategoryIds.has(cat.slug)
-  );
+  
+  const groupCategories = (cats: Category[]) => {
+    const groups: { [key: string]: { parent: Category; children: Category[] } } = {};
+    
+    const parents = cats.filter(cat => !cat.parentId);
+    
+    parents.forEach(parent => {
+      groups[parent.id] = { parent, children: [] };
+    });
+    
+    cats.forEach(cat => {
+      if (cat.parentId && groups[cat.parentId]) {
+        groups[cat.parentId].children.push(cat);
+      }
+    });
+    
+    return groups;
+  };
+
+  const categoryGroups = groupCategories(categories);
+
+  // 🔍 DEBUG: Ver qué tienen los productos
+  console.log('Products received:', products.slice(0, 2).map(p => ({
+    id: p.id,
+    name: p.name,
+    category: p.category,
+    categoryType: typeof p.category
+  })));
 
   // Calcular el rango de precios real de los productos mostrados
   const productPrices = products.map(p => p.price);
@@ -55,10 +72,30 @@ export default function FilterSidebar({
   const [priceRange, setPriceRange] = useState<[number, number]>([minProductPrice, maxProductPriceReal]);
   const [sortKey, setSortKey] = useState<string>('relevance');
 
-  const handleCategoryChange = (categoryId: string, checked: boolean) => {
-    const newSelectedCategories = checked
-      ? [...selectedCategories, categoryId]
-      : selectedCategories.filter(id => id !== categoryId);
+  // Actualizar rango de precios cuando cambian los productos
+  useEffect(() => {
+    setPriceRange([minProductPrice, maxProductPriceReal]);
+  }, [minProductPrice, maxProductPriceReal]);
+
+  const handleCategoryChange = (categoryId: string, checked: boolean, isParent = false, childrenIds: string[] = []) => {
+    let newSelectedCategories = [...selectedCategories];
+    
+    if (isParent) {
+      if (checked) {
+        // Seleccionar padre y todos sus hijos
+        newSelectedCategories = [...new Set([...newSelectedCategories, categoryId, ...childrenIds])];
+      } else {
+        // Deseleccionar padre y todos sus hijos
+        newSelectedCategories = newSelectedCategories.filter(id => id !== categoryId && !childrenIds.includes(id));
+      }
+    } else {
+      if (checked) {
+        newSelectedCategories.push(categoryId);
+      } else {
+        newSelectedCategories = newSelectedCategories.filter(id => id !== categoryId);
+      }
+    }
+    
     setSelectedCategories(newSelectedCategories);
   };
 
@@ -116,19 +153,54 @@ export default function FilterSidebar({
         <AccordionItem value="categories">
           <AccordionTrigger className="text-base font-medium">Categorías</AccordionTrigger>
           <AccordionContent className="space-y-2 pt-2">
-            {filteredCategories.length === 0 && (
+            {Object.keys(categoryGroups).length === 0 && (
               <div className="text-sm text-muted-foreground">No hay categorías disponibles</div>
             )}
-            {filteredCategories.map(category => (
-              <div key={category.id} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`category-${category.id}`}
-                  checked={selectedCategories.includes(category.id)}
-                  onCheckedChange={(checked) => handleCategoryChange(category.id, !!checked)}
-                />
-                <Label htmlFor={`category-${category.id}`} className="font-normal text-sm">
-                  {category.name}
-                </Label>
+            {/* ✅ MOSTRAR TODAS LAS CATEGORÍAS SIN FILTRAR */}
+            {Object.entries(categoryGroups).map(([key, group]) => (
+              <div key={key} className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`category-${group.parent.id}`}
+                    checked={selectedCategories.includes(group.parent.id)}
+                    onCheckedChange={(checked) => 
+                      handleCategoryChange(
+                        group.parent.id, 
+                        !!checked, 
+                        true, 
+                        group.children.map(c => c.id)
+                      )
+                    }
+                  />
+                  <Label 
+                    htmlFor={`category-${group.parent.id}`} 
+                    className="font-medium text-sm cursor-pointer"
+                  >
+                    {group.parent.name}
+                  </Label>
+                </div>
+                
+                {group.children.length > 0 && (
+                  <div className="ml-6 space-y-1">
+                    {group.children.map(child => (
+                      <div key={child.id} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`category-${child.id}`}
+                          checked={selectedCategories.includes(child.id)}
+                          onCheckedChange={(checked) => 
+                            handleCategoryChange(child.id, !!checked)
+                          }
+                        />
+                        <Label 
+                          htmlFor={`category-${child.id}`} 
+                          className="font-normal text-sm cursor-pointer"
+                        >
+                          {child.name}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </AccordionContent>
@@ -157,3 +229,4 @@ export default function FilterSidebar({
     </div>
   );
 }
+

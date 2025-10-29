@@ -28,9 +28,13 @@ export default function HomePage() {
     let tempProducts = [...allProducts];
 
     if (currentFilters.categories.length > 0) {
-      tempProducts = tempProducts.filter(product => 
-        currentFilters.categories.includes(product.category.id)
-      );
+      tempProducts = tempProducts.filter(product => {
+        // Si el producto tiene subcategoría, compara también su id
+        const categoryId = product.category?.id;
+        const subcategoryId = product.subcategory?.id;
+        return currentFilters.categories.includes(categoryId) ||
+               (subcategoryId && currentFilters.categories.includes(subcategoryId));
+      });
     }
 
     tempProducts = tempProducts.filter(product => 
