@@ -17,16 +17,18 @@ const fontMono = Source_Code_Pro({
 });
 
 export const metadata = {
-  title: 'AVA Shop – Tienda de electrónica',
-  description: 'Tienda online de teléfonos, accesorios y MacBooks. Precios, reseñas y envíos.',
-  applicationName: 'AVA Shop',
-  authors: [{ name: 'AVA', url: 'https://ava.example.com' }],
+  title: 'CCS724 – Tienda de electrónica',
+  description: 'CCS724 — Tienda online  de MONDSUB y REMAX.',
+  applicationName: 'CCS724',
+  authors: [{ name: 'CCS724', url: process.env.NEXT_PUBLIC_APP_URL }],
   openGraph: {
-    title: 'AVA Shop',
+    title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
     url: process.env.NEXT_PUBLIC_APP_URL,
-    siteName: 'AVA Shop',
+    siteName: 'CCS724',
     images: [
+      // Logo principal (CCS724) primero, AVA como secundario
+      `${process.env.NEXT_PUBLIC_APP_URL}/images/CCS724/ccs724_logo.png`,
       `${process.env.NEXT_PUBLIC_APP_URL}/images/AVALOGO/ava_logo.png`,
     ],
     locale: 'es_ES',
@@ -34,9 +36,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AVA Shop',
+    title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
-    images: [`${process.env.NEXT_PUBLIC_APP_URL}/images/AVALOGO/ava_logo.png`],
+    images: [
+      `${process.env.NEXT_PUBLIC_APP_URL}/images/CCS724/ccs724_logo.png`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/images/AVALOGO/ava_logo.png`,
+    ],
   },
   icons: {
     icon: '/favicon.ico',

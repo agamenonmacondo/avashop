@@ -29,54 +29,36 @@ export default function Header() {
                     href="/"
                     className="flex items-center gap-2 text-lg font-semibold -ml-2"
                   >
+                    {/* CCS724 más grande en móvil */}
                     <Image
-                      src="/images/AVALOGO/ava_logo.png"
-                      alt="AVA Shop Logo"
-                      width={32}
-                      height={32}
-                      className="text-primary"
+                      src="/images/AVALOGO/logo_ccs.png"
+                      alt="CCS724 Logo"
+                      width={56}
+                      height={56}
+                      priority
                     />
-                    <span className="font-bold text-xl font-headline">
-                      AVA Shop
-                    </span>
                   </Link>
-                  {/* Logo Carlos Cardona en menú móvil */}
-                  <div className="flex items-center mt-4">
-                    <Image
-                      src="/images/AVALOGO/carlos_cardona.png"
-                      alt="carlos cardona logo"
-                      width={90}
-                      height={90}
-                    />
-                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
           </div>
+
           {/* Desktop Logo & Nav */}
           <Link
             href="/"
-            className="mr-6 hidden md:flex items-center gap-2"
+            className="mr-6 hidden md:flex items-center gap-3"
           >
+            {/* CCS724 como logo principal, más grande */}
             <Image
-              src="/images/AVALOGO/ava_logo.png"
-              alt="AVA Shop Logo"
-              width={40}
-              height={40}
-              className="text-primary"
-            />
-            <span className="font-bold text-xl font-headline">
-              AVA Shop
-            </span>
-            {/* Logo adicional */}
-            <Image
-              src="/images/AVALOGO/carlos_cardona.png"
-              alt="carlos cardona logo"
-              width={130}
-              height={130}
-              className="ml-4"
+              src="/images/AVALOGO/logo_ccs.png"
+              alt="CCS724 Logo"
+              width={200}
+              height={200}
+              className="object-contain"
+              priority
             />
           </Link>
+
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             {/* Navigation links removed */}
           </nav>

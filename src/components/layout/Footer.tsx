@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link href="/" className="inline-block mb-4">
-              <span className="font-bold text-2xl font-headline">AVA Shop</span>
+              <span className="font-bold text-2xl font-headline">CCS 724</span>
             </Link>
             <p className="text-muted-foreground text-sm">
               Tu tienda única para lo último en tecnología y accesorios.
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/40 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} AVA Shop. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} CCS 724. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

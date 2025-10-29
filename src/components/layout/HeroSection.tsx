@@ -63,7 +63,7 @@ export default function HeroSection() {
         <div className="grid md:grid-cols-2 gap-8 items-center py-20 md:py-32">
           <div className="space-y-6 text-center md:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tight">
-              <span className="text-primary">AVA Shop:</span> La Tecnología Que Te Define
+              <span className="text-primary">CCS 724:</span> Compra Confianza Seguridad
             </h1>
             <p className="text-lg text-muted-foreground max-w-lg mx-auto md:mx-0">
               Explora lo último en accesorios premium, productos de belleza. Calidad y servicio que marcan la diferencia.
