@@ -3828,42 +3828,7 @@ export const products: Product[] = [
     createdAt: now,
     updatedAt: now,
   },
-  {
-    id: "remax-rm-208",
-    name: "RM-208 Audífonos Manos Libres con Sonido 3 Tonos y Mega Bass",
-    description: "Disfruta de una experiencia de audio superior con los audífonos manos libres RM-208. Estos audífonos ofrecen un sonido envolvente con tres tonos distintos y un potente mega bass que te permitirá sumergirte en tu música favorita. Diseñados para ser cómodos y fáciles de usar, son ideales para llamadas y sesiones de música en cualquier lugar. Su tecnología de sonido avanzada y su diseño ergonómico los hacen perfectos para aquellos que buscan calidad y comodidad en un mismo producto.",
-    price: 50400,
-    imageUrls: [
-      "/images/remax/408_RM-208.png",
-      "/images/remax/409_RM-208.png",
-      "/images/remax/410_RM-208.png"
-    ],
-    category: micrófonosCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 143, \"categoria_original\": \"auriculares\", \"color_principal\": \"negro\", \"precio_base\": 40000, \"multiplicador\": 1.26, \"subcategoria_detectada\": \"micrófonosCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  },
-  {
-    id: "remax-rm-625",
-    name: "RM-625 Audífonos Manos Libres con Sonido HD y Control Inteligente",
-    description: "Experimenta la libertad de comunicarte con los audífonos RM-625, diseñados para ofrecer una experiencia de audio superior con sonido HD y un control inteligente que facilita su uso. Estos audífonos manos libres están pensados para aquellos que buscan comodidad y calidad en sus conversaciones diarias. Especificaciones técnicas: - Sonido HD para una experiencia de audio superior. - Control inteligente para una fácil navegación y manejo. - Diseño manos libres para una mayor comodidad y seguridad durante el uso. Materiales y construcción: Aunque los materiales específicos no se detallan, el diseño y la construcción de los audífonos sugieren durabilidad y confort, adecuados para un uso prolongado. Compatibilidad y usos: - Compatibles con dispositivos que soportan conexiones de audífonos estándar. - Ideales para llamadas, videoconferencias y escuchar música. Ventajas: - Ofrece una experiencia de audio nítida y clara. - Facilita el manejo gracias a su control inteligente. - Permite un uso cómodo y sin las restricciones de cables o manejo manual durante las llamadas o al escuchar música. En resumen, los audífonos RM-625 combinan tecnología avanzada con un diseño práctico, ofreciendo una solución ideal para aquellos que buscan disfrutar de su música o realizar llamadas con claridad y comodidad.",
-    price: 54432,
-    imageUrls: [
-      "/images/remax/411_RM-625.png",
-      "/images/remax/412_RM-625.png",
-      "/images/remax/413_RM-625.png"
-    ],
-    category: cablesCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 144, \"categoria_original\": \"auriculares\", \"color_principal\": \"negro\", \"precio_base\": 43200, \"multiplicador\": 1.26, \"subcategoria_detectada\": \"cablesCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  }
+  
 ];
 
 export const mockUser: User = {
