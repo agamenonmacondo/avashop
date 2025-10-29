@@ -214,6 +214,10 @@ export default function OrdersPage() {
                     <div className="mt-2">
                       {getStatusBadge(order.payment_status)}
                     </div>
+                    {/* Enlace al detalle */}
+                    <Button asChild variant="outline" size="sm" className="mt-2">
+                      <Link href={`/account/orders/${order.order_id}`}>Ver Detalle</Link>
+                    </Button>
                   </div>
                 </div>
               </CardHeader>
