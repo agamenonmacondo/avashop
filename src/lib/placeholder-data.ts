@@ -214,7 +214,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-niacinamida-highlight-serum",
     name: "MONDSUB NIACINAMIDA HIGHLIGHT SERUM",
     description: "Iluminador para cara y cuerpo que desvanece manchas y marcas de acné, reduce la oscuridad e iguala e ilumina tu piel. Contiene Niacinamida y tiene un volumen de 95ml.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/002_MONDSUB_NIACINAMIDA_HIGHLIGHT_SERUM.png"
     ],
@@ -222,7 +222,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 4, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 4, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -230,7 +230,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-colageno-highlight-serum",
     name: "MONDSUB COLAGENO HIGHLIGHT SERUM",
     description: "Iluminador para cara y cuerpo que aumenta la hidratación de la piel, reduce la sequedad y reafirma y suaviza la piel. Adecuado para pieles flácidas o envejecidas prematuramente. Presentado en un envase de 95ml.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/003_MONDSUB_COLAGENO_HIGHLIGHT_SERUM.png"
     ],
@@ -238,7 +238,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 5, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco o crema\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 5, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco o crema\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -246,7 +246,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-acido-hialuronico-highlight-serum",
     name: "MONDSUB ACIDO HIALURONICO HIGHLIGHT SERUM",
     description: "Iluminador para cara y cuerpo con ácido hialurónico que proporciona hidratación intensiva. Su textura de gel suave hidrata y suaviza la piel, adecuado para pieles secas y deshidratadas. Contenido: 95ml.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/004_MONDSUB_ACIDO_HIALURONICO_HIGHLIGHT_SERUM.png"
     ],
@@ -254,7 +254,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 6, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"Blanco/Rosa\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 6, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"Blanco/Rosa\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -262,7 +262,7 @@ export const products: Product[] = [
     id: "mon-sub-protector-solar-en-gel-spf-30",
     name: "PROTECTOR SOLAR EN GEL SPF 30",
     description: "Protector solar en gel con factor de protección SPF 30, ideal para proteger la piel del sol de manera efectiva. Su fórmula en gel lo hace ligero y fácil de aplicar, perfecto para uso diario. Ofrece protección contra los rayos UVB, ayudando a prevenir quemaduras solares y reduciendo el riesgo de daño solar a largo plazo. Su textura fresca y no grasa lo hace adecuado para todos los tipos de piel, incluyendo las más sensibles.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/005_PROTECTOR_SOLAR_EN_GEL_SPF_30.png"
     ],
@@ -270,7 +270,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 7, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"protectoresSolaresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 7, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"protectoresSolaresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -278,7 +278,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-protector-solar-en-gel-spf-30",
     name: "MONDSUB PROTECTOR SOLAR EN GEL SPF 30",
     description: "Protector solar 2 en 1 con extracto de aloe vera y café arábica. Ofrece protección solar externa e hidratación interna. Su textura en gel es transparente, ligera como el agua, no irrita ni es pegajosa. Ideal para cuidar la piel de manera efectiva y suave.",
-    price: 72000,
+    price: 39600,
     imageUrls: [
       "/images/mon_sub/006_MONDSUB_PROTECTOR_SOLAR_EN_GEL_SPF_30.png"
     ],
@@ -286,7 +286,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 8, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"protectoresSolaresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 8, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"protectoresSolaresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -294,7 +294,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-lip-balm-sandia-cereza",
     name: "MONDSUB LIP BALM SANDIA + CEREZA",
     description: "Bálsamo labial dual que nutre profundamente los labios, realzando su luminosidad natural y dejándolos más hidratados y suaves. Con sabores a sandía y cereza, ofrece una sensación mejorada y un toque de color. Ideal para mantener los labios hidratados y con un aspecto saludable.",
-    price: 28500,
+    price: 15675,
     imageUrls: [
       "/images/mon_sub/008_MONDSUB_LIP_BALM_SANDIA_+_CEREZA.png"
     ],
@@ -302,7 +302,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 10, \"categoria_original\": \"Cuidado Personal - Cosméticos\", \"color_principal\": \"Rosa/ Rojo\", \"precio_base\": 9500, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"balsamosLabialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 10, \"categoria_original\": \"Cuidado Personal - Cosméticos\", \"color_principal\": \"Rosa/ Rojo\", \"precio_base\": 9500, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"balsamosLabialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -310,7 +310,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-lip-balm-acido-hialurico-vitamina-e",
     name: "MONDSUB LIP BALM ACIDO HIALURICO + VITAMINA E",
     description: "Bálsamo labial dual-color que repara los labios secos, mantiene la elasticidad e hidratación. Atenúa las líneas de expresión y deja los labios suaves y voluminosos. Con ácido hialurónico y vitamina E, ofrece una solución hidratante y rejuvenecedora para labios.",
-    price: 28500,
+    price: 15675,
     imageUrls: [
       "/images/mon_sub/009_MONDSUB_LIP_BALM_ACIDO_HIALURICO_+_VITAMINA_E.png"
     ],
@@ -318,7 +318,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 11, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"Variado (probablemente tonos pastel o colores brillantes debido al efecto dual-color)\", \"precio_base\": 9500, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 11, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"Variado (probablemente tonos pastel o colores brillantes debido al efecto dual-color)\", \"precio_base\": 9500, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -326,7 +326,7 @@ export const products: Product[] = [
     id: "mon-sub-espuma-limpiadora-facial",
     name: "ESPUMA LIMPIADORA FACIAL",
     description: "Descubre la limpieza facial perfecta con nuestra Espuma Limpiadora Facial, disponible en sabores refrescantes como Fresa, Arándano, Té Verde y Vitamina C. Esta espuma suave y cremosa está diseñada para limpiar profundamente la piel, eliminando impurezas y dejando un frescor duradero. Ideal para todos los tipos de piel, su fórmula enriquecida con ingredientes naturales promueve una piel limpia, radiante y saludable. Su textura ligera y no grasa la hace perfecta para un uso diario, tanto por la mañana como por la noche, como parte de tu rutina de cuidado facial.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/010_ESPUMA_LIMPIADORA_FACIAL.png"
     ],
@@ -334,7 +334,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 12, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 12, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -342,7 +342,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-espuma-limpiadora-arandano",
     name: "MONDSUB ESPUMA LIMPIADORA ARANDANO",
     description: "Descubre el poder del arándano en nuestra Espuma Limpiadora, diseñada para proporcionar un cuidado nutritivo a la piel seca. Potencia la hidratación, combate los radicales libres con su acción antioxidante y deja tu rostro iluminado. Su fórmula de limpieza profunda elimina impurezas sin resecar, dejando la piel suave y fresca. Ideal para todos los tipos de piel, especialmente para aquellas que buscan un producto natural y efectivo.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/012_MONDSUB_ESPUMA_LIMPIADORA_ARANDANO.png"
     ],
@@ -350,7 +350,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 14, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"rojo\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 14, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"rojo\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -358,7 +358,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-espuma-limpiadora-te-verde",
     name: "MONDSUB ESPUMA LIMPIADORA TE VERDE",
     description: "Espuma limpiadora facial con extracto de té verde, ideal para controlar el exceso de grasa y limpiar profundamente los poros. Ofrece una acción hidratante y calmante, dejando la piel fresca y limpia. Perfecta para aquellos que buscan un producto natural y efectivo para el cuidado diario de la piel.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/013_MONDSUB_ESPUMA_LIMPIADORA_TE_VERDE.png"
     ],
@@ -366,7 +366,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 15, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"Verde\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 15, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"Verde\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -374,7 +374,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-espuma-limpiadora-vitamina-c",
     name: "MONDSUB ESPUMA LIMPIADORA VITAMINA C",
     description: "Descubre el poder iluminador de la Vitamina C en nuestra Espuma Limpiadora. Ideal para una limpieza profunda, aclara y unifica el tono de tu piel, mejorando su opacidad. Su fórmula con Vitamina C la hace perfecta para aquellos que buscan un cutis radiante y saludable. Fácil de usar y con un aroma agradable, esta espuma limpiadora es ideal para tu rutina diaria de cuidado facial.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/014_MONDSUB_ESPUMA_LIMPIADORA_VITAMINA_C.png"
     ],
@@ -382,7 +382,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 16, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
+    details: JSON.parse("{\"pagina\": 16, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"limpiadoresCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -390,7 +390,7 @@ export const products: Product[] = [
     id: "mon-sub-exfoliante-corporal",
     name: "Exfoliante Corporal",
     description: "Exfoliante corporal diseñado para eliminar células muertas y dejar la piel suave y renovada. Ideal para preparar la piel para otros tratamientos y mejorar su textura. Su fórmula suave es adecuada para diversos tipos de piel.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/015_Exfoliante_Corporal.png"
     ],
@@ -398,7 +398,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 17, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"exfoliantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 17, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"exfoliantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -406,7 +406,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-exfoliante-corporal",
     name: "MONDSUB EXFOLIANTE CORPORAL",
     description: "Exfoliante corporal de 200ml que mejora la piel áspera, dejándola suave y brillante. Ideal para exfoliar y limpiar la piel, eliminando células muertas y dejando una sensación de suavidad y frescura.",
-    price: 39000,
+    price: 21450,
     imageUrls: [
       "/images/mon_sub/016_MONDSUB_EXFOLIANTE_CORPORAL.png"
     ],
@@ -414,7 +414,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 18, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"Blanco\", \"precio_base\": 13000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"exfoliantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 18, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"Blanco\", \"precio_base\": 13000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"exfoliantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -422,7 +422,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-gluteos-mondsub",
     name: "MASCARILLA DE GLUTEOS MONDSUB",
     description: "Mascarilla de glúteos hidratante y reafirmante con extracto de melocotón. Ideal para cuidar y embellecer la piel de los glúteos, proporcionando hidratación y firmeza. Presentada en un paquete de 3 unidades.",
-    price: 90000,
+    price: 49500,
     imageUrls: [
       "/images/mon_sub/017_MASCARILLA_DE_GLUTEOS_MONDSUB.png"
     ],
@@ -430,7 +430,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 19, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 30000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 19, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 30000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -438,7 +438,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-gluteos",
     name: "MONDSUB MASCARILLA DE GLUTEOS",
     description: "Descubre la mascarilla de glúteos de Mondsub, diseñada para reafirmar y levantar tus glúteos de manera efectiva. Con extracto de melocotón y papaya, esta mascarilla ofrece beneficios nutritivos y rejuvenecedores para la piel. Presentada en un paquete de 3 unidades, esta mascarilla es ideal para un tratamiento intensivo en casa. Su fórmula única ayuda a mejorar la firmeza y apariencia de la piel, dejándola suave y revitalizada.",
-    price: 90000,
+    price: 49500,
     imageUrls: [
       "/images/mon_sub/019_MONDSUB_MASCARILLA_DE_GLUTEOS.png"
     ],
@@ -446,7 +446,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 21, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 30000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 21, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 30000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -454,7 +454,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-brazos",
     name: "MASCARILLA DE BRAZOS",
     description: "Disfruta de una experiencia de cuidado personal con nuestra Mascarilla de Brazos, diseñada para proporcionar brillo y suavidad a tus brazos. Con su fórmula de hidratación profunda, esta mascarilla actúa intensamente para dejar tu piel hidratada y nutrida. Ideal para después de la depilación o en cualquier momento que necesites un impulso de hidratación. Su textura hidratante se absorbe fácilmente, dejando una sensación de suavidad duradera.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/021_MASCARILLA_DE_BRAZOS.png"
     ],
@@ -462,7 +462,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 23, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 23, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -470,7 +470,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-brazos-x-3-unidades",
     name: "MONDSUB MASCARILLA DE BRAZOS X 3 UNIDADES",
     description: "Mascarilla de brazos hidratante y refrescante que repone la humedad y retiene el agua, brindando una hidratación duradera. Se recomienda dejarla por 15 a 20 minutos y luego retirar y limpiar los brazos. Ideal para cuidar y mimar la piel de los brazos.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/022_MONDSUB_MASCARILLA_DE_BRAZOS_X_3_UNIDADES.png"
     ],
@@ -478,7 +478,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 24, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 24, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -486,7 +486,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-piernas",
     name: "MASCARILLA DE PIERNAS",
     description: "Mascarilla de piernas diseñada para proporcionar hidratación profunda, aclarar y exfoliar la piel. Es nutritiva y está pensada para dejar las piernas suaves y renovadas. Ideal para personas que buscan cuidar su piel de manera intensiva.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/023_MASCARILLA_DE_PIERNAS.png"
     ],
@@ -494,7 +494,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 25, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 25, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -502,7 +502,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-piernas",
     name: "MONDSUB MASCARILLA DE PIERNAS",
     description: "Mascarilla de piernas de alta calidad que contiene extracto de plantas naturales y ricas moléculas de células activas. Ofrece funciones exfoliantes, nutritivas e hidratantes. Su tiempo de aplicación es de aproximadamente 20 minutos, durante los cuales la piel del pie absorbe la humedad y los nutrientes. Ideal para cuidar y rejuvenecer la piel de los pies.",
-    price: 81000,
+    price: 44550,
     imageUrls: [
       "/images/mon_sub/024_MONDSUB_MASCARILLA_DE_PIERNAS.png"
     ],
@@ -510,7 +510,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 26, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 27000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 26, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 27000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -518,7 +518,7 @@ export const products: Product[] = [
     id: "mon-sub-serum-facial-en-barra",
     name: "SERUM FACIAL EN BARRA",
     description: "Descubre el poder del SERUM FACIAL EN BARRA, diseñado para proporcionar hidratación profunda y suavidad a tu piel. Con su innovadora presentación en barra, este serum facial ofrece una experiencia única y práctica para el cuidado diario de tu rostro. Sus beneficios incluyen una intensa luminocidad y una hidratación duradera, dejándote una piel suave y radiante. Ideal para todos los tipos de piel, este producto es perfecto para aquellos que buscan una solución efectiva y fácil de usar para mantener su piel saludable y rejuvenecida.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/025_SERUM_FACIAL_EN_BARRA.png"
     ],
@@ -526,7 +526,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 27, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 27, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -534,7 +534,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-serum-facial-de-acido-hialuronico-en-barra",
     name: "MONDSUB SERUM FACIAL DE ACIDO HIALURONICO EN BARRA",
     description: "Barra hidratante para piel seca que hidrata al instante, proporciona hidratación intensa y aporta suavidad excepcional. Ideal para el cuidado diario de la piel, especialmente para aquellos que buscan una solución práctica y efectiva para combatir la sequedad y mantener la piel saludable y radiante.",
-    price: 30000,
+    price: 16500,
     imageUrls: [
       "/images/mon_sub/027_MONDSUB_SERUM_FACIAL_DE_ACIDO_HIALURONICO_EN_BARRA.png"
     ],
@@ -542,7 +542,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 29, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 10000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 29, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 10000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -550,7 +550,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-serum-facial-de-niacinamida-en-barra",
     name: "MONDSUB SERUM FACIAL DE NIACINAMIDA EN BARRA",
     description: "Barra iluminadora para pieles apagadas que suprime profundamente la melanina, corrige las manchas oscuras e ilumina el tono de la piel. Serum facial en barra con niacinamida, ideal para aquellos que buscan un producto innovador y efectivo para mejorar la apariencia de su piel.",
-    price: 30000,
+    price: 16500,
     imageUrls: [
       "/images/mon_sub/028_MONDSUB_SERUM_FACIAL_DE_NIACINAMIDA_EN_BARRA.png"
     ],
@@ -558,7 +558,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 30, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 10000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 30, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 10000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -566,7 +566,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-serum-contorno-de-ojos-de-peptidos",
     name: "MONDSUB SERUM CONTORNO DE OJOS DE PEPTIDOS",
     description: "Serum contorno de ojos de péptidos en barra juvenil para el cuidado de la piel. Hidrata profundamente y aporta luminosidad al contorno de ojos. Ideal para personas que buscan reducir la apariencia de ojeras y líneas finas alrededor de los ojos.",
-    price: 36000,
+    price: 19800,
     imageUrls: [
       "/images/mon_sub/029_MONDSUB_SERUM_CONTORNO_DE_OJOS_DE_PEPTIDOS.png"
     ],
@@ -574,7 +574,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 31, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"serumCategory\"}"),
+    details: JSON.parse("{\"pagina\": 31, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 12000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -582,7 +582,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-doble-fase",
     name: "ACEITE FACIAL DOBLE FASE",
     description: "Descubre el secreto para una piel radiante y rejuvenecida con nuestro ACEITE FACIAL DOBLE FASE. Ideal para todo tipo de piel, este innovador producto reafirma e hidrata profundamente, dejando tu rostro suave y luminoso. Con propiedades iluminadoras, hidratantes y antienvejecimiento, este aceite facial es perfecto para combatir los signos del tiempo y mantener una apariencia saludable y vibrante. Su fórmula doble fase proporciona una experiencia única y efectiva para el cuidado de la piel.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/030_ACEITE_FACIAL_DOBLE_FASE.png"
     ],
@@ -590,7 +590,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 32, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 32, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -598,7 +598,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-de-rosas-doble-fase",
     name: "ACEITE FACIAL DE ROSAS DOBLE FASE",
     description: "Descubre el poder rejuvenecedor del Aceite Facial de Rosas Doble Fase de MONDSUB. Este aceite antienvejecimiento e iluminador está diseñado para hidratar y revitalizar la piel, reduciendo la apariencia de las líneas finas y las arrugas. Su fórmula de doble fase combina los beneficios de los aceites esenciales con una textura ligera y no grasa, perfecta para todos los tipos de piel. El aceite facial de rosas proporciona un brillo saludable y radiante, mientras que sus propiedades antioxidantes protegen la piel de los daños ambientales. Ideal para uso diario como parte de tu rutina de cuidado facial.",
-    price: 33000,
+    price: 18150,
     imageUrls: [
       "/images/mon_sub/031_ACEITE_FACIAL_DE_ROSAS_DOBLE_FASE.png"
     ],
@@ -606,7 +606,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 33, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"rosa\", \"precio_base\": 11000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 33, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"rosa\", \"precio_base\": 11000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -614,7 +614,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-pro-xylane-doble-fase",
     name: "ACEITE FACIAL PRO-XYLANE DOBLE FASE",
     description: "Descubre el poder antienvejecimiento con nuestro Aceite Facial Pro-Xylane Doble Fase. Formulado con ingredientes de alta calidad, este aceite facial de doble fase ofrece una hidratación profunda y reduce las arrugas, dejando tu piel suave y radiante. Su fórmula única se adapta a las necesidades de tu piel, proporcionando una acción antiarrugas y antienvejecimiento efectiva. Ideal para ser utilizado en la rutina diaria de cuidado facial, este aceite es perfecto para aquellos que buscan mantener una apariencia saludable y juvenil.",
-    price: 33000,
+    price: 18150,
     imageUrls: [
       "/images/mon_sub/032_ACEITE_FACIAL_PRO-XYLANE_DOBLE_FASE.png"
     ],
@@ -622,7 +622,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 34, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 11000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 34, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 11000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -630,7 +630,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-de-peptido-azul-doble-fase",
     name: "ACEITE FACIAL DE PEPTIDO AZUL DOBLE FASE",
     description: "Aceite facial de alta calidad con péptidos y doble fase, diseñado para reparar y proteger la piel. Con propiedades antioxidantes, ayuda a mantener la piel hidratada y rejuvenecida. Su presentación en doble fase ofrece una experiencia única y efectiva para el cuidado facial. Ideal para todos los tipos de piel, especialmente recomendado para pieles maduras o dañadas por factores ambientales.",
-    price: 33000,
+    price: 18150,
     imageUrls: [
       "/images/mon_sub/033_ACEITE_FACIAL_DE_PEPTIDO_AZUL_DOBLE_FASE.png"
     ],
@@ -638,7 +638,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 35, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"azul\", \"precio_base\": 11000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 35, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"azul\", \"precio_base\": 11000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -646,7 +646,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-hialuronico-doble-fase",
     name: "ACEITE FACIAL HIALURONICO DOBLE FASE",
     description: "Descubre el poder hidratante y humectante del Aceite Facial Hialurónico Doble Fase de MONDSUB. Este aceite innovador de doble fase ofrece una hidratación profunda y duradera para la piel, mejorando su elasticidad y luminosidad. Su fórmula única combina los beneficios del ácido hialurónico con aceites faciales para proporcionar una experiencia de cuidado facial completa. Ideal para todos los tipos de piel, especialmente para aquellas que buscan combatir la sequedad y los signos de envejecimiento prematuro.",
-    price: 33000,
+    price: 18150,
     imageUrls: [
       "/images/mon_sub/034_ACEITE_FACIAL_HIALURONICO_DOBLE_FASE.png"
     ],
@@ -654,7 +654,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 36, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 11000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 36, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"blanco\", \"precio_base\": 11000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -662,7 +662,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-de-vitamina-c-azul-doble-fase",
     name: "ACEITE FACIAL DE VITAMINA C AZUL DOBLE FASE",
     description: "Descubre el poder rejuvenecedor del Aceite Facial de Vitamina C Azul Doble Fase de MONDSUB. Este aceite doble fase ofrece un blanqueamiento y aclarado efectivo de la piel, proporcionando un tono uniforme y radiante. Su fórmula innovadora combina las propiedades antioxidantes de la vitamina C con una textura ligera y no grasa, ideal para todos los tipos de piel. Perfecto para usar diariamente como parte de tu rutina de cuidado facial, este aceite hidrata y nutre la piel mientras combate las imperfecciones y los signos del envejecimiento. Su presentación azul añade un toque de elegancia a tu rutina de belleza.",
-    price: 33000,
+    price: 18150,
     imageUrls: [
       "/images/mon_sub/035_ACEITE_FACIAL_DE_VITAMINA_C_AZUL_DOBLE_FASE.png"
     ],
@@ -670,7 +670,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 37, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"azul\", \"precio_base\": 11000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 37, \"categoria_original\": \"Cuidado Facial\", \"color_principal\": \"azul\", \"precio_base\": 11000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"aceitesFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -678,7 +678,7 @@ export const products: Product[] = [
     id: "mon-sub-crema-facial-dia-y-noche",
     name: "CREMA FACIAL DIA Y NOCHE",
     description: "Descubre la crema facial todo en uno para día y noche, diseñada para nutrir tu piel durante el día y repararla mientras duermes. Esta crema 2 en 1 ofrece una solución integral para el cuidado facial, proporcionando hidratación y rejuvenecimiento. Su textura suave y absorbente la hace ideal para todos los tipos de piel. Con su fórmula innovadora, esta crema facial ayuda a combatir los signos del envejecimiento y a mantener la piel radiante y saludable.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/036_CREMA_FACIAL_DIA_Y_NOCHE.png"
     ],
@@ -686,7 +686,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 38, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 38, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -694,7 +694,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-dia-noche",
     name: "MONDSUB CREMA DIA & NOCHE",
     description: "Descubre el secreto para un cuidado de piel integral con la Crema de Día y Noche de MONDSUB. La crema de día ofrece hidratación y humectación para mantener tu piel fresca y radiante durante el día. Por la noche, la crema reparadora e iluminadora actúa mientras duermes, rejuveneciendo y revitalizando tu piel. Con ingredientes como escualano y fermento bifido, esta crema proporciona una doble acción para un cuidado de piel completo. Perfecta para todos los tipos de piel, esta crema es ideal para aquellos que buscan mantener una piel saludable y radiante.",
-    price: 66000,
+    price: 36300,
     imageUrls: [
       "/images/mon_sub/034_MONDSUB_CREMA_DIA_&_NOCHE.png",
       "/images/mon_sub/037_MONDSUB_CREMA_DIA_&_NOCHE.png",
@@ -704,7 +704,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 39, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 22000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 39, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"blanco\", \"precio_base\": 22000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -712,7 +712,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-dia-noche-vitamina-c-vitamina-a",
     name: "MONDSUB CREMA DIA & NOCHE VITAMINA C+ VITAMINA A",
     description: "Este producto de cuidado de la piel ofrece una solución integral para día y noche. La crema de día con Vitamina C es antioxidante y blanqueadora, con una textura refrescante e hidratante que se absorbe fácilmente. La crema de noche con Vitamina A es reafirmante y reparadora, con una textura sedosa que se extiende suavemente. Ambas cremas trabajan juntas para proporcionar una piel más saludable y radiante.",
-    price: 66000,
+    price: 36300,
     imageUrls: [
       "/images/mon_sub/039_MONDSUB_CREMA_DIA_&_NOCHE_VITAMINA_C+_VITAMINA_A.png"
     ],
@@ -720,7 +720,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 41, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"blanco\", \"precio_base\": 22000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 41, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"blanco\", \"precio_base\": 22000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -728,7 +728,7 @@ export const products: Product[] = [
     id: "mon-sub-crema-facial-efecto-dual",
     name: "CREMA FACIAL EFECTO DUAL",
     description: "Una crema facial con doble beneficio que ofrece una solución integral para el cuidado de la piel. Con su efecto dual, esta crema promete hidratar y nutrir la piel, dejándola suave y radiante. Su textura suave y absorbente la hace ideal para el uso diario. Aunque no se especifican los ingredientes, su presentación sugiere una fórmula avanzada para el cuidado facial.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/040_CREMA_FACIAL_EFECTO_DUAL.png"
     ],
@@ -736,7 +736,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 42, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 42, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -744,7 +744,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-efecto-dual-ceramida-retinol",
     name: "MONDSUB CREMA EFECTO DUAL CERAMIDA + RETINOL",
     description: "Crema facial de efecto dual que combina ceramidas y retinol para aliviar y reparar zonas secas, con picazón, enrojecidas y sensibles. Reafirma y reduce la apariencia de líneas de expresión, pliegues nasolabiales y patas de gallo, proporcionando una piel más suave y rejuvenecida.",
-    price: 72000,
+    price: 39600,
     imageUrls: [
       "/images/mon_sub/041_MONDSUB_CREMA_EFECTO_DUAL_CERAMIDA_+_RETINOL.png"
     ],
@@ -752,7 +752,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 43, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 43, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -760,7 +760,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-efecto-dual-acido-hyaluronico-reti",
     name: "MONDSUB CREMA EFECTO DUAL ACIDO HYALURONICO + RETINOL",
     description: "Crema facial con efecto dual que combina ácido hialurónico y retinol para nutrir profundamente la piel seca y reafirmar la piel envejecida, reduciendo líneas de expresión y arrugas. Ideal para cuidado facial diario, ofrece una solución integral para pieles secas y maduras.",
-    price: 72000,
+    price: 39600,
     imageUrls: [
       "/images/mon_sub/042_MONDSUB_CREMA_EFECTO_DUAL_ACIDO_HYALURONICO_+_RETI.png"
     ],
@@ -768,7 +768,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 44, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 44, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -776,7 +776,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-efecto-dual-niacinamida-retinol",
     name: "MONDSUB CREMA EFECTO DUAL NIACINAMIDA + RETINOL",
     description: "Descubre la crema facial de última generación de MONDSUB, diseñada para iluminar y blanquear el tono de la piel. Con una potente combinación de Niacinamida y Retinol, esta crema repara y reafirma la piel, reduciendo las arrugas y dejando una apariencia suave y rejuvenecida. Ideal para aquellos que buscan una solución integral para el cuidado de la piel, esta crema ofrece un efecto dual que no solo mejora la textura de la piel sino que también combate los signos del envejecimiento.",
-    price: 72000,
+    price: 39600,
     imageUrls: [
       "/images/mon_sub/043_MONDSUB_CREMA_EFECTO_DUAL_NIACINAMIDA_+_RETINOL.png"
     ],
@@ -784,7 +784,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 45, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 45, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 24000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasFacialesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -792,7 +792,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-absorcion-de-bio-colageno",
     name: "MASCARILLA DE ABSORCION DE BIO COLAGENO",
     description: "Descubre la mascarilla de absorción de bio colágeno, un producto innovador diseñado para hidratar y rejuvenecer tu piel. Con su fórmula rica en colágeno, esta mascarilla facial promueve la elasticidad y firmeza de la piel, reduciendo la apariencia de líneas finas y arrugas. Su textura suave y cómoda se adapta perfectamente al contorno de tu rostro, permitiendo una absorción óptima de sus beneficios. Ideal para todos los tipos de piel, esta mascarilla es perfecta para aquellos que buscan una solución natural y efectiva para mantener una piel saludable y radiante.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/044_MASCARILLA_DE_ABSORCION_DE_BIO_COLAGENO.png"
     ],
@@ -800,7 +800,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 46, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 46, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -808,7 +808,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-absorci-n-de-bio-col-geno-mondsub",
     name: "Mascarilla de absorción de bio colágeno MONDSUB",
     description: "Mascarilla de absorción de bio colágeno que ofrece blanqueamiento y brillo a la piel. Presentada en un paquete de 3 unidades, esta mascarilla facial está diseñada para hidratar y rejuvenecer la piel, aprovechando los beneficios del colágeno. Su fórmula está pensada para mejorar la elasticidad y firmeza de la piel, dejando un acabado suave y luminoso. Ideal para aquellos que buscan una rutina de cuidado facial efectiva y fácil de usar.",
-    price: 63000,
+    price: 34650,
     imageUrls: [
       "/images/mon_sub/045_Mascarilla_de_absorción_de_bio_colágeno_MONDSUB.png",
       "/images/mon_sub/046_Mascarilla_de_absorción_de_bio_colágeno_MONDSUB.png"
@@ -817,7 +817,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 47, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"Blanco\", \"precio_base\": 21000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 47, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"Blanco\", \"precio_base\": 21000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -825,7 +825,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-bio-colageno-x-3-unidades",
     name: "MONDSUB MASCARILLA DE BIO COLAGENO X 3 UNIDADES",
     description: "Mascarilla de absorción de bio colágeno reafirmante y alisado. Ideal para hidratar y rejuvenecer la piel, proporcionando una apariencia suave y radiante. Presentada en un paquete de 3 unidades.",
-    price: 63000,
+    price: 34650,
     imageUrls: [
       "/images/mon_sub/047_MONDSUB_MASCARILLA_DE_BIO_COLAGENO_X_3_UNIDADES.png"
     ],
@@ -833,7 +833,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 49, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 21000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 49, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 21000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -841,7 +841,7 @@ export const products: Product[] = [
     id: "mon-sub-hidrataci-n-instantanea",
     name: "Hidratación Instantanea",
     description: "Producto diseñado para proporcionar hidratación instantánea, ideal para personas que buscan mantener su piel y cuerpo hidratados de manera rápida y efectiva. Su fórmula ligera y no grasa permite una absorción rápida, dejando la piel suave y fresca. Perfecto para usar en cualquier momento del día, especialmente después de actividades que deshidratan la piel.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/049_Hidratación_Instantanea.png"
     ],
@@ -849,7 +849,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 51, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 51, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -857,7 +857,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-hidrogel-de-bamboo",
     name: "MONDSUB MASCARILLA DE HIDROGEL DE BAMBOO",
     description: "Descubre el poder del bambú en nuestra mascarilla de hidrogel. Ideal para limpiar tus poros y controlar el brillo de tu rostro. Presentada en una caja con 12 unidades, esta mascarilla es perfecta para un cuidado intensivo de la piel. Su fórmula innovadora y materiales de alta calidad la convierten en un producto imprescindible en tu rutina de belleza diaria.",
-    price: 135000,
+    price: 74250,
     imageUrls: [
       "/images/mon_sub/050_MONDSUB_MASCARILLA_DE_HIDROGEL_DE_BAMBOO.png"
     ],
@@ -865,7 +865,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 52, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 52, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -873,7 +873,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-hidrogel-vitamina-c",
     name: "MONDSUB MASCARILLA DE HIDROGEL VITAMINA C",
     description: "Mascarilla de hidrogel con vitamina C que hidrata y reafirma la piel, dejándola suave, flexible y delicada. Presentada en caja con 12 unidades, es ideal para tratamientos faciales intensivos y para mantener una piel saludable y radiante.",
-    price: 135000,
+    price: 74250,
     imageUrls: [
       "/images/mon_sub/051_MONDSUB_MASCARILLA_DE_HIDROGEL_VITAMINA_C.png"
     ],
@@ -881,7 +881,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 53, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 53, \"categoria_original\": \"Cuidado facial\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -889,7 +889,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-mascarilla-de-hidrogel-niacinamida",
     name: "MONDSUB MASCARILLA DE HIDROGEL NIACINAMIDA",
     description: "Mascarilla de hidrogel con niacinamida que proporciona una piel radiante y uniforme con un brillo luminoso, eliminando la apariencia opaca de la piel. Ideal para hidratar y mejorar la textura de la piel. Presentada en caja con 12 unidades.",
-    price: 135000,
+    price: 74250,
     imageUrls: [
       "/images/mon_sub/052_MONDSUB_MASCARILLA_DE_HIDROGEL_NIACINAMIDA.png"
     ],
@@ -897,7 +897,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 54, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 54, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"blanco\", \"precio_base\": 45000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -905,7 +905,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarillas-faciales-de-animales",
     name: "MASCARILLAS FACIALES DE ANIMALES",
     description: "Mascarilla facial nutritiva diseñada para retener la hidratación y proporcionar una piel radiante y brillante. Ideal para todos los tipos de piel, esta mascarilla facial está inspirada en animales y ofrece una experiencia única de cuidado facial. Su fórmula nutritiva ayuda a mantener la piel hidratada y con un aspecto saludable.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/053_MASCARILLAS_FACIALES_DE_ANIMALES.png"
     ],
@@ -913,7 +913,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 55, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco/rosado\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 55, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco/rosado\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -921,7 +921,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-facial-reafirmante-de-panda",
     name: "MASCARILLA FACIAL REAFIRMANTE DE PANDA",
     description: "Mascarilla reafirmante que mejora la apariencia de las líneas de expresión y revitaliza la piel apagada y deshidratada. Presentada en una caja que contiene 6 unidades, es ideal para aquellos que buscan hidratar y rejuvenecer su piel de manera efectiva.",
-    price: 60000,
+    price: 33000,
     imageUrls: [
       "/images/mon_sub/054_MASCARILLA_FACIAL_REAFIRMANTE_DE_PANDA.png"
     ],
@@ -929,7 +929,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 56, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 20000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 56, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 20000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -937,7 +937,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-facial-hidratante-de-pinguino",
     name: "MASCARILLA FACIAL HIDRATANTE DE PINGUINO",
     description: "Mascarilla facial hidratante con diseño de pinguino, ideal para refrescar e hidratar la piel. Presentada en una caja que contiene 6 unidades. Perfecta para aquellos que buscan cuidar su piel con productos divertidos y efectivos.",
-    price: 60000,
+    price: 33000,
     imageUrls: [
       "/images/mon_sub/055_MASCARILLA_FACIAL_HIDRATANTE_DE_PINGUINO.png"
     ],
@@ -945,7 +945,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 57, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"Blanco/Azul\", \"precio_base\": 20000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 57, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"Blanco/Azul\", \"precio_base\": 20000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -953,7 +953,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-facial-suavisante-de-tigre",
     name: "MASCARILLA FACIAL SUAVISANTE DE TIGRE",
     description: "Mascarilla facial suavizante de tigre que retiene la hidratación y mejora la elasticidad de la piel. Presentada en una caja que contiene 6 unidades, es ideal para aquellos que buscan cuidar su piel de manera efectiva y divertida. Su diseño con temática de animales puede agregar un toque de diversión al cuidado diario de la piel.",
-    price: 60000,
+    price: 33000,
     imageUrls: [
       "/images/mon_sub/056_MASCARILLA_FACIAL_SUAVISANTE_DE_TIGRE.png"
     ],
@@ -961,7 +961,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 58, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"Blanco o colores claros con ilustraciones de tigre\", \"precio_base\": 20000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 58, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"Blanco o colores claros con ilustraciones de tigre\", \"precio_base\": 20000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -969,7 +969,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-facial-de-hidrogel-doble-color",
     name: "MASCARILLA FACIAL DE HIDROGEL DOBLE COLOR",
     description: "Descubre la innovadora Mascarilla Facial de Hidrogel Doble Color, diseñada para proporcionar una experiencia de cuidado facial única. Con su innovadora composición de hidrogel, esta mascarilla se adapta perfectamente a la forma de tu rostro, asegurando una absorción óptima de sus ingredientes activos. Los dos colores visibles en la mascarilla indican la presencia de diferentes beneficios en cada parte, ofreciendo una solución integral para diferentes necesidades de la piel. Ideal para hidratar, iluminar y revitalizar la piel, dejándola suave, fresca y radiante. Su aplicación es sencilla y cómoda, perfecta para incluir en tu rutina diaria de cuidado facial o como un tratamiento especial para consentirte.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/057_MASCARILLA_FACIAL_DE_HIDROGEL_DOBLE_COLOR.png"
     ],
@@ -977,7 +977,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 59, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"Blanco/Rosa/Azul\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
+    details: JSON.parse("{\"pagina\": 59, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"Blanco/Rosa/Azul\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -985,7 +985,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-de-hidrogel-doble-color",
     name: "MASCARILLA DE HIDROGEL DOBLE COLOR",
     description: "Mascarilla de hidrogel doble color con ácido hialurónico y polipéptido, diseñada para combatir el envejecimiento prematuro de la piel. Contiene 12 unidades y está formulada con 93% de péptidos de origen natural. Su textura de hidrogel proporciona una experiencia hidratante y rejuvenecedora. Ideal para uso diario o como tratamiento intensivo para pieles secas o maduras.",
-    price: 150000,
+    price: 82500,
     imageUrls: [
       "/images/mon_sub/058_MASCARILLA_DE_HIDROGEL_DOBLE_COLOR.png",
       "/images/mon_sub/060_MASCARILLA_DE_HIDROGEL_DOBLE_COLOR.png"
@@ -994,7 +994,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 60, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"Blanco/Rosa\", \"precio_base\": 50000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 60, \"categoria_original\": \"Cuidado de la piel\", \"color_principal\": \"Blanco/Rosa\", \"precio_base\": 50000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1002,7 +1002,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-hidratante-de-manos-miel-y-almendras",
     name: "MONDSUB CREMA HIDRATANTE DE MANOS MIEL Y ALMENDRAS",
     description: "Disfruta de manos suaves y luminosas con nuestra Crema de Manos Iluminadora de Miel y Almendras. Esta rica crema hidrata profundamente, dejando tus manos con una sensación de suavidad y confort duradero. Con su fórmula enriquecida con miel y almendras, proporciona una hidratación intensa y ayuda a mejorar la apariencia de las manos, dándoles un brillo saludable. Ideal para manos secas y agrietadas, es perfecta para uso diario.",
-    price: 19500,
+    price: 10725,
     imageUrls: [
       "/images/mon_sub/061_MONDSUB_CREMA_HIDRATANTE_DE_MANOS_MIEL_Y_ALMENDRAS.png"
     ],
@@ -1010,7 +1010,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 63, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"beige\", \"precio_base\": 6500, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasManosCategory\"}"),
+    details: JSON.parse("{\"pagina\": 63, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"beige\", \"precio_base\": 6500, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasManosCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1018,7 +1018,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-crema-hidratante-de-manos-aceite-de-argan",
     name: "MONDSUB CREMA HIDRATANTE DE MANOS ACEITE DE ARGAN",
     description: "Crea una barrera de hidratación duradera en tus manos con nuestra Crema Hidratante de Manos con Aceite de Argan. Rica en nutrientes y antioxidantes, esta crema nutritiva mantiene tus manos suaves y protegidas. Ideal para manos secas y agrietadas, proporciona una sensación de confort y suavidad inmediata. Su fórmula enriquecida con aceite de argán, conocido por sus propiedades hidratantes y regeneradoras, es perfecta para el cuidado diario de las manos.",
-    price: 19500,
+    price: 10725,
     imageUrls: [
       "/images/mon_sub/062_MONDSUB_CREMA_HIDRATANTE_DE_MANOS_ACEITE_DE_ARGAN.png"
     ],
@@ -1026,7 +1026,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 64, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"beige\", \"precio_base\": 6500, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"cremasManosCategory\"}"),
+    details: JSON.parse("{\"pagina\": 64, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"beige\", \"precio_base\": 6500, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"cremasManosCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1034,7 +1034,7 @@ export const products: Product[] = [
     id: "mon-sub-set-facial-de-vitamina-e",
     name: "SET FACIAL DE VITAMINA E",
     description: "Este set facial de vitamina E está diseñado para combatir los signos del envejecimiento y reafirmar la piel. Ofrece hidratación profunda, elasticidad y firmeza. Ideal para aquellos que buscan una rutina de cuidado facial completa y efectiva. Sus propiedades antienvejecimiento ayudan a reducir las líneas finas y arrugas, dejando la piel suave y radiante.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/066_SET_FACIAL_DE_VITAMINA_E.png"
     ],
@@ -1042,7 +1042,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 65, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
+    details: JSON.parse("{\"pagina\": 65, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1050,7 +1050,7 @@ export const products: Product[] = [
     id: "mon-sub-aceite-facial-de-vitamina-e",
     name: "ACEITE FACIAL DE VITAMINA E",
     description: "Descubre el poder rejuvenecedor del Aceite Facial de Vitamina E. Este aceite hidratante y nutritivo proporciona suavidad y elasticidad a tu piel, dejándola lisa y firme. Con su fórmula de hidratación profunda, es ideal para combatir la sequedad y mejorar la apariencia de la piel. Su textura ligera y absorbente lo hace perfecto para un uso diario, dejándote con una sensación de frescura y confort.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/064_ACEITE_FACIAL_DE_VITAMINA_E.png"
     ],
@@ -1058,7 +1058,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 66, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"amarillo\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 66, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"amarillo\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1066,7 +1066,7 @@ export const products: Product[] = [
     id: "mon-sub-mascarilla-facial-de-vitamina-e",
     name: "MASCARILLA FACIAL DE VITAMINA E",
     description: "Descubre el poder hidratante de nuestra Mascarilla Facial de Vitamina E. Formulado con ingredientes ricos en vitamina E, este producto ofrece hidratación profunda, elasticidad y firmeza a tu piel. Ideal para revitalizar y rejuvenecer el cutis, proporcionando una sensación de suavidad y frescura duradera. Su textura suave y fácil de aplicar lo hace perfecto para todos los tipos de piel.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/065_MASCARILLA_FACIAL_DE_VITAMINA_E.png"
     ],
@@ -1074,7 +1074,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 67, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"verde\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 67, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"verde\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1082,7 +1082,7 @@ export const products: Product[] = [
     id: "mon-sub-set-de-vitamina-c-iluminador-y-reafirmante",
     name: "SET DE VITAMINA C ILUMINADOR Y REAFIRMANTE",
     description: "Este set de vitamina C es un producto iluminador y reafirmante diseñado para mejorar la apariencia de la piel. Con su fórmula enriquecida con vitamina C, ayuda a iluminar y unificar el tono de la piel, reduciendo la apariencia de manchas y dejándola con un aspecto más radiante y saludable. Su textura suave y absorbente lo hace ideal para un uso diario, proporcionando una sensación de frescura y suavidad en la piel. Es perfecto para aquellos que buscan mejorar la apariencia de su piel con un producto fácil de usar y con beneficios visibles.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/067_SET_DE_VITAMINA_C_ILUMINADOR_Y_REAFIRMANTE.png"
     ],
@@ -1090,7 +1090,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 69, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
+    details: JSON.parse("{\"pagina\": 69, \"categoria_original\": \"Cuidado personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1098,7 +1098,7 @@ export const products: Product[] = [
     id: "mon-sub-luxury-skin-care-set",
     name: "LUXURY SKIN CARE SET",
     description: "Este conjunto de cuidado de la piel de lujo está diseñado para borrar las huellas de la edad y revelar un rostro brillante y resistente al envejecimiento. Ideal para aquellos que buscan una solución integral para el cuidado de su piel, este set probablemente incluye una variedad de productos como cremas hidratantes, sueros y lociones, formulados con ingredientes de alta calidad para proporcionar una apariencia saludable y radiante.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/070_LUXURY_SKIN_CARE_SET.png"
     ],
@@ -1106,7 +1106,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 72, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 72, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1114,7 +1114,7 @@ export const products: Product[] = [
     id: "mon-sub-limpiador-facial-tonico-facial",
     name: "LIMPIADOR FACIAL TONICO FACIAL",
     description: "Descubre la limpieza y suavidad para tu piel con nuestro Limpiaador Facial y Tónico Facial. Nuestra esencia hidratante de absorción instantánea te brinda frescura sin sensación pegajosa. Ideal para una rutina de cuidado facial diaria, ofrece beneficios de hidratación y refrescancia sin tirantez ni falsa suavidad. Perfecto para todos los tipos de piel, se presenta como una solución integral para mantener tu rostro limpio, suave y saludable.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/071_LIMPIADOR_FACIAL_TONICO_FACIAL.png"
     ],
@@ -1122,7 +1122,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 73, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 73, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1130,7 +1130,7 @@ export const products: Product[] = [
     id: "mon-sub-locion-antiarrugas-anti-edad",
     name: "LOCION ANTIARRUGAS ANTI EDAD",
     description: "Loción antiarrugas y anti edad que aprovecha el efecto sinérgico de la trufa para dejar la piel suave, delicada, hidratada y resistente a las arrugas. Ideal para productos antiedad y esencia pura que dejan la piel radiante y fresca en todo momento.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/072_LOCION_ANTIARRUGAS_ANTI_EDAD.png"
     ],
@@ -1138,7 +1138,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 74, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"locionesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 74, \"categoria_original\": \"Cuidado personal y belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"locionesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1146,7 +1146,7 @@ export const products: Product[] = [
     id: "mon-sub-crema-hidratante-sensitiva-y-crema-reafirmante-par",
     name: "CREMA HIDRATANTE SENSITIVA y CREMA REAFIRMANTE PARA EL CONTORNO DE OJOS",
     description: "Dos productos de cuidado personal: una crema hidratante para piel sensible que ofrece suavidad, rejuvenecimiento, nutrición e hidratación; y una crema reafirmante para el contorno de ojos que utiliza tecnología avanzada para reparar lesiones oculares y brindar una apariencia joven y radiante.",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/073_CREMA_HIDRATANTE_SENSITIVA_y_CREMA_REAFIRMANTE_PAR.png"
     ],
@@ -1154,7 +1154,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 75, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
+    details: JSON.parse("{\"pagina\": 75, \"categoria_original\": \"Cuidado Personal y Belleza\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1162,7 +1162,7 @@ export const products: Product[] = [
     id: "mon-sub-mondsub-luxury-skin-care-set",
     name: "MONDSUB LUXURY SKIN CARE SET",
     description: "Descubre el conjunto de cuidado de la piel de lujo de MONDSUB, diseñado para ofrecer una experiencia de cuidado personal excepcional. Este conjunto de productos de alta calidad está formulado para nutrir y proteger la piel, dejándola suave, radiante y saludable. Ideal para aquellos que buscan un ritual de belleza completo y lujoso.",
-    price: 1350000,
+    price: 742500,
     imageUrls: [
       "/images/mon_sub/074_MONDSUB_LUXURY_SKIN_CARE_SET.png"
     ],
@@ -1170,7 +1170,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 76, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"null\", \"precio_base\": 450000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
+    details: JSON.parse("{\"pagina\": 76, \"categoria_original\": \"Cuidado personal\", \"color_principal\": \"null\", \"precio_base\": 450000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -1178,7 +1178,7 @@ export const products: Product[] = [
     id: "mon-sub-set-de-vitamina-c",
     name: "Set De Vitamina C",
     description: "Producto de MON_SUB",
-    price: 75000,
+    price: 41250,
     imageUrls: [
       "/images/mon_sub/063_SET_DE_VITAMINA_C.png"
     ],
@@ -1186,7 +1186,7 @@ export const products: Product[] = [
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 0, \"categoria_original\": \"\", \"color_principal\": \"\", \"precio_base\": 25000, \"multiplicador\": 3.0, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
+    details: JSON.parse("{\"pagina\": 0, \"categoria_original\": \"\", \"color_principal\": \"\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"setsBellezaCategory\"}"),
     createdAt: now,
     updatedAt: now,
   },
@@ -3126,7 +3126,7 @@ export const products: Product[] = [
     id: "remax-rp-w76",
     name: "RP-W76 Cargador Inalámbrico Rápido de 15W Compatible con Apple y Android",
     description: "Cargador inalámbrico de alta velocidad diseñado para ofrecer una carga eficiente y segura a dispositivos compatibles con la tecnología de carga inalámbrica. Con una potencia de salida de 15 watts, este cargador es ideal para usuarios de dispositivos Apple y Android que buscan una forma cómoda y sin cables de mantener sus dispositivos cargados. Especificaciones técnicas: - Potencia de carga: 15 watts - Compatibilidad: Apple y Android - Tecnología: Carga inalámbrica Materiales y construcción: - Fabricado con materiales de alta calidad que garantizan durabilidad y resistencia Ventajas: - Carga rápida y eficiente - Compatible con una amplia gama de dispositivos - Diseño sin cables para una mayor comodidad Uso recomendado: - Para dispositivos móviles compatibles con carga inalámbrica - Ideal para uso diario y en entornos donde la comodidad es clave Nota: Asegúrese de que su dispositivo sea compatible con la carga inalámbrica antes de usar este producto.",
-    price: 100800,
+    price: 161,
     imageUrls: [
       "/images/remax/299_RP-W76.png",
       "/images/remax/300_RP-W76.png",
