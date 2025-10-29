@@ -386,23 +386,7 @@ export const products: Product[] = [
     createdAt: now,
     updatedAt: now,
   },
-  {
-    id: "mon-sub-exfoliante-corporal",
-    name: "Exfoliante Corporal",
-    description: "Exfoliante corporal diseñado para eliminar células muertas y dejar la piel suave y renovada. Ideal para preparar la piel para otros tratamientos y mejorar su textura. Su fórmula suave es adecuada para diversos tipos de piel.",
-    price: 41250,
-    imageUrls: [
-      "/images/mon_sub/015_Exfoliante_Corporal.png"
-    ],
-    category: exfoliantesCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 17, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"null\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"exfoliantesCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  },
-  {
+    {
     id: "mon-sub-mondsub-exfoliante-corporal",
     name: "MONDSUB EXFOLIANTE CORPORAL",
     description: "Exfoliante corporal de 200ml que mejora la piel áspera, dejándola suave y brillante. Ideal para exfoliar y limpiar la piel, eliminando células muertas y dejando una sensación de suavidad y frescura.",
@@ -514,22 +498,7 @@ export const products: Product[] = [
     createdAt: now,
     updatedAt: now,
   },
-  {
-    id: "mon-sub-serum-facial-en-barra",
-    name: "SERUM FACIAL EN BARRA",
-    description: "Descubre el poder del SERUM FACIAL EN BARRA, diseñado para proporcionar hidratación profunda y suavidad a tu piel. Con su innovadora presentación en barra, este serum facial ofrece una experiencia única y práctica para el cuidado diario de tu rostro. Sus beneficios incluyen una intensa luminocidad y una hidratación duradera, dejándote una piel suave y radiante. Ideal para todos los tipos de piel, este producto es perfecto para aquellos que buscan una solución efectiva y fácil de usar para mantener su piel saludable y rejuvenecida.",
-    price: 41250,
-    imageUrls: [
-      "/images/mon_sub/025_SERUM_FACIAL_EN_BARRA.png"
-    ],
-    category: serumCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 27, \"categoria_original\": \"Cuidado Personal / Cosméticos\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"serumCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  },
+ 
   {
     id: "mon-sub-mondsub-serum-facial-de-acido-hialuronico-en-barra",
     name: "MONDSUB SERUM FACIAL DE ACIDO HIALURONICO EN BARRA",
@@ -789,22 +758,6 @@ export const products: Product[] = [
     updatedAt: now,
   },
   {
-    id: "mon-sub-mascarilla-de-absorcion-de-bio-colageno",
-    name: "MASCARILLA DE ABSORCION DE BIO COLAGENO",
-    description: "Descubre la mascarilla de absorción de bio colágeno, un producto innovador diseñado para hidratar y rejuvenecer tu piel. Con su fórmula rica en colágeno, esta mascarilla facial promueve la elasticidad y firmeza de la piel, reduciendo la apariencia de líneas finas y arrugas. Su textura suave y cómoda se adapta perfectamente al contorno de tu rostro, permitiendo una absorción óptima de sus beneficios. Ideal para todos los tipos de piel, esta mascarilla es perfecta para aquellos que buscan una solución natural y efectiva para mantener una piel saludable y radiante.",
-    price: 41250,
-    imageUrls: [
-      "/images/mon_sub/044_MASCARILLA_DE_ABSORCION_DE_BIO_COLAGENO.png"
-    ],
-    category: mascarillasCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 46, \"categoria_original\": \"Cuidado Personal / Belleza\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"mascarillasCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  },
-  {
     id: "mon-sub-mascarilla-de-absorci-n-de-bio-col-geno-mondsub",
     name: "Mascarilla de absorción de bio colágeno MONDSUB",
     description: "Mascarilla de absorción de bio colágeno que ofrece blanqueamiento y brillo a la piel. Presentada en un paquete de 3 unidades, esta mascarilla facial está diseñada para hidratar y rejuvenecer la piel, aprovechando los beneficios del colágeno. Su fórmula está pensada para mejorar la elasticidad y firmeza de la piel, dejando un acabado suave y luminoso. Ideal para aquellos que buscan una rutina de cuidado facial efectiva y fácil de usar.",
@@ -837,23 +790,7 @@ export const products: Product[] = [
     createdAt: now,
     updatedAt: now,
   },
-  {
-    id: "mon-sub-hidrataci-n-instantanea",
-    name: "Hidratación Instantanea",
-    description: "Producto diseñado para proporcionar hidratación instantánea, ideal para personas que buscan mantener su piel y cuerpo hidratados de manera rápida y efectiva. Su fórmula ligera y no grasa permite una absorción rápida, dejando la piel suave y fresca. Perfecto para usar en cualquier momento del día, especialmente después de actividades que deshidratan la piel.",
-    price: 41250,
-    imageUrls: [
-      "/images/mon_sub/049_Hidratación_Instantanea.png"
-    ],
-    category: hidratantesCategory,
-    stock: 10,
-    rating: 0,
-    reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 51, \"categoria_original\": \"Cuidado Personal\", \"color_principal\": \"blanco\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria_detectada\": \"hidratantesCategory\"}"),
-    createdAt: now,
-    updatedAt: now,
-  },
-  {
+   {
     id: "mon-sub-mondsub-mascarilla-de-hidrogel-de-bamboo",
     name: "MONDSUB MASCARILLA DE HIDROGEL DE BAMBOO",
     description: "Descubre el poder del bambú en nuestra mascarilla de hidrogel. Ideal para limpiar tus poros y controlar el brillo de tu rostro. Presentada en una caja con 12 unidades, esta mascarilla es perfecta para un cuidado intensivo de la piel. Su fórmula innovadora y materiales de alta calidad la convierten en un producto imprescindible en tu rutina de belleza diaria.",
