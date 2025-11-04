@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { Home, ShoppingCart, Mail, CreditCard, Bitcoin } from 'lucide-react';
+import { Home, ShoppingCart, Mail, CreditCard, Bitcoin, MessageCircle } from 'lucide-react'; // ✅ Añadir MessageCircle para WhatsApp
 import Link from 'next/link';
 import { formatColombianCurrency } from '@/lib/utils';
 import { createCoinbaseCharge } from '@/lib/actions/order.actions';
@@ -332,6 +332,31 @@ function CheckoutContent() {
     }
   }
 
+  async function handleWhatsAppCheckout() {
+    const orderInput = await getValidatedOrderInput();
+    if (!orderInput) return;
+
+    // Construir mensaje para WhatsApp
+    const whatsappNumber = '573504017710'; // ✅ Número proporcionado (sin +)
+    const itemsText = orderInput.cartItems.map(item => `${item.name} x${item.quantity} - ${formatColombianCurrency(item.price * item.quantity)}`).join('\n');
+    const message = encodeURIComponent(
+      `Hola, quiero hacer un pedido contra entrega.\n\n` +
+      `Nombre: ${orderInput.shippingDetails.fullName}\n` +
+      `Email: ${orderInput.shippingDetails.email}\n` +
+      `Dirección: ${orderInput.shippingDetails.address}, ${orderInput.shippingDetails.city}, ${orderInput.shippingDetails.state}, ${orderInput.shippingDetails.country}\n` +
+      `Teléfono: ${orderInput.shippingDetails.phone || 'No especificado'}\n\n` +
+      `Items:\n${itemsText}\n\n` +
+      `Subtotal: ${formatColombianCurrency(orderSummary.subtotal)}\n` +
+      `IVA: ${formatColombianCurrency(orderSummary.iva)}\n` +
+      `Envío: ${orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}\n` +
+      `Total: ${formatColombianCurrency(orderSummary.total)}\n\n` +
+      `Por favor confirma el pedido.`
+    );
+
+    // Redirigir a WhatsApp
+    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+  }
+
   const handleBoldClose = () => {
     setBoldButtonData(null);
   };
@@ -550,6 +575,17 @@ function CheckoutContent() {
                     >
                         <Bitcoin className="mr-2 h-5 w-5" />
                         {isCoinbaseLoading ? 'Procesando...' : 'Pago con Cripto (Coinbase)'}
+                    </Button>
+                    {/* ✅ Nuevo botón Pago Contra Entrega */}
+                    <Button 
+                      type="button" 
+                      onClick={handleWhatsAppCheckout} 
+                      size="lg" 
+                      className="w-full text-base" 
+                      disabled={!shippingForm.formState.isValid || cartItems.length === 0}
+                    >
+                        <MessageCircle className="mr-2 h-5 w-5" />
+                        Pago Contra Entrega (WhatsApp)
                     </Button>
                 </div>
               ) : (
