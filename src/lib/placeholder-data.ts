@@ -211,6 +211,22 @@ const now = new Date();
 
 export const products: Product[] = [
   {
+    id: "remax-rb-h11",
+    name: "RB-H11 Auriculares Inalámbricos Elegantes",
+    description: "Auriculares inalámbricos con un diseño elegante y sofisticado. Estos auriculares ofrecen una experiencia de audio sin interrupciones gracias a su tecnología inalámbrica. Su diseño ligero y ergonómico los hace ideales para uso diario, ya sea para escuchar música, realizar llamadas o disfrutar de contenido multimedia. Los auriculares están diseñados para ser compatibles con la mayoría de dispositivos móviles y ofrecen una conexión estable y de alta calidad. Su elegante diseño los hace destacar por su estilo y funcionalidad.",
+    price: 31500,
+    imageUrls: [
+      "/images/remax/001_RB-H11.png"
+    ],
+    category: auricularesCategory,
+    stock: 10,
+    rating: 0,
+    reviewsCount: 0,
+    details: JSON.parse("{\"pagina\": 1, \"categoria_original\": \"auriculares\", \"color_principal\": \"negro\", \"precio_base\": 25000, \"multiplicador\": 1.26, \"subcategoria\": \"auricularesCategory\"}"),
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
     id: "remax-km-03",
     name: "KM-03 Estabilizador Gimbal de 3 Ejes para Celular con Seguimiento Facial y Control Remoto",
     description: "El KM-03 es un estabilizador gimbal de 3 ejes diseñado para celulares, equipado con tecnología de seguimiento facial y control remoto. Ideal para capturar momentos especiales con gran estabilidad y nitidez. Su diseño ergonómico y ligero permite un manejo cómodo y prolongado. Compatible con la mayoría de los modelos de celulares del mercado. Características principales: estabilización de 3 ejes para una máxima estabilidad, seguimiento facial para capturar los mejores momentos, control remoto para una mayor comodidad. Materiales de alta calidad y durabilidad. Uso recomendado para grabaciones de video, sesiones de fotos y cualquier aplicación que requiera estabilidad y precisión.",
