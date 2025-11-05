@@ -29,7 +29,6 @@ export default function Header() {
                     href="/"
                     className="flex items-center gap-2 text-lg font-semibold -ml-2"
                   >
-                    {/* CCS724 más grande en móvil */}
                     <Image
                       src="/images/AVALOGO/logo_ccs.png"
                       alt="CCS724 Logo"
@@ -38,6 +37,9 @@ export default function Header() {
                       priority
                     />
                   </Link>
+
+                  {/* Solo un enlace "Combos" en el menú móvil */}
+                  <Link href="/landing" className="text-base hover:underline">COMBO PRO</Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -60,7 +62,10 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {/* Navigation links removed */}
+            {/* Enlace Combo Pro */}
+            <Link href="/landing" className="hover:underline">Combo Pro</Link>
+            {/* Enlace Kit Esencial */}
+            <Link href="/landing/kit-esencial" className="hover:underline">Kit Esencial</Link>
           </nav>
         </div>
 
