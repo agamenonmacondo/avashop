@@ -38,8 +38,10 @@ export default function Header() {
                     />
                   </Link>
 
-                  {/* Solo un enlace "Combos" en el menú móvil */}
-                  <Link href="/landing" className="text-base hover:underline">COMBO PRO</Link>
+                  {/* Enlace Combo Pro en menú móvil */}
+                  <Link href="/landing" className="text-base hover:underline">Combo Pro</Link>
+                  {/* Enlace Kit Esencial en menú móvil */}
+                  <Link href="/landing/kit-esencial" className="text-base hover:underline">Kit Esencial</Link>
                 </nav>
               </SheetContent>
             </Sheet>
