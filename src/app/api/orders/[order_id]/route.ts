@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getSupabase } from '@/lib/supabaseClient'; // ok si @ funciona
-import { sendEmail, getOrderConfirmationEmail } from '@/lib/email'; // o usa ruta relativa si no
+import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
+import { getOrderConfirmationEmail } from '@/lib/email';
 
 export const runtime = 'nodejs';
+
+// Inicializar Supabase
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+// Inicializar Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET(request: Request, { params }: { params: { order_id: string } }) {
   const { order_id } = params;
@@ -14,15 +24,6 @@ export async function GET(request: Request, { params }: { params: { order_id: st
     return NextResponse.json(
       { success: false, error: 'Order ID is required' },
       { status: 400 }
-    );
-  }
-
-  const supabase = getSupabase();
-  if (!supabase) {
-    console.error('❌ [GET ORDER] Supabase no inicializado');
-    return NextResponse.json(
-      { success: false, error: 'Database connection failed' },
-      { status: 500 }
     );
   }
 
@@ -83,15 +84,47 @@ export async function GET(request: Request, { params }: { params: { order_id: st
     items: response.items,
   });
 
-  if (response.status === 'paid' || response.status === 'approved') {
-    try {
-      await sendEmail(response.shipping.email, `Confirmación #${response.orderId}`, `<p>Total: ${response.total}</p>`);
-      console.log('Correo enviado');
-    } catch (e) {
-      console.error('Error enviando correo:', e);
+  // ✅ Enviar correo de confirmación si el pago está aprobado
+  if ((response.status === 'paid' || response.status === 'approved') && response.items.length > 0) {
+    const customerEmail = response.shipping?.email;
+    
+    if (customerEmail) {
+      try {
+        console.log('📧 [GET ORDER] Enviando correo a:', customerEmail);
+        
+        const html = getOrderConfirmationEmail({
+          orderId: response.orderId,
+          customerName: response.shipping?.fullName || response.shipping?.name || 'Cliente',
+          items: response.items.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          total: response.total,
+        });
+
+        const { data, error } = await resend.emails.send({
+          from: process.env.SMTP_FROM || 'ventas@ccs724.com',
+          to: customerEmail,
+          subject: `✅ Confirmación de Pedido #${response.orderId} - CCS724`,
+          html,
+          replyTo: 'ventas@ccs724.com',
+        });
+
+        if (error) {
+          console.error('❌ [GET ORDER] Error al enviar correo:', error);
+        } else {
+          console.log('✅ [GET ORDER] Correo enviado exitosamente:', data?.id);
+        }
+      } catch (error) {
+        console.error('❌ [GET ORDER] Error enviando correo:', error);
+      }
+    } else {
+      console.warn('⚠️ [GET ORDER] No se encontró email del cliente');
     }
+  } else {
+    console.log('ℹ️ [GET ORDER] No se envía correo - Estado:', response.status, '- Items:', response.items.length);
   }
 
   return NextResponse.json(response);
-
 }
