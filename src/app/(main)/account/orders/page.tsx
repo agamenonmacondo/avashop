@@ -1,77 +1,113 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Package, ShoppingBag, AlertCircle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Package, ChevronLeft, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { getSupabase } from '@/lib/supabaseClient';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 
 interface OrderItem {
-  id: string;
-  name: string;
+  product_id: string;
+  product_name: string;
   quantity: number;
   price: number;
-  imageUrl?: string;
+  image_url: string | null;
 }
 
 interface Order {
-  orderId: string;
+  order_id: string;
+  total_amount: number;
   status: string;
-  total: number;
-  subtotal: number;
-  iva: number;
-  envio: number;
+  payment_status: string;
+  created_at: string;
+  user_email: string;
   items: OrderItem[];
-  shipping: {
-    fullName?: string;
-    name?: string;
-    email?: string;
-    address?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-  };
-  createdAt: string;
-  paidAt?: string;
 }
 
 export default function OrdersPage() {
-  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadOrders();
-  }, []);
-
-  const loadOrders = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Aquí deberías obtener las órdenes del usuario autenticado
-      // Por ahora, intentamos cargar desde localStorage o sessionStorage
-      const storedOrders = localStorage.getItem('user_orders');
-      
-      if (storedOrders) {
-        const parsedOrders = JSON.parse(storedOrders);
-        setOrders(parsedOrders);
-      } else {
-        // Si no hay órdenes guardadas, intenta cargar desde la API
-        // Necesitarás implementar una ruta API que devuelva todas las órdenes del usuario
-        console.log('No hay órdenes guardadas localmente');
-        setOrders([]);
-      }
-    } catch (err) {
-      console.error('Error cargando órdenes:', err);
-      setError('Error al cargar tus pedidos. Por favor, intenta de nuevo.');
-    } finally {
+    const auth = getFirebaseAuth();
+    if (!auth) {
       setLoading(false);
+      setError('No se pudo inicializar Firebase');
+      return;
     }
-  };
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser?.email) {
+        setLoading(false);
+        setError('Debes iniciar sesión para ver tus pedidos');
+        return;
+      }
+
+      setUserEmail(firebaseUser.email);
+      
+      const supabase = getSupabase();
+      if (!supabase) {
+        setLoading(false);
+        setError('No se pudo conectar con la base de datos');
+        return;
+      }
+
+      try {
+        console.log('🔍 Buscando órdenes para:', firebaseUser.email);
+
+        // Obtener órdenes del usuario
+        const { data: ordersData, error: ordersError } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('user_email', firebaseUser.email.toLowerCase().trim())
+          .order('created_at', { ascending: false });
+
+        if (ordersError) {
+          console.error('❌ Error cargando órdenes:', ordersError);
+          setError('Error al cargar tus pedidos');
+          setLoading(false);
+          return;
+        }
+
+        console.log('✅ Órdenes encontradas:', ordersData?.length || 0);
+
+        if (ordersData && ordersData.length > 0) {
+          // Obtener items de cada orden
+          const ordersWithItems = await Promise.all(
+            ordersData.map(async (order) => {
+              const { data: items, error: itemsError } = await supabase
+                .from('order_items')
+                .select('*')
+                .eq('order_id', order.order_id);
+              
+              if (itemsError) {
+                console.error(`❌ Error cargando items para ${order.order_id}:`, itemsError);
+              }
+
+              return { ...order, items: items || [] };
+            })
+          );
+
+          setOrders(ordersWithItems);
+        } else {
+          setOrders([]);
+        }
+
+        setLoading(false);
+      } catch (err: any) {
+        console.error('❌ Error general:', err);
+        setError(err.message || 'Error desconocido');
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -92,69 +128,33 @@ export default function OrdersPage() {
   };
 
   const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
-      pending: { label: 'Pendiente', variant: 'secondary' },
-      paid: { label: 'Pagado', variant: 'default' },
-      approved: { label: 'Aprobado', variant: 'default' },
-      processing: { label: 'Procesando', variant: 'outline' },
-      shipped: { label: 'Enviado', variant: 'outline' },
-      delivered: { label: 'Entregado', variant: 'default' },
-      cancelled: { label: 'Cancelado', variant: 'destructive' },
+    const statusConfig: Record<string, { label: string; className: string }> = {
+      pending: { label: 'Pendiente', className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
+      approved: { label: 'Aprobado', className: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
+      declined: { label: 'Rechazado', className: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' },
+      error: { label: 'Error', className: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200' },
     };
 
-    const config = statusConfig[status.toLowerCase()] || { label: status, variant: 'outline' };
-    return <Badge variant={config.variant}>{config.label}</Badge>;
+    const config = statusConfig[status] || statusConfig.pending;
+
+    return (
+      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${config.className}`}>
+        {config.label}
+      </span>
+    );
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col items-center justify-center min-h-[400px]">
-          <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+      <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
           <p className="text-muted-foreground">Cargando tus pedidos...</p>
         </div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card className="max-w-2xl mx-auto">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-            <h3 className="text-lg font-semibold mb-2">Error al cargar pedidos</h3>
-            <p className="text-muted-foreground text-center mb-6">{error}</p>
-            <Button onClick={loadOrders}>Reintentar</Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (orders.length === 0) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card className="max-w-2xl mx-auto">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No tienes pedidos aún</h3>
-            <p className="text-muted-foreground text-center mb-6">
-              Cuando realices tu primera compra, aparecerá aquí
-            </p>
-            <Button onClick={() => router.push('/')}>
-              Ir a la tienda
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  return (
-    <div className="container mx-auto px-4 md:px-6 py-12">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
   if (error) {
     return (
       <div className="container mx-auto px-4 py-12">
