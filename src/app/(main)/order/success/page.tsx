@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle2, Loader2, Mail, MailCheck } from 'lucide-react';
+import { CheckCircle2, Loader2, MailCheck } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
@@ -42,69 +42,8 @@ function SuccessContent() {
   const [emailSent, setEmailSent] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
 
-  useEffect(() => {
-    if (!orderId) {
-      console.warn('⚠️ No se encontró order_id en la URL');
-      setLoading(false);
-      return;
-    }
-
-    console.log('🔍 [SUCCESS] Cargando orden:', orderId, '- Estado Bold:', txStatus);
-
-    setLoading(true);
-
-    // Actualizar estado si Bold indica aprobado
-    if (txStatus === 'approved') {
-      console.log('✅ [SUCCESS] Bold indica pago aprobado, actualizando estado...');
-      
-      fetch('/api/bold/webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId: orderId,
-          status: 'approved',
-          transactionDate: new Date().toISOString(),
-        }),
-      })
-        .then(res => res.json())
-        .then(webhookResult => {
-          console.log('✅ [SUCCESS] Webhook ejecutado:', webhookResult);
-        })
-        .catch(err => {
-          console.error('⚠️ [SUCCESS] Error llamando webhook:', err);
-        });
-    }
-
-    // Cargar los datos de la orden
-    fetch(`/api/orders/${orderId}`)
-      .then(res => {
-        console.log('📡 [SUCCESS] Status de respuesta:', res.status);
-        if (!res.ok) throw new Error('Order not found');
-        return res.json();
-      })
-      .then(data => {
-        console.log('✅ [SUCCESS] Datos completos de la orden:', data);
-        
-        // Si Bold dice approved pero la orden está pending, usar el estado de Bold
-        if (txStatus === 'approved' && data.status === 'pending') {
-          data.status = 'approved';
-        }
-        
-        setOrder(data);
-        setLoading(false);
-
-        // 📧 Enviar correo de confirmación automáticamente
-        sendConfirmationEmail(data);
-      })
-      .catch(err => {
-        console.error('❌ [SUCCESS] Error cargando orden:', err);
-        setError(true);
-        setLoading(false);
-      });
-  }, [orderId, txStatus]);
-
+  // Función para enviar correo de confirmación
   const sendConfirmationEmail = async (orderData: OrderData) => {
-    // Verificar que tengamos email del cliente
     const customerEmail = orderData.shipping?.email;
     
     if (!customerEmail) {
@@ -142,11 +81,69 @@ function SuccessContent() {
       setEmailSent(true);
     } catch (error) {
       console.error('❌ Error enviando correo de confirmación:', error);
-      // No mostramos error al usuario, solo lo registramos
     } finally {
       setSendingEmail(false);
     }
   };
+
+  useEffect(() => {
+    if (!orderId) {
+      console.warn('⚠️ No se encontró order_id en la URL');
+      setLoading(false);
+      return;
+    }
+
+    console.log('🔍 [SUCCESS] Cargando orden:', orderId, '- Estado Bold:', txStatus);
+    setLoading(true);
+
+    // Actualizar estado si Bold indica aprobado
+    if (txStatus === 'approved') {
+      console.log('✅ [SUCCESS] Bold indica pago aprobado, actualizando estado...');
+      
+      fetch('/api/bold/webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: orderId,
+          status: 'approved',
+          transactionDate: new Date().toISOString(),
+        }),
+      })
+        .then(res => res.json())
+        .then(webhookResult => {
+          console.log('✅ [SUCCESS] Webhook ejecutado:', webhookResult);
+        })
+        .catch(err => {
+          console.error('⚠️ [SUCCESS] Error llamando webhook:', err);
+        });
+    }
+
+    // Cargar los datos de la orden
+    fetch(`/api/orders/${orderId}`)
+      .then(res => {
+        console.log('📡 [SUCCESS] Status de respuesta:', res.status);
+        if (!res.ok) throw new Error('Order not found');
+        return res.json();
+      })
+      .then(data => {
+        console.log('✅ [SUCCESS] Datos completos de la orden:', data);
+        
+        if (txStatus === 'approved' && data.status === 'pending') {
+          data.status = 'approved';
+        }
+        
+        setOrder(data);
+        setLoading(false);
+
+        // 📧 Enviar correo de confirmación automáticamente
+        sendConfirmationEmail(data);
+      })
+      .catch(err => {
+        console.error('❌ [SUCCESS] Error cargando orden:', err);
+        setError(true);
+        setLoading(false);
+      });
+  }, [orderId, txStatus]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -196,6 +193,9 @@ function SuccessContent() {
                     </p>
                   </div>
                 )}
+                <p className="text-sm text-muted-foreground mt-4">
+                  Te enviaremos una confirmación por correo electrónico pronto.
+                </p>
               </div>
             )}
 
@@ -257,7 +257,7 @@ function SuccessContent() {
                 ) : (
                   <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg">
                     <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                      Los detalles de los productos se están procesando.
+                      Los detalles de los productos se están procesando. Recibirás la información completa por correo.
                     </p>
                   </div>
                 )}
@@ -314,6 +314,13 @@ function SuccessContent() {
                 </div>
               </div>
             )}
+
+            {/* Mensaje de confirmación */}
+            <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg text-sm text-center">
+              <p className="text-blue-800 dark:text-blue-200">
+                📧 Te enviaremos una confirmación por correo electrónico pronto.
+              </p>
+            </div>
 
             {/* Botones de acción */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
