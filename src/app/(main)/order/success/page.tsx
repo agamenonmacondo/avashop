@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { CheckCircle2, Loader2, Mail, MailCheck } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
+import { sendEmail, getOrderConfirmationEmail } from '@/lib/email';
 
 interface OrderItem {
   id: string;
@@ -32,13 +33,14 @@ interface OrderData {
 function SuccessContent() {
   const searchParams = useSearchParams();
   
-  // ⭐ CAMBIO: Buscar 'bold-order-id' primero, luego 'order_id'
   const orderId = searchParams?.get('bold-order-id') || searchParams?.get('order_id') || null;
   const txStatus = searchParams?.get('bold-tx-status') || 'approved';
   
   const [order, setOrder] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   useEffect(() => {
     if (!orderId) {
@@ -82,17 +84,17 @@ function SuccessContent() {
       })
       .then(data => {
         console.log('✅ [SUCCESS] Datos completos de la orden:', data);
-        console.log('📦 [SUCCESS] Items recibidos:', data.items);
-        console.log('📦 [SUCCESS] Cantidad de items:', data.items?.length || 0);
         
         // Si Bold dice approved pero la orden está pending, usar el estado de Bold
         if (txStatus === 'approved' && data.status === 'pending') {
           data.status = 'approved';
-          console.log('✅ [SUCCESS] Estado actualizado a approved');
         }
         
         setOrder(data);
         setLoading(false);
+
+        // 📧 Enviar correo de confirmación automáticamente
+        sendConfirmationEmail(data);
       })
       .catch(err => {
         console.error('❌ [SUCCESS] Error cargando orden:', err);
@@ -100,6 +102,51 @@ function SuccessContent() {
         setLoading(false);
       });
   }, [orderId, txStatus]);
+
+  const sendConfirmationEmail = async (orderData: OrderData) => {
+    // Verificar que tengamos email del cliente
+    const customerEmail = orderData.shipping?.email;
+    
+    if (!customerEmail) {
+      console.warn('⚠️ No se encontró email del cliente');
+      return;
+    }
+
+    if (!orderData.items || orderData.items.length === 0) {
+      console.warn('⚠️ No hay items en el pedido');
+      return;
+    }
+
+    setSendingEmail(true);
+    console.log('📧 Enviando correo de confirmación a:', customerEmail);
+
+    try {
+      const html = getOrderConfirmationEmail({
+        orderId: orderData.orderId,
+        customerName: orderData.shipping?.fullName || 'Cliente',
+        items: orderData.items.map(item => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        total: orderData.total,
+      });
+
+      await sendEmail({
+        to: customerEmail,
+        subject: `✅ Confirmación de Pedido #${orderData.orderId} - CCS724`,
+        html,
+      });
+
+      console.log('✅ Correo de confirmación enviado exitosamente');
+      setEmailSent(true);
+    } catch (error) {
+      console.error('❌ Error enviando correo de confirmación:', error);
+      // No mostramos error al usuario, solo lo registramos
+    } finally {
+      setSendingEmail(false);
+    }
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -149,10 +196,35 @@ function SuccessContent() {
                     </p>
                   </div>
                 )}
-                <p className="text-sm text-muted-foreground mt-4">
-                  Te enviaremos una confirmación por correo electrónico pronto.
-                </p>
               </div>
+            )}
+
+            {/* Estado del envío de correo */}
+            {!loading && !error && order && (
+              <>
+                {sendingEmail && (
+                  <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg flex items-center gap-3">
+                    <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+                    <p className="text-sm text-blue-800 dark:text-blue-200">
+                      Enviando confirmación por correo electrónico...
+                    </p>
+                  </div>
+                )}
+
+                {emailSent && (
+                  <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg flex items-center gap-3">
+                    <MailCheck className="h-5 w-5 text-green-600" />
+                    <div>
+                      <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                        ✅ Correo de confirmación enviado
+                      </p>
+                      <p className="text-xs text-green-700 dark:text-green-300 mt-1">
+                        Revisa tu bandeja de entrada: {order.shipping?.email}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Renderizar items */}
@@ -185,7 +257,7 @@ function SuccessContent() {
                 ) : (
                   <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg">
                     <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                      Los detalles de los productos se están procesando. Recibirás la información completa por correo.
+                      Los detalles de los productos se están procesando.
                     </p>
                   </div>
                 )}
@@ -242,13 +314,6 @@ function SuccessContent() {
                 </div>
               </div>
             )}
-
-            {/* Mensaje de confirmación */}
-            <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg text-sm text-center">
-              <p className="text-blue-800 dark:text-blue-200">
-                📧 Te enviaremos una confirmación por correo electrónico pronto.
-              </p>
-            </div>
 
             {/* Botones de acción */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
