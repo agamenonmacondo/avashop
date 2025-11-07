@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -55,6 +55,8 @@ const heroVideos = [
 export default function HeroSection() {
     const [activeIndex, setActiveIndex] = useState(0);
     const router = useRouter();
+    const mobileVideoRef = useRef<HTMLVideoElement>(null);
+    const desktopVideoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -62,6 +64,46 @@ export default function HeroSection() {
         }, 3000);
         return () => clearInterval(interval);
     }, []);
+
+    // Reiniciar y reproducir video mobile cuando cambia el índice
+    useEffect(() => {
+        const video = mobileVideoRef.current;
+        if (video) {
+            // Pausar el video actual
+            video.pause();
+            // Cambiar la fuente
+            video.src = heroVideos[activeIndex].mobile;
+            // Cargar el nuevo video
+            video.load();
+            // Esperar a que esté listo y reproducir
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.log('Error playing mobile video:', err);
+                });
+            }
+        }
+    }, [activeIndex]);
+
+    // Reiniciar y reproducir video desktop cuando cambia el índice
+    useEffect(() => {
+        const video = desktopVideoRef.current;
+        if (video) {
+            // Pausar el video actual
+            video.pause();
+            // Cambiar la fuente
+            video.src = heroVideos[activeIndex].desktop;
+            // Cargar el nuevo video
+            video.load();
+            // Esperar a que esté listo y reproducir
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.log('Error playing desktop video:', err);
+                });
+            }
+        }
+    }, [activeIndex]);
 
     const handleCTAClick = () => {
         router.push(heroVideos[activeIndex].link);
@@ -119,9 +161,7 @@ export default function HeroSection() {
                     <div className="relative w-full cursor-pointer group" onClick={handleCTAClick}>
                         <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl group-hover:shadow-3xl transition-shadow duration-300">
                             <video
-                                key={`desktop-${activeIndex}`}
-                                src={heroVideos[activeIndex].desktop}
-                                autoPlay
+                                ref={desktopVideoRef}
                                 loop
                                 muted
                                 playsInline
@@ -132,7 +172,7 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                {/* Indicadores de navegación para desktop - MEJORADOS */}
+                {/* Indicadores de navegación para desktop */}
                 <div className="flex justify-center gap-3 mt-12">
                     {heroVideos.map((_, index) => (
                         <button
@@ -157,9 +197,7 @@ export default function HeroSection() {
                         onClick={handleCTAClick}
                     >
                         <video
-                            key={`mobile-${activeIndex}`}
-                            src={heroVideos[activeIndex].mobile}
-                            autoPlay
+                            ref={mobileVideoRef}
                             loop
                             muted
                             playsInline
@@ -215,8 +253,8 @@ export default function HeroSection() {
                                 onClick={() => setActiveIndex(index)}
                                 className={`h-1.5 rounded-full transition-all duration-300 ${
                                     activeIndex === index
-                                        ? 'w-8 bg-primary'
-                                        : 'w-1.5 bg-muted hover:bg-muted-foreground/50'
+                                        ? 'w-8 bg-primary shadow-md'
+                                        : 'w-1.5 bg-border hover:bg-foreground/30 dark:bg-muted dark:hover:bg-muted-foreground/50'
                                 }`}
                                 aria-label={`Mostrar video ${index + 1}`}
                             />
