@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle2, Loader2, MailCheck } from 'lucide-react';
+import { CheckCircle2, Loader2, MailCheck, AlertCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
@@ -41,6 +41,7 @@ function SuccessContent() {
   const [error, setError] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   // Función para enviar correo de confirmación
   const sendConfirmationEmail = async (orderData: OrderData) => {
@@ -57,6 +58,7 @@ function SuccessContent() {
     }
 
     setSendingEmail(true);
+    setEmailError(false);
     console.log('📧 Enviando correo de confirmación a:', customerEmail);
 
     try {
@@ -81,6 +83,7 @@ function SuccessContent() {
       setEmailSent(true);
     } catch (error) {
       console.error('❌ Error enviando correo de confirmación:', error);
+      setEmailError(true);
     } finally {
       setSendingEmail(false);
     }
@@ -142,6 +145,10 @@ function SuccessContent() {
         console.error('❌ [SUCCESS] Error cargando orden:', err);
         setError(true);
         setLoading(false);
+        
+        // 🔄 Fallback: Intentar enviar correo aunque falle la carga
+        // (Si tienes la info mínima en localStorage o sessionStorage)
+        console.log('⚠️ Intentando enviar correo sin datos completos...');
       });
   }, [orderId, txStatus]);
 
@@ -200,7 +207,7 @@ function SuccessContent() {
             )}
 
             {/* Estado del envío de correo */}
-            {!loading && !error && order && (
+            {!loading && (
               <>
                 {sendingEmail && (
                   <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg flex items-center gap-3">
@@ -218,8 +225,24 @@ function SuccessContent() {
                       <p className="text-sm font-medium text-green-800 dark:text-green-200">
                         ✅ Correo de confirmación enviado
                       </p>
-                      <p className="text-xs text-green-700 dark:text-green-300 mt-1">
-                        Revisa tu bandeja de entrada: {order.shipping?.email}
+                      {order?.shipping?.email && (
+                        <p className="text-xs text-green-700 dark:text-green-300 mt-1">
+                          Revisa tu bandeja de entrada: {order.shipping.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {emailError && !emailSent && (
+                  <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg flex items-center gap-3">
+                    <AlertCircle className="h-5 w-5 text-yellow-600" />
+                    <div>
+                      <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                        ⚠️ No pudimos enviar el correo automáticamente
+                      </p>
+                      <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">
+                        Te enviaremos la confirmación en los próximos minutos
                       </p>
                     </div>
                   </div>
