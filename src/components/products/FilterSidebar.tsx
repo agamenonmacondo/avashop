@@ -31,7 +31,7 @@ export default function FilterSidebar({
   onFilterChange,
   onSortChange,
   className,
-  maxPrice = 5000000,
+  maxPrice = 800000,
   priceStep = 100000
 }: FilterSidebarProps) {
   

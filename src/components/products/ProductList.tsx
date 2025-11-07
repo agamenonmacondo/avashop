@@ -2,10 +2,10 @@ import type { Product } from '@/types';
 import ProductCard from './ProductCard';
 
 interface ProductListProps {
-  products: Product[];
+  products?: Product[];
 }
 
-export default function ProductList({ products }: ProductListProps) {
+export default function ProductList({ products = [] }: ProductListProps) {
   if (products.length === 0) {
     return <p className="text-center text-muted-foreground py-10">No se encontraron productos con los filtros seleccionados.</p>;
   }

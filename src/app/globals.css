@@ -14,7 +14,7 @@
     --popover-foreground: 220 20% 12%;
  
     --primary: 45 85% 55%; /* Gold/yellow for light mode */
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 220 20% 12%; /* <-- Cambia a oscuro */
  
     --secondary: 220 20% 96%;
     --secondary-foreground: 220 20% 12%;
@@ -62,7 +62,7 @@
     --popover-foreground: 210 40% 98%;
  
     --primary: 45 90% 60%; /* Gold/yellow from screenshot */
-    --primary-foreground: 45 90% 10%;
+    --primary-foreground: 45 90% 10%; /* Mantén oscuro en dark */
  
     --secondary: 220 16% 24%;
     --secondary-foreground: 210 40% 98%;

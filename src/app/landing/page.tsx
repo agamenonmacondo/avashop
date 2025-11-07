@@ -8,9 +8,29 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Script from 'next/script';
 
 export default function LandingPage() {
   const router = useRouter();
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Combo PRO - CCS724',
+    image: 'https://www.ccs724.com/images/combos/combo_1/combo1.png',
+    description: 'Combo profesional con audio dual y estabilización inteligente. Incluye Gimbal KOOSDA KM03 y Micrófono REMAX K18.',
+    brand: {
+      '@type': 'Brand',
+      name: 'CCS724',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: 'https://www.ccs724.com/landing',
+      priceCurrency: 'COP',
+      price: '489900',
+      availability: 'https://schema.org/InStock',
+    },
+  };
 
   // Función para agregar el combo al carrito y redirigir
   function handleBuyComboPro() {
@@ -20,11 +40,8 @@ export default function LandingPage() {
       price: 489900,
       quantity: 1,
       imageUrls: ['/images/combos/combo_1/combo1.png'],
-      descripcion: 'Combo profesional con audio dual y estabilización inteligente. Incluye Gimbal KOOSDA KM03 y Micrófono REMAX K18.',
-      category: {
-        name: 'Combos',
-        id: 'combos'
-      },
+      descripcion: 'Combo profesional con audio dual y estabilización inteligente.',
+      category: { name: 'Combos', id: 'combos' },
       stock: 10, // Cantidad disponible
     };
 
@@ -41,6 +58,12 @@ export default function LandingPage() {
 
   return (
     <>
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
       <Header />
 
       <main>
@@ -51,21 +74,24 @@ export default function LandingPage() {
             <div className="space-y-24 max-w-7xl mx-auto">
               {/* Combo 1: Micrófono REMAX K18 */}
               <div>
-                {/* Imagen grande ocupando todo el espacio vertical */}
                 <div className="relative h-[70vh] min-h-[800px] mb-8">
-                  {/* Imagen para escritorio */}
-                  <Image
-                    src="/images/combos/combo_1/combo_k18.png"
-                    alt="REMAX Wireless Microphone K18"
-                    fill
-                    className="object-contain hidden md:block"
+                  <video
+                    src="/images/combos/combo_1/K18.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain hidden md:block w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
-                  {/* Imagen para móvil */}
-                  <Image
-                    src="/images/combos/combo_1/combo_k18_mobile.png"
-                    alt="REMAX Wireless Microphone K18 Mobile"
-                    fill
-                    className="object-contain block md:hidden"
+                  <video
+                    src="/images/combos/combo_1/K18_MOBILE.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain block md:hidden w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
                 </div>
 
@@ -117,21 +143,24 @@ export default function LandingPage() {
 
               {/* Combo 2: Kit PRO Gimbal + Micrófono */}
               <div>
-                {/* Imagen grande ocupando todo el espacio vertical */}
                 <div className="relative h-[70vh] min-h-[800px] mb-8">
-                  {/* Imagen para escritorio */}
-                  <Image
-                    src="/images/combos/combo_1/combo1.png"
-                    alt="Combo PRO: Audio Dual y Estabilización Inteligente"
-                    fill
-                    className="object-contain hidden md:block"
+                  <video
+                    src="/images/combos/combo_1/COMBO_PRO.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain hidden md:block w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
-                  {/* Imagen para móvil */}
-                  <Image
-                    src="/images/combos/combo_1/combo1_mobile.png"
-                    alt="Combo PRO: Audio Dual y Estabilización Inteligente Mobile"
-                    fill
-                    className="object-contain block md:hidden"
+                  <video
+                    src="/images/combos/combo_1/COMBO_PRO_MOBILE.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain block md:hidden w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
                 </div>
 
@@ -168,21 +197,24 @@ export default function LandingPage() {
 
               {/* Combo 3: KOOSDA Gimbal Stabilizer */}
               <div>
-                {/* Imagen grande ocupando todo el espacio vertical */}
                 <div className="relative h-[70vh] min-h-[800px] mb-8">
-                  {/* Imagen para escritorio */}
-                  <Image
-                    src="/images/combos/combo_1/combo km03.png"
-                    alt="KOOSDA 3-AXIS GIMBAL STABILIZER KM03"
-                    fill
-                    className="object-contain hidden md:block"
+                  <video
+                    src="/images/combos/combo_1/KM03.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain hidden md:block w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
-                  {/* Imagen para móvil */}
-                  <Image
-                    src="/images/combos/combo_1/combo_km03_mobile.png"
-                    alt="KOOSDA 3-AXIS GIMBAL STABILIZER KM03 Mobile"
-                    fill
-                    className="object-contain block md:hidden"
+                  <video
+                    src="/images/combos/combo_1/KM03_MOBILE.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="object-contain block md:hidden w-full h-full"
+                    style={{ position: 'absolute', inset: 0 }}
                   />
                 </div>
 

@@ -9,6 +9,9 @@ import HeroSection from '@/components/layout/HeroSection';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import type { ThemeProviderProps } from 'next-themes/dist/types';
 
 // Definir tipos para los filtros
 interface Filters {
@@ -20,7 +23,7 @@ export default function HomePage() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
   const [currentFilters, setCurrentFilters] = useState<Filters>({ 
     categories: [], 
-    priceRange: [0, 5000000] 
+    priceRange: [0, 800000] 
   });
   const [currentSortKey, setCurrentSortKey] = useState('relevance');
 
@@ -82,7 +85,7 @@ export default function HomePage() {
     categories: categories, 
     onFilterChange: handleFilterChange,
     onSortChange: handleSortChange,
-    maxPrice: 5000000, 
+    maxPrice: 800000, 
     priceStep: 100000,
   };
 
