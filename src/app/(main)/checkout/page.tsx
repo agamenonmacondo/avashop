@@ -52,7 +52,7 @@ const calculateOrderSummary = (cartItems: any[]) => {
     return { items: [], subtotal: 0, iva: 0, shipping: 0, total: 0 };
   }
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const iva = subtotal * IVA_RATE;
+  const iva = 0; // IVA no se calcula
   const shipping = subtotal > 200000 ? 0 : 15000;
   const total = subtotal + iva + shipping;
   return { items: cartItems, subtotal, iva, shipping, total };
