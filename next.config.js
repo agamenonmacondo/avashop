@@ -12,12 +12,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'firebasestorage.googleapis.com', port: '', pathname: '/**' },
     ],
   },
-  experimental: {
-    metadataBase: new URL('https://www.ccs724.com'),
-  },
   allowedDevOrigins: [
     'http://localhost:9004',
-    'http://192.168.0.6:9004', // agrega aquí la IP desde donde accedes
+    'http://192.168.0.6:9004',
   ],
 };
 
