@@ -9,8 +9,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co', port: '', pathname: '/**' },
-      { protocol: 'https', hostname: 'firebasestorage.googleapis.com', port: '', pathname: '/**' },
-    ],
+     { protocol: 'https', hostname: 'via.placeholder.com', port: '', pathname: '/**' },
   },
   experimental: {
     metadataBase: new URL('https://www.ccs724.com'),
