@@ -17,6 +17,7 @@ const fontMono = Source_Code_Pro({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://www.ccs724.com'),
   title: 'CCS724 – Tienda de electrónica',
   description: 'CCS724 — Tienda online  de MONDSUB y REMAX.',
   applicationName: 'CCS724',
