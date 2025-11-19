@@ -1,30 +1,23 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+import { products } from '@/lib/placeholder-data';
+
+const baseUrl = 'https://www.ccs724.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const productEntries = products.map(product => ({
+    url: `${baseUrl}/products/${product.id}`,
+    lastModified: product.updatedAt ? new Date(product.updatedAt) : new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
   return [
     {
-      url: 'https://www.ccs724.com',
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
-    {
-      url: 'https://www.ccs724.com/landing',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: 'https://www.ccs724.com/landing/kit-esencial',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: 'https://www.ccs724.com/products',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
+    ...productEntries,
   ];
 }

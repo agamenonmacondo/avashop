@@ -1,173 +1,70 @@
-'use client';
 
-import { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { Metadata } from 'next';
 import { products } from '@/lib/placeholder-data';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { Minus, Plus, ShoppingCart } from 'lucide-react';
-import Image from 'next/image';
-import { formatColombianCurrency } from '@/lib/utils';
-import type { CartItem } from '@/types';
+import ProductDetailClient from './ProductDetailClient';
 
-export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
-  const router = useRouter();
-  const { toast } = useToast();
-  const [quantity, setQuantity] = useState(1);
-  const [isAdding, setIsAdding] = useState(false);
-  const [selectedImageIdx, setSelectedImageIdx] = useState(0);
-  
-  const product = products.find(p => p.id === resolvedParams.id);
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
+
+  if (!product) {
+    return {
+      title: 'Producto no encontrado',
+    };
+  }
+
+  return {
+    title: `${product.name} | CCS724`,
+    description: product.description.substring(0, 160),
+    openGraph: {
+      title: product.name,
+      description: product.description.substring(0, 160),
+      images: [
+        {
+          url: product.imageUrls[0],
+          width: 800,
+          height: 600,
+          alt: product.name,
+        },
+      ],
+    },
+  };
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return <div className="container mx-auto px-4 py-12 text-center">Producto no encontrado</div>;
   }
 
-  const handleAddToCart = () => {
-    setIsAdding(true);
-    
-    try {
-      const cartData = localStorage.getItem('cart');
-      const currentCart: CartItem[] = cartData ? JSON.parse(cartData) : [];
-      
-      const existingItemIndex = currentCart.findIndex(item => item.id === product.id);
-      
-      if (existingItemIndex >= 0) {
-        currentCart[existingItemIndex].quantity += quantity;
-      } else {
-        const newItem: CartItem = {
-          ...product,
-          quantity,
-          stock: Number(product.stock ?? 0),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        currentCart.push(newItem);
-      }
-      
-      localStorage.setItem('cart', JSON.stringify(currentCart));
-      
-      window.dispatchEvent(new StorageEvent('storage', {
-        key: 'cart',
-        newValue: JSON.stringify(currentCart),
-      }));
-      
-      toast({
-        title: "¡Agregado al carrito!",
-        description: `${product.name} x${quantity}`,
-      });
-      
-      // Redirigir al checkout
-      setTimeout(() => {
-        router.push('/checkout');
-      }, 500);
-      
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error);
-      toast({
-        title: "Error",
-        description: "No se pudo agregar el producto al carrito.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsAdding(false);
-    }
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    image: product.imageUrls,
+    description: product.description,
+    offers: {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: 'COP',
+      availability: 'https://schema.org/InStock',
+    },
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="relative aspect-square rounded-lg overflow-hidden bg-muted max-w-xl mx-auto">
-          <Image
-            src={product.imageUrls[selectedImageIdx]}
-            alt={product.name}
-            fill
-            className="object-contain"
-            priority
-            unoptimized
-          />
-        </div>
-
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold font-headline mb-2">{product.name}</h1>
-            <p className="text-muted-foreground">{product.category.name}</p>
-          </div>
-
-          <div className="text-3xl font-bold text-primary">
-            {formatColombianCurrency(product.price)}
-          </div>
-
-          <p className="text-muted-foreground leading-relaxed">
-            {product.description}
-          </p>
-
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Stock:</span>
-            <span className={`text-sm font-medium ${(product.stock ?? 0) > 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {(product.stock ?? 0) > 0 ? `${product.stock} disponibles` : 'Agotado'}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">Cantidad:</span>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={isAdding}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span className="w-12 text-center font-medium">{quantity}</span>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setQuantity(Math.min(product.stock ?? 0, quantity + 1))}
-                disabled={isAdding}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          <Button
-            size="lg"
-            className="w-full"
-            onClick={handleAddToCart}
-            disabled={(product.stock ?? 0) === 0 || isAdding}
-          >
-            <ShoppingCart className="mr-2 h-5 w-5" />
-            {isAdding ? 'Agregando...' : 'Comprar Ahora'}
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex gap-4 overflow-x-auto mb-6">
-        {product.imageUrls && product.imageUrls.length > 0 ? (
-          product.imageUrls.map((imgUrl, idx) => (
-            <button
-              key={imgUrl}
-              type="button"
-              className={`relative aspect-square w-24 h-24 rounded-lg overflow-hidden bg-muted border-2 ${selectedImageIdx === idx ? 'border-primary' : 'border-transparent'}`}
-              onClick={() => setSelectedImageIdx(idx)}
-              style={{ cursor: 'pointer' }}
-            >
-              <Image
-                src={imgUrl}
-                alt={`${product.name} imagen ${idx + 1}`}
-                fill
-                className="object-contain"
-                unoptimized
-              />
-            </button>
-          ))
-        ) : (
-          <div className="w-24 h-24 bg-muted flex items-center justify-center">Sin imágenes</div>
-        )}
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductDetailClient product={product} />
     </div>
   );
 }
