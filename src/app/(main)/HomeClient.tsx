@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import ProductList from '@/components/products/ProductList';
 import FilterSidebar from '@/components/products/FilterSidebar';
-import { products as allProducts, categories } from '@/lib/placeholder-data';
+import { products as allProducts } from '@/lib/placeholder-data';
 import type { Product } from '@/types';
 import HeroSection from '@/components/layout/HeroSection';
 import { Button } from '@/components/ui/button';
