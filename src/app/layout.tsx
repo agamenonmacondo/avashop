@@ -19,18 +19,14 @@ const fontMono = Source_Code_Pro({
 export const metadata = {
   metadataBase: new URL('https://www.ccs724.com'),
   title: 'CCS724 – Tienda de electrónica',
-  description: 'CCS724 — Tienda online  de MONDSUB y REMAX.',
-  applicationName: 'CCS724',
-  authors: [{ name: 'CCS724', url: process.env.NEXT_PUBLIC_APP_URL }],
+  description: 'CCS724 — Tienda online de MONDSUB y REMAX.',
   openGraph: {
     title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    url: 'https://www.ccs724.com',
     siteName: 'CCS724',
     images: [
-      // Logo principal (CCS724) primero, AVA como secundario
-      `${process.env.NEXT_PUBLIC_APP_URL}/images/CCS724/ccs724_logo.png`,
-      `${process.env.NEXT_PUBLIC_APP_URL}/images/AVALOGO/ava_logo.png`,
+      'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
     ],
     locale: 'es_ES',
     type: 'website',
@@ -40,12 +36,13 @@ export const metadata = {
     title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
     images: [
-      `${process.env.NEXT_PUBLIC_APP_URL}/images/CCS724/ccs724_logo.png`,
-      `${process.env.NEXT_PUBLIC_APP_URL}/images/AVALOGO/ava_logo.png`,
+      'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
     ],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/images/AVALOGO/logo_ccs.png?v=3',
+    shortcut: '/images/AVALOGO/logo_ccs.png?v=3',
+    apple: '/images/AVALOGO/logo_ccs.png?v=3',
   },
 };
 

@@ -9,14 +9,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co', port: '', pathname: '/**' },
-     { protocol: 'https', hostname: 'via.placeholder.com', port: '', pathname: '/**' },
-  },
-  experimental: {
-    metadataBase: new URL('https://www.ccs724.com'),
+      { protocol: 'https', hostname: 'via.placeholder.com', port: '', pathname: '/**' },
+    ],
   },
   allowedDevOrigins: [
     'http://localhost:9004',
-    'http://192.168.0.6:9004', // agrega aquí la IP desde donde accedes
+    'http://192.168.0.6:9004',
   ],
 };
 
