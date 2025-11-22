@@ -152,7 +152,8 @@ export default function FilterSidebar({
       <Accordion type="multiple" defaultValue={['categories', 'price']} className="w-full">
         <AccordionItem value="categories">
           <AccordionTrigger className="text-base font-medium">Categorías</AccordionTrigger>
-          <AccordionContent className="space-y-2 pt-2">
+          {/* MODIFICACIÓN: Agregamos max-h-[300px] y overflow-y-auto para crear el scroll */}
+          <AccordionContent className="space-y-2 pt-2 max-h-[300px] overflow-y-auto pr-2">
             {Object.keys(categoryGroups).length === 0 && (
               <div className="text-sm text-muted-foreground">No hay categorías disponibles</div>
             )}

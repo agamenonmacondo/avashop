@@ -6,6 +6,16 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+// 1. MAPA DE VIDEOS: Conecta el ID del producto con su archivo de video
+// Ajusta las claves ('remax-km-03', etc.) para que coincidan con los IDs en tu base de datos
+const videoMapping: Record<string, string> = {
+  'remax-km-03': 'KM03.mp4',
+  'remax-km-01': 'KM01.mp4',
+  'k18': 'K18.mp4',
+  'kit-esencial': 'KIT_ESENCIAL.mp4',
+  'combo-pro': 'COMBO_PRO.mp4',
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = products.find((p) => p.id === id);
@@ -16,7 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // CORRECCIÓN: Aseguramos que description sea un string (si es undefined, usa el texto alternativo)
   const description = product.description ?? `Detalles de ${product.name}`;
 
   return {
@@ -45,14 +54,20 @@ export default async function ProductPage({ params }: Props) {
     return <div className="container mx-auto px-4 py-12 text-center">Producto no encontrado</div>;
   }
 
-  // Calcular fecha de validez del precio (1 año a partir de hoy)
   const priceValidUntil = new Date();
   priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
 
-  // CORRECCIÓN: Aseguramos que description sea un string para el JSON-LD también
   const description = product.description ?? `Compra ${product.name} al mejor precio en CCS724.`;
 
-  const jsonLd = {
+  // 2. LÓGICA DE VIDEO: Buscamos si hay video para este producto
+  const videoFile = videoMapping[product.id];
+  // Asumimos que los videos están en public/images/combos/combo_1/
+  const videoUrl = videoFile 
+    ? `https://www.ccs724.com/images/combos/combo_1/${videoFile}` 
+    : null;
+
+  // Construcción del JSON-LD
+  const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
@@ -121,8 +136,22 @@ export default async function ProductPage({ params }: Props) {
     }
   };
 
+  // 3. INYECCIÓN DEL VIDEO EN JSON-LD (Solución al error de Google)
+  if (videoUrl) {
+    jsonLd.subjectOf = {
+      '@type': 'VideoObject',
+      name: `Video de ${product.name}`,
+      description: description,
+      thumbnailUrl: product.imageUrls[0], // <--- ESTO SOLUCIONA EL ERROR "Falta URL de miniatura"
+      uploadDate: new Date().toISOString(),
+      contentUrl: videoUrl,
+      embedUrl: videoUrl
+    };
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* El script es invisible para el usuario, pero Google lo lee aquí */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
