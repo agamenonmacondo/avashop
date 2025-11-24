@@ -10,20 +10,27 @@ export async function GET() {
     <title>CCS724 Productos</title>
     <link>${baseUrl}</link>
     <description>Catálogo de productos de tecnología y electrónica CCS724</description>
-    ${products.map((product) => `
+    ${products.map((product) => {
+      // CORRECCIÓN: Asegurar que la URL de la imagen sea absoluta
+      const imageUrl = product.imageUrls[0].startsWith('http')
+        ? product.imageUrls[0]
+        : `${baseUrl}${product.imageUrls[0].startsWith('/') ? '' : '/'}${product.imageUrls[0]}`;
+      
+      return `
     <item>
       <g:id>${product.id}</g:id>
       <g:title><![CDATA[${product.name}]]></g:title>
       <g:description><![CDATA[${product.description || product.name}]]></g:description>
       <g:link>${baseUrl}/products/${product.id}</g:link>
-      <g:image_link>${product.imageUrls[0]}</g:image_link>
+      <g:image_link>${imageUrl}</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${product.price} COP</g:price>
       <g:brand>Generico</g:brand> 
       <g:google_product_category>Electronics</g:google_product_category>
     </item>
-    `).join('')}
+    `;
+    }).join('')}
   </channel>
 </rss>`;
 
