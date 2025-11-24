@@ -59,6 +59,16 @@ export default async function ProductPage({ params }: Props) {
 
   const description = product.description ?? `Compra ${product.name} al mejor precio en CCS724.`;
 
+  // Lógica de marca para JSON-LD
+  let brandName = 'Generico';
+  const lowerId = product.id.toLowerCase();
+  const lowerName = product.name.toLowerCase();
+  
+  if (lowerId.startsWith('remax') || lowerName.includes('remax')) brandName = 'Remax';
+  else if (lowerId.startsWith('mon-sub') || lowerName.includes('mondsub')) brandName = 'Mondsub';
+  else if (lowerName.includes('xiaomi')) brandName = 'Xiaomi';
+  // Puedes agregar más marcas aquí
+
   // 2. LÓGICA DE VIDEO: Buscamos si hay video para este producto
   const videoFile = videoMapping[product.id];
   // Asumimos que los videos están en public/images/combos/combo_1/
@@ -74,6 +84,10 @@ export default async function ProductPage({ params }: Props) {
     image: product.imageUrls,
     description: description,
     sku: product.id,
+    brand: {
+      '@type': 'Brand',
+      name: brandName
+    },
     offers: {
       '@type': 'Offer',
       price: product.price,
