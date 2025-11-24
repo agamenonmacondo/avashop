@@ -11,10 +11,19 @@ export async function GET() {
     <link>${baseUrl}</link>
     <description>Catálogo de productos de tecnología y electrónica CCS724</description>
     ${products.map((product) => {
-      // CORRECCIÓN: Asegurar que la URL de la imagen sea absoluta
-      const imageUrl = product.imageUrls[0].startsWith('http')
-        ? product.imageUrls[0]
-        : `${baseUrl}${product.imageUrls[0].startsWith('/') ? '' : '/'}${product.imageUrls[0]}`;
+      // CORRECCIÓN: Asegurar que la URL de la imagen sea absoluta y esté codificada
+      let imageUrl = '';
+      
+      if (product.imageUrls && product.imageUrls.length > 0) {
+        const rawUrl = product.imageUrls[0];
+        // Construir la URL absoluta
+        const absoluteUrl = rawUrl.startsWith('http')
+          ? rawUrl
+          : `${baseUrl}${rawUrl.startsWith('/') ? '' : '/'}${rawUrl}`;
+        
+        // Codificar la URL para manejar espacios, tildes y caracteres especiales
+        imageUrl = encodeURI(absoluteUrl);
+      }
       
       return `
     <item>
@@ -22,7 +31,7 @@ export async function GET() {
       <g:title><![CDATA[${product.name}]]></g:title>
       <g:description><![CDATA[${product.description || product.name}]]></g:description>
       <g:link>${baseUrl}/products/${product.id}</g:link>
-      <g:image_link>${imageUrl}</g:image_link>
+      ${imageUrl ? `<g:image_link>${imageUrl}</g:image_link>` : ''}
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${product.price} COP</g:price>
