@@ -25,24 +25,34 @@ export async function GET() {
     <link>${baseUrl}</link>
     <description>Catálogo de productos de tecnología y electrónica CCS724</description>
     ${products.map((product) => {
-      // CORRECCIÓN: Asegurar que la URL de la imagen sea absoluta, codificada y escapada para XML
       let imageUrl = '';
+      let additionalImagesXml = '';
       
       if (product.imageUrls && product.imageUrls.length > 0) {
-        // .trim() elimina espacios accidentales al inicio o final que rompen la URL
-        const rawUrl = product.imageUrls[0].trim();
-        
-        // Construir la URL absoluta
-        const absoluteUrl = rawUrl.startsWith('http')
-          ? rawUrl
-          : `${baseUrl}${rawUrl.startsWith('/') ? '' : '/'}${rawUrl}`;
-        
-        // 1. encodeURI: Arregla espacios y tildes para la web
-        // 2. escapeXml: Arregla caracteres como '&' para que no rompan el XML
-        imageUrl = escapeXml(encodeURI(absoluteUrl));
+        // Procesamos todas las URLs disponibles
+        const processedUrls = product.imageUrls.map(url => {
+            const rawUrl = url.trim();
+            // Construir la URL absoluta
+            const absoluteUrl = rawUrl.startsWith('http')
+              ? rawUrl
+              : `${baseUrl}${rawUrl.startsWith('/') ? '' : '/'}${rawUrl}`;
+            
+            // Codificar y escapar para XML
+            return escapeXml(encodeURI(absoluteUrl));
+        });
 
-        // AGREGAR ESTO: Imprimir la URL en la consola para verificar
-        console.log(`Producto ID: ${product.id} | URL Generada: ${imageUrl}`);
+        // La primera imagen es la principal
+        imageUrl = processedUrls[0];
+
+        // Las siguientes (hasta 10) son adicionales
+        if (processedUrls.length > 1) {
+            additionalImagesXml = processedUrls.slice(1, 11).map(url => 
+                `<g:additional_image_link>${url}</g:additional_image_link>`
+            ).join('\n      ');
+        }
+
+        // Log para depuración
+        console.log(`Producto ID: ${product.id} | Img Principal: ${imageUrl} | Adicionales: ${processedUrls.length - 1}`);
       }
 
       // Generar el link del producto y escapar para XML
@@ -55,6 +65,7 @@ export async function GET() {
       <g:description><![CDATA[${product.description || product.name}]]></g:description>
       <g:link>${productLink}</g:link>
       ${imageUrl ? `<g:image_link>${imageUrl}</g:image_link>` : ''}
+      ${additionalImagesXml}
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${product.price} COP</g:price>
