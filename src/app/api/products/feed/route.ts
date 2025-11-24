@@ -50,9 +50,16 @@ export async function GET() {
                 `<g:additional_image_link>${url}</g:additional_image_link>`
             ).join('\n      ');
         }
+      }
 
-        // Log para depuración
-        console.log(`Producto ID: ${product.id} | Img Principal: ${imageUrl} | Adicionales: ${processedUrls.length - 1}`);
+      // Lógica para determinar la marca basada en el ID del producto
+      let brand = 'Generico';
+      const lowerId = product.id.toLowerCase();
+      
+      if (lowerId.startsWith('remax')) {
+        brand = 'Remax';
+      } else if (lowerId.startsWith('mon-sub')) {
+        brand = 'Mondsub';
       }
 
       // Generar el link del producto y escapar para XML
@@ -69,7 +76,7 @@ export async function GET() {
       <g:condition>new</g:condition>
       <g:availability>in_stock</g:availability>
       <g:price>${product.price} COP</g:price>
-      <g:brand>Generico</g:brand> 
+      <g:brand>${brand}</g:brand> 
       <g:google_product_category>Electronics</g:google_product_category>
     </item>
     `;
