@@ -18,10 +18,10 @@ export default function ProductDetailClient({ product }: { product: typeof produ
   const [isAdding, setIsAdding] = useState(false);
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
 
-  // Track cuando se ve el producto
+  // Track cuando se ve el producto (solo una vez al montar)
   useEffect(() => {
     trackViewContent(product.id, product.name, product.price);
-  }, [product]);
+  }, [product.id, product.name, product.price]);
 
   const handleAddToCart = () => {
     setIsAdding(true);
@@ -52,13 +52,13 @@ export default function ProductDetailClient({ product }: { product: typeof produ
         newValue: JSON.stringify(currentCart),
       }));
 
+      // Track ANTES de mostrar el toast para asegurar que se envíe
+      trackAddToCart(product.id, product.name, product.price, quantity);
+
       toast({
         title: "¡Agregado al carrito!",
         description: `${product.name} x${quantity}`,
       });
-
-      // Track cuando se agrega al carrito
-      trackAddToCart(product.id, product.name, product.price, quantity);
 
       setTimeout(() => {
         router.push('/checkout');

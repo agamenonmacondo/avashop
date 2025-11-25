@@ -1,6 +1,7 @@
 'use client';
 
-import { Suspense, useState, useEffect } from 'react'; // ✅ Agregar Suspense aquí
+import { Suspense, useEffect, useState } from 'react'; // ✅ Agregar Suspense aquí
+import { trackInitiateCheckout } from '@/lib/meta-pixel';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -20,6 +21,7 @@ import BoldButton from '@/components/checkout/BoldButton';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { getSupabase } from '@/lib/supabaseClient';
+import type { CartItem } from '@/types';
 
 const shippingFormSchema = z.object({
   fullName: z.string().min(2, "El nombre completo es requerido (mín. 2 caracteres)."),
@@ -603,6 +605,24 @@ function CheckoutContent() {
 }
 
 export default function CheckoutPage() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    // Cargar carrito
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      const parsedCart: CartItem[] = JSON.parse(cartData);
+      setCart(parsedCart);
+
+      // Track InitiateCheckout
+      const totalValue = parsedCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const totalItems = parsedCart.reduce((sum, item) => sum + item.quantity, 0);
+      const contentIds = parsedCart.map(item => item.id);
+
+      trackInitiateCheckout(totalValue, totalItems, contentIds);
+    }
+  }, []);
+
   return (
     <Suspense fallback={
       <div className="container mx-auto px-4 py-12 text-center">

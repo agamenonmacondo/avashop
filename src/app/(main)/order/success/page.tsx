@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { sendEmail, getOrderConfirmationEmail } from '@/lib/email';
+import { trackPurchase } from '@/lib/meta-pixel';
 
 interface OrderItem {
   id: string;
@@ -362,6 +363,33 @@ function SuccessContent() {
 }
 
 export default function OrderSuccessPage() {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get('order_id');
+
+  useEffect(() => {
+    if (orderId) {
+      // Obtener datos de la orden (ajusta según tu implementación)
+      const orderData = localStorage.getItem(`order_${orderId}`);
+      if (orderData) {
+        const order = JSON.parse(orderData);
+        
+        // Track Purchase
+        trackPurchase(
+          order.id,
+          order.total_amount,
+          order.items.map((item: any) => ({
+            id: item.product_id,
+            quantity: item.quantity,
+            price: item.price
+          }))
+        );
+
+        // Limpiar carrito después de compra exitosa
+        localStorage.removeItem('cart');
+      }
+    }
+  }, [orderId]);
+
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-screen">
