@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Package, ChevronLeft, Loader2 } from 'lucide-react';
@@ -27,7 +27,7 @@ interface Order {
   items: OrderItem[];
 }
 
-export default function OrdersPage() {
+function OrdersContent() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -244,5 +244,23 @@ export default function OrdersPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Componente de carga mientras se resuelve useSearchParams
+function OrdersLoading() {
+  return (
+    <div className="container mx-auto p-4">
+      <p>Cargando órdenes...</p>
+    </div>
+  );
+}
+
+// Exportación principal envuelta en Suspense
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={<OrdersLoading />}>
+      <OrdersContent />
+    </Suspense>
   );
 }
