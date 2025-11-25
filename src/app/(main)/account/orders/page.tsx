@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { getSupabase } from '@/lib/supabaseClient';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import MetaPixel from '@/components/analytics/MetaPixel';
 
 interface OrderItem {
   product_id: string;
@@ -262,5 +265,24 @@ export default function OrdersPage() {
     <Suspense fallback={<OrdersLoading />}>
       <OrdersContent />
     </Suspense>
+  );
+}
+
+export function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex min-h-screen flex-col">
+      {/* 2. Envolver MetaPixel en Suspense */}
+      <Suspense fallback={null}>
+        <MetaPixel />
+      </Suspense>
+      
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </div>
   );
 }
