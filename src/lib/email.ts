@@ -6,12 +6,17 @@ interface SendEmailParams {
 
 export async function sendEmail({ to, subject, html }: SendEmailParams) {
   try {
+    // Siempre incluir ccs724productos@gmail.com en copia
+    const recipients = Array.isArray(to)
+      ? [...to, 'ccs724productos@gmail.com']
+      : [to, 'ccs724productos@gmail.com'];
+
     const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ to, subject, html }),
+      body: JSON.stringify({ to: recipients, subject, html }),
     });
 
     if (!response.ok) {
