@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import { Minus, Plus } from 'lucide-react';
 import { formatColombianCurrency } from '@/lib/utils';
 import type { CartItem } from '@/types';
 import { products } from '@/lib/placeholder-data';
+import { trackViewContent, trackAddToCart } from '@/lib/meta-pixel';
 
 export default function ProductDetailClient({ product }: { product: typeof products[number] }) {
   const router = useRouter();
@@ -16,6 +17,11 @@ export default function ProductDetailClient({ product }: { product: typeof produ
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
+
+  // Track cuando se ve el producto
+  useEffect(() => {
+    trackViewContent(product.id, product.name, product.price);
+  }, [product]);
 
   const handleAddToCart = () => {
     setIsAdding(true);
@@ -50,6 +56,9 @@ export default function ProductDetailClient({ product }: { product: typeof produ
         title: "¡Agregado al carrito!",
         description: `${product.name} x${quantity}`,
       });
+
+      // Track cuando se agrega al carrito
+      trackAddToCart(product.id, product.name, product.price, quantity);
 
       setTimeout(() => {
         router.push('/checkout');

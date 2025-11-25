@@ -88,6 +88,15 @@ export default async function ProductPage({ params }: Props) {
       '@type': 'Brand',
       name: brandName
     },
+    ...(product.rating > 0 && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: product.rating,
+        reviewCount: product.reviewsCount || 1, // Debe ser al menos 1
+        bestRating: "5",
+        worstRating: "1"
+      }
+    }),
     offers: {
       '@type': 'Offer',
       price: product.price,
@@ -130,11 +139,6 @@ export default async function ProductPage({ params }: Props) {
         returnMethod: 'https://schema.org/ReturnByMail',
         returnFees: 'https://schema.org/FreeReturn',
       },
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '12'
     },
     review: {
       '@type': 'Review',
