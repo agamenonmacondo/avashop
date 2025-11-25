@@ -1,13 +1,12 @@
 import { Metadata } from 'next';
 import { products } from '@/lib/placeholder-data';
 import ProductDetailClient from './ProductDetailClient';
+import Breadcrumbs from '@/components/ui/Breadcrumbs'; // 1. Importamos Breadcrumbs
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-// 1. MAPA DE VIDEOS: Conecta el ID del producto con su archivo de video
-// Ajusta las claves ('remax-km-03', etc.) para que coincidan con los IDs en tu base de datos
 const videoMapping: Record<string, string> = {
   'remax-km-03': 'KM03.mp4',
   'remax-km-01': 'KM01.mp4',
@@ -54,12 +53,16 @@ export default async function ProductPage({ params }: Props) {
     return <div className="container mx-auto px-4 py-12 text-center">Producto no encontrado</div>;
   }
 
+  // 2. SOLUCIÓN AL ERROR: Definimos valores seguros.
+  // Si rating es undefined, usamos 0.
+  const rating = product.rating ?? 0;
+  const reviewsCount = product.reviewsCount ?? 0;
+
   const priceValidUntil = new Date();
   priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
 
   const description = product.description ?? `Compra ${product.name} al mejor precio en CCS724.`;
 
-  // Lógica de marca para JSON-LD
   let brandName = 'Generico';
   const lowerId = product.id.toLowerCase();
   const lowerName = product.name.toLowerCase();
@@ -67,16 +70,12 @@ export default async function ProductPage({ params }: Props) {
   if (lowerId.startsWith('remax') || lowerName.includes('remax')) brandName = 'Remax';
   else if (lowerId.startsWith('mon-sub') || lowerName.includes('mondsub')) brandName = 'Mondsub';
   else if (lowerName.includes('xiaomi')) brandName = 'Xiaomi';
-  // Puedes agregar más marcas aquí
 
-  // 2. LÓGICA DE VIDEO: Buscamos si hay video para este producto
   const videoFile = videoMapping[product.id];
-  // Asumimos que los videos están en public/images/combos/combo_1/
   const videoUrl = videoFile 
     ? `https://www.ccs724.com/images/combos/combo_1/${videoFile}` 
     : null;
 
-  // Construcción del JSON-LD
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -88,11 +87,12 @@ export default async function ProductPage({ params }: Props) {
       '@type': 'Brand',
       name: brandName
     },
-    ...(product.rating > 0 && {
+    // 3. Usamos la variable segura 'rating'
+    ...(rating > 0 && {
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: product.rating,
-        reviewCount: product.reviewsCount || 1, // Debe ser al menos 1
+        ratingValue: rating,
+        reviewCount: reviewsCount || 1,
         bestRating: "5",
         worstRating: "1"
       }
@@ -140,27 +140,29 @@ export default async function ProductPage({ params }: Props) {
         returnFees: 'https://schema.org/FreeReturn',
       },
     },
-    review: {
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: '5'
-      },
-      author: {
-        '@type': 'Person',
-        name: 'Cliente Verificado'
-      },
-      datePublished: new Date().toISOString().split('T')[0]
-    }
+    // 4. Usamos la variable segura 'rating' para evitar reseñas falsas si es 0
+    ...(rating > 0 ? {
+      review: {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: rating.toString()
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Cliente Verificado'
+        },
+        datePublished: new Date().toISOString().split('T')[0]
+      }
+    } : {}),
   };
 
-  // 3. INYECCIÓN DEL VIDEO EN JSON-LD (Solución al error de Google)
   if (videoUrl) {
     jsonLd.subjectOf = {
       '@type': 'VideoObject',
       name: `Video de ${product.name}`,
       description: description,
-      thumbnailUrl: product.imageUrls[0], // <--- ESTO SOLUCIONA EL ERROR "Falta URL de miniatura"
+      thumbnailUrl: product.imageUrls[0],
       uploadDate: new Date().toISOString(),
       contentUrl: videoUrl,
       embedUrl: videoUrl
@@ -169,11 +171,20 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* El script es invisible para el usuario, pero Google lo lee aquí */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      
+      {/* 5. Implementación de Breadcrumbs */}
+      <Breadcrumbs 
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Productos', href: '/#products' },
+          { label: product.name, href: `/products/${product.id}` },
+        ]} 
+      />
+
       <ProductDetailClient product={product} />
     </div>
   );
