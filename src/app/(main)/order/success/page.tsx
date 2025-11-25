@@ -139,17 +139,29 @@ function SuccessContent() {
         setOrder(data);
         setLoading(false);
 
+        // Track Purchase cuando se carga la orden
+        if (data.items && data.items.length > 0) {
+          trackPurchase(
+            data.orderId,
+            data.total,
+            data.items.map((item: OrderItem) => ({
+              id: item.id,
+              quantity: item.quantity,
+              price: item.price
+            }))
+          );
+        }
+
         // 📧 Enviar correo de confirmación automáticamente
         sendConfirmationEmail(data);
+
+        // Limpiar carrito después de compra exitosa
+        localStorage.removeItem('cart');
       })
       .catch(err => {
         console.error('❌ [SUCCESS] Error cargando orden:', err);
         setError(true);
         setLoading(false);
-        
-        // 🔄 Fallback: Intentar enviar correo aunque falle la carga
-        // (Si tienes la info mínima en localStorage o sessionStorage)
-        console.log('⚠️ Intentando enviar correo sin datos completos...');
       });
   }, [orderId, txStatus]);
 
@@ -362,34 +374,8 @@ function SuccessContent() {
   );
 }
 
+// COMPONENTE PRINCIPAL - SIN useSearchParams aquí
 export default function OrderSuccessPage() {
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get('order_id');
-
-  useEffect(() => {
-    if (orderId) {
-      // Obtener datos de la orden (ajusta según tu implementación)
-      const orderData = localStorage.getItem(`order_${orderId}`);
-      if (orderData) {
-        const order = JSON.parse(orderData);
-        
-        // Track Purchase
-        trackPurchase(
-          order.id,
-          order.total_amount,
-          order.items.map((item: any) => ({
-            id: item.product_id,
-            quantity: item.quantity,
-            price: item.price
-          }))
-        );
-
-        // Limpiar carrito después de compra exitosa
-        localStorage.removeItem('cart');
-      }
-    }
-  }, [orderId]);
-
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-screen">
