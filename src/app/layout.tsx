@@ -40,9 +40,9 @@ export const metadata = {
     ],
   },
   icons: {
-    icon: '/images/AVALOGO/logo_ccs.png?v=3',
-    shortcut: '/images/AVALOGO/logo_ccs.png?v=3',
-    apple: '/images/AVALOGO/logo_ccs.png?v=3',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 
@@ -54,6 +54,12 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#000000" />
         <Script 
           src="https://checkout.bold.co/library/boldPaymentButton.js" 
           strategy="beforeInteractive"

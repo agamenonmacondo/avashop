@@ -47,16 +47,16 @@ const getCartFromLocalStorage = () => {
   }
 };
 
-const IVA_RATE = 0.19;
-
 const calculateOrderSummary = (cartItems: any[]) => {
   if (cartItems.length === 0) {
     return { items: [], subtotal: 0, shipping: 0, total: 0 };
   }
+  
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shipping = subtotal > 200000 ? 0 : 15000;
-  const total = subtotal + shipping;
-  return { items: cartItems, subtotal, shipping, total };
+  const total = subtotal + shipping; // ✅ Sin IVA
+  
+  return { items: cartItems, subtotal, shipping, total }; // ✅ Sin incluir 'iva'
 };
 
 const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
@@ -337,9 +337,11 @@ function CheckoutContent() {
     const orderInput = await getValidatedOrderInput();
     if (!orderInput) return;
 
-    // Construir mensaje para WhatsApp
-    const whatsappNumber = '573504017710'; // ✅ Número proporcionado (sin +)
-    const itemsText = orderInput.cartItems.map(item => `${item.name} x${item.quantity} - ${formatColombianCurrency(item.price * item.quantity)}`).join('\n');
+    const whatsappNumber = '573504017710';
+    const itemsText = orderInput.cartItems.map(item => 
+      `${item.name} x${item.quantity} - ${formatColombianCurrency(item.price * item.quantity)}`
+    ).join('\n');
+    
     const message = encodeURIComponent(
       `Hola, quiero hacer un pedido contra entrega.\n\n` +
       `Nombre: ${orderInput.shippingDetails.fullName}\n` +
@@ -348,13 +350,11 @@ function CheckoutContent() {
       `Teléfono: ${orderInput.shippingDetails.phone || 'No especificado'}\n\n` +
       `Items:\n${itemsText}\n\n` +
       `Subtotal: ${formatColombianCurrency(orderSummary.subtotal)}\n` +
-      `IVA: ${formatColombianCurrency(orderSummary.iva)}\n` +
       `Envío: ${orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}\n` +
       `Total: ${formatColombianCurrency(orderSummary.total)}\n\n` +
       `Por favor confirma el pedido.`
     );
 
-    // Redirigir a WhatsApp
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
   }
 
