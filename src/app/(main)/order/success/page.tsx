@@ -40,55 +40,7 @@ function SuccessContent() {
   const [order, setOrder] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [sendingEmail, setSendingEmail] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-
-  // Función para enviar correo de confirmación
-  const sendConfirmationEmail = async (orderData: OrderData) => {
-    const customerEmail = orderData.shipping?.email;
-    
-    if (!customerEmail) {
-      console.warn('⚠️ No se encontró email del cliente');
-      return;
-    }
-
-    if (!orderData.items || orderData.items.length === 0) {
-      console.warn('⚠️ No hay items en el pedido');
-      return;
-    }
-
-    setSendingEmail(true);
-    setEmailError(false);
-    console.log('📧 Enviando correo de confirmación a:', customerEmail);
-
-    try {
-      const html = getOrderConfirmationEmail({
-        orderId: orderData.orderId,
-        customerName: orderData.shipping?.fullName || 'Cliente',
-        items: orderData.items.map(item => ({
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        total: orderData.total,
-      });
-
-      await sendEmail({
-        to: customerEmail,
-        subject: `✅ Confirmación de Pedido #${orderData.orderId} - CCS724`,
-        html,
-      });
-
-      console.log('✅ Correo de confirmación enviado exitosamente');
-      setEmailSent(true);
-    } catch (error) {
-      console.error('❌ Error enviando correo de confirmación:', error);
-      setEmailError(true);
-    } finally {
-      setSendingEmail(false);
-    }
-  };
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   useEffect(() => {
     if (!orderId) {
@@ -96,6 +48,50 @@ function SuccessContent() {
       setLoading(false);
       return;
     }
+
+    // Función para enviar correo de confirmación (movida adentro)
+    const sendConfirmationEmail = async (orderData: OrderData) => {
+      const customerEmail = orderData.shipping?.email;
+      
+      if (!customerEmail) {
+        console.warn('⚠️ No se encontró email del cliente para enviar confirmación.');
+        setEmailStatus('error');
+        return;
+      }
+
+      if (!orderData.items || orderData.items.length === 0) {
+        console.warn('⚠️ No hay items en el pedido, no se envía correo.');
+        return;
+      }
+
+      setEmailStatus('sending');
+      console.log('📧 Enviando correo de confirmación a:', customerEmail);
+
+      try {
+        const html = getOrderConfirmationEmail({
+          orderId: orderData.orderId,
+          customerName: orderData.shipping?.fullName || 'Cliente',
+          items: orderData.items.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          total: orderData.total,
+        });
+
+        await sendEmail({
+          to: customerEmail,
+          subject: `✅ Confirmación de Pedido #${orderData.orderId} - CCS724`,
+          html,
+        });
+
+        console.log('✅ Correo de confirmación enviado exitosamente');
+        setEmailStatus('sent');
+      } catch (error) {
+        console.error('❌ Error enviando correo de confirmación:', error);
+        setEmailStatus('error');
+      }
+    };
 
     console.log('🔍 [SUCCESS] Cargando orden:', orderId, '- Estado Bold:', txStatus);
     setLoading(true);
@@ -222,7 +218,7 @@ function SuccessContent() {
             {/* Estado del envío de correo */}
             {!loading && (
               <>
-                {sendingEmail && (
+                {emailStatus === 'sending' && (
                   <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg flex items-center gap-3">
                     <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
                     <p className="text-sm text-blue-800 dark:text-blue-200">
@@ -231,12 +227,12 @@ function SuccessContent() {
                   </div>
                 )}
 
-                {emailSent && (
+                {emailStatus === 'sent' && (
                   <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg flex items-center gap-3">
                     <MailCheck className="h-5 w-5 text-green-600" />
                     <div>
                       <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                        ✅ Correo de confirmación enviado
+                        Correo de confirmación enviado
                       </p>
                       {order?.shipping?.email && (
                         <p className="text-xs text-green-700 dark:text-green-300 mt-1">
@@ -247,15 +243,15 @@ function SuccessContent() {
                   </div>
                 )}
 
-                {emailError && !emailSent && (
+                {emailStatus === 'error' && (
                   <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg flex items-center gap-3">
                     <AlertCircle className="h-5 w-5 text-yellow-600" />
                     <div>
                       <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                        ⚠️ No pudimos enviar el correo automáticamente
+                        No pudimos enviar el correo automáticamente
                       </p>
                       <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">
-                        Te enviaremos la confirmación en los próximos minutos
+                        No te preocupes, tu pedido fue recibido. Te enviaremos la confirmación manualmente.
                       </p>
                     </div>
                   </div>
