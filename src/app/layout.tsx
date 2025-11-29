@@ -40,10 +40,14 @@ export const metadata = {
     ],
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: '/images/favicon.ico', sizes: 'any' },
+      { url: '/images/favicon.svg', type: 'image/svg+xml' },
+      { url: '/images/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    ],
+    apple: '/images/apple-touch-icon.png',
   },
+  manifest: '/images/site.webmanifest',
 };
 
 export default function RootLayout({
@@ -54,11 +58,6 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/images/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png" />
-        <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
-        <link rel="manifest" href="/images/site.webmanifest" />
         <meta name="theme-color" content="#000000" />
         <Script 
           src="https://checkout.bold.co/library/boldPaymentButton.js" 
