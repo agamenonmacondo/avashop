@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 
 const heroVideos = [
     {
-        desktop: '/images/combos/combo_1/COMBO_PRO.mp4',
-        mobile: '/images/combos/combo_1/COMBO_PRO_MOBILE.mp4',
+        desktop: '/images/combos/combo_1/COMBO PRO REEL DESKTOP.mp4',
+        mobile: '/images/combos/combo_1/DESKTOP  PRO.mp4',
         title: 'Combo PRO',
         description: 'Audio Dual y Estabilización Inteligente',
         price: '$489.900',
@@ -15,41 +15,14 @@ const heroVideos = [
         buttonText: 'Ver Combo PRO',
     },
     {
-        desktop: '/images/combos/combo_1/KIT_ESENCIAL.mp4',
-        mobile: '/images/combos/combo_1/KIT_ESENCIAL_MOBILE.mp4',
+        desktop: '/images/combos/combo_1/ESENCIAL REEL DESKTOP.mp4',
+        mobile: '/images/combos/combo_1/ESENCIAL MOBILE.mp4',
         title: 'Kit Esencial',
-        description: 'Sonido Pro y Luz Perfecta',
+        description: 'Micrófono K18 y Gimbal KM01',
         price: '$299.900',
         link: '/landing/kit-esencial',
         buttonText: 'Ver Kit Esencial',
-    },
-    {
-        desktop: '/images/combos/combo_1/KM03.mp4',
-        mobile: '/images/combos/combo_1/KM03_MOBILE.mp4',
-        title: 'KOOSDA Gimbal KM03',
-        description: 'Estabilización Profesional',
-        price: '$289.900',
-        link: '/landing',
-        buttonText: 'Ver Gimbal KM03',
-    },
-    {
-        desktop: '/images/combos/combo_1/K18.mp4',
-        mobile: '/images/combos/combo_1/K18_MOBILE.mp4',
-        title: 'REMAX Micrófono K18',
-        description: 'Audio Inalámbrico Premium',
-        price: '$149.900',
-        link: '/landing',
-        buttonText: 'Ver Micrófono K18',
-    },
-    {
-        desktop: '/images/combos/combo_1/KM01.mp4',
-        mobile: '/images/combos/combo_1/KM01_MOBILE.mp4',
-        title: 'KOOSDA Mini Gimbal KM01',
-        description: 'Compacto y Versátil',
-        price: '$189.900',
-        link: '/landing/kit-esencial',
-        buttonText: 'Ver Mini Gimbal',
-    },
+    }
 ];
 
 export default function HeroSection() {
