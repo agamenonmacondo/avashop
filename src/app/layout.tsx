@@ -16,10 +16,13 @@ const fontMono = Source_Code_Pro({
   variable: '--font-mono',
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL('https://www.ccs724.com'),
-  title: 'CCS724 – Tienda de electrónica',
-  description: 'CCS724 — Tienda online de MONDSUB y REMAX.',
+  title: {
+    default: 'CCS724 | Tienda de Electrónica y Tecnología en Colombia',
+    template: '%s | CCS724',
+  },
+  description: 'Encuentra lo último en tecnología, accesorios para celulares, audio y gadgets en Colombia. Envíos a todo el país.',
   openGraph: {
     title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
@@ -41,11 +44,19 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/favicon.ico', sizes: 'any' },
-      { url: '/images/favicon.svg', type: 'image/svg+xml' },
-      { url: '/images/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+      { url: '/images/favicon.ico?v=2', sizes: 'any' },
+      { url: '/images/favicon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/images/favicon-96x96.png?v=2', type: 'image/png', sizes: '96x96' },
     ],
-    apple: '/images/apple-touch-icon.png',
+    apple: [
+      { url: '/images/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'manifest',
+        url: '/images/site.webmanifest',
+      },
+    ],
   },
   manifest: '/images/site.webmanifest',
 };

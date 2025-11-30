@@ -64,8 +64,8 @@ export default function PoliticaDevolucionesPage() {
             <ol className="list-decimal list-inside space-y-3 text-muted-foreground">
               <li>
                 <strong>Contacta con nosotros:</strong> Envía un correo a{' '}
-                <a href="mailto:ccs724productos@gmail.com" className="text-primary hover:underline">
-                  ccs724productos@gmail.com
+                <a href="mailto:ventas@ccs724.com" className="text-primary hover:underline">
+                  ventas@ccs724.com
                 </a>{' '}
                 indicando tu número de pedido y el motivo de la devolución.
               </li>
@@ -150,8 +150,8 @@ export default function PoliticaDevolucionesPage() {
             <p className="flex items-center gap-2 text-muted-foreground">
               <Mail className="h-4 w-4" />
               <strong>Email:</strong>{' '}
-              <a href="mailto:ccs724productos@gmail.com" className="text-primary hover:underline">
-                ccs724productos@gmail.com
+              <a href="mailto:ventas@ccs724.com" className="text-primary hover:underline">
+                ventas@ccs724.com
               </a>
             </p>
             <p className="flex items-center gap-2 text-muted-foreground">
