@@ -26,25 +26,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/politica-de-envios`,
       lastModified: new Date(),
       changeFrequency: 'yearly' as const,
-      priority: 0.5,
+      priority: 0.6,
     },
     {
       url: `${baseUrl}/politica-de-devoluciones`,
       lastModified: new Date(),
       changeFrequency: 'yearly' as const,
-      priority: 0.5,
+      priority: 0.6,
     },
     {
       url: `${baseUrl}/terminos-y-condiciones`,
       lastModified: new Date(),
       changeFrequency: 'yearly' as const,
-      priority: 0.5,
+      priority: 0.6,
     },
     {
       url: `${baseUrl}/politica-de-privacidad`,
       lastModified: new Date(),
       changeFrequency: 'yearly' as const,
-      priority: 0.5,
+      priority: 0.6,
     },
   ];
 }
