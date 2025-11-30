@@ -11,6 +11,7 @@ import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MetaPixel from '@/components/analytics/MetaPixel';
+import { useForm } from 'react-hook-form';
 
 interface OrderItem {
   product_id: string;
@@ -35,6 +36,26 @@ function OrdersContent() {
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const form = useForm({
+    defaultValues: {
+      name: '',
+      email: '', // ← aquí se llenará con el email autenticado
+      phone: '',
+    },
+  });
+
+  useEffect(() => {
+    const auth = getFirebaseAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        form.setValue('email', user.email || '');
+        form.setValue('name', user.displayName || '');
+        // Si tienes más datos, también puedes setearlos aquí
+      }
+    });
+    return () => unsubscribe();
+  }, [form]);
 
   useEffect(() => {
     const auth = getFirebaseAuth();

@@ -20,6 +20,7 @@ import { auth } from '@/lib/firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Separator } from '../ui/separator';
+import { syncUserProfile } from '@/lib/auth/syncUserProfile'; // ✅ Importar función de sincronización
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'El nombre debe tener al menos 2 caracteres.' }),
@@ -69,6 +70,10 @@ export default function SignupForm() {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      
+      // ✅ Guardar perfil en base de datos
+      await syncUserProfile(user, true);
+
       toast({
         title: "Registro/Inicio de Sesión con Google Exitoso",
         description: `¡Bienvenido, ${user.displayName || user.email}!`,
@@ -108,6 +113,9 @@ export default function SignupForm() {
         await updateProfile(userCredential.user, {
           displayName: values.name,
         });
+
+        // ✅ Guardar perfil en base de datos inmediatamente después de crear la cuenta
+        await syncUserProfile(userCredential.user, true);
       }
       toast({
         title: "Registro Exitoso",

@@ -1,32 +1,39 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { User, Mail, Phone, Save, Loader2, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { User, Mail, Phone, MapPin, Save, ShoppingBag } from 'lucide-react';
-import Link from 'next/link';
 import { getSupabase } from '@/lib/supabaseClient';
-import { getAuth } from 'firebase/auth';
-import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
+import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
+// Esquema para Perfil
 const profileFormSchema = z.object({
   name: z.string().min(2, "El nombre es requerido"),
   email: z.string().email("Correo electrónico inválido"),
   phone: z.string().optional(),
 });
 
+// Esquema para Dirección
 const addressFormSchema = z.object({
-  street: z.string().min(3, "La dirección es requerida"),
-  city: z.string().min(2, "La ciudad es requerida"),
-  state: z.string().min(2, "El departamento/estado es requerido"),
-  zipCode: z.string().min(3, "El código postal es requerido"),
-  country: z.string().min(2, "El país es requerido"),
+  address: z.string().min(5, "La dirección es muy corta"),
+  city: z.string().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -34,190 +41,254 @@ type AddressFormValues = z.infer<typeof addressFormSchema>;
 
 export default function AccountPage() {
   const { toast } = useToast();
+  const router = useRouter();
+  
+  // Estados
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [savingAddress, setSavingAddress] = useState(false);
 
+  // Formulario Perfil
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
-    },
+    defaultValues: { name: '', email: '', phone: '' },
   });
 
+  // Formulario Dirección
   const addressForm = useForm<AddressFormValues>({
     resolver: zodResolver(addressFormSchema),
-    defaultValues: { street: '', city: '', state: '', zipCode: '', country: 'Colombia' },
+    defaultValues: { address: '', city: '' },
   });
 
+  // 🔄 Cargar datos
   useEffect(() => {
-    const auth = getAuth();
+    const auth = getFirebaseAuth();
+    if (!auth) return;
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        router.push('/login');
+        return;
+      }
+
       setUser(firebaseUser);
-      if (!firebaseUser?.email) {
-        profileForm.reset({ name: '', email: '', phone: '' });
+      const userEmail = firebaseUser.email;
+
+      if (!userEmail) {
         setLoading(false);
         return;
       }
-      try {
-        const supabase = getSupabase();
-        if (!supabase) {
-          console.error('Supabase no está inicializado');
-          setLoading(false);
-          return;
-        }
 
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', firebaseUser.email.toLowerCase().trim())
-          .maybeSingle();
+      // 1. Pre-llenar formulario con datos de Firebase
+      profileForm.reset({
+        name: firebaseUser.displayName || '',
+        email: userEmail,
+        phone: '',
+      });
 
-        if (error) {
-          console.error('Error obteniendo perfil:', error);
-          profileForm.reset({
-            name: firebaseUser.displayName ?? '',
-            email: firebaseUser.email ?? '',
-            phone: '',
-          });
-        } else if (data) {
-          profileForm.reset({
-            name: data.name ?? '',
-            email: firebaseUser.email ?? '',
-            phone: data.phone ?? '',
-          });
-          if (data.addresses && Array.isArray(data.addresses) && data.addresses.length > 0) {
-            addressForm.reset(data.addresses[0]);
+      const supabase = getSupabase();
+      if (supabase) {
+        try {
+          // 2. Buscar en la tabla 'profiles' usando el EMAIL como ID (según tu captura)
+          const { data: profileData, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userEmail) // IMPORTANTE: Usamos el email como ID
+            .maybeSingle();
+
+          if (profileData) {
+            // Cargar datos del perfil
+            profileForm.reset({
+              name: profileData.name || firebaseUser.displayName || '',
+              email: userEmail,
+              phone: profileData.phone || '',
+            });
+
+            // Cargar dirección desde la columna JSONB 'addresses'
+            // Tu captura muestra que es un array: [{"city": "Bogota", ...}]
+            if (profileData.addresses && Array.isArray(profileData.addresses) && profileData.addresses.length > 0) {
+              const mainAddress = profileData.addresses[0]; // Tomamos la primera dirección
+              addressForm.reset({
+                address: mainAddress.address || '', // Ajusta la clave según tu JSON
+                city: mainAddress.city || '',
+              });
+            }
           }
-        } else {
-          profileForm.reset({
-            name: firebaseUser.displayName ?? '',
-            email: firebaseUser.email ?? '',
-            phone: '',
-          });
+        } catch (error) {
+          console.error("Error cargando datos:", error);
         }
-      } catch (err) {
-        console.error('Error cargando perfil:', err);
-      } finally {
-        setLoading(false);
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router, profileForm, addressForm]);
 
-  async function onProfileSubmit(profileValues: ProfileFormValues) {
-    if (!user?.email) return;
-    setLoading(true);
+  // 💾 Guardar Perfil
+  async function onProfileSubmit(values: ProfileFormValues) {
+    if (!user || !user.email) return;
+    setSavingProfile(true);
+
     try {
       const supabase = getSupabase();
-      if (!supabase) {
-        toast({ title: 'Error', description: 'No se pudo conectar con la base de datos', variant: 'destructive' });
-        setLoading(false);
-        return;
-      }
+      if (!supabase) throw new Error("No hay conexión a base de datos");
 
+      // Actualizamos la tabla profiles usando el email como ID
       const { error } = await supabase
         .from('profiles')
         .upsert({
-          id: user.email.toLowerCase().trim(),
-          name: profileValues.name,
-          phone: profileValues.phone ?? '',
+          id: user.email, // Usamos email como ID
+          name: values.name,
+          phone: values.phone || null,
+          // No tocamos 'addresses' aquí para no borrarlas
           updated_at: new Date().toISOString(),
-        });
-      if (error) {
-        toast({ title: 'Error', description: 'No se pudo guardar el perfil', variant: 'destructive' });
-      } else {
-        toast({ title: 'Perfil actualizado', description: 'Tus datos han sido guardados.' });
-      }
-    } catch (err) {
-      toast({ title: 'Error', description: 'No se pudo guardar el perfil', variant: 'destructive' });
+        }, { onConflict: 'id' });
+
+      if (error) throw error;
+
+      toast({ title: 'Perfil actualizado ✅', description: 'Tus datos se guardaron correctamente.' });
+    } catch (error: any) {
+      console.error('Error guardando perfil:', error);
+      toast({ 
+        title: 'Error', 
+        description: 'No se pudo guardar el perfil.', 
+        variant: 'destructive' 
+      });
+    } finally {
+      setSavingProfile(false);
     }
-    setLoading(false);
   }
 
-  async function onAddressSubmit(formValues: AddressFormValues) {
-    if (!user?.email) return;
-    setLoading(true);
+  // 💾 Guardar Dirección
+  async function onAddressSubmit(values: AddressFormValues) {
+    if (!user || !user.email) return;
+    setSavingAddress(true);
+
     try {
       const supabase = getSupabase();
-      if (!supabase) {
-        toast({ title: 'Error', description: 'No se pudo conectar con la base de datos', variant: 'destructive' });
-        setLoading(false);
-        return;
-      }
+      if (!supabase) throw new Error("No hay conexión a base de datos");
 
+      // Creamos el objeto de dirección para guardar en el JSON
+      const newAddress = {
+        address: values.address,
+        city: values.city,
+        updated_at: new Date().toISOString()
+      };
+
+      // Guardamos en la columna 'addresses' (tipo JSONB)
+      // Nota: Esto sobrescribe el array con una sola dirección. 
+      // Si quieres múltiples, habría que leer primero y hacer push.
       const { error } = await supabase
         .from('profiles')
-        .upsert({
-          id: user.email.toLowerCase().trim(),
-          addresses: [formValues],
-          updated_at: new Date().toISOString(),
-        });
-      if (error) {
-        toast({ title: 'Error', description: 'No se pudo guardar la dirección', variant: 'destructive' });
-      } else {
-        toast({ title: 'Dirección guardada', description: 'Tus datos han sido guardados.' });
-      }
-    } catch (err) {
-      toast({ title: 'Error', description: 'No se pudo guardar la dirección', variant: 'destructive' });
+        .update({
+          addresses: [newAddress] // Guardamos como un array de objetos JSON
+        })
+        .eq('id', user.email); // Usamos email como ID
+
+      if (error) throw error;
+
+      toast({ title: 'Dirección guardada 🏠', description: 'Tu dirección de envío ha sido actualizada.' });
+    } catch (error: any) {
+      console.error('Error guardando dirección:', error);
+      toast({ 
+        title: 'Error', 
+        description: 'No se pudo guardar la dirección.', 
+        variant: 'destructive' 
+      });
+    } finally {
+      setSavingAddress(false);
     }
-    setLoading(false);
   }
 
-  if (loading) return <div className="container mx-auto p-8">Cargando perfil...</div>;
+  if (loading) {
+    return (
+      <div className="container mx-auto py-8 flex justify-center min-h-[400px]">
+        <div className="text-center mt-10">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Cargando tu cuenta...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold font-headline">Mi Cuenta</h1>
-        <Button variant="outline" asChild>
-          <Link href="/account/orders"><ShoppingBag className="mr-2 h-4 w-4" /> Ver Pedidos</Link>
-        </Button>
+    <div className="container mx-auto py-8 px-4 max-w-4xl">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Mi Cuenta</h1>
       </div>
 
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:w-1/2 lg:w-1/3 mb-6">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="profile">Perfil</TabsTrigger>
           <TabsTrigger value="addresses">Direcciones</TabsTrigger>
         </TabsList>
 
+        {/* PESTAÑA PERFIL */}
         <TabsContent value="profile">
-          <Card className="shadow-lg">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-2xl font-headline flex items-center"><User className="mr-3 h-6 w-6 text-primary"/>Información Personal</CardTitle>
-              <CardDescription>Administra tus detalles personales, información de contacto y avatar.</CardDescription>
+              <CardTitle className="flex items-center gap-2">
+                <User className="h-5 w-5 text-primary" />
+                Información Personal
+              </CardTitle>
+              <CardDescription>
+                Administra tus detalles personales.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...profileForm}>
                 <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <FormField control={profileForm.control} name="name" render={({ field }) => (
+                  <FormField
+                    control={profileForm.control}
+                    name="name"
+                    render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center"><User className="mr-2 h-4 w-4 text-muted-foreground"/>Nombre Completo</FormLabel>
-                        <FormControl><Input placeholder="Ej: Ana Pérez" {...field} /></FormControl>
+                        <FormLabel>Nombre Completo</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Tu nombre" {...field} disabled={savingProfile} />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )} />
-                    <FormField control={profileForm.control} name="email" render={({ field }) => (
+                    )}
+                  />
+
+                  <FormField
+                    control={profileForm.control}
+                    name="email"
+                    render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center"><Mail className="mr-2 h-4 w-4 text-muted-foreground"/>Correo Electrónico</FormLabel>
-                        <FormControl><Input type="email" placeholder="tu@correo.com" {...field} disabled /></FormControl>
+                        <FormLabel>Correo Electrónico</FormLabel>
+                        <FormControl>
+                          <Input {...field} disabled className="bg-muted/50" />
+                        </FormControl>
+                        <p className="text-[10px] text-muted-foreground">
+                          El correo no se puede modificar por seguridad.
+                        </p>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={profileForm.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Teléfono</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Tu número de contacto" {...field} disabled={savingProfile} />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
-                    )} />
-                  </div>
-                  <FormField control={profileForm.control} name="phone" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center"><Phone className="mr-2 h-4 w-4 text-muted-foreground"/>Número de Teléfono</FormLabel>
-                      <FormControl><Input type="tel" placeholder="Opcional" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <Button type="submit" className="transition-transform hover:scale-105 active:scale-95">
-                    <Save className="mr-2 h-4 w-4" /> Guardar Perfil
+                    )}
+                  />
+
+                  <Button type="submit" disabled={savingProfile} className="w-full">
+                    {savingProfile ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Guardando...</>
+                    ) : (
+                      <><Save className="mr-2 h-4 w-4" /> Guardar Perfil</>
+                    )}
                   </Button>
                 </form>
               </Form>
@@ -225,42 +296,63 @@ export default function AccountPage() {
           </Card>
         </TabsContent>
 
+        {/* PESTAÑA DIRECCIONES */}
         <TabsContent value="addresses">
-          <Card className="shadow-lg">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-2xl font-headline flex items-center"><MapPin className="mr-3 h-6 w-6 text-primary"/>Administrar Direcciones</CardTitle>
-              <CardDescription>Actualiza tus direcciones de envío y facturación.</CardDescription>
+              <CardTitle className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                Dirección de Envío
+              </CardTitle>
+              <CardDescription>
+                Esta dirección se usará para tus pedidos.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...addressForm}>
                 <form onSubmit={addressForm.handleSubmit(onAddressSubmit)} className="space-y-6">
-                  <FormField control={addressForm.control} name="street" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Dirección (Calle, Carrera, etc.)</FormLabel>
-                      <FormControl><Input placeholder="Ej: Carrera 10 # 20-30" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <div className="grid sm:grid-cols-3 gap-6">
-                    <FormField control={addressForm.control} name="city" render={({ field }) => (
-                      <FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input placeholder="Ej: Bogotá" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                    <FormField control={addressForm.control} name="state" render={({ field }) => (
-                      <FormItem><FormLabel>Departamento</FormLabel><FormControl><Input placeholder="Ej: Cundinamarca" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                    <FormField control={addressForm.control} name="zipCode" render={({ field }) => (
-                      <FormItem><FormLabel>Código Postal</FormLabel><FormControl><Input placeholder="Ej: 110111" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                  </div>
-                  <FormField control={addressForm.control} name="country" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>País</FormLabel>
-                      <FormControl><Input {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <Button type="submit" className="transition-transform hover:scale-105 active:scale-95">
-                    <Save className="mr-2 h-4 w-4" /> Guardar Dirección
+                  <FormField
+                    control={addressForm.control}
+                    name="address"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Dirección Completa</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Ej: Calle 123 # 45 - 67, Apto 201" 
+                            {...field} 
+                            disabled={savingAddress} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={addressForm.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ciudad (Opcional)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Ej: Bogotá" 
+                            {...field} 
+                            disabled={savingAddress} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button type="submit" disabled={savingAddress} className="w-full">
+                    {savingAddress ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Guardando...</>
+                    ) : (
+                      <><Save className="mr-2 h-4 w-4" /> Guardar Dirección</>
+                    )}
                   </Button>
                 </form>
               </Form>

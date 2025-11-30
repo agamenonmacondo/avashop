@@ -1,4 +1,3 @@
-
 import LoginForm from '@/components/auth/LoginForm';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -10,12 +9,15 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-4">
-            <span className="font-bold text-3xl font-headline">AVA Shop</span>
+            <span className="font-bold text-3xl font-headline">CCS 724</span>
           </Link>
           <h2 className="text-2xl font-semibold text-foreground">¡Bienvenido de Nuevo!</h2>
           <p className="text-muted-foreground">Inicia sesión para continuar a tu cuenta.</p>
         </div>
+
+        {/* Solo formulario de email, sin pestañas */}
         <LoginForm />
+
         <div className="mt-6 text-center text-sm text-muted-foreground">
           <p className="mb-2">
             ¿No tienes una cuenta?{' '}
