@@ -71,10 +71,8 @@ export default function CartPage() {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const taxRate = 0.19;
-  const taxAmount = subtotal * taxRate;
   const shippingCost = subtotal > 200000 ? 0 : 15000;
-  const totalAmount = subtotal + taxAmount + shippingCost;
+  const totalAmount = subtotal + shippingCost;
 
   if (cartItems.length === 0) {
     return (
@@ -148,10 +146,6 @@ export default function CartPage() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
                 <span>{shippingCost === 0 ? 'Gratis' : formatColombianCurrency(shippingCost)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Impuestos (19%)</span>
-                <span>{formatColombianCurrency(taxAmount)}</span>
               </div>
               <div className="border-t pt-2 flex justify-between font-bold text-xl">
                 <span>Total</span>
