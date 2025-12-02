@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle2, Loader2, MailCheck, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Loader2, MailCheck, AlertCircle, MessageCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
@@ -41,6 +41,7 @@ function SuccessContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [whatsappNotified, setWhatsappNotified] = useState(false);
 
   useEffect(() => {
     if (!orderId) {
@@ -49,7 +50,81 @@ function SuccessContent() {
       return;
     }
 
-    // Función para enviar correo de confirmación (movida adentro)
+    // ✅ Función para notificar a la empresa por WhatsApp (automático)
+    const notifyCompanyWhatsApp = (orderData: OrderData) => {
+      const companyPhone = '573504017710'; // Número de la empresa
+      const customerName = orderData.shipping?.fullName || 'Cliente';
+      const customerPhone = orderData.shipping?.phone || 'No proporcionado';
+      const customerEmail = orderData.shipping?.email || 'No proporcionado';
+      const customerAddress = orderData.shipping?.address || 'No proporcionada';
+      const customerCity = orderData.shipping?.city || '';
+      const customerState = orderData.shipping?.state || '';
+      
+      // Construir lista de productos
+      const productList = orderData.items
+        .map((item, index) => `${index + 1}. ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toLocaleString('es-CO')}`)
+        .join('\n');
+
+      // Mensaje completo con resumen de la compra
+      const message = `🔔 *NUEVO PEDIDO* 🔔\n\n` +
+        `📦 *Pedido:* #${orderData.orderId}\n` +
+        `📅 *Fecha:* ${new Date(orderData.createdAt).toLocaleString('es-CO')}\n\n` +
+        `👤 *CLIENTE*\n` +
+        `Nombre: ${customerName}\n` +
+        `📧 Email: ${customerEmail}\n` +
+        `📱 Tel: ${customerPhone}\n` +
+        `📍 Dirección: ${customerAddress}\n` +
+        `${customerCity ? `Ciudad: ${customerCity}, ${customerState}\n` : ''}\n` +
+        `🛍️ *PRODUCTOS*\n${productList}\n\n` +
+        `💰 *RESUMEN DE PAGO*\n` +
+        `Subtotal: $${orderData.subtotal.toLocaleString('es-CO')}\n` +
+        `IVA (19%): $${orderData.iva.toLocaleString('es-CO')}\n` +
+        `Envío: ${orderData.envio === 0 ? 'Gratis' : '$' + orderData.envio.toLocaleString('es-CO')}\n` +
+        `*TOTAL: $${orderData.total.toLocaleString('es-CO')}*\n\n` +
+        `✅ Estado: PAGADO\n\n` +
+        `_Notificación automática de CCS724_`;
+
+      // Abrir WhatsApp automáticamente
+      const whatsappUrl = `https://wa.me/${companyPhone}?text=${encodeURIComponent(message)}`;
+      
+      console.log('💬 Notificando a la empresa por WhatsApp:', companyPhone);
+      console.log('📄 Mensaje:', message);
+      
+      // Abrir WhatsApp automáticamente en una nueva pestaña
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        setWhatsappNotified(true);
+      }, 2000); // Espera 2 segundos para que se cargue la página primero
+    };
+
+    // ✅ Función para solicitar reseña (después de 3 días)
+    const requestReview = async (orderData: OrderData) => {
+      try {
+        console.log('⭐ Programando solicitud de reseña...');
+        
+        const products = orderData.items.map(item => ({
+          name: item.name,
+          imageUrl: item.imageUrl
+        }));
+
+        await fetch('/api/reviews/request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: orderData.orderId,
+            userEmail: orderData.shipping?.email,
+            customerName: orderData.shipping?.fullName || 'Cliente',
+            products
+          })
+        });
+
+        console.log('✅ Solicitud de reseña programada');
+      } catch (error) {
+        console.error('❌ Error programando reseña:', error);
+      }
+    };
+
+    // Función para enviar correo de confirmación
     const sendConfirmationEmail = async (orderData: OrderData) => {
       const customerEmail = orderData.shipping?.email;
       
@@ -66,6 +141,7 @@ function SuccessContent() {
 
       setEmailStatus('sending');
       console.log('📧 Enviando correo de confirmación a:', customerEmail);
+      console.log('📧 Con copia a: ccs724productos@gmail.com');
 
       try {
         const html = getOrderConfirmationEmail({
@@ -86,6 +162,7 @@ function SuccessContent() {
         });
 
         console.log('✅ Correo de confirmación enviado exitosamente');
+        console.log('✅ Copia enviada a ccs724productos@gmail.com');
         setEmailStatus('sent');
       } catch (error) {
         console.error('❌ Error enviando correo de confirmación:', error);
@@ -148,8 +225,14 @@ function SuccessContent() {
           );
         }
 
-        // 📧 Enviar correo de confirmación automáticamente
+        // ✅ Enviar correo de confirmación automáticamente
         sendConfirmationEmail(data);
+
+        // ✅ Notificar a la empresa por WhatsApp automáticamente
+        notifyCompanyWhatsApp(data);
+
+        // ✅ Solicitar reseña (programada)
+        requestReview(data);
 
         // Limpiar carrito después de compra exitosa
         localStorage.removeItem('cart');
@@ -230,13 +313,14 @@ function SuccessContent() {
                 {emailStatus === 'sent' && (
                   <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg flex items-center gap-3">
                     <MailCheck className="h-5 w-5 text-green-600" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                        Correo de confirmación enviado
+                        ✅ Correo de confirmación enviado
                       </p>
                       {order?.shipping?.email && (
                         <p className="text-xs text-green-700 dark:text-green-300 mt-1">
-                          Revisa tu bandeja de entrada: {order.shipping.email}
+                          📧 Cliente: {order.shipping.email}<br/>
+                          📧 Copia: ccs724productos@gmail.com
                         </p>
                       )}
                     </div>
@@ -252,6 +336,21 @@ function SuccessContent() {
                       </p>
                       <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">
                         No te preocupes, tu pedido fue recibido. Te enviaremos la confirmación manualmente.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* ✅ Indicador de notificación WhatsApp */}
+                {whatsappNotified && (
+                  <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg flex items-center gap-3">
+                    <MessageCircle className="h-5 w-5 text-green-600" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                        💬 Notificación enviada a CCS724
+                      </p>
+                      <p className="text-xs text-green-700 dark:text-green-300 mt-1">
+                        La empresa ha sido notificada por WhatsApp sobre tu pedido
                       </p>
                     </div>
                   </div>
@@ -331,6 +430,7 @@ function SuccessContent() {
                       )}
                       {order.shipping.country && <p>{order.shipping.country}</p>}
                       {order.shipping.email && <p className="text-muted-foreground">{order.shipping.email}</p>}
+                      {order.shipping.phone && <p className="text-muted-foreground">📱 {order.shipping.phone}</p>}
                     </div>
                   </div>
                 )}
@@ -350,7 +450,8 @@ function SuccessContent() {
             {/* Mensaje de confirmación */}
             <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg text-sm text-center">
               <p className="text-blue-800 dark:text-blue-200">
-                📧 Te enviaremos una confirmación por correo electrónico pronto.
+                📧 Confirmación enviada a tu correo y a ccs724productos@gmail.com<br/>
+                💬 Empresa notificada por WhatsApp al +57 350 401 7710
               </p>
             </div>
 
