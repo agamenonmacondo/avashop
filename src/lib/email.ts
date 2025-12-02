@@ -116,7 +116,7 @@ export function getOrderConfirmationEmail(orderData: {
               📧 Email: <a href="mailto:ventas@ccs724.com" style="color: #667eea; text-decoration: none;">ventas@ccs724.com</a>
             </p>
             <p style="margin: 5px 0; color: #4a5568;">
-              💬 WhatsApp: <a href="https://wa.me/573001234567" style="color: #25D366; text-decoration: none;">+57 300 123 4567</a>
+              💬 WhatsApp: <a href="https://wa.me/573504017710" style="color: #25D366; text-decoration: none;">+57 350 401 7710</a>
             </p>
           </div>
           

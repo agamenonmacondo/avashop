@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Loader2, Package, MapPin, CreditCard } from 'lucide-react';
+import { ChevronLeft, Loader2, Package, MapPin, CreditCard, Truck, Calendar, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { getSupabase } from '@/lib/supabaseClient';
@@ -26,6 +26,7 @@ interface Order {
   status: string;
   payment_status: string;
   created_at: string;
+  paid_at: string | null;
   user_email: string;
   shipping_details: any;
   items: OrderItem[];
@@ -33,15 +34,16 @@ interface Order {
 
 export default function OrderDetailPage() {
   const params = useParams();
-  const router = useRouter();
-  const orderId = params.order_id as string;
+  const orderId = params?.order_id as string;
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadOrderDetail();
+    if (orderId) {
+      loadOrderDetail();
+    }
   }, [orderId]);
 
   const loadOrderDetail = async () => {
@@ -56,9 +58,6 @@ export default function OrderDetailPage() {
         return;
       }
 
-      console.log('🔍 Cargando detalle de orden:', orderId);
-
-      // Obtener la orden - CORREGIDO: usando los nombres de columna correctos
       const { data: orderData, error: orderError } = await supabase
         .from('orders')
         .select(`
@@ -78,25 +77,19 @@ export default function OrderDetailPage() {
         .single();
 
       if (orderError) {
-        console.error('❌ Error cargando orden:', orderError);
         setError('Orden no encontrada');
         setLoading(false);
         return;
       }
 
-      console.log('✅ Orden encontrada:', orderData);
-
-      // Obtener items de la orden - CORREGIDO: nombres de columna correctos
       const { data: items, error: itemsError } = await supabase
         .from('order_items')
         .select('product_id, product_name, quantity, price, image_url, created_at')
         .eq('order_id', orderId);
 
       if (itemsError) {
-        console.error('❌ Error cargando items:', itemsError);
+        console.error('Error cargando items:', itemsError);
       }
-
-      console.log('📦 Items encontrados:', items?.length || 0, items);
 
       setOrder({ 
         ...orderData,
@@ -104,7 +97,6 @@ export default function OrderDetailPage() {
       });
       setLoading(false);
     } catch (err: any) {
-      console.error('❌ Error general:', err);
       setError(err.message || 'Error al cargar el pedido');
       setLoading(false);
     }
@@ -118,14 +110,20 @@ export default function OrderDetailPage() {
     }).format(amount);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-CO', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'Fecha no disponible';
+    
+    try {
+      return new Date(dateString).toLocaleDateString('es-CO', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } catch (e) {
+      return 'Fecha inválida';
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -140,18 +138,35 @@ export default function OrderDetailPage() {
     const config = statusConfig[status] || statusConfig.pending;
 
     return (
-      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${config.className}`}>
+      <span className={`px-4 py-2 rounded-full text-base font-semibold ${config.className}`}>
         {config.label}
       </span>
     );
+  };
+
+  const getEstimatedDelivery = () => {
+    if (!order?.created_at) return 'Por confirmar';
+    
+    try {
+      const orderDate = new Date(order.created_at);
+      const minDays = new Date(orderDate);
+      minDays.setDate(minDays.getDate() + 3);
+      
+      const maxDays = new Date(orderDate);
+      maxDays.setDate(maxDays.getDate() + 5);
+      
+      return `${minDays.toLocaleDateString('es-CO', { month: 'short', day: 'numeric' })} - ${maxDays.toLocaleDateString('es-CO', { month: 'short', day: 'numeric' })}`;
+    } catch (e) {
+      return 'Por confirmar';
+    }
   };
 
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">Cargando detalle del pedido...</p>
+          <Loader2 className="h-16 w-16 animate-spin mx-auto mb-6 text-primary" />
+          <p className="text-lg text-muted-foreground">Cargando detalle del pedido...</p>
         </div>
       </div>
     );
@@ -162,9 +177,9 @@ export default function OrderDetailPage() {
       <div className="container mx-auto px-4 py-12">
         <Card className="max-w-md mx-auto">
           <CardContent className="pt-6 text-center">
-            <Package className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <p className="text-red-600 mb-4">{error || 'Pedido no encontrado'}</p>
-            <Button asChild>
+            <Package className="h-20 w-20 mx-auto mb-6 text-muted-foreground" />
+            <p className="text-lg text-red-600 mb-6">{error || 'Pedido no encontrado'}</p>
+            <Button asChild size="lg">
               <Link href="/account/orders">Volver a Pedidos</Link>
             </Button>
           </CardContent>
@@ -175,29 +190,29 @@ export default function OrderDetailPage() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-      <Button variant="ghost" asChild className="mb-6">
+      <Button variant="ghost" asChild className="mb-6 text-base">
         <Link href="/account/orders">
-          <ChevronLeft className="mr-2 h-4 w-4" /> Volver a Mis Pedidos
+          <ChevronLeft className="mr-2 h-5 w-5" /> Volver a Mis Pedidos
         </Link>
       </Button>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto space-y-6">
         {/* Header del pedido */}
-        <Card className="mb-6">
+        <Card>
           <CardHeader>
             <div className="flex justify-between items-start flex-wrap gap-4">
               <div>
-                <CardTitle className="text-2xl flex items-center gap-2">
-                  <Package className="h-6 w-6" />
+                <CardTitle className="text-3xl md:text-4xl flex items-center gap-3">
+                  <Package className="h-8 w-8" />
                   Pedido #{order.order_id}
                 </CardTitle>
-                <CardDescription className="mt-2">
+                <CardDescription className="mt-3 text-base">
                   Realizado el {formatDate(order.created_at)}
                 </CardDescription>
               </div>
               <div className="text-right">
                 {getStatusBadge(order.payment_status)}
-                <p className="text-2xl font-bold mt-2">
+                <p className="text-3xl md:text-4xl font-bold mt-3">
                   {formatCurrency(order.total_amount)}
                 </p>
               </div>
@@ -205,37 +220,117 @@ export default function OrderDetailPage() {
           </CardHeader>
         </Card>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        {/* Estado y Tracking */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl md:text-2xl flex items-center gap-2">
+              <Truck className="h-6 w-6" />
+              Estado del Pedido
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              {/* Timeline del pedido */}
+              <div className="flex items-start gap-4">
+                <div className="flex flex-col items-center">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    order.payment_status === 'approved' || order.payment_status === 'paid' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-gray-300 text-gray-600'
+                  }`}>
+                    <CheckCircle className="h-6 w-6" />
+                  </div>
+                  <div className="w-0.5 h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 pt-1">
+                  <p className="font-semibold text-lg">Pedido Confirmado</p>
+                  <p className="text-base text-muted-foreground mt-1">
+                    {formatDate(order.created_at)}
+                  </p>
+                  {order.paid_at && (
+                    <p className="text-base text-green-600 mt-2 font-medium">
+                      ✓ Pago confirmado el {formatDate(order.paid_at)}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-300 text-gray-600">
+                    <Truck className="h-6 w-6" />
+                  </div>
+                  <div className="w-0.5 h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 pt-1">
+                  <p className="font-semibold text-lg">En Proceso</p>
+                  <p className="text-base text-muted-foreground mt-1">
+                    Tu pedido se está preparando para el envío
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-300 text-gray-600">
+                    <Calendar className="h-6 w-6" />
+                  </div>
+                </div>
+                <div className="flex-1 pt-1">
+                  <p className="font-semibold text-lg">Entrega Estimada</p>
+                  <p className="text-base text-muted-foreground mt-1">
+                    {getEstimatedDelivery()}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    * Según <Link href="/politica-de-envios" className="text-primary hover:underline font-medium">política de envíos</Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Información adicional */}
+            <div className="mt-6 p-5 bg-blue-50 dark:bg-blue-950 rounded-lg">
+              <p className="text-base text-blue-800 dark:text-blue-200 leading-relaxed">
+                <strong className="text-lg">ℹ️ Información importante:</strong><br />
+                Recibirás un correo electrónico cuando tu pedido sea despachado con el número de guía para rastrear tu envío.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid lg:grid-cols-2 gap-6">
           {/* Productos */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Productos ({order.items.length})</CardTitle>
+              <CardTitle className="text-xl md:text-2xl">
+                Productos ({order.items?.length || 0})
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {order.items && order.items.length > 0 ? (
                   order.items.map((item, idx) => (
-                    <div key={idx} className="flex gap-4 pb-4 border-b last:border-b-0">
+                    <div key={idx} className="flex gap-4 pb-5 border-b last:border-b-0">
                       {item.image_url && (
                         <img
                           src={item.image_url}
                           alt={item.product_name}
-                          className="w-20 h-20 object-cover rounded"
+                          className="w-24 h-24 object-cover rounded-lg"
                         />
                       )}
                       <div className="flex-1">
-                        <p className="font-semibold">{item.product_name}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-semibold text-base md:text-lg">{item.product_name}</p>
+                        <p className="text-base text-muted-foreground mt-1">
                           Cantidad: {item.quantity}
                         </p>
-                        <p className="font-semibold mt-1">
+                        <p className="font-bold text-lg md:text-xl mt-2">
                           {formatCurrency(item.price * item.quantity)}
                         </p>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-muted-foreground text-center py-4">
+                  <p className="text-base text-muted-foreground text-center py-6">
                     No hay productos disponibles
                   </p>
                 )}
@@ -247,45 +342,45 @@ export default function OrderDetailPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
+                <CardTitle className="text-xl md:text-2xl flex items-center gap-2">
+                  <MapPin className="h-6 w-6" />
                   Dirección de Envío
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {order.shipping_details ? (
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-3 text-base">
                     {order.shipping_details.fullName && (
-                      <p className="font-semibold">{order.shipping_details.fullName}</p>
+                      <p className="font-semibold text-lg">{order.shipping_details.fullName}</p>
                     )}
                     {order.shipping_details.address && (
-                      <p>{order.shipping_details.address}</p>
+                      <p className="text-base">{order.shipping_details.address}</p>
                     )}
                     {order.shipping_details.city && order.shipping_details.state && (
-                      <p>
+                      <p className="text-base">
                         {order.shipping_details.city}, {order.shipping_details.state}
                       </p>
                     )}
                     {order.shipping_details.country && (
-                      <p>{order.shipping_details.country}</p>
+                      <p className="text-base">{order.shipping_details.country}</p>
                     )}
                     {order.shipping_details.postalCode && (
-                      <p>CP: {order.shipping_details.postalCode}</p>
+                      <p className="text-base">CP: {order.shipping_details.postalCode}</p>
                     )}
-                    <Separator className="my-3" />
+                    <Separator className="my-4" />
                     {order.shipping_details.phone && (
-                      <p className="text-muted-foreground">
-                        Tel: {order.shipping_details.phone}
+                      <p className="text-base text-muted-foreground">
+                        📱 Tel: {order.shipping_details.phone}
                       </p>
                     )}
                     {order.shipping_details.email && (
-                      <p className="text-muted-foreground">
-                        Email: {order.shipping_details.email}
+                      <p className="text-base text-muted-foreground">
+                        📧 Email: {order.shipping_details.email}
                       </p>
                     )}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-base text-muted-foreground">
                     No hay información de envío disponible
                   </p>
                 )}
@@ -294,35 +389,64 @@ export default function OrderDetailPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <CreditCard className="h-5 w-5" />
+                <CardTitle className="text-xl md:text-2xl flex items-center gap-2">
+                  <CreditCard className="h-6 w-6" />
                   Resumen del Pago
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Subtotal:</span>
-                    <span>{formatCurrency(order.subtotal || order.total_amount * 0.84)}</span>
+                <div className="space-y-4 text-base">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Subtotal productos:</span>
+                    <span className="font-semibold text-lg">{formatCurrency(order.subtotal)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">IVA (19%):</span>
-                    <span>{formatCurrency(order.iva || order.total_amount * 0.16)}</span>
-                  </div>
-                  {order.shipping_cost > 0 && (
-                    <div className="flex justify-between">
+                  
+                  {order.shipping_cost > 0 ? (
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Costo de envío:</span>
+                      <span className="font-semibold text-lg">{formatCurrency(order.shipping_cost)}</span>
+                    </div>
+                  ) : (
+                    <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">Envío:</span>
-                      <span>{formatCurrency(order.shipping_cost)}</span>
+                      <span className="font-semibold text-lg text-green-600">¡Gratis! 🎉</span>
                     </div>
                   )}
-                  <Separator className="my-2" />
-                  <div className="flex justify-between font-bold text-base">
-                    <span>Total:</span>
-                    <span className="text-green-600">
+                  
+                  <Separator className="my-3" />
+                  
+                  <div className="flex justify-between items-center pt-3">
+                    <span className="font-bold text-xl">Total Pagado:</span>
+                    <span className="font-bold text-2xl md:text-3xl text-green-600">
                       {formatCurrency(order.total_amount)}
                     </span>
                   </div>
+
+                  <div className="mt-5 p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+                    <p className="text-sm md:text-base text-green-800 dark:text-green-200 text-center font-medium">
+                      ✓ Pago procesado exitosamente
+                    </p>
+                  </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Ayuda */}
+            <Card className="border-2 border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-lg md:text-xl">¿Necesitas ayuda?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-base">
+                <p className="text-muted-foreground leading-relaxed">
+                  Si tienes alguna duda sobre tu pedido, contáctanos:
+                </p>
+                <div className="space-y-2">
+                  <p className="font-semibold text-base">📧 ventas@ccs724.com</p>
+                  <p className="font-semibold text-base">💬 WhatsApp: +57 350 401 7710</p>
+                </div>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Horario de atención: Lunes a Viernes 8:00 AM - 6:00 PM
+                </p>
               </CardContent>
             </Card>
           </div>
