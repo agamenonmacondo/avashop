@@ -15,7 +15,11 @@ export interface Product {
   details?: Record<string, unknown>;
   createdAt: Date | string;
   updatedAt?: Date | string;
-  slug?: string; // Asegúrate de que esta propiedad existe
+  slug?: string;
+  
+  // ✅ NUEVOS: Datos de reseñas
+  averageRating?: number; // Promedio calculado de reseñas reales
+  totalReviews?: number;  // Total de reseñas verificadas
 }
 
 export interface Category {
@@ -33,7 +37,7 @@ export interface User {
   id: string;
   name?: string;
   email: string;
-  phone?: string; // Added phone to User type
+  phone?: string;
   avatar?: string;
   addresses?: Address[];
 }
@@ -42,7 +46,7 @@ export interface Address {
   id: string;
   street: string;
   city: string;
-  state: string; // For Colombia, this would be "Departamento"
+  state: string;
   zipCode: string;
   country: string;
   isDefault?: boolean;
@@ -50,14 +54,13 @@ export interface Address {
 
 export type OrderStatus = 'Pendiente' | 'Procesando' | 'Enviado' | 'Entregado' | 'Cancelado';
 
-
 export interface Order {
   id: string;
   userId: string;
   items: CartItem[];
-  totalAmount: number; // Prices in COP
+  totalAmount: number;
   status: OrderStatus;
-  orderDate: string; // ISO string date
+  orderDate: string;
   shippingAddress: Address;
   trackingNumber?: string;
 }

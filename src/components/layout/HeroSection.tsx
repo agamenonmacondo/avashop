@@ -29,24 +29,24 @@ const heroContent = [
         showInfo: true,
     },
     {
-        type: 'image',
-        desktop: '/images/combos/combo_1/COMPRA Y DESKTOP.jpeg',
-        mobile: '/images/combos/combo_1/COMPRA MOBILE.jpeg',
+        type: 'video',
+        desktop: '/images/combos/combo_1/PROMO DESKTOP.mp4',
+        mobile: '/images/combos/combo_1/PROMO MOBILE.mp4',
         title: 'Crea Contenido Pro',
         description: 'Selfie Sticks, Aros de Luz y Carga Magnética',
         price: '',
-        link: '/landing', // Cambiado a /landing (Combo PRO)
+        link: '/landing',
         buttonText: 'Ver Combo PRO',
         showInfo: true,
     },
     {
-        type: 'image',
-        desktop: '/images/combos/combo_1/SEGURIDAD DESKTOP.jpeg',
-        mobile: '/images/combos/combo_1/SEGURIDAD MOBILE.jpeg',
+        type: 'video',
+        desktop: '/images/combos/combo_1/CREA DESKTOP.mp4',
+        mobile: '/images/combos/combo_1/CREA MOBILE.mp4',
         title: '¡Captura tu Mejor Ángulo!',
         description: 'Kit de Creación: Selfie Stick + Aro de Luz + Carga Rápida',
         price: '',
-        link: '/landing/kit-esencial', // Cambiado a /landing/kit-esencial (Kit Esencial)
+        link: '/landing/kit-esencial',
         buttonText: 'Ver Kit Esencial',
         showInfo: true,
     }

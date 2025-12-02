@@ -2,152 +2,252 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { ShoppingCart, Share2, Minus, Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Minus, Plus } from 'lucide-react';
 import { formatColombianCurrency } from '@/lib/utils';
-import type { CartItem } from '@/types';
-import { products } from '@/lib/placeholder-data';
-import { trackViewContent, trackAddToCart } from '@/lib/meta-pixel';
+import type { Product } from '@/types';
+import type { Review, ReviewStats } from '@/types/review';
+import ReviewStatsComponent from '@/components/reviews/ReviewStats';
+import ReviewList from '@/components/reviews/ReviewList';
+import ShareProductModal from '@/components/products/ShareProductModal';
+import Image from 'next/image';
 
-export default function ProductDetailClient({ product }: { product: typeof products[number] }) {
+interface ProductDetailClientProps {
+  product: Product;
+}
+
+export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
-  const [isAdding, setIsAdding] = useState(false);
-  const [selectedImageIdx, setSelectedImageIdx] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [showShareModal, setShowShareModal] = useState(false);
+  
+  // Estado para reseñas
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewStats, setReviewStats] = useState<ReviewStats>({
+    average: 0,
+    total: 0,
+    distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+  });
+  const [loadingReviews, setLoadingReviews] = useState(true);
 
-  // Track cuando se ve el producto (solo una vez al montar)
+  // Cargar reseñas al montar el componente
   useEffect(() => {
-    trackViewContent(product.id, product.name, product.price);
-  }, [product.id, product.name, product.price]);
+    const fetchReviews = async () => {
+      try {
+        setLoadingReviews(true);
+        const response = await fetch(`/api/reviews?productId=${product.id}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setReviews(data.reviews || []);
+          setReviewStats(data.stats || {
+            average: 0,
+            total: 0,
+            distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+          });
+        }
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      } finally {
+        setLoadingReviews(false);
+      }
+    };
+
+    fetchReviews();
+  }, [product.id]);
 
   const handleAddToCart = () => {
-    setIsAdding(true);
-
     try {
       const cartData = localStorage.getItem('cart');
-      const currentCart: CartItem[] = cartData ? JSON.parse(cartData) : [];
+      const currentCart = cartData ? JSON.parse(cartData) : [];
 
-      const existingItemIndex = currentCart.findIndex(item => item.id === product.id);
+      const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
 
-      if (existingItemIndex >= 0) {
-        currentCart[existingItemIndex].quantity += quantity;
+      let updatedCart;
+      if (existingItemIndex !== -1) {
+        updatedCart = currentCart.map((item: any, index: number) =>
+          index === existingItemIndex
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
       } else {
-        const newItem: CartItem = {
-          ...product,
-          quantity,
-          stock: Number(product.stock ?? 0),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        currentCart.push(newItem);
+        updatedCart = [
+          ...currentCart,
+          {
+            ...product,
+            quantity
+          }
+        ];
       }
 
-      localStorage.setItem('cart', JSON.stringify(currentCart));
-
-      window.dispatchEvent(new StorageEvent('storage', {
-        key: 'cart',
-        newValue: JSON.stringify(currentCart),
-      }));
-
-      // Track ANTES de mostrar el toast para asegurar que se envíe
-      trackAddToCart(product.id, product.name, product.price, quantity);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      window.dispatchEvent(new Event('storage'));
 
       toast({
-        title: "¡Agregado al carrito!",
-        description: `${product.name} x${quantity}`,
+        title: '¡Producto agregado!',
+        description: `${quantity} ${product.name} agregado(s) al carrito`,
       });
 
       setTimeout(() => {
-        router.push('/checkout');
+        router.push('/cart');
       }, 500);
 
     } catch (error) {
-      console.error('Error al agregar al carrito:', error);
+      console.error('Error adding to cart:', error);
       toast({
-        title: "Error",
-        description: "No se pudo agregar el producto al carrito.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'No se pudo agregar el producto al carrito',
+        variant: 'destructive'
       });
-    } finally {
-      setIsAdding(false);
     }
   };
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="space-y-4">
-        <div className="relative aspect-square w-full overflow-hidden rounded-lg border bg-background">
-          <Image
-            src={product.imageUrls[selectedImageIdx]}
-            alt={product.name}
-            fill
-            className="object-contain p-2"
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </div>
+  // ✅ Abrir modal de compartir
+  const handleShare = () => {
+    setShowShareModal(true);
+  };
 
-        <div className="flex gap-4 overflow-x-auto pb-2">
-          {product.imageUrls.map((url, idx) => (
-            <button
-              key={idx}
-              onClick={() => setSelectedImageIdx(idx)}
-              className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-md border ${
-                selectedImageIdx === idx ? 'ring-2 ring-primary' : ''
-              }`}
-            >
+  return (
+    <>
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Galería de imágenes */}
+          <div>
+            <div className="aspect-square relative mb-4 rounded-lg overflow-hidden bg-secondary">
               <Image
-                src={url}
-                alt={`Vista ${idx + 1}`}
+                src={product.imageUrls[selectedImage]}
+                alt={product.name}
                 fill
                 className="object-cover"
+                priority
               />
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold sm:text-3xl">{product.name}</h1>
-        <p className="text-muted-foreground">{product.category.name}</p>
-
-        <div className="text-3xl font-bold text-primary">
-          {formatColombianCurrency(product.price)}
-        </div>
-
-        <p className="text-base text-muted-foreground leading-relaxed">
-          {product.description}
-        </p>
-
-        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={isAdding}
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
-            <span className="w-12 text-center font-medium">{quantity}</span>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setQuantity(Math.min(product.stock ?? 0, quantity + 1))}
-              disabled={isAdding}
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {product.imageUrls.map((url, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`aspect-square relative rounded-md overflow-hidden border-2 transition-colors ${
+                    selectedImage === index
+                      ? 'border-primary'
+                      : 'border-transparent hover:border-border'
+                  }`}
+                >
+                  <Image
+                    src={url}
+                    alt={`${product.name} ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
-          <Button onClick={handleAddToCart} className="w-full sm:w-auto" disabled={isAdding}>
-            {isAdding ? 'Agregando...' : 'Agregar al Carrito'}
-          </Button>
+          {/* Información del producto */}
+          <div className="space-y-6">
+            <div>
+              <p className="text-sm text-muted-foreground mb-2">
+                {product.category.name}
+              </p>
+              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+              <p className="text-2xl font-bold text-primary mb-4">
+                {formatColombianCurrency(product.price)}
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                {product.description}
+              </p>
+            </div>
+
+            {/* Controles de cantidad */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center border rounded-md">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="px-4 font-medium">{quantity}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setQuantity(quantity + 1)}
+                  disabled={product.stock !== undefined && quantity >= product.stock}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              {product.stock !== undefined && (
+                <span className="text-sm text-muted-foreground">
+                  {product.stock} disponibles
+                </span>
+              )}
+            </div>
+
+            {/* Botones de acción */}
+            <div className="space-y-3">
+              <Button
+                onClick={handleAddToCart}
+                size="lg"
+                className="w-full"
+                disabled={product.stock === 0}
+              >
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Agregar al Carrito
+              </Button>
+
+              <Button 
+                variant="outline" 
+                size="lg" 
+                onClick={handleShare}
+                className="w-full"
+              >
+                <Share2 className="mr-2 h-5 w-5" />
+                Compartir Producto
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Sección de reseñas */}
+        <div className="border-t pt-12">
+          <h2 className="text-2xl font-bold mb-6">Reseñas de Clientes</h2>
+          
+          {loadingReviews ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Cargando reseñas...</p>
+            </div>
+          ) : (
+            <>
+              <ReviewStatsComponent stats={reviewStats} />
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold mb-4">
+                  Opiniones Verificadas
+                </h3>
+                <ReviewList reviews={reviews} />
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </div>
+
+      {/* ✅ Modal de compartir */}
+      <ShareProductModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        product={{
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrls[0]
+        }}
+        productUrl={typeof window !== 'undefined' ? window.location.href : ''}
+      />
+    </>
   );
 }
