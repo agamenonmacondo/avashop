@@ -1,5 +1,6 @@
 import type { Product, Category, Order, User } from '@/types';
 
+
 // Updated categories based on the full product list
 // ===== CATEGORÍAS PADRE =====
 export const bellezaCategory: Category = { 
@@ -205,6 +206,7 @@ export const categories: Category[] = [
   micrófonosCategory,
   adaptadoresCategory,
 ];
+
 
 
 const now = new Date();

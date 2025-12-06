@@ -144,7 +144,7 @@ function CheckoutContent() {
 
     const fetchProfile = async () => {
       try {
-        const normalizedEmail = user.email!.toLowerCase().trim(); // ✅ Usar ! para indicar que email existe
+        const normalizedEmail = user.email!.toLowerCase().trim();
         const supabase = getSupabase();
         if (!supabase) throw new Error('Supabase not initialized');
         
@@ -166,16 +166,19 @@ function CheckoutContent() {
 
           const shippingData = {
             fullName: data.name ?? '',
-            address: addressObj.street ?? addressObj.address ?? '',
+            address: addressObj.street ?? addressObj.address ?? '', // ⚠️ PROBLEMA: puede ser "street" o "address"
             city: addressObj.city ?? '',
             state: addressObj.state ?? '',
             zipCode: addressObj.zipCode ?? '',
             country: addressObj.country ?? 'Colombia',
-            email: data.id ?? '',
+            email: data.id ?? '', // ✅ Correcto: id ES el email
             phone: data.phone ?? '',
           };
 
+          console.log('📥 [CHECKOUT] Datos cargados desde Supabase:', shippingData); // ⭐ AGREGAR LOG
           shippingForm.reset(shippingData as any);
+        } else {
+          console.log('⚠️ [CHECKOUT] No se encontró perfil para:', normalizedEmail); // ⭐ AGREGAR LOG
         }
       } catch (err) {
         console.error('fetchProfile exception', err);
@@ -213,16 +216,112 @@ function CheckoutContent() {
     }
   }, [user, isCartLoaded, authChecked, router, toast]);
 
+  // ✅ Función corregida para guardar cambios en el perfil
+  const handleSaveProfile = async () => {
+    try {
+      const isValid = await shippingForm.trigger();
+      if (!isValid) {
+        toast({
+          title: "Datos incompletos",
+          description: "Por favor completa todos los campos requeridos.",
+          variant: "destructive"
+        });
+        return false;
+      }
+
+      if (!user?.email) {
+        toast({
+          title: "Error",
+          description: "No se pudo identificar el usuario.",
+          variant: "destructive"
+        });
+        return false;
+      }
+
+      const formData = shippingForm.getValues();
+      const supabase = getSupabase();
+      if (!supabase) throw new Error('Supabase not initialized');
+
+      const normalizedEmail = user.email.toLowerCase().trim();
+
+      // ✅ Preparar datos de dirección (MISMA ESTRUCTURA que al cargar)
+      const addressData = {
+        street: formData.address, // ⭐ Usa "street" para ser consistente
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode || '',
+        country: formData.country,
+      };
+
+      console.log('💾 [CHECKOUT] Guardando en Supabase:', { normalizedEmail, addressData }); // ⭐ LOG
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: normalizedEmail,
+          name: formData.fullName,
+          phone: formData.phone || '',
+          addresses: [addressData],
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'id'
+        });
+
+      if (error) {
+        console.error('❌ [CHECKOUT] Error guardando perfil:', error);
+        toast({
+          title: "Error al guardar",
+          description: "No se pudieron guardar los cambios.",
+          variant: "destructive"
+        });
+        return false;
+      }
+
+      console.log('✅ [CHECKOUT] Perfil guardado exitosamente');
+      toast({
+        title: "✅ Perfil actualizado",
+        description: "Tus datos de envío se guardaron correctamente.",
+      });
+      return true;
+
+    } catch (err) {
+      console.error('Exception guardando perfil:', err);
+      toast({
+        title: "Error",
+        description: "Ocurrió un error al guardar.",
+        variant: "destructive"
+      });
+      return false;
+    }
+  };
+
+  // ✅ Modificar getValidatedOrderInput para guardar antes de proceder
   const getValidatedOrderInput = async () => {
     const isShippingValid = await shippingForm.trigger();
     if (!isShippingValid) {
-      toast({ title: "Información Incompleta", description: "Por favor, completa los detalles de envío correctamente.", variant: "destructive" });
+      toast({ 
+        title: "Información Incompleta", 
+        description: "Por favor, completa los detalles de envío correctamente.", 
+        variant: "destructive" 
+      });
       return null;
     }
+
     if (cartItems.length === 0) {
-      toast({ title: "Carrito Vacío", description: "Tu carrito está vacío.", variant: "destructive" });
+      toast({ 
+        title: "Carrito Vacío", 
+        description: "Tu carrito está vacío.", 
+        variant: "destructive" 
+      });
       return null;
     }
+
+    // ✅ Guardar perfil antes de proceder al pago
+    const profileSaved = await handleSaveProfile();
+    if (!profileSaved) {
+      return null;
+    }
+
     return {
       shippingDetails: shippingForm.getValues(),
       cartItems: cartItems,
@@ -513,6 +612,18 @@ function CheckoutContent() {
                   />
                 </form>
               </Form>
+              
+              {/* ✅ Botón opcional para guardar sin proceder al pago */}
+              <div className="mt-4">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={handleSaveProfile}
+                  disabled={!shippingForm.formState.isValid}
+                >
+                  💾 Guardar datos de envío
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

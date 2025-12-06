@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabaseClient';
-import type { Review, ReviewStats, CreateReviewInput } from '@/types/review';
 
 // GET /api/reviews?productId=xxx
 export async function GET(request: Request) {
@@ -45,7 +44,7 @@ export async function GET(request: Request) {
     }
 
     // Calcular estadísticas
-    const stats: ReviewStats = {
+    const stats = {
       total: reviews?.length || 0,
       average: reviews && reviews.length > 0 
         ? reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length 
@@ -76,23 +75,13 @@ export async function GET(request: Request) {
 // POST /api/reviews
 export async function POST(request: Request) {
   try {
-    const supabase = getSupabase();
-    
-    if (!supabase) {
-      return NextResponse.json(
-        { error: 'Supabase no está configurado' },
-        { status: 500 }
-      );
-    }
-
-    const body: CreateReviewInput = await request.json();
-    
-    const { order_id, product_id, rating, comment, token } = body;
+    const body = await request.json();
+    const { product_id, user_email, order_id, rating, comment, photo_url } = body;
 
     // Validar campos requeridos
-    if (!order_id || !product_id || !rating || !comment || !token) {
+    if (!product_id || !rating || !user_email) {
       return NextResponse.json(
-        { error: 'Todos los campos son requeridos' },
+        { error: 'product_id, rating y user_email son requeridos' },
         { status: 400 }
       );
     }
@@ -105,89 +94,46 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validar token
-    const { data: reviewRequest, error: tokenError } = await supabase
-      .from('review_requests')
-      .select('*')
-      .eq('token', token)
-      .eq('order_id', order_id)
-      .single();
-
-    if (tokenError || !reviewRequest) {
+    const supabase = getSupabase();
+    
+    if (!supabase) {
       return NextResponse.json(
-        { error: 'Token inválido o expirado' },
-        { status: 401 }
+        { error: 'Supabase no está configurado' },
+        { status: 500 }
       );
     }
 
-    // Verificar si el token ya fue usado
-    if (reviewRequest.is_used) {
-      return NextResponse.json(
-        { error: 'Este token ya fue utilizado' },
-        { status: 400 }
-      );
-    }
+    // Verificar si ya existe una reseña para este producto y usuario
+    if (order_id) {
+      const { data: existingReview } = await supabase
+        .from('reviews')
+        .select('id')
+        .eq('order_id', order_id)
+        .eq('product_id', product_id)
+        .single();
 
-    // Verificar si el token expiró
-    if (new Date(reviewRequest.expires_at) < new Date()) {
-      return NextResponse.json(
-        { error: 'El token ha expirado' },
-        { status: 400 }
-      );
-    }
-
-    // Obtener información de la orden
-    const { data: order, error: orderError } = await supabase
-      .from('orders')
-      .select('*, order_items(*)')
-      .eq('id', order_id)
-      .single();
-
-    if (orderError || !order) {
-      return NextResponse.json(
-        { error: 'Orden no encontrada' },
-        { status: 404 }
-      );
-    }
-
-    // Verificar que el producto esté en la orden
-    const productInOrder = order.order_items?.some(
-      (item: any) => item.product_id === product_id
-    );
-
-    if (!productInOrder) {
-      return NextResponse.json(
-        { error: 'Este producto no está en tu orden' },
-        { status: 400 }
-      );
-    }
-
-    // Verificar si ya existe una reseña
-    const { data: existingReview } = await supabase
-      .from('reviews')
-      .select('id')
-      .eq('order_id', order_id)
-      .eq('product_id', product_id)
-      .single();
-
-    if (existingReview) {
-      return NextResponse.json(
-        { error: 'Ya dejaste una reseña para este producto' },
-        { status: 400 }
-      );
+      if (existingReview) {
+        return NextResponse.json(
+          { error: 'Ya dejaste una reseña para este producto' },
+          { status: 400 }
+        );
+      }
     }
 
     // Crear la reseña
     const { data: review, error: reviewError } = await supabase
       .from('reviews')
       .insert({
-        order_id,
         product_id,
-        user_id: order.user_id,
-        user_email: reviewRequest.user_email,
+        user_email,
+        user_id: user_email,
+        order_id: order_id || null,
         rating,
-        comment,
-        is_verified: true
+        comment: comment || '',
+        photo_url: photo_url || null,
+        is_verified: !!order_id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();
@@ -199,12 +145,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-
-    // Marcar el token como usado
-    await supabase
-      .from('review_requests')
-      .update({ is_used: true })
-      .eq('id', reviewRequest.id);
 
     return NextResponse.json({ 
       success: true, 
