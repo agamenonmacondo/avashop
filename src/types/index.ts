@@ -1,32 +1,25 @@
 export interface Product {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   price: number;
   imageUrls: string[];
-  category: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-  stock?: number;
+  category: Category;
+  subcategory?: Category;
+  slug: string;
+  stock: number;
+  featured: boolean;    // ✅ Obligatorio
+  active: boolean;      // ✅ Obligatorio
   rating?: number;
   reviewsCount?: number;
-  details?: Record<string, unknown>;
   createdAt: Date | string;
-  updatedAt?: Date | string;
-  slug?: string;
-  
-  // ✅ NUEVOS: Datos de reseñas
-  averageRating?: number; // Promedio calculado de reseñas reales
-  totalReviews?: number;  // Total de reseñas verificadas
 }
 
 export interface Category {
   id: string;
   name: string;
   slug: string;
-  parentId?: string; 
+  parentId?: string;
 }
 
 export interface CartItem extends Product {
