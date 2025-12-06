@@ -12,19 +12,13 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Meta Pixel */}
       <Suspense fallback={null}>
         <MetaPixel />
       </Suspense>
-      
-      {/* Google Ads */}
       <GoogleAds />
-      
-      {/* TikTok Pixel */}
       <Suspense fallback={null}>
         <TikTokPixel />
       </Suspense>
-      
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

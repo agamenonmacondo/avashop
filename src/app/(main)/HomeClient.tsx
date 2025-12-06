@@ -16,6 +16,13 @@ interface Filters {
   priceRange: [number, number];
 }
 
+// ✅ Helper para obtener timestamp de forma segura
+const getTimestamp = (date: Date | string | undefined): number => {
+  if (!date) return 0;
+  if (date instanceof Date) return date.getTime();
+  return new Date(date).getTime();
+};
+
 export default function HomeClient() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
   const [currentFilters, setCurrentFilters] = useState<Filters>({ 
@@ -52,8 +59,9 @@ export default function HomeClient() {
         break;
       case 'newest': 
         tempProducts.sort((a, b) => {
-          const aTime = a.createdAt instanceof Date ? a.createdAt.getTime() : new Date(a.createdAt).getTime();
-          const bTime = b.createdAt instanceof Date ? b.createdAt.getTime() : new Date(b.createdAt).getTime();
+          // ✅ Usar helper para manejar undefined
+          const aTime = getTimestamp(a.createdAt);
+          const bTime = getTimestamp(b.createdAt);
           return bTime - aTime;
         }); 
         break;

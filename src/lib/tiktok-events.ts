@@ -27,47 +27,28 @@ export interface TikTokEventParams {
 }
 
 /**
- * Declaración de tipos global para TikTok Pixel
- */
-declare global {
-  interface Window {
-    ttq: {
-      track: (eventName: string, params?: Record<string, any>) => void;
-      page: () => void;
-      load: (pixelId: string, options?: Record<string, any>) => void;
-      identify: (userData?: Record<string, any>) => void;
-    };
-  }
-}
-
-/**
  * Función para rastrear eventos de TikTok
  */
 export const trackTikTokEvent = (
   eventName: TikTokEventName,
   params?: TikTokEventParams
 ): void => {
-  if (typeof window === 'undefined') {
-    console.warn('⚠️ trackTikTokEvent llamado en servidor');
-    return;
-  }
+  if (typeof window === 'undefined') return;
 
-  if (!window.ttq) {
+  const ttq = (window as any).ttq;
+  if (!ttq) {
     console.warn('⚠️ TikTok Pixel no inicializado');
     return;
   }
 
   try {
-    window.ttq.track(eventName, params);
+    ttq.track(eventName, params);
     console.log(`📊 TikTok Event: ${eventName}`, params);
   } catch (error) {
     console.error('❌ Error al rastrear evento de TikTok:', error);
   }
 };
 
-/**
- * Helper: Vista de producto
- */
 export const trackProductView = (product: {
   id: string;
   name: string;
@@ -84,9 +65,6 @@ export const trackProductView = (product: {
   });
 };
 
-/**
- * Helper: Agregar al carrito
- */
 export const trackAddToCart = (product: {
   id: string;
   name: string;
@@ -103,9 +81,6 @@ export const trackAddToCart = (product: {
   });
 };
 
-/**
- * Helper: Iniciar checkout
- */
 export const trackCheckout = (cart: {
   total: number;
   itemCount: number;
@@ -118,9 +93,6 @@ export const trackCheckout = (cart: {
   });
 };
 
-/**
- * Helper: Compra completada
- */
 export const trackPurchase = (order: {
   orderId: string;
   total: number;
@@ -135,9 +107,6 @@ export const trackPurchase = (order: {
   });
 };
 
-/**
- * Helper: Búsqueda
- */
 export const trackSearch = (query: string): void => {
   trackTikTokEvent('Search', {
     query,

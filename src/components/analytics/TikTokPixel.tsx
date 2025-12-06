@@ -5,32 +5,12 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || 'D4PSQJJC77UCR38FRVEG';
 
-// Declaración de tipos global ANTES del componente
-declare global {
-  interface Window {
-    ttq: {
-      track: (eventName: string, params?: Record<string, any>) => void;
-      page: () => void;
-      load: (pixelId: string, options?: Record<string, any>) => void;
-      identify: (userData?: Record<string, any>) => void;
-      enableCookie: () => void;
-      disableCookie: () => void;
-    };
-    TiktokAnalyticsObject: string;
-  }
-}
-
 export default function TikTokPixel() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Inicializar TikTok Pixel
   useEffect(() => {
-    // Verificar si ya está inicializado
-    if (typeof window !== 'undefined' && window.ttq) {
-      console.log('✅ TikTok Pixel ya inicializado');
-      return;
-    }
+    if ((window as any).ttq) return;
 
     const script = document.createElement('script');
     script.innerHTML = `
@@ -44,20 +24,13 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
     `;
     
     document.head.appendChild(script);
-    console.log('✅ TikTok Pixel inicializado con ID:', TIKTOK_PIXEL_ID);
-
-    return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
+    console.log('✅ TikTok Pixel inicializado');
   }, []);
 
-  // Rastrear cambios de página
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.ttq) {
-      window.ttq.page();
-      console.log('📄 TikTok PageView:', pathname);
+    const ttq = (window as any).ttq;
+    if (ttq) {
+      ttq.page();
     }
   }, [pathname, searchParams]);
 
