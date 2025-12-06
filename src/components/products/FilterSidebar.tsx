@@ -55,13 +55,13 @@ export default function FilterSidebar({
 
   const categoryGroups = groupCategories(categories);
 
-  // 🔍 DEBUG: Ver qué tienen los productos
-  console.log('Products received:', products.slice(0, 2).map(p => ({
-    id: p.id,
-    name: p.name,
-    category: p.category,
-    categoryType: typeof p.category
-  })));
+  // ❌ ELIMINAR O COMENTAR ESTA LÍNEA:
+  // console.log('Products received:', products.slice(0, 2).map(p => ({
+  //   id: p.id,
+  //   name: p.name,
+  //   category: p.category,
+  //   categoryType: typeof p.category
+  // })));
 
   // Calcular el rango de precios real de los productos mostrados
   const productPrices = products.map(p => p.price);

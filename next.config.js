@@ -12,15 +12,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'via.placeholder.com', port: '', pathname: '/**' },
     ],
   },
-  allowedDevOrigins: [
-    'http://localhost:9004',
-    'http://192.168.0.6:9004',
-  ],
+  allowedDevOrigins: ['192.168.0.6'],
 };
 
-const path = require('path');
-
-module.exports = {
-  ...nextConfig,
-  outputFileTracingRoot: path.join(__dirname),
-};
+module.exports = nextConfig;
