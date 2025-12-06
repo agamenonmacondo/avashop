@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next';
+import { products } from '@/lib/placeholder-data';
 
 const baseUrl = 'https://www.ccs724.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -47,4 +48,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
   ];
+
+  // ✅ Agregar URLs de productos dinámicamente desde placeholder-data
+  const productPages: MetadataRoute.Sitemap = products.map((product) => ({
+    url: `${baseUrl}/products/${product.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...productPages];
 }

@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
+// ✅ No hay más llamadas async a Supabase
 export default function HomePage() {
   return <HomeClient />;
 }
