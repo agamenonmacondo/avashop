@@ -217,7 +217,7 @@ export const products: Product[] = [
     id: "remax-km-03",
     name: "KM-03 Estabilizador Gimbal de 3 Ejes para Celular con Seguimiento Facial y Control Remoto",
     description: "El KM-03 es un estabilizador gimbal de 3 ejes diseñado para celulares, equipado con tecnología de seguimiento facial y control remoto. Ideal para capturar momentos especiales con gran estabilidad y nitidez. Su diseño ergonómico y ligero permite un manejo cómodo y prolongado. Compatible con la mayoría de los modelos de celulares del mercado. Características principales: estabilización de 3 ejes para una máxima estabilidad, seguimiento facial para capturar los mejores momentos, control remoto para una mayor comodidad. Materiales de alta calidad y durabilidad. Uso recomendado para grabaciones de video, sesiones de fotos y cualquier aplicación que requiera estabilidad y precisión.",
-    price: 403200,
+    price: 350000,
     imageUrls: [
       "/images/remax/002_KM-03.png",
       "/images/remax/003_KM-03.png"
