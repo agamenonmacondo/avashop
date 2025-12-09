@@ -29,7 +29,12 @@ export const metadata: Metadata = {
     url: 'https://www.ccs724.com',
     siteName: 'CCS724',
     images: [
-      'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
+      {
+        url: 'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
+        width: 1200,
+        height: 630,
+        alt: 'CCS724 Logo',
+      },
     ],
     locale: 'es_ES',
     type: 'website',
@@ -38,27 +43,25 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
-    images: [
-      'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
-    ],
+    images: ['https://www.ccs724.com/images/AVALOGO/logo_ccs.png'],
   },
   icons: {
     icon: [
-      { url: '/images/favicon.ico?v=2', sizes: 'any' },
-      { url: '/images/favicon.svg?v=2', type: 'image/svg+xml' },
-      { url: '/images/favicon-96x96.png?v=2', type: 'image/png', sizes: '96x96' },
+      { url: '/images/favicon.ico', sizes: 'any' },
+      { url: '/images/favicon.svg', type: 'image/svg+xml' },
+      { url: '/images/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
     apple: [
-      { url: '/images/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'manifest',
-        url: '/images/site.webmanifest',
-      },
+      { url: '/images/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
   manifest: '/images/site.webmanifest',
+  applicationName: 'CCS724',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'CCS724',
+  },
 };
 
 export default function RootLayout({
@@ -70,6 +73,11 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#000000" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="CCS724" />
+        
         <Script 
           src="https://checkout.bold.co/library/boldPaymentButton.js" 
           strategy="beforeInteractive"

@@ -13,14 +13,8 @@ export const metadata: Metadata = {
     url: 'https://www.ccs724.com',
     siteName: 'CCS724',
   },
-  icons: {
-    icon: '/images/AVALOGO/logo_ccs.png?v=2',
-    shortcut: '/images/AVALOGO/logo_ccs.png?v=2',
-    apple: '/images/AVALOGO/logo_ccs.png?v=2',
-  },
 };
 
-// ✅ No hay más llamadas async a Supabase
 export default function HomePage() {
   return <HomeClient />;
 }
