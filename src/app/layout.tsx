@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: 'CCS724',
     images: [
       {
-        url: 'https://www.ccs724.com/images/AVALOGO/logo_ccs.png',
+        url: 'https://www.ccs724.com/images/AVALOGO/ccs724_logo_transparent.png',
         width: 1200,
         height: 630,
         alt: 'CCS724 Logo',
@@ -43,19 +43,20 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CCS724',
     description: 'Tienda online de teléfonos, accesorios y MacBooks.',
-    images: ['https://www.ccs724.com/images/AVALOGO/logo_ccs.png'],
+    images: ['https://www.ccs724.com/images/AVALOGO/ccs724_logo_transparent.png'],
   },
   icons: {
     icon: [
-      { url: '/images/favicon.ico', sizes: 'any' },
-      { url: '/images/favicon.svg', type: 'image/svg+xml' },
-      { url: '/images/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
+    shortcut: '/favicon.ico',
     apple: [
-      { url: '/images/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
-  manifest: '/images/site.webmanifest',
+  manifest: '/site.webmanifest',
   applicationName: 'CCS724',
   appleWebApp: {
     capable: true,
@@ -72,6 +73,10 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        
         <meta name="theme-color" content="#000000" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
