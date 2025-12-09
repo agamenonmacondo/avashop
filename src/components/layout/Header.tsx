@@ -8,13 +8,20 @@ import UserNav from './UserNav';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // Selecciona el logo según el modo
+  // Evitar hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Selecciona el logo según el modo (solo después de montar)
   const logoSrc =
-    resolvedTheme === 'dark'
+    mounted && resolvedTheme === 'dark'
       ? '/images/AVALOGO/ccs724_logo_yellow_transparent.png'
       : '/images/AVALOGO/ccs724_logo_transparent.png';
 
@@ -46,8 +53,15 @@ export default function Header() {
                       priority
                     />
                   </Link>
-                  <Link href="/landing" className="text-base hover:underline">Combo Pro</Link>
-                  <Link href="/landing/kit-esencial" className="text-base hover:underline">Kit Esencial</Link>
+                  <Link href="/landing" className="text-base hover:underline">
+                    Combo Pro
+                  </Link>
+                  <Link
+                    href="/landing/kit-esencial"
+                    className="text-base hover:underline"
+                  >
+                    Kit Esencial
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -65,12 +79,20 @@ export default function Header() {
               height={200}
               className="object-contain"
               priority
+              key={logoSrc} // Forzar re-render cuando cambia el logo
             />
           </Link>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/landing" className="hover:underline">Combo Pro</Link>
-            <Link href="/landing/kit-esencial" className="hover:underline">Kit Esencial</Link>
+            <Link href="/landing" className="hover:underline">
+              Combo Pro
+            </Link>
+            <Link
+              href="/landing/kit-esencial"
+              className="hover:underline"
+            >
+              Kit Esencial
+            </Link>
           </nav>
         </div>
 
