@@ -7,8 +7,17 @@ import { Button } from '@/components/ui/button';
 import UserNav from './UserNav';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useTheme } from 'next-themes';
 
 export default function Header() {
+  const { resolvedTheme } = useTheme();
+
+  // Selecciona el logo según el modo
+  const logoSrc =
+    resolvedTheme === 'dark'
+      ? '/images/AVALOGO/ccs724_logo_yellow_transparent.png'
+      : '/images/AVALOGO/ccs724_logo_transparent.png';
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
@@ -30,17 +39,14 @@ export default function Header() {
                     className="flex items-center gap-2 text-lg font-semibold -ml-2"
                   >
                     <Image
-                      src="/images/AVALOGO/logo_ccs.png"
+                      src={logoSrc}
                       alt="CCS724 Logo"
                       width={56}
                       height={56}
                       priority
                     />
                   </Link>
-
-                  {/* Enlace Combo Pro en menú móvil */}
                   <Link href="/landing" className="text-base hover:underline">Combo Pro</Link>
-                  {/* Enlace Kit Esencial en menú móvil */}
                   <Link href="/landing/kit-esencial" className="text-base hover:underline">Kit Esencial</Link>
                 </nav>
               </SheetContent>
@@ -52,9 +58,8 @@ export default function Header() {
             href="/"
             className="mr-6 hidden md:flex items-center gap-3"
           >
-            {/* CCS724 como logo principal, más grande */}
             <Image
-              src="/images/AVALOGO/logo_ccs.png"
+              src={logoSrc}
               alt="CCS724 Logo"
               width={200}
               height={200}
@@ -64,16 +69,13 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {/* Enlace Combo Pro */}
             <Link href="/landing" className="hover:underline">Combo Pro</Link>
-            {/* Enlace Kit Esencial */}
             <Link href="/landing/kit-esencial" className="hover:underline">Kit Esencial</Link>
           </nav>
         </div>
 
         {/* Right container for actions */}
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-          {/* Barra de búsqueda ELIMINADA */}
           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart" aria-label="Carrito de Compras">
