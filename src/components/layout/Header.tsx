@@ -48,9 +48,11 @@ export default function Header() {
                     <Image
                       src={logoSrc}
                       alt="CCS724 Logo"
-                      width={56}
-                      height={56}
+                      width={120}
+                      height={120}
+                      className="object-contain"
                       priority
+                      key={`mobile-${logoSrc}`}
                     />
                   </Link>
                   <Link href="/landing" className="text-base hover:underline">
@@ -67,6 +69,22 @@ export default function Header() {
             </Sheet>
           </div>
 
+          {/* Mobile Logo (visible solo en mobile) */}
+          <Link
+            href="/"
+            className="md:hidden flex items-center"
+          >
+            <Image
+              src={logoSrc}
+              alt="CCS724 Logo"
+              width={140}
+              height={140}
+              className="object-contain h-10 w-auto"
+              priority
+              key={`header-mobile-${logoSrc}`}
+            />
+          </Link>
+
           {/* Desktop Logo & Nav */}
           <Link
             href="/"
@@ -79,7 +97,7 @@ export default function Header() {
               height={200}
               className="object-contain"
               priority
-              key={logoSrc} // Forzar re-render cuando cambia el logo
+              key={`desktop-${logoSrc}`}
             />
           </Link>
 
