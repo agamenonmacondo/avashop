@@ -222,7 +222,7 @@ export const products: Product[] = [
       "/images/remax/002_KM-03.png",
       "/images/remax/003_KM-03.png"
     ],
-    category: micrófonosCategory,
+    category: soportesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -240,7 +240,7 @@ export const products: Product[] = [
       "/images/remax/005_KGB-302.png",
       "/images/remax/006_KGB-302.png"
     ],
-    category: cablesCategory,
+    category: soportesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -258,7 +258,7 @@ export const products: Product[] = [
       "/images/remax/008_KM-01.png",
       "/images/remax/009_KM-01.png"
     ],
-    category: cablesCategory,
+    category: soportesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,

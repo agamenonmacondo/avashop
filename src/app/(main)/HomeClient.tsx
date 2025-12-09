@@ -1,14 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import ProductList from '@/components/products/ProductList';
-import FilterSidebar from '@/components/products/FilterSidebar';
+import CategoryFilter from '@/components/products/CategoryFilter';
 import { products as allProducts, categories } from '@/lib/placeholder-data';
 import type { Product } from '@/types';
 import HeroSection from '@/components/layout/HeroSection';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { SlidersHorizontal } from 'lucide-react';
 
 // Definir tipos para los filtros
 interface Filters {
@@ -24,29 +21,37 @@ const getTimestamp = (date: Date | string | undefined): number => {
 };
 
 export default function HomeClient() {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
-  const [currentFilters, setCurrentFilters] = useState<Filters>({ 
-    categories: [], 
-    priceRange: [0, 800000] 
-  });
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentSortKey, setCurrentSortKey] = useState('relevance');
+
+  // Calcular productos por categoría
+  const productsCount = useMemo(() => {
+    const counts: Record<string, number> = {};
+    
+    categories.forEach(category => {
+      counts[category.id] = allProducts.filter(product => 
+        product.category?.id === category.id || 
+        product.subcategory?.id === category.id
+      ).length;
+    });
+    
+    return counts;
+  }, []);
 
   const applyFiltersAndSort = useCallback(() => {
     let tempProducts = [...allProducts];
 
-    if (currentFilters.categories.length > 0) {
+    // Filtrar por categoría seleccionada (del CategoryFilter)
+    if (selectedCategory) {
       tempProducts = tempProducts.filter(product => {
         const categoryId = product.category?.id;
         const subcategoryId = product.subcategory?.id;
-        return currentFilters.categories.includes(categoryId) ||
-               (subcategoryId && currentFilters.categories.includes(subcategoryId));
+        return categoryId === selectedCategory || subcategoryId === selectedCategory;
       });
     }
-
-    tempProducts = tempProducts.filter(product => 
-      product.price >= currentFilters.priceRange[0] && product.price <= currentFilters.priceRange[1]
-    );
     
+    // Ordenar
     switch (currentSortKey) {
       case 'price-asc':
         tempProducts.sort((a, b) => a.price - b.price);
@@ -59,7 +64,6 @@ export default function HomeClient() {
         break;
       case 'newest': 
         tempProducts.sort((a, b) => {
-          // ✅ Usar helper para manejar undefined
           const aTime = getTimestamp(a.createdAt);
           const bTime = getTimestamp(b.createdAt);
           return bTime - aTime;
@@ -71,57 +75,48 @@ export default function HomeClient() {
     }
 
     setFilteredProducts(tempProducts);
-  }, [currentFilters, currentSortKey]);
+  }, [selectedCategory, currentSortKey]);
 
   useEffect(() => {
     applyFiltersAndSort();
   }, [applyFiltersAndSort]);
 
-  const handleFilterChange = (newFilters: Filters) => {
-    setCurrentFilters(newFilters);
-  };
-
-  const handleSortChange = (sortKey: string) => {
-    setCurrentSortKey(sortKey);
-  };
-  
-  const filterProps = {
-    categories: categories, 
-    onFilterChange: handleFilterChange,
-    onSortChange: handleSortChange,
-    maxPrice: 800000, 
-    priceStep: 100000,
+  const handleCategorySelect = (categoryId: string | null) => {
+    setSelectedCategory(categoryId);
   };
 
   return (
     <>
       <HeroSection />
+      
+      {/* Filtro Interactivo de Categorías */}
+      <section className="py-12 bg-secondary/20">
+        <div className="container mx-auto px-4 md:px-6">
+          <CategoryFilter 
+            categories={categories}
+            onCategorySelect={handleCategorySelect}
+            selectedCategory={selectedCategory}
+            productsCount={productsCount}
+          />
+        </div>
+      </section>
+
+      {/* Productos - Ahora ocupando todo el ancho */}
       <section id="products" className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row gap-8">
-            <aside className="hidden md:block w-full md:w-1/4 lg:w-1/5">
-              <FilterSidebar {...filterProps} />
-            </aside>
-            <div className="w-full md:w-3/4 lg:w-4/5">
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-bold font-headline">Nuestros Productos</h2>
-                <div className="md:hidden">
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button variant="outline">
-                        <SlidersHorizontal className="mr-2 h-4 w-4" />
-                        Filtrar
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent side="left" className="w-3/4">
-                      <FilterSidebar {...filterProps} />
-                    </SheetContent>
-                  </Sheet>
-                </div>
-              </div>
-              <ProductList products={filteredProducts} />
-            </div>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold font-headline">
+              {selectedCategory 
+                ? categories.find(c => c.id === selectedCategory)?.name 
+                : 'Nuestros Productos'}
+            </h2>
+            <p className="text-muted-foreground mt-1">
+              {filteredProducts.length} productos encontrados
+            </p>
           </div>
+          
+          {/* ProductList ahora ocupa todo el ancho disponible */}
+          <ProductList products={filteredProducts} />
         </div>
       </section>
     </>
