@@ -1685,7 +1685,7 @@ export const products: Product[] = [
     description: "Cable USB C diseñado para ofrecer carga rápida PD de hasta 100W, compatible con dispositivos iPhone, iPad y MacBook. Fabricado con materiales de alta calidad, este cable garantiza una conexión estable y segura para la transferencia de datos y carga de dispositivos. Su diseño robusto y duradero asegura un uso prolongado sin comprometer su rendimiento. Ideal para aquellos que buscan una solución de carga rápida y eficiente para sus dispositivos compatibles. El cable es fácil de usar y no requiere configuración adicional, simplemente conéctalo a tu dispositivo y comienza a cargar.",
     price: 34020,
     imageUrls: [
-      "/images/remax/223_RC-175.png",
+      
       "/images/remax/224_RC-175.png",
       "/images/remax/225_RC-175.png",
       "/images/remax/226_RC-175.png"
