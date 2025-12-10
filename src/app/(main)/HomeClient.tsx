@@ -23,6 +23,112 @@ const getTimestamp = (date: Date | string | undefined): number => {
   return new Date(date).getTime();
 };
 
+// ✅ Función centralizada para obtener imagen de banner por categoría
+const getBannerImageByCategory = (categoryId: string, categoryName: string, parentId?: string): string | null => {
+  // Mapeo de banners principales
+  const mainCategoryImages: Record<string, string> = {
+    'accesorios': '/images/banners/banner acesosrios.jpeg',
+    'belleza': '/images/banners/banner belleza.jpeg',
+  };
+
+  // Normalizar nombre para búsqueda
+  const normalizedName = categoryName.toLowerCase().trim();
+
+  // Mapeo COMPLETO basado en nombre de categoría
+  const imagesByName: Record<string, string> = {
+    // ===== BELLEZA =====
+    'limpiadores': '/images/banners/banner limpiadores.jpeg',
+    'hidratantes': '/images/banners/BANNER HIDRATANTES.jpeg',
+    'mascarillas': '/images/banners/BANNER MASCARILLAS.jpeg',
+    'protectores solares': '/images/banners/BANNER PROTECTORES SOLARES.jpeg',
+    'bálsamos labiales': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
+    'balsamos labiales': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
+    'exfoliantes': '/images/banners/BANNER EXFOLIANTES.jpeg',
+    'aceites faciales': '/images/banners/BANNER ACEITES  FACIALES.jpeg',
+    'cremas faciales': '/images/banners/BANNER CREMAS FACIALES.jpeg',
+    'sets de belleza': '/images/banners/BANNER SET DE BELLEZA.jpeg',
+    'set de belleza': '/images/banners/BANNER SET DE BELLEZA.jpeg',
+    'cremas de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
+    'crema de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
+    'lociones': '/images/banners/BANNER LOCION.jpeg',
+    'loción': '/images/banners/BANNER LOCION.jpeg',
+    'locion': '/images/banners/BANNER LOCION.jpeg',
+    'sérum': '/images/banners/BANNER SERUM.jpeg',
+    'serum': '/images/banners/BANNER SERUM.jpeg',
+    'sérums': '/images/banners/BANNER SERUM.jpeg',
+    
+    // ===== ACCESORIOS =====
+    'auriculares': '/images/banners/BANNER AURICULARES.jpeg',
+    'cargadores': '/images/banners/BANNER CARGADORES.jpeg',
+    'cables': '/images/banners/BANNER CABLES.jpeg',
+    'soportes': '/images/banners/BANNER SOPORTES.jpeg',
+    'soporte': '/images/banners/BANNER SOPORTES.jpeg',
+    'power banks': '/images/banners/BANNER POWERBANKS.jpeg',
+    'powerbanks': '/images/banners/BANNER POWERBANKS.jpeg',
+    'powerbank': '/images/banners/BANNER POWERBANKS.jpeg',
+    'power bank': '/images/banners/BANNER POWERBANKS.jpeg',
+    'adaptadores': '/images/banners/BANNER ADPATDORES.jpeg',
+    'adaptador': '/images/banners/BANNER ADPATDORES.jpeg',
+    'hubs': '/images/banners/BANNER HUBS.jpeg',
+    'hub': '/images/banners/BANNER HUBS.jpeg',
+    'altavoces': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'altavoz': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'parlantes': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'parlante': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'bocinas': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'bocina': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'speaker': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'speakers': '/images/banners/BANNER ALTAVOCES.jpeg',
+    'micrófonos': '/images/banners/BANNER MICROFONOS.jpeg',
+    'microfonos': '/images/banners/BANNER MICROFONOS.jpeg',
+    'micrófono': '/images/banners/BANNER MICROFONOS.jpeg',
+    'microfono': '/images/banners/BANNER MICROFONOS.jpeg',
+    'teclados': '/images/banners/BANNER TECLADOS.jpeg',
+    'teclado': '/images/banners/BANNER TECLADOS.jpeg',
+    'smartwatches': '/images/banners/BANNER SMART WACHT.jpeg',
+    'smartwatch': '/images/banners/BANNER SMART WACHT.jpeg',
+    'smart watch': '/images/banners/BANNER SMART WACHT.jpeg',
+    'relojes inteligentes': '/images/banners/BANNER SMART WACHT.jpeg',
+    'reloj inteligente': '/images/banners/BANNER SMART WACHT.jpeg',
+  };
+
+  // Si es categoría principal
+  if (!parentId && mainCategoryImages[categoryId]) {
+    return mainCategoryImages[categoryId];
+  }
+
+  // Buscar por nombre exacto
+  if (imagesByName[normalizedName]) {
+    console.log(`✅ Imagen encontrada por nombre exacto: "${normalizedName}" -> ${imagesByName[normalizedName]}`);
+    return imagesByName[normalizedName];
+  }
+
+  // Buscar por coincidencia parcial (el nombre contiene la clave)
+  for (const [key, image] of Object.entries(imagesByName)) {
+    if (normalizedName.includes(key)) {
+      console.log(`✅ Imagen encontrada por coincidencia parcial: "${normalizedName}" incluye "${key}" -> ${image}`);
+      return image;
+    }
+  }
+
+  // Buscar por coincidencia inversa (la clave contiene el nombre)
+  for (const [key, image] of Object.entries(imagesByName)) {
+    if (key.includes(normalizedName) && normalizedName.length > 3) {
+      console.log(`✅ Imagen encontrada por coincidencia inversa: "${key}" incluye "${normalizedName}" -> ${image}`);
+      return image;
+    }
+  }
+
+  // Fallback a categoría padre si existe
+  if (parentId && mainCategoryImages[parentId]) {
+    console.log(`⚠️ Usando imagen de categoría padre para: "${normalizedName}"`);
+    return mainCategoryImages[parentId];
+  }
+
+  console.log(`❌ No se encontró imagen para: "${normalizedName}" (ID: ${categoryId})`);
+  return null;
+};
+
 export default function HomeClient() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -47,56 +153,31 @@ export default function HomeClient() {
     return counts;
   }, []);
 
+  // Debug: Mostrar todas las categorías al cargar
+  useEffect(() => {
+    console.log('=== CATEGORÍAS DISPONIBLES ===');
+    categories.forEach(cat => {
+      console.log(`ID: "${cat.id}", Nombre: "${cat.name}", ParentID: "${cat.parentId || 'ninguno'}"`);
+    });
+  }, []);
+
   // Función para obtener el banner de la categoría seleccionada
   const getCategoryBannerImage = useCallback(() => {
     if (!selectedCategory) return null;
 
     const selectedCat = categories.find(c => c.id === selectedCategory);
-    if (!selectedCat) return null;
-
-    // Mapeo de banners principales
-    const mainCategoryImages: Record<string, string> = {
-      'accesorios': '/images/banners/banner acesosrios.jpeg',
-      'belleza': '/images/banners/banner belleza.jpeg',
-    };
-
-    // Mapeo de subcategorías
-    const subcategoryImages: Record<string, string> = {
-      // Belleza
-      'b1': '/images/banners/banner limpiadores.jpeg',
-      'b2': '/images/banners/BANNER HIDRATANTES.jpeg',
-      'b3': '/images/banners/BANNER MASCARILLAS.jpeg',
-      'b4': '/images/banners/BANNER PROTECTORES SOLARES.jpeg',
-      'b5': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
-      'b6': '/images/banners/BANNER EXFOLIANTES.jpeg',
-      'b7': '/images/banners/BANNER ACEITES  FACIALES.jpeg',
-      'b8': '/images/banners/BANNER CREMAS FACIALES.jpeg',
-      'b9': '/images/banners/BANNER SET DE BELLEZA.jpeg',
-      'b10': '/images/banners/BANNER CREMA DE MANOS.jpeg',
-      'b11': '/images/banners/BANNER LOCION.jpeg',
-      'b12': '/images/banners/BANNER SERUM.jpeg',
-      
-      // Accesorios
-      'a1': '/images/banners/BANNER AURICULARES.jpeg',
-      'a2': '/images/banners/BANNER CARGADORES.jpeg',
-      'a3': '/images/banners/BANNER CABLES.jpeg',
-      'a4': '/images/banners/BANNER SOPORTES.jpeg',
-      'a5': '/images/banners/BANNER POWERBANKS.jpeg',
-      'a6': '/images/banners/BANNER ADPATDORES.jpeg',
-      'a7': '/images/banners/BANNER HUBS.jpeg',
-      'a8': '/images/banners/BANNER ALTAVOCES.jpeg',
-      'a9': '/images/banners/BANNER MICROFONOS.jpeg',
-      'a10': '/images/banners/BANNER TECLADOS.jpeg',
-      'a11': '/images/banners/BANNER SMART WACHT.jpeg',
-    };
-
-    // Si es subcategoría, retornar su banner
-    if (selectedCat.parentId) {
-      return subcategoryImages[selectedCategory] || mainCategoryImages[selectedCat.parentId];
+    if (!selectedCat) {
+      console.log(`❌ Categoría no encontrada: ${selectedCategory}`);
+      return null;
     }
 
-    // Si es categoría principal
-    return mainCategoryImages[selectedCategory];
+    console.log(`🔍 Buscando imagen para: ID="${selectedCat.id}", Nombre="${selectedCat.name}"`);
+    
+    return getBannerImageByCategory(
+      selectedCat.id, 
+      selectedCat.name, 
+      selectedCat.parentId || undefined
+    );
   }, [selectedCategory]);
 
   const applyFiltersAndSort = useCallback(() => {
@@ -160,13 +241,12 @@ export default function HomeClient() {
         const categoryFilterBottom = categoryFilterRef.current.offsetTop + categoryFilterRef.current.offsetHeight;
         const scrollPosition = window.scrollY;
         
-        // Mostrar botón si estamos más abajo del filtro
         setShowScrollButton(scrollPosition > categoryFilterBottom + 300);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Ejecutar al montar
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -204,51 +284,52 @@ export default function HomeClient() {
       <section ref={productsRef} id="products" className="py-12 md:py-16 scroll-mt-20">
         <div className="container mx-auto px-4 md:px-6">
           
-          {/* Banner de Categoría Fijo en formato 21:9 */}
+          {/* Banner de Categoría - Imagen completa sin truncar */}
           {selectedCategory && categoryBannerImage && (
             <div className="mb-8 relative w-full rounded-xl overflow-hidden shadow-2xl">
-              {/* Contenedor con aspect ratio 21:9 */}
+              {/* Contenedor que se adapta a la imagen */}
               <div className="relative w-full" style={{ aspectRatio: '21/9' }}>
                 <Image
+                  key={`${selectedCategory}-${categoryBannerImage}`}
                   src={categoryBannerImage}
                   alt={selectedCategoryName || 'Categoría'}
                   fill
-                  className="object-cover"
+                  className="object-contain bg-gradient-to-r from-gray-900 to-gray-800"
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                  onError={(e) => {
+                    console.error(`Error cargando imagen: ${categoryBannerImage}`);
+                  }}
                 />
                 
-                {/* Overlay con gradiente más oscuro para mejor contraste */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                {/* Overlay ligero */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />
                 
-                {/* Contenido del banner */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 lg:p-10">
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      {/* Título con mejor contraste y sombra más pronunciada */}
-                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline mb-3 text-white dark:text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-                        {selectedCategoryName}
-                      </h2>
-                      <p className="text-lg md:text-xl lg:text-2xl font-medium text-white/95 dark:text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                        {filteredProducts.length} productos encontrados
-                      </p>
-                    </div>
-                    
-                    {/* Botón para limpiar filtro */}
-                    <button
-                      onClick={() => setSelectedCategory(null)}
-                      className="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-all hover:scale-110 active:scale-95 shadow-lg"
-                      aria-label="Ver todas las categorías"
-                    >
-                      <X className="h-5 w-5 md:h-6 md:w-6" />
-                    </button>
+                {/* Botón para limpiar filtro */}
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-white p-3 rounded-full hover:bg-black/80 transition-all hover:scale-110 active:scale-95 shadow-lg border border-white/20 z-10"
+                  aria-label="Ver todas las categorías"
+                >
+                  <X className="h-5 w-5 md:h-6 md:w-6" />
+                </button>
+
+                {/* Nombre de categoría superpuesto */}
+                <div className="absolute bottom-4 left-4 z-10">
+                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
+                    <h2 className="text-white font-bold text-lg md:text-xl">
+                      {selectedCategoryName}
+                    </h2>
+                    <p className="text-white/80 text-sm">
+                      {filteredProducts.length} productos
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Título alternativo cuando no hay categoría seleccionada */}
+          {/* Título cuando no hay categoría seleccionada */}
           {!selectedCategory && (
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">

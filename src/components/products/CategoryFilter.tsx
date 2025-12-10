@@ -23,46 +23,60 @@ export default function CategoryFilter({
   const [hoveredSubcategory, setHoveredSubcategory] = useState<string | null>(null);
   const [selectedSubcategoryImage, setSelectedSubcategoryImage] = useState<string | null>(null);
 
+  // Categorías principales ordenadas
   const mainCategories = categories
     .filter(cat => !cat.parentId)
     .sort((a, b) => {
-      const order = { 'accesorios': 1, 'belleza': 2 };
-      return (order[a.id as keyof typeof order] || 999) - (order[b.id as keyof typeof order] || 999);
+      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2 };
+      return (order[a.id] || 999) - (order[b.id] || 999);
     });
   
+  // Obtener subcategorías de una categoría padre
   const getSubcategories = (parentId: string) => {
     return categories.filter(cat => cat.parentId === parentId);
   };
 
-  const getCategoryImage = (categoryId: string) => {
+  // Imagen de categoría principal
+  const getCategoryImage = (categoryId: string): string | null => {
     const images: Record<string, string> = {
       'accesorios': '/images/banners/banner acesosrios.jpeg',
       'belleza': '/images/banners/banner belleza.jpeg',
     };
-    return images[categoryId];
+    return images[categoryId] || null;
   };
 
-  const getSubcategoryBannerImage = (subcategoryId: string) => {
+  // Mapeo de imágenes de subcategorías basado en NOMBRE
+  const getSubcategoryBannerImage = (subcategoryId: string): string | null => {
     const subcategory = categories.find(c => c.id === subcategoryId);
-    const subcategoryName = subcategory?.name?.toLowerCase() || '';
-
+    if (!subcategory) return null;
+    
+    const name = subcategory.name.toLowerCase().trim();
+    
+    // Mapeo por nombre normalizado
     const imagesByName: Record<string, string> = {
+      // Belleza
       'limpiadores': '/images/banners/banner limpiadores.jpeg',
       'hidratantes': '/images/banners/BANNER HIDRATANTES.jpeg',
       'mascarillas': '/images/banners/BANNER MASCARILLAS.jpeg',
       'protectores solares': '/images/banners/BANNER PROTECTORES SOLARES.jpeg',
       'bálsamos labiales': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
+      'balsamos labiales': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
       'exfoliantes': '/images/banners/BANNER EXFOLIANTES.jpeg',
       'aceites faciales': '/images/banners/BANNER ACEITES  FACIALES.jpeg',
       'cremas faciales': '/images/banners/BANNER CREMAS FACIALES.jpeg',
       'sets de belleza': '/images/banners/BANNER SET DE BELLEZA.jpeg',
       'cremas de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
       'lociones': '/images/banners/BANNER LOCION.jpeg',
+      'sérum': '/images/banners/BANNER SERUM.jpeg',
       'serum': '/images/banners/BANNER SERUM.jpeg',
+      'sérums': '/images/banners/BANNER SERUM.jpeg',
+      
+      // Accesorios
       'auriculares': '/images/banners/BANNER AURICULARES.jpeg',
       'cargadores': '/images/banners/BANNER CARGADORES.jpeg',
       'cables': '/images/banners/BANNER CABLES.jpeg',
       'soportes': '/images/banners/BANNER SOPORTES.jpeg',
+      'power banks': '/images/banners/BANNER POWERBANKS.jpeg',
       'powerbanks': '/images/banners/BANNER POWERBANKS.jpeg',
       'adaptadores': '/images/banners/BANNER ADPATDORES.jpeg',
       'hubs': '/images/banners/BANNER HUBS.jpeg',
@@ -70,51 +84,33 @@ export default function CategoryFilter({
       'micrófonos': '/images/banners/BANNER MICROFONOS.jpeg',
       'microfonos': '/images/banners/BANNER MICROFONOS.jpeg',
       'teclados': '/images/banners/BANNER TECLADOS.jpeg',
+      'smartwatches': '/images/banners/BANNER SMART WACHT.jpeg',
       'smartwatch': '/images/banners/BANNER SMART WACHT.jpeg',
-      'smart watch': '/images/banners/BANNER SMART WACHT.jpeg',
       'relojes inteligentes': '/images/banners/BANNER SMART WACHT.jpeg',
     };
 
-    for (const [name, image] of Object.entries(imagesByName)) {
-      if (subcategoryName.includes(name) || name.includes(subcategoryName)) {
+    // Buscar coincidencia exacta primero
+    if (imagesByName[name]) {
+      return imagesByName[name];
+    }
+
+    // Buscar coincidencia parcial
+    for (const [key, image] of Object.entries(imagesByName)) {
+      if (name.includes(key) || key.includes(name)) {
         return image;
       }
     }
 
-    const imagesById: Record<string, string> = {
-      'b1': '/images/banners/banner limpiadores.jpeg',
-      'b2': '/images/banners/BANNER HIDRATANTES.jpeg',
-      'b3': '/images/banners/BANNER MASCARILLAS.jpeg',
-      'b4': '/images/banners/BANNER PROTECTORES SOLARES.jpeg',
-      'b5': '/images/banners/BANNER BALSAMOS LABIALES.jpeg',
-      'b6': '/images/banners/BANNER EXFOLIANTES.jpeg',
-      'b7': '/images/banners/BANNER ACEITES  FACIALES.jpeg',
-      'b8': '/images/banners/BANNER CREMAS FACIALES.jpeg',
-      'b9': '/images/banners/BANNER SET DE BELLEZA.jpeg',
-      'b10': '/images/banners/BANNER CREMA DE MANOS.jpeg',
-      'b11': '/images/banners/BANNER LOCION.jpeg',
-      'b12': '/images/banners/BANNER SERUM.jpeg',
-      'a1': '/images/banners/BANNER AURICULARES.jpeg',
-      'a2': '/images/banners/BANNER CARGADORES.jpeg',
-      'a3': '/images/banners/BANNER CABLES.jpeg',
-      'a4': '/images/banners/BANNER SOPORTES.jpeg',
-      'a5': '/images/banners/BANNER POWERBANKS.jpeg',
-      'a6': '/images/banners/BANNER ADPATDORES.jpeg',
-      'a7': '/images/banners/BANNER HUBS.jpeg',
-      'a8': '/images/banners/BANNER ALTAVOCES.jpeg',
-      'a9': '/images/banners/BANNER MICROFONOS.jpeg',
-      'a10': '/images/banners/BANNER TECLADOS.jpeg',
-      'a11': '/images/banners/BANNER SMART WACHT.jpeg',
-    };
-
-    return imagesById[subcategoryId];
+    return null;
   };
 
-  const getSubcategoryIconImage = (subcategoryId: string) => {
+  // Alias para iconos de subcategoría
+  const getSubcategoryIconImage = (subcategoryId: string): string | null => {
     return getSubcategoryBannerImage(subcategoryId);
   };
 
-  const getBannerImage = (categoryId: string) => {
+  // Obtener imagen del banner principal (cambia según hover)
+  const getBannerImage = (categoryId: string): string | null => {
     if (selectedCategory && selectedCategory !== categoryId && selectedSubcategoryImage) {
       const selectedCat = categories.find(c => c.id === selectedCategory);
       if (selectedCat?.parentId === categoryId) {
@@ -127,10 +123,7 @@ export default function CategoryFilter({
         const subcategoryImage = getSubcategoryBannerImage(hoveredSubcategory);
         if (subcategoryImage) return subcategoryImage;
       }
-      
-      if (hoveredSubcategory === null) {
-        return getCategoryImage(categoryId);
-      }
+      return getCategoryImage(categoryId);
     }
 
     if (selectedCategory === categoryId) {
@@ -140,6 +133,7 @@ export default function CategoryFilter({
     return getCategoryImage(categoryId);
   };
 
+  // Manejar click en subcategoría
   const handleSubcategoryClick = (e: React.MouseEvent, subcategoryId: string) => {
     e.stopPropagation();
     const bannerImage = getSubcategoryBannerImage(subcategoryId);
@@ -149,11 +143,13 @@ export default function CategoryFilter({
     onCategorySelect(subcategoryId);
   };
 
+  // Manejar click en categoría principal
   const handleCategoryClick = (categoryId: string) => {
     setSelectedSubcategoryImage(null);
     onCategorySelect(categoryId);
   };
 
+  // Actualizar imagen seleccionada cuando cambia la categoría
   useEffect(() => {
     if (selectedCategory) {
       const selectedCat = categories.find(c => c.id === selectedCategory);
@@ -169,17 +165,6 @@ export default function CategoryFilter({
       setSelectedSubcategoryImage(null);
     }
   }, [selectedCategory, categories]);
-
-  // Debug: mostrar mapeo de categorías en consola
-  useEffect(() => {
-    console.log('=== DEBUG: Mapeo de Subcategorías ===');
-    categories.forEach(cat => {
-      if (cat.parentId) {
-        const image = getSubcategoryBannerImage(cat.id);
-        console.log(`ID: ${cat.id}, Nombre: ${cat.name}, Imagen: ${image}`);
-      }
-    });
-  }, [categories]);
 
   return (
     <div className="w-full">
@@ -231,16 +216,15 @@ export default function CategoryFilter({
                       src={categoryImage}
                       alt={category.name}
                       fill
-                      className="object-cover transition-all duration-500 ease-in-out"
+                      className="object-cover object-center transition-all duration-500 ease-in-out"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1400px"
                       priority
                     />
-                    {/* Overlay más oscuro para máximo contraste */}
                     <div className={cn(
                       "absolute inset-0 transition-all duration-300",
                       isHovered 
-                        ? "bg-black/80"
-                        : "bg-gradient-to-t from-black/75 via-black/50 to-black/30"
+                        ? "bg-black/20"
+                        : "bg-gradient-to-t from-black/30 via-transparent to-transparent"
                     )} />
                   </div>
                 )}
@@ -254,43 +238,14 @@ export default function CategoryFilter({
                   )} />
                 )}
 
-                {/* Título de la categoría - MÁS GRANDE Y MÁS CONTRASTE */}
-                <div className={cn(
-                  "absolute top-6 left-6 transition-all duration-300",
-                  isHovered ? "translate-y-0 scale-110" : "translate-y-0"
-                )}>
-                  <h3 className={cn(
-                    "font-extrabold font-headline transition-all duration-300",
-                    "drop-shadow-[0_6px_24px_rgba(0,0,0,1)]",
-                    isHovered 
-                      ? "text-5xl md:text-6xl lg:text-7xl text-cyan-400 dark:text-cyan-300" 
-                      : "text-3xl md:text-4xl lg:text-5xl text-orange-400 dark:text-orange-300"
-                  )}>
-                    {category.name}
-                  </h3>
-                  {productsCount[category.id] && (
-                    <p className={cn(
-                      "drop-shadow-[0_4px_18px_rgba(0,0,0,1)] mt-3 transition-all duration-300 font-bold",
-                      isHovered 
-                        ? "text-2xl md:text-3xl text-cyan-200 dark:text-cyan-100" 
-                        : "text-lg md:text-xl text-orange-200 dark:text-orange-100"
-                    )}>
-                      {productsCount[category.id]} productos disponibles
-                    </p>
-                  )}
-                </div>
-
-                {/* Indicador en la esquina inferior */}
                 <div className="absolute bottom-6 right-6 z-10">
-                  <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md rounded-lg px-4 py-2 border-2 border-orange-400/50">
-                    {!isHovered && productsCount[category.id] && (
-                      <span className="text-base font-bold text-orange-300">
-                        {productsCount[category.id]} productos
-                      </span>
-                    )}
+                  <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md rounded-lg px-4 py-2 border border-white/30">
+                    <span className="text-base font-bold text-white">
+                      {category.name}
+                    </span>
                     <ChevronDown 
                       className={cn(
-                        "h-6 w-6 text-orange-300 transition-transform duration-300",
+                        "h-6 w-6 text-white transition-transform duration-300",
                         (isHovered || isCategoryOrSubcategorySelected) && "rotate-180"
                       )} 
                     />
@@ -320,36 +275,34 @@ export default function CategoryFilter({
                         "group/item relative overflow-hidden rounded-lg transition-all duration-300",
                         "border-2 hover:shadow-lg hover:scale-105 aspect-[21/9] bg-card",
                         selectedCategory === category.id && !selectedSubcategoryImage
-                          ? "border-cyan-400 ring-2 ring-cyan-400"
-                          : "border-border hover:border-cyan-400/50"
+                          ? "border-primary ring-2 ring-primary"
+                          : "border-border hover:border-primary/50"
                       )}
                     >
                       {getCategoryImage(category.id) && (
                         <div className="absolute inset-0">
                           <Image
-                            src={getCategoryImage(category.id)}
+                            src={getCategoryImage(category.id)!}
                             alt={category.name}
                             fill
-                            className="object-cover"
+                            className="object-cover object-center"
                             sizes="400px"
                           />
-                          <div className="absolute inset-0 bg-black/65" />
+                          <div className="absolute inset-0 bg-black/50" />
                         </div>
                       )}
 
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-3">
-                        <Package className="h-10 w-10 text-cyan-400 dark:text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,1)] mb-2" />
-                        <span className="font-extrabold text-base text-cyan-400 dark:text-cyan-300 drop-shadow-[0_3px_12px_rgba(0,0,0,1)]">
+                        <Package className="h-10 w-10 text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-2" />
+                        <span className="font-extrabold text-base text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                           Ver Todas
                         </span>
                         {productsCount[category.id] && (
-                          <span className="text-sm text-cyan-200 dark:text-cyan-100 drop-shadow-[0_2px_8px_rgba(0,0,0,1)] font-bold mt-1">
+                          <span className="text-sm text-amber-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-bold mt-1">
                             {productsCount[category.id]} productos
                           </span>
                         )}
                       </div>
-                      
-                      <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </button>
 
                     {/* Subcategorías */}
@@ -366,8 +319,8 @@ export default function CategoryFilter({
                             "group/item relative overflow-hidden rounded-lg transition-all duration-300",
                             "border-2 hover:shadow-lg hover:scale-105 aspect-[21/9] bg-card",
                             selectedCategory === subcategory.id
-                              ? "border-cyan-400 ring-2 ring-cyan-400"
-                              : "border-border hover:border-cyan-400/50"
+                              ? "border-primary ring-2 ring-primary"
+                              : "border-border hover:border-primary/50"
                           )}
                         >
                           {iconImage ? (
@@ -376,48 +329,39 @@ export default function CategoryFilter({
                                 src={iconImage}
                                 alt={subcategory.name}
                                 fill
-                                className="object-cover"
+                                className="object-cover object-center"
                                 sizes="(max-width: 768px) 50vw, 400px"
                               />
-                              {/* Overlay con máximo contraste */}
                               <div className={cn(
                                 "absolute inset-0 transition-all duration-300",
                                 isSubcategoryHovered
-                                  ? "bg-black/80"
-                                  : "bg-gradient-to-t from-black/75 via-black/50 to-black/30"
+                                  ? "bg-black/60"
+                                  : "bg-gradient-to-t from-black/70 via-black/40 to-black/20"
                               )} />
                             </div>
                           ) : (
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
                           )}
 
-                          {/* Texto MÁS GRANDE con MÁXIMO contraste */}
                           <div className={cn(
                             "absolute inset-0 flex flex-col items-center justify-center p-3 transition-all duration-300",
                             isSubcategoryHovered ? "scale-105" : "scale-100"
                           )}>
                             <span className={cn(
                               "font-extrabold text-center transition-all duration-300",
-                              "drop-shadow-[0_4px_16px_rgba(0,0,0,1)]",
+                              "text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]",
                               isSubcategoryHovered 
-                                ? "text-xl md:text-2xl text-cyan-400 dark:text-cyan-300" 
-                                : "text-base md:text-lg text-orange-400 dark:text-orange-300"
+                                ? "text-xl md:text-2xl" 
+                                : "text-base md:text-lg"
                             )}>
                               {subcategory.name}
                             </span>
                             {productsCount[subcategory.id] && (
-                              <span className={cn(
-                                "text-sm drop-shadow-[0_3px_10px_rgba(0,0,0,1)] mt-2 transition-all duration-300 font-bold",
-                                isSubcategoryHovered 
-                                  ? "text-cyan-200 dark:text-cyan-100" 
-                                  : "text-orange-200 dark:text-orange-100"
-                              )}>
+                              <span className="text-sm text-amber-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] mt-2 font-bold">
                                 {productsCount[subcategory.id]} productos
                               </span>
                             )}
                           </div>
-                          
-                          <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                         </button>
                       );
                     })}
@@ -437,7 +381,7 @@ export default function CategoryFilter({
               onCategorySelect(null);
               setSelectedSubcategoryImage(null);
             }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-lg hover:from-orange-600 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl font-semibold"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -461,8 +405,8 @@ export function CategoryFilterMobile({
   const mainCategories = categories
     .filter(cat => !cat.parentId)
     .sort((a, b) => {
-      const order = { 'accesorios': 1, 'belleza': 2 };
-      return (order[a.id as keyof typeof order] || 999) - (order[b.id as keyof typeof order] || 999);
+      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2 };
+      return (order[a.id] || 999) - (order[b.id] || 999);
     });
   
   const getCategoryIcon = (categoryId: string) => {
