@@ -218,17 +218,18 @@ export default function HomeClient() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                 />
                 
-                {/* Overlay con gradiente */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                {/* Overlay con gradiente más oscuro para mejor contraste */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
                 
                 {/* Contenido del banner */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 lg:p-10">
                   <div className="flex items-end justify-between gap-4">
-                    <div className="text-white">
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-headline drop-shadow-2xl mb-2">
+                    <div>
+                      {/* Título con mejor contraste y sombra más pronunciada */}
+                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline mb-3 text-white dark:text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
                         {selectedCategoryName}
                       </h2>
-                      <p className="text-base md:text-lg text-white/90 drop-shadow-lg">
+                      <p className="text-lg md:text-xl lg:text-2xl font-medium text-white/95 dark:text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                         {filteredProducts.length} productos encontrados
                       </p>
                     </div>

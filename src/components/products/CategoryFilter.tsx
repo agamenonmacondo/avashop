@@ -34,12 +34,6 @@ export default function CategoryFilter({
     return categories.filter(cat => cat.parentId === parentId);
   };
 
-  const getCategoryIcon = (categoryId: string) => {
-    if (categoryId === 'belleza') return '💄';
-    if (categoryId === 'accesorios') return '🎧';
-    return '📦';
-  };
-
   const getCategoryImage = (categoryId: string) => {
     const images: Record<string, string> = {
       'accesorios': '/images/banners/banner acesosrios.jpeg',
@@ -48,15 +42,11 @@ export default function CategoryFilter({
     return images[categoryId];
   };
 
-  // Mapeo de subcategorías por nombre para mayor claridad
   const getSubcategoryBannerImage = (subcategoryId: string) => {
-    // Primero obtener el nombre de la subcategoría para mapear correctamente
     const subcategory = categories.find(c => c.id === subcategoryId);
     const subcategoryName = subcategory?.name?.toLowerCase() || '';
 
-    // Mapeo por nombre de subcategoría
     const imagesByName: Record<string, string> = {
-      // Belleza
       'limpiadores': '/images/banners/banner limpiadores.jpeg',
       'hidratantes': '/images/banners/BANNER HIDRATANTES.jpeg',
       'mascarillas': '/images/banners/BANNER MASCARILLAS.jpeg',
@@ -69,8 +59,6 @@ export default function CategoryFilter({
       'cremas de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
       'lociones': '/images/banners/BANNER LOCION.jpeg',
       'serum': '/images/banners/BANNER SERUM.jpeg',
-      
-      // Accesorios
       'auriculares': '/images/banners/BANNER AURICULARES.jpeg',
       'cargadores': '/images/banners/BANNER CARGADORES.jpeg',
       'cables': '/images/banners/BANNER CABLES.jpeg',
@@ -87,16 +75,13 @@ export default function CategoryFilter({
       'relojes inteligentes': '/images/banners/BANNER SMART WACHT.jpeg',
     };
 
-    // Buscar por nombre
     for (const [name, image] of Object.entries(imagesByName)) {
       if (subcategoryName.includes(name) || name.includes(subcategoryName)) {
         return image;
       }
     }
 
-    // Fallback al mapeo por ID si no se encuentra por nombre
     const imagesById: Record<string, string> = {
-      // Belleza
       'b1': '/images/banners/banner limpiadores.jpeg',
       'b2': '/images/banners/BANNER HIDRATANTES.jpeg',
       'b3': '/images/banners/BANNER MASCARILLAS.jpeg',
@@ -109,8 +94,6 @@ export default function CategoryFilter({
       'b10': '/images/banners/BANNER CREMA DE MANOS.jpeg',
       'b11': '/images/banners/BANNER LOCION.jpeg',
       'b12': '/images/banners/BANNER SERUM.jpeg',
-      
-      // Accesorios
       'a1': '/images/banners/BANNER AURICULARES.jpeg',
       'a2': '/images/banners/BANNER CARGADORES.jpeg',
       'a3': '/images/banners/BANNER CABLES.jpeg',
@@ -252,6 +235,13 @@ export default function CategoryFilter({
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1400px"
                       priority
                     />
+                    {/* Overlay más oscuro para máximo contraste */}
+                    <div className={cn(
+                      "absolute inset-0 transition-all duration-300",
+                      isHovered 
+                        ? "bg-black/80"
+                        : "bg-gradient-to-t from-black/75 via-black/50 to-black/30"
+                    )} />
                   </div>
                 )}
 
@@ -264,16 +254,43 @@ export default function CategoryFilter({
                   )} />
                 )}
 
+                {/* Título de la categoría - MÁS GRANDE Y MÁS CONTRASTE */}
+                <div className={cn(
+                  "absolute top-6 left-6 transition-all duration-300",
+                  isHovered ? "translate-y-0 scale-110" : "translate-y-0"
+                )}>
+                  <h3 className={cn(
+                    "font-extrabold font-headline transition-all duration-300",
+                    "drop-shadow-[0_6px_24px_rgba(0,0,0,1)]",
+                    isHovered 
+                      ? "text-5xl md:text-6xl lg:text-7xl text-cyan-400 dark:text-cyan-300" 
+                      : "text-3xl md:text-4xl lg:text-5xl text-orange-400 dark:text-orange-300"
+                  )}>
+                    {category.name}
+                  </h3>
+                  {productsCount[category.id] && (
+                    <p className={cn(
+                      "drop-shadow-[0_4px_18px_rgba(0,0,0,1)] mt-3 transition-all duration-300 font-bold",
+                      isHovered 
+                        ? "text-2xl md:text-3xl text-cyan-200 dark:text-cyan-100" 
+                        : "text-lg md:text-xl text-orange-200 dark:text-orange-100"
+                    )}>
+                      {productsCount[category.id]} productos disponibles
+                    </p>
+                  )}
+                </div>
+
+                {/* Indicador en la esquina inferior */}
                 <div className="absolute bottom-6 right-6 z-10">
-                  <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
-                    {productsCount[category.id] && (
-                      <span className="text-sm text-white/90">
+                  <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md rounded-lg px-4 py-2 border-2 border-orange-400/50">
+                    {!isHovered && productsCount[category.id] && (
+                      <span className="text-base font-bold text-orange-300">
                         {productsCount[category.id]} productos
                       </span>
                     )}
                     <ChevronDown 
                       className={cn(
-                        "h-5 w-5 text-white transition-transform duration-300",
+                        "h-6 w-6 text-orange-300 transition-transform duration-300",
                         (isHovered || isCategoryOrSubcategorySelected) && "rotate-180"
                       )} 
                     />
@@ -303,8 +320,8 @@ export default function CategoryFilter({
                         "group/item relative overflow-hidden rounded-lg transition-all duration-300",
                         "border-2 hover:shadow-lg hover:scale-105 aspect-[21/9] bg-card",
                         selectedCategory === category.id && !selectedSubcategoryImage
-                          ? "border-primary ring-2 ring-primary"
-                          : "border-border hover:border-primary/50"
+                          ? "border-cyan-400 ring-2 ring-cyan-400"
+                          : "border-border hover:border-cyan-400/50"
                       )}
                     >
                       {getCategoryImage(category.id) && (
@@ -316,28 +333,29 @@ export default function CategoryFilter({
                             className="object-cover"
                             sizes="400px"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                          <div className="absolute inset-0 bg-black/65" />
                         </div>
                       )}
 
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-3">
-                        <Package className="h-8 w-8 text-white drop-shadow-lg mb-1" />
-                        <span className="font-bold text-sm text-white drop-shadow-lg">
+                        <Package className="h-10 w-10 text-cyan-400 dark:text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,1)] mb-2" />
+                        <span className="font-extrabold text-base text-cyan-400 dark:text-cyan-300 drop-shadow-[0_3px_12px_rgba(0,0,0,1)]">
                           Ver Todas
                         </span>
                         {productsCount[category.id] && (
-                          <span className="text-xs text-white/90 drop-shadow">
+                          <span className="text-sm text-cyan-200 dark:text-cyan-100 drop-shadow-[0_2px_8px_rgba(0,0,0,1)] font-bold mt-1">
                             {productsCount[category.id]} productos
                           </span>
                         )}
                       </div>
                       
-                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </button>
 
                     {/* Subcategorías */}
                     {subcategories.map((subcategory) => {
                       const iconImage = getSubcategoryIconImage(subcategory.id);
+                      const isSubcategoryHovered = hoveredSubcategory === subcategory.id;
                       
                       return (
                         <button
@@ -348,8 +366,8 @@ export default function CategoryFilter({
                             "group/item relative overflow-hidden rounded-lg transition-all duration-300",
                             "border-2 hover:shadow-lg hover:scale-105 aspect-[21/9] bg-card",
                             selectedCategory === subcategory.id
-                              ? "border-primary ring-2 ring-primary"
-                              : "border-border hover:border-primary/50"
+                              ? "border-cyan-400 ring-2 ring-cyan-400"
+                              : "border-border hover:border-cyan-400/50"
                           )}
                         >
                           {iconImage ? (
@@ -361,24 +379,45 @@ export default function CategoryFilter({
                                 className="object-cover"
                                 sizes="(max-width: 768px) 50vw, 400px"
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                              {/* Overlay con máximo contraste */}
+                              <div className={cn(
+                                "absolute inset-0 transition-all duration-300",
+                                isSubcategoryHovered
+                                  ? "bg-black/80"
+                                  : "bg-gradient-to-t from-black/75 via-black/50 to-black/30"
+                              )} />
                             </div>
                           ) : (
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
                           )}
 
-                          <div className="absolute inset-0 flex flex-col items-center justify-center p-3 opacity-0 group-hover/item:opacity-100 transition-opacity">
-                            <span className="font-bold text-sm text-white drop-shadow-lg">
+                          {/* Texto MÁS GRANDE con MÁXIMO contraste */}
+                          <div className={cn(
+                            "absolute inset-0 flex flex-col items-center justify-center p-3 transition-all duration-300",
+                            isSubcategoryHovered ? "scale-105" : "scale-100"
+                          )}>
+                            <span className={cn(
+                              "font-extrabold text-center transition-all duration-300",
+                              "drop-shadow-[0_4px_16px_rgba(0,0,0,1)]",
+                              isSubcategoryHovered 
+                                ? "text-xl md:text-2xl text-cyan-400 dark:text-cyan-300" 
+                                : "text-base md:text-lg text-orange-400 dark:text-orange-300"
+                            )}>
                               {subcategory.name}
                             </span>
                             {productsCount[subcategory.id] && (
-                              <span className="text-xs text-white/90 drop-shadow">
+                              <span className={cn(
+                                "text-sm drop-shadow-[0_3px_10px_rgba(0,0,0,1)] mt-2 transition-all duration-300 font-bold",
+                                isSubcategoryHovered 
+                                  ? "text-cyan-200 dark:text-cyan-100" 
+                                  : "text-orange-200 dark:text-orange-100"
+                              )}>
                                 {productsCount[subcategory.id]} productos
                               </span>
                             )}
                           </div>
                           
-                          <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                          <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                         </button>
                       );
                     })}
@@ -398,7 +437,7 @@ export default function CategoryFilter({
               onCategorySelect(null);
               setSelectedSubcategoryImage(null);
             }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-lg hover:from-orange-600 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl font-semibold"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
