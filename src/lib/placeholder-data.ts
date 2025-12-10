@@ -308,7 +308,7 @@ export const products: Product[] = [
       "/images/remax/013_KR-L11.png",
       "/images/remax/014_KR-L11.png"
     ],
-    category: cablesCategory,
+    category: soportesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -344,7 +344,7 @@ export const products: Product[] = [
       "/images/remax/019_RP-W90.png",
       "/images/remax/020_RP-W90.png"
     ],
-    category: auricularesCategory,
+    category: cargadoresCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -506,7 +506,7 @@ export const products: Product[] = [
       "/images/remax/046_MP-5.png",
       "/images/remax/047_MP-5.png"
     ],
-    category: cargadoresCategory,
+    category: powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -522,7 +522,7 @@ export const products: Product[] = [
     imageUrls: [
       "/images/remax/048_CYBERPUNK_DATA_CABLE_IPHONE_RC-171_CL.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -539,7 +539,7 @@ export const products: Product[] = [
       "/images/remax/049_RC-171.png",
       "/images/remax/050_RC-171.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -557,7 +557,7 @@ export const products: Product[] = [
       "/images/remax/052_RC-C170C.png",
       "/images/remax/053_RC-C170C.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -665,7 +665,7 @@ export const products: Product[] = [
       "/images/remax/070_RB-M10.png",
       "/images/remax/071_RB-M10.png"
     ],
-    category: cablesCategory,
+    category: altavocesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -683,7 +683,7 @@ export const products: Product[] = [
       "/images/remax/073_RB-M82.png",
       "/images/remax/074_RB-M82.png"
     ],
-    category: cablesCategory,
+    category: altavocesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -701,7 +701,7 @@ export const products: Product[] = [
       "/images/remax/076_RB-M7.png",
       "/images/remax/077_RB-M7.png"
     ],
-    category: cablesCategory,
+    category: altavocesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -840,7 +840,7 @@ export const products: Product[] = [
       "/images/remax/095_CABLE_C-27.png",
       "/images/remax/096_CABLE_C-27.png"
     ],
-    category: auricularesCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -930,7 +930,7 @@ export const products: Product[] = [
       "/images/remax/110_AP-08.png",
       "/images/remax/111_AP-08.png"
     ],
-    category: micrófonosCategory,
+    category: adaptadoresCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -1001,7 +1001,7 @@ export const products: Product[] = [
       "/images/remax/121_K-13.png",
       "/images/remax/122_K-13.png"
     ],
-    category: cablesCategory,
+    category: micrófonosCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -1160,7 +1160,7 @@ export const products: Product[] = [
       "/images/remax/145_UC-921.png",
       "/images/remax/146_UC-921.png"
     ],
-    category: cablesCategory,
+    category: hubsCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -1330,7 +1330,7 @@ export const products: Product[] = [
       "/images/remax/165_RB_S33.png",
       "/images/remax/166_RB_S33.png"
     ],
-    category: micrófonosCategory,
+    category: auricularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -1403,7 +1403,7 @@ export const products: Product[] = [
       "/images/remax/178_REMAX_SERIES_VELOCITY_CABLE_AUDIO_ADAPTER_3.5.png",
       "/images/remax/179_REMAX_SERIES_VELOCITY_CABLE_AUDIO_ADAPTER_3.5.png"
     ],
-    category: auricularesCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2029,7 +2029,7 @@ export const products: Product[] = [
       "/images/remax/279_RPP-226.png",
       "/images/remax/280_RPP-226.png"
     ],
-    category: cargadoresCategory,
+    category: powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2065,7 +2065,7 @@ export const products: Product[] = [
       "/images/remax/285_RPP-213.png",
       "/images/remax/286_RPP-213.png"
     ],
-    category: cargadoresCategory,
+    category: powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2083,7 +2083,7 @@ export const products: Product[] = [
       "/images/remax/288_RPP-533.png",
       "/images/remax/289_RPP-533.png"
     ],
-    category: cargadoresCategory,
+    category: powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2101,7 +2101,7 @@ export const products: Product[] = [
       "/images/remax/291_RPP-572.png",
       "/images/remax/292_RPP-572.png"
     ],
-    category: cargadoresCategory,
+    category:powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2137,7 +2137,7 @@ export const products: Product[] = [
       "/images/remax/297_RPP-212.png",
       "/images/remax/298_RPP-212.png"
     ],
-    category: cargadoresCategory,
+    category: powerBanksCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2190,7 +2190,7 @@ export const products: Product[] = [
       "/images/remax/305_RC-188i.png",
       "/images/remax/306_RC-188i.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2350,7 +2350,7 @@ export const products: Product[] = [
       "/images/remax/330_RM-C61.png",
       "/images/remax/331_RM-C61.png"
     ],
-    category: cablesCategory,
+    category: soportesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2386,7 +2386,7 @@ export const products: Product[] = [
       "/images/remax/336_RL-LA07i.png",
       "/images/remax/337_RL-LA07i.png"
     ],
-    category: cablesCategory,
+    category: adaptadoresCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2405,7 +2405,7 @@ export const products: Product[] = [
       "/images/remax/340_RC-093.png",
       "/images/remax/341_RC-093.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2421,7 +2421,7 @@ export const products: Product[] = [
     imageUrls: [
       "/images/remax/342_RC-093_AL.png"
     ],
-    category: cargadoresCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2634,7 +2634,7 @@ export const products: Product[] = [
       "/images/remax/374_RM-711.png",
       "/images/remax/375_RM-711.png"
     ],
-    category: micrófonosCategory,
+    category: auricularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2652,7 +2652,7 @@ export const products: Product[] = [
       "/images/remax/377_RM-202.png",
       "/images/remax/378_RM-202.png"
     ],
-    category: cablesCategory,
+    category: auricularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2688,7 +2688,7 @@ export const products: Product[] = [
       "/images/remax/383_RP-U32CN.png",
       "/images/remax/384_RP-U32CN.png"
     ],
-    category: auricularesCategory,
+    category: cargadoresCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2773,7 +2773,7 @@ export const products: Product[] = [
       "/images/remax/393_L-100.png",
       "/images/remax/394_L-100.png"
     ],
-    category: auricularesCategory,
+    category: cablesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2924,7 +2924,7 @@ export const products: Product[] = [
       "/images/remax/409_RM-208.png",
       "/images/remax/410_RM-208.png"
     ],
-    category: micrófonosCategory,
+    category: auricularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -2942,7 +2942,7 @@ export const products: Product[] = [
       "/images/remax/412_RM-625.png",
       "/images/remax/413_RM-625.png"
     ],
-    category: cablesCategory,
+    category: auricularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
