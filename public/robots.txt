@@ -1,3 +1,49 @@
+# Robots.txt para CCS724 - Tienda de Electrónica y Tecnología
+# https://www.ccs724.com
+
+# Permitir a todos los bots acceso general
 User-agent: *
 Allow: /
+
+# Permitir explícitamente el acceso a recursos estáticos
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /apple-touch-icon.png
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /site.webmanifest
+
+# Bloquear acceso a rutas administrativas y privadas
+Disallow: /api/admin/
+Disallow: /admin/
+Disallow: /_next/static/
+Disallow: /checkout/confirmation/
+
+# Bloquear parámetros de seguimiento duplicados
+Disallow: /*?utm_*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+
+# Configuración específica para Googlebot
+User-agent: Googlebot
+Allow: /
+Allow: /favicon.ico
+Allow: /site.webmanifest
+Crawl-delay: 0
+
+# Configuración para bots de imágenes
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.svg
+Allow: /*.webp
+
+# Sitemaps
 Sitemap: https://www.ccs724.com/sitemap.xml
+Sitemap: https://www.ccs724.com/product-sitemap.xml
+Sitemap: https://www.ccs724.com/category-sitemap.xml
