@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabaseClient';
+import { products } from '@/lib/placeholder-data'; // 👈 Importar productos
 
 export async function POST(request: NextRequest) {
   try {
     const { userId, productId, quantity = 1 } = await request.json();
+
+    console.log('[/api/cart/add] Request:', { userId, productId, quantity });
 
     if (!userId || !productId) {
       return NextResponse.json(
@@ -13,15 +16,14 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = getSupabase();
-    
     if (!supabase) {
       return NextResponse.json(
         { success: false, message: 'Supabase no configurado' },
         { status: 500 }
       );
     }
-    
-    // 1. Obtener carrito actual del usuario
+
+    // Obtener carrito actual desde profiles
     const { data: profile, error: fetchError } = await supabase
       .from('profiles')
       .select('cart')
@@ -30,33 +32,33 @@ export async function POST(request: NextRequest) {
 
     if (fetchError && fetchError.code !== 'PGRST116') {
       console.error('Error obteniendo perfil:', fetchError);
-      throw fetchError;
+      return NextResponse.json(
+        { success: false, message: 'Error obteniendo perfil', error: fetchError.message },
+        { status: 500 }
+      );
     }
 
     const currentCart = profile?.cart || [];
 
-    // 2. Buscar si el producto ya existe
+    // Buscar si el producto ya existe en el carrito
     const existingIndex = currentCart.findIndex((item: any) => item.id === productId);
 
     if (existingIndex !== -1) {
-      // Incrementar cantidad
+      // Incrementar cantidad si ya existe
       currentCart[existingIndex].quantity += quantity;
     } else {
-      // Obtener info del producto desde Supabase directamente
-      const { data: product, error: productError } = await supabase
-        .from('products')
-        .select('id, name, price, stock, imageUrls:image_urls, category_id, product_url, buy_now_url')
-        .eq('id', productId)
-        .single();
+      // 👇 CORREGIDO: Buscar producto en placeholder-data en lugar de Supabase
+      const product = products.find((p) => p.id === productId);
 
-      if (productError || !product) {
+      if (!product) {
+        console.error('Producto no encontrado en placeholder-data:', productId);
         return NextResponse.json(
-          { success: false, message: 'Producto no encontrado' },
+          { success: false, message: `Producto no encontrado: ${productId}` },
           { status: 404 }
         );
       }
 
-      // Agregar nuevo item con URLs para AVA
+      // Agregar nuevo producto al carrito
       currentCart.push({
         id: product.id,
         name: product.name,
@@ -64,12 +66,11 @@ export async function POST(request: NextRequest) {
         quantity: quantity,
         imageUrls: product.imageUrls || [],
         stock: product.stock || 0,
-        product_url: product.product_url || '',
-        buy_now_url: product.buy_now_url || '',
+       
       });
     }
 
-    // 3. Actualizar carrito en Supabase
+    // Actualizar carrito en Supabase
     const { error: updateError } = await supabase
       .from('profiles')
       .upsert({
@@ -82,18 +83,25 @@ export async function POST(request: NextRequest) {
 
     if (updateError) {
       console.error('Error actualizando carrito:', updateError);
-      throw updateError;
+      return NextResponse.json(
+        { success: false, message: 'Error actualizando carrito', error: updateError.message },
+        { status: 500 }
+      );
     }
+
+    const total = currentCart.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
+
+    console.log('[/api/cart/add] Success:', { itemCount: currentCart.length, total });
 
     return NextResponse.json({
       success: true,
       message: 'Producto agregado al carrito',
       cart: currentCart,
-      total: currentCart.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0),
+      total: total,
     });
 
   } catch (error) {
-    console.error('Error agregando al carrito:', error);
+    console.error('[/api/cart/add] Error:', error);
     return NextResponse.json(
       { success: false, message: 'Error interno del servidor', error: String(error) },
       { status: 500 }
