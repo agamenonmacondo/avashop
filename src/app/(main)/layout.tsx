@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
-import Head from 'next/head';
+// ❌ Eliminamos la importación de Head porque ya no se usa aquí
+// import Head from 'next/head'; 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MetaPixel from '@/components/analytics/MetaPixel';
@@ -13,12 +14,12 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </Head>
+      {/* 
+         ❌ ELIMINADO: Este bloque <Head> sobraba. 
+         Next.js ya inyecta los favicons automáticamente gracias 
+         a la configuración 'metadata' en src/app/layout.tsx 
+      */}
+      
       <Suspense fallback={null}>
         <MetaPixel />
       </Suspense>
