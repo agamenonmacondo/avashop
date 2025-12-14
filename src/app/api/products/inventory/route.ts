@@ -1,20 +1,15 @@
 import { products } from '@/lib/placeholder-data';
 
 export async function GET() {
-  // ⚠️ IMPORTANTE: Reemplaza 'TIENDA_PRINCIPAL' con el código exacto
-  // que aparece en tu Perfil de Negocio de Google.
-  const STORE_CODE = 'TIENDA_PRINCIPAL'; 
+  // ⚠️ Usa el código exacto de tu negocio en Google
+  const STORE_CODE = '15284960994718424806';
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">
   <title>Inventario Local CCS724</title>
   <updated>${new Date().toISOString()}</updated>
   ${products.map((product) => {
-    // Leemos el stock desde placeholder-data.
-    // Si el producto no tiene propiedad 'stock', asumimos 10 unidades.
     const quantity = product.stock !== undefined ? product.stock : 10;
-    
-    // Determinamos disponibilidad basado en el stock real
     const availability = quantity > 0 ? 'in_stock' : 'out_of_stock';
 
     return `
