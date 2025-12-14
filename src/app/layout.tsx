@@ -71,23 +71,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        {/* ❌ BORRA ESTAS LÍNEAS (Next.js ya las genera desde 'metadata') */}
-        {/* <link rel="icon" href="/favicon.ico" sizes="48x48" /> */}
-        {/* <link rel="icon" href="/favicon.svg" type="image/svg+xml" /> */}
-        {/* <link rel="shortcut icon" href="/favicon.ico" /> */}
-        
-        <meta name="theme-color" content="#000000" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="CCS724" />
-        
-        <Script 
-          src="https://checkout.bold.co/library/boldPaymentButton.js" 
-          strategy="beforeInteractive"
-        />
-      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
