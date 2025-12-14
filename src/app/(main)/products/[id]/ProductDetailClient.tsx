@@ -10,12 +10,12 @@ import { formatColombianCurrency } from '@/lib/utils';
 import type { Product } from '@/types';
 import ShareProductModal from '@/components/products/ShareProductModal';
 import Image from 'next/image';
+import { getSupabase } from '@/lib/supabaseClient';
 
 interface ProductDetailClientProps {
   product: Product;
 }
 
-// ✅ UNA SOLA definición de Review
 interface Review {
   id: number;
   product_id: string;
@@ -27,7 +27,6 @@ interface Review {
   created_at: string;
 }
 
-// ✅ Interfaz para ReviewStats
 interface ReviewStats {
   average: number;
   total: number;
@@ -46,8 +45,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   
-  // Estado para reseñas
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewStats, setReviewStats] = useState<ReviewStats>({
     average: 0,
@@ -56,7 +55,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   });
   const [loadingReviews, setLoadingReviews] = useState(true);
 
-  // Cargar reseñas al montar el componente
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -65,7 +63,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         
         if (response.ok) {
           const data = await response.json();
-          console.log('📥 Reviews data:', data); // Debug
           setReviews(data.reviews || []);
           setReviewStats(data.stats || {
             average: 0,
@@ -83,11 +80,62 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     fetchReviews();
   }, [product.id]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    setIsAddingToCart(true);
+    
     try {
+      // 1. Obtener usuario autenticado de Supabase
+      const supabase = getSupabase();
+      let userId: string;
+      let isGuest = false;
+
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user?.id) {
+          // Usuario autenticado - buscar en tabla profiles
+          const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('user_email')
+            .eq('id', session.user.id)
+            .single();
+
+          if (!error && profile?.user_email) {
+            userId = profile.user_email;
+            console.log('✅ Usuario autenticado desde profiles:', userId);
+          } else {
+            // Fallback al email de la sesión
+            userId = session.user.email || session.user.id;
+            console.log('✅ Usuario autenticado desde session:', userId);
+          }
+        } else {
+          // Usuario guest - generar ID temporal
+          const storedGuestId = localStorage.getItem('guestUserId');
+          if (storedGuestId) {
+            userId = storedGuestId;
+            isGuest = true;
+            console.log('🔄 Usando guest ID existente:', userId);
+          } else {
+            userId = `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            localStorage.setItem('guestUserId', userId);
+            isGuest = true;
+            console.log('🆕 Nuevo guest ID generado:', userId);
+          }
+        }
+      } else {
+        // Fallback si Supabase no está disponible
+        const storedGuestId = localStorage.getItem('guestUserId');
+        userId = storedGuestId || `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        if (!storedGuestId) {
+          localStorage.setItem('guestUserId', userId);
+        }
+        isGuest = true;
+        console.log('⚠️ Supabase no disponible, usando:', userId);
+      }
+
+      // 2. Guardar en localStorage (sincronización inmediata)
       const cartData = localStorage.getItem('cart');
       const currentCart = cartData ? JSON.parse(cartData) : [];
-
       const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
 
       let updatedCart;
@@ -110,22 +158,64 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       localStorage.setItem('cart', JSON.stringify(updatedCart));
       window.dispatchEvent(new Event('storage'));
 
+      // 3. Guardar en Supabase (tabla carts) - Solo si NO es guest
+      if (!isGuest) {
+        console.log('💾 Guardando en Supabase...', { userId, productId: product.id, quantity });
+        
+        const response = await fetch('/api/cart/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+            productId: product.id,
+            quantity: quantity
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error('❌ Error en API:', data);
+          toast({
+            title: 'Advertencia',
+            description: 'Producto guardado localmente. Sincronización pendiente.',
+            variant: 'default',
+          });
+        } else {
+          console.log('✅ Guardado en Supabase:', data);
+        }
+      } else {
+        console.log('⚠️ Usuario guest - solo guardado en localStorage');
+      }
+
+      // 4. Mostrar toast y redirigir
       toast({
         title: '¡Producto agregado!',
         description: `${quantity} ${product.name} agregado(s) al carrito`,
       });
 
       setTimeout(() => {
-        router.push('/cart');
+        router.push(`/cart?userId=${userId}`);
       }, 500);
 
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('❌ Error agregando al carrito:', error);
+      
       toast({
-        title: 'Error',
-        description: 'No se pudo agregar el producto al carrito',
-        variant: 'destructive'
+        title: 'Producto guardado localmente',
+        description: 'El producto se guardó en tu navegador.',
+        variant: 'default',
       });
+      
+      // Aún así, redirigir al carrito
+      setTimeout(() => {
+        const guestId = localStorage.getItem('guestUserId');
+        router.push(`/cart${guestId ? `?userId=${guestId}` : ''}`);
+      }, 500);
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -219,10 +309,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 onClick={handleAddToCart}
                 size="lg"
                 className="w-full"
-                disabled={product.stock === 0}
+                disabled={product.stock === 0 || isAddingToCart}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
-                Agregar al Carrito
+                {isAddingToCart ? 'Agregando...' : 'Agregar al Carrito'}
               </Button>
 
               <Button 
@@ -298,7 +388,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   {reviews.map((review) => (
                     <div key={review.id} className="border rounded-lg p-6 bg-card">
                       <div className="flex items-start gap-4">
-                        {/* ✅ Avatar con imagen - VERSIÓN MEJORADA */}
                         <div className="flex-shrink-0">
                           <Avatar className="h-14 w-14 border-2 border-primary">
                             <AvatarImage 
@@ -313,7 +402,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          {/* ✅ Header con nombre y verificación */}
                           <div className="flex flex-wrap items-center gap-2 mb-2">
                             <h4 className="font-bold text-lg">
                               {review.user_email.split('@')[0]}
@@ -326,7 +414,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             )}
                           </div>
 
-                          {/* ✅ Rating y fecha en la misma línea */}
                           <div className="flex items-center gap-3 mb-3">
                             <div className="flex gap-0.5">
                               {[...Array(5)].map((_, i) => (
@@ -349,7 +436,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             </span>
                           </div>
 
-                          {/* ✅ Comentario con mejor formato */}
                           <p className="text-foreground leading-relaxed text-base">
                             {review.comment}
                           </p>
