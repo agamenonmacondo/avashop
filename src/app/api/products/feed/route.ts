@@ -1,4 +1,4 @@
-import { products } from '@/lib/placeholder-data';
+import { products, categories } from '@/lib/placeholder-data';
 
 // Función auxiliar para escapar caracteres especiales de XML
 const escapeXml = (unsafe: string) => {
@@ -6,12 +6,40 @@ const escapeXml = (unsafe: string) => {
     switch (c) {
       case '<': return '&lt;';
       case '>': return '&gt;';
-      case '&': return '&amp;';
-      case '\'': return '&apos;';
+      case '&': return '&apos;';
       case '"': return '&quot;';
       default: return c;
     }
   });
+};
+
+// Obtener la ruta completa de la categoría
+const getCategoryPath = (categoryId: string): string => {
+  const category = categories.find(c => c.id === categoryId);
+  if (!category) return 'Productos';
+  
+  if (category.parentId) {
+    const parent = categories.find(c => c.id === category.parentId);
+    return parent ? `${parent.name} > ${category.name}` : category.name;
+  }
+  
+  return category.name;
+};
+
+// Mapear categorías a Google Product Categories
+const getGoogleCategory = (categoryId: string): string => {
+  const category = categories.find(c => c.id === categoryId);
+  const parentId = category?.parentId || categoryId;
+  
+  // Mapeo según categoría principal
+  if (parentId === 'belleza') {
+    return 'Health & Beauty > Personal Care';
+  }
+  if (parentId === 'accesorios') {
+    return 'Electronics > Electronics Accessories';
+  }
+  
+  return 'Electronics';
 };
 
 export async function GET() {
@@ -40,8 +68,8 @@ export async function GET() {
 
         if (processedUrls.length > 1) {
             additionalImagesXml = processedUrls.slice(1, 11).map(url => 
-                `<g:additional_image_link>${url}</g:additional_image_link>`
-            ).join('\n      ');
+                `      <g:additional_image_link>${url}</g:additional_image_link>`
+            ).join('\n');
         }
       }
 
@@ -55,26 +83,38 @@ export async function GET() {
       }
 
       const productLink = escapeXml(`${baseUrl}/products/${product.id}`);
+      const categoryPath = getCategoryPath(product.category.id);
+      const googleCategory = getGoogleCategory(product.category.id);
+      const parentCategory = categories.find(c => c.id === product.category.parentId);
       
-      return `
-    <item>
-      <g:id>${product.id}</g:id>
+      // Calcular envío: gratis si el precio > 200000 COP
+      const shippingCost = product.price > 200000 ? 0 : 15000;
+      
+      return `    <item>
+      <g:id>${escapeXml(product.id)}</g:id>
       <g:title><![CDATA[${product.name}]]></g:title>
       <g:description><![CDATA[${product.description || product.name}]]></g:description>
       <g:link>${productLink}</g:link>
       ${imageUrl ? `<g:image_link>${imageUrl}</g:image_link>` : ''}
-      ${additionalImagesXml}
+${additionalImagesXml}
       <g:availability>in_stock</g:availability>
-      <g:condition>new</g:condition>
       <g:price>${product.price} COP</g:price>
-      <g:brand>${brand}</g:brand>
-      <g:google_product_category>Electronics</g:google_product_category>
-      <g:gtin></g:gtin>
-      <g:mpn>${product.id}</g:mpn>
+      <g:condition>new</g:condition>
+      <g:brand>${escapeXml(brand)}</g:brand>
+      <g:google_product_category>${escapeXml(googleCategory)}</g:google_product_category>
+      <g:product_type>${escapeXml(categoryPath)}</g:product_type>
+      ${parentCategory ? `<g:item_group_id>${escapeXml(parentCategory.id)}</g:item_group_id>` : ''}
+      <g:shipping>
+        <g:country>CO</g:country>
+        <g:service>Envío estándar</g:service>
+        <g:price>${shippingCost} COP</g:price>
+      </g:shipping>
+      <g:shipping_weight>0.5 kg</g:shipping_weight>
       <g:identifier_exists>no</g:identifier_exists>
-    </item>
-    `;
-    }).join('')}
+      <g:mpn>${escapeXml(product.id)}</g:mpn>
+      <g:gtin></g:gtin>
+    </item>`;
+    }).join('\n')}
   </channel>
 </rss>`;
 
