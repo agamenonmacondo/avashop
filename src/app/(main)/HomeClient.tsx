@@ -6,6 +6,7 @@ import CategoryFilter from '@/components/products/CategoryFilter';
 import { products as allProducts, categories } from '@/lib/placeholder-data';
 import type { Product } from '@/types';
 import HeroSection from '@/components/layout/HeroSection';
+import ProductTickerBar from '@/components/ProductTickerBar';
 import { ArrowUp, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
@@ -25,18 +26,15 @@ const getTimestamp = (date: Date | string | undefined): number => {
 
 // ✅ Función centralizada para obtener imagen de banner por categoría
 const getBannerImageByCategory = (categoryId: string, categoryName: string, parentId?: string): string | null => {
-  // Mapeo de banners principales
   const mainCategoryImages: Record<string, string> = {
     'accesorios': '/images/banners/banner acesosrios.jpeg',
     'belleza': '/images/banners/banner belleza.jpeg',
   };
 
-  // Normalizar nombre para búsqueda
   const normalizedName = categoryName.toLowerCase().trim();
 
-  // Mapeo COMPLETO basado en nombre de categoría
   const imagesByName: Record<string, string> = {
-    // ===== BELLEZA =====
+    // BELLEZA
     'limpiadores': '/images/banners/banner limpiadores.jpeg',
     'hidratantes': '/images/banners/BANNER HIDRATANTES.jpeg',
     'mascarillas': '/images/banners/BANNER MASCARILLAS.jpeg',
@@ -49,83 +47,45 @@ const getBannerImageByCategory = (categoryId: string, categoryName: string, pare
     'sets de belleza': '/images/banners/BANNER SET DE BELLEZA.jpeg',
     'set de belleza': '/images/banners/BANNER SET DE BELLEZA.jpeg',
     'cremas de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
-    'crema de manos': '/images/banners/BANNER CREMA DE MANOS.jpeg',
     'lociones': '/images/banners/BANNER LOCION.jpeg',
-    'loción': '/images/banners/BANNER LOCION.jpeg',
-    'locion': '/images/banners/BANNER LOCION.jpeg',
     'sérum': '/images/banners/BANNER SERUM.jpeg',
     'serum': '/images/banners/BANNER SERUM.jpeg',
-    'sérums': '/images/banners/BANNER SERUM.jpeg',
     
-    // ===== ACCESORIOS =====
+    // ACCESORIOS
     'auriculares': '/images/banners/BANNER AURICULARES.jpeg',
     'cargadores': '/images/banners/BANNER CARGADORES.jpeg',
     'cables': '/images/banners/BANNER CABLES.jpeg',
     'soportes': '/images/banners/BANNER SOPORTES.jpeg',
-    'soporte': '/images/banners/BANNER SOPORTES.jpeg',
     'power banks': '/images/banners/BANNER POWERBANKS.jpeg',
     'powerbanks': '/images/banners/BANNER POWERBANKS.jpeg',
-    'powerbank': '/images/banners/BANNER POWERBANKS.jpeg',
-    'power bank': '/images/banners/BANNER POWERBANKS.jpeg',
     'adaptadores': '/images/banners/BANNER ADPATDORES.jpeg',
-    'adaptador': '/images/banners/BANNER ADPATDORES.jpeg',
     'hubs': '/images/banners/BANNER HUBS.jpeg',
-    'hub': '/images/banners/BANNER HUBS.jpeg',
     'altavoces': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'altavoz': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'parlantes': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'parlante': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'bocinas': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'bocina': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'speaker': '/images/banners/BANNER ALTAVOCES.jpeg',
-    'speakers': '/images/banners/BANNER ALTAVOCES.jpeg',
     'micrófonos': '/images/banners/BANNER MICROFONOS.jpeg',
     'microfonos': '/images/banners/BANNER MICROFONOS.jpeg',
-    'micrófono': '/images/banners/BANNER MICROFONOS.jpeg',
-    'microfono': '/images/banners/BANNER MICROFONOS.jpeg',
     'teclados': '/images/banners/BANNER TECLADOS.jpeg',
-    'teclado': '/images/banners/BANNER TECLADOS.jpeg',
     'smartwatches': '/images/banners/BANNER SMART WACHT.jpeg',
     'smartwatch': '/images/banners/BANNER SMART WACHT.jpeg',
-    'smart watch': '/images/banners/BANNER SMART WACHT.jpeg',
-    'relojes inteligentes': '/images/banners/BANNER SMART WACHT.jpeg',
-    'reloj inteligente': '/images/banners/BANNER SMART WACHT.jpeg',
   };
 
-  // Si es categoría principal
   if (!parentId && mainCategoryImages[categoryId]) {
     return mainCategoryImages[categoryId];
   }
 
-  // Buscar por nombre exacto
   if (imagesByName[normalizedName]) {
-    console.log(`✅ Imagen encontrada por nombre exacto: "${normalizedName}" -> ${imagesByName[normalizedName]}`);
     return imagesByName[normalizedName];
   }
 
-  // Buscar por coincidencia parcial (el nombre contiene la clave)
   for (const [key, image] of Object.entries(imagesByName)) {
     if (normalizedName.includes(key)) {
-      console.log(`✅ Imagen encontrada por coincidencia parcial: "${normalizedName}" incluye "${key}" -> ${image}`);
       return image;
     }
   }
 
-  // Buscar por coincidencia inversa (la clave contiene el nombre)
-  for (const [key, image] of Object.entries(imagesByName)) {
-    if (key.includes(normalizedName) && normalizedName.length > 3) {
-      console.log(`✅ Imagen encontrada por coincidencia inversa: "${key}" incluye "${normalizedName}" -> ${image}`);
-      return image;
-    }
-  }
-
-  // Fallback a categoría padre si existe
   if (parentId && mainCategoryImages[parentId]) {
-    console.log(`⚠️ Usando imagen de categoría padre para: "${normalizedName}"`);
     return mainCategoryImages[parentId];
   }
 
-  console.log(`❌ No se encontró imagen para: "${normalizedName}" (ID: ${categoryId})`);
   return null;
 };
 
@@ -135,44 +95,24 @@ export default function HomeClient() {
   const [currentSortKey, setCurrentSortKey] = useState('relevance');
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Referencias para hacer scroll
   const categoryFilterRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
 
-  // Calcular productos por categoría
   const productsCount = useMemo(() => {
     const counts: Record<string, number> = {};
-    
     categories.forEach(category => {
       counts[category.id] = allProducts.filter(product => 
         product.category?.id === category.id || 
         product.subcategory?.id === category.id
       ).length;
     });
-    
     return counts;
   }, []);
 
-  // Debug: Mostrar todas las categorías al cargar
-  useEffect(() => {
-    console.log('=== CATEGORÍAS DISPONIBLES ===');
-    categories.forEach(cat => {
-      console.log(`ID: "${cat.id}", Nombre: "${cat.name}", ParentID: "${cat.parentId || 'ninguno'}"`);
-    });
-  }, []);
-
-  // Función para obtener el banner de la categoría seleccionada
   const getCategoryBannerImage = useCallback(() => {
     if (!selectedCategory) return null;
-
     const selectedCat = categories.find(c => c.id === selectedCategory);
-    if (!selectedCat) {
-      console.log(`❌ Categoría no encontrada: ${selectedCategory}`);
-      return null;
-    }
-
-    console.log(`🔍 Buscando imagen para: ID="${selectedCat.id}", Nombre="${selectedCat.name}"`);
-    
+    if (!selectedCat) return null;
     return getBannerImageByCategory(
       selectedCat.id, 
       selectedCat.name, 
@@ -183,7 +123,6 @@ export default function HomeClient() {
   const applyFiltersAndSort = useCallback(() => {
     let tempProducts = [...allProducts];
 
-    // Filtrar por categoría seleccionada (del CategoryFilter)
     if (selectedCategory) {
       tempProducts = tempProducts.filter(product => {
         const categoryId = product.category?.id;
@@ -192,7 +131,6 @@ export default function HomeClient() {
       });
     }
     
-    // Ordenar
     switch (currentSortKey) {
       case 'price-asc':
         tempProducts.sort((a, b) => a.price - b.price);
@@ -222,7 +160,6 @@ export default function HomeClient() {
     applyFiltersAndSort();
   }, [applyFiltersAndSort]);
 
-  // Scroll automático a productos cuando se selecciona categoría
   useEffect(() => {
     if (selectedCategory && productsRef.current) {
       setTimeout(() => {
@@ -234,13 +171,11 @@ export default function HomeClient() {
     }
   }, [selectedCategory]);
 
-  // Detectar scroll para mostrar/ocultar botón
   useEffect(() => {
     const handleScroll = () => {
       if (categoryFilterRef.current) {
         const categoryFilterBottom = categoryFilterRef.current.offsetTop + categoryFilterRef.current.offsetHeight;
         const scrollPosition = window.scrollY;
-        
         setShowScrollButton(scrollPosition > categoryFilterBottom + 300);
       }
     };
@@ -264,10 +199,22 @@ export default function HomeClient() {
   const categoryBannerImage = getCategoryBannerImage();
   const selectedCategoryName = categories.find(c => c.id === selectedCategory)?.name;
 
+  const tickerProducts = allProducts.map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+  }));
+
   return (
-    <>
-      <HeroSection />
-      
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative">
+        <HeroSection />
+      </section>
+
+      {/* Barra animada de productos */}
+      <ProductTickerBar products={tickerProducts} />
+
       {/* Filtro Interactivo de Categorías */}
       <section ref={categoryFilterRef} className="py-12 bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
@@ -284,10 +231,8 @@ export default function HomeClient() {
       <section ref={productsRef} id="products" className="py-12 md:py-16 scroll-mt-20">
         <div className="container mx-auto px-4 md:px-6">
           
-          {/* Banner de Categoría - Imagen completa sin truncar */}
           {selectedCategory && categoryBannerImage && (
             <div className="mb-8 relative w-full rounded-xl overflow-hidden shadow-2xl">
-              {/* Contenedor que se adapta a la imagen */}
               <div className="relative w-full" style={{ aspectRatio: '21/9' }}>
                 <Image
                   key={`${selectedCategory}-${categoryBannerImage}`}
@@ -297,15 +242,10 @@ export default function HomeClient() {
                   className="object-contain bg-gradient-to-r from-gray-900 to-gray-800"
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                  onError={(e) => {
-                    console.error(`Error cargando imagen: ${categoryBannerImage}`);
-                  }}
                 />
                 
-                {/* Overlay ligero */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />
                 
-                {/* Botón para limpiar filtro */}
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-white p-3 rounded-full hover:bg-black/80 transition-all hover:scale-110 active:scale-95 shadow-lg border border-white/20 z-10"
@@ -314,7 +254,6 @@ export default function HomeClient() {
                   <X className="h-5 w-5 md:h-6 md:w-6" />
                 </button>
 
-                {/* Nombre de categoría superpuesto */}
                 <div className="absolute bottom-4 left-4 z-10">
                   <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
                     <h2 className="text-white font-bold text-lg md:text-xl">
@@ -329,7 +268,6 @@ export default function HomeClient() {
             </div>
           )}
 
-          {/* Título cuando no hay categoría seleccionada */}
           {!selectedCategory && (
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">
@@ -341,12 +279,10 @@ export default function HomeClient() {
             </div>
           )}
           
-          {/* Lista de Productos */}
           <ProductList products={filteredProducts} />
         </div>
       </section>
 
-      {/* Botón flotante "Volver al filtro" */}
       <button
         onClick={scrollToFilter}
         className={cn(
@@ -365,6 +301,6 @@ export default function HomeClient() {
           Ver Categorías
         </span>
       </button>
-    </>
+    </div>
   );
 }

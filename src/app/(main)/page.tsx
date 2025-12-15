@@ -1,20 +1,10 @@
-import type { Metadata } from 'next';
 import HomeClient from './HomeClient';
-
-export const metadata: Metadata = {
-  title: 'CCS724 | Tienda de Electrónica y Tecnología en Colombia',
-  description: 'Encuentra micrófonos Remax, estabilizadores, accesorios para celulares y más...',
-  alternates: {
-    canonical: 'https://www.ccs724.com',
-  },
-  openGraph: {
-    title: 'CCS724 | Tecnología y Accesorios',
-    description: 'Micrófonos, audio y accesorios móviles de alta calidad.',
-    url: 'https://www.ccs724.com',
-    siteName: 'CCS724',
-  },
-};
+import { products } from '@/lib/placeholder-data';
 
 export default function HomePage() {
-  return <HomeClient />;
+  return (
+    <>
+      <HomeClient />
+    </>
+  );
 }
