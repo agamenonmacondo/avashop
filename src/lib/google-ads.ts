@@ -5,7 +5,7 @@ declare global {
   }
 }
 
-const CONVERSION_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17757337492';
+const CONVERSION_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17796310652';
 const PURCHASE_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
 
 // Función general para enviar eventos

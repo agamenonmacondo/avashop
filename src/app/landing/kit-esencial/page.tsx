@@ -1,19 +1,26 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Mic, Video, Clock, Usb, ShieldCheck, Truck, Award, RotateCw, Lightbulb, Smartphone, Play, Pause, Volume2, VolumeX, ChevronDown } from 'lucide-react';
+import { Mic, Video, ShieldCheck, Truck, Award, ChevronDown, Check, Star, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Script from 'next/script';
+import { gtagViewItem, gtagAddToCart } from '@/lib/google-ads';
 
 export default function KitEsencialPage() {
   const router = useRouter();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    gtagViewItem(299900, [{
+      id: 'kit-esencial',
+      name: 'Kit Esencial',
+      price: 299900,
+      quantity: 1,
+    }]);
+  }, []);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -21,16 +28,15 @@ export default function KitEsencialPage() {
     name: 'Kit Esencial - CCS724',
     image: 'https://www.ccs724.com/images/combos/combos_2/kit_esencial.png',
     description: 'Kit esencial para creadores: incluye Micrófono REMAX K18 y KOOSDA Mini Gimbal KM01.',
-    brand: {
-      '@type': 'Brand',
-      name: 'CCS724',
-    },
+    brand: { '@type': 'Brand', name: 'CCS724' },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '127' },
     offers: {
       '@type': 'Offer',
       url: 'https://www.ccs724.com/landing/kit-esencial',
       priceCurrency: 'COP',
       price: '299900',
       availability: 'https://schema.org/InStock',
+      priceValidUntil: '2025-12-31',
     },
   };
 
@@ -42,38 +48,19 @@ export default function KitEsencialPage() {
       quantity: 1,
       imageUrls: ['/images/combos/combos_2/kit_esencial.png'],
       descripcion: 'Kit esencial para creadores: incluye micrófono y mini gimbal.',
-      category: {
-        name: 'Combos',
-        id: 'combos'
-      },
+      category: { name: 'Combos', id: 'combos' },
       stock: 15,
     };
-
+    gtagAddToCart(299900, [kitEsencial]);
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const exists = cart.find((item: any) => item.id === kitEsencial.id);
-    if (!exists) {
-      cart.push(kitEsencial);
-    }
+    if (!exists) cart.push(kitEsencial);
     localStorage.setItem('cart', JSON.stringify(cart));
     router.push('/cart');
   }
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
+  const scrollToBuy = () => {
+    document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -87,315 +74,287 @@ export default function KitEsencialPage() {
       <Header />
 
       <main className="pt-16">
-        {/* HERO VIDEO SECTION */}
-        <section className="relative w-full bg-black min-h-[calc(100vh-4rem)] flex flex-col">
-          
-          {/* VIDEO - Ocupa la mayor parte */}
-          <div className="relative w-full flex-1 min-h-[50vh] md:min-h-[60vh]">
-            <video
-              ref={videoRef}
-              src="/images/combos/combo_1/ESENCIAL REEL DESKTOP.mp4"
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-
-            {/* Overlay gradiente sutil */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
-
-            {/* Controles de video - Arriba derecha */}
-            <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
-              <button
-                onClick={togglePlay}
-                className="p-2.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all"
-                aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
-              >
-                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              </button>
-              <button
-                onClick={toggleMute}
-                className="p-2.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all"
-                aria-label={isMuted ? 'Activar sonido' : 'Silenciar'}
-              >
-                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-              </button>
-            </div>
-
-            {/* Badge flotante - Arriba izquierda */}
-            <div className="absolute top-4 left-4 z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary rounded-full shadow-lg">
-                <span className="text-xs font-bold text-primary-foreground tracking-wide">
-                  CCS724 • KIT ESENCIAL
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* CONTENIDO - Parte inferior sobre el video */}
-          <div className="relative z-10 bg-gradient-to-t from-black via-black/95 to-transparent -mt-32 pt-32 pb-6 px-4 md:px-8">
-            <div className="container mx-auto max-w-4xl">
-              <div className="space-y-4 text-center md:text-left">
-                {/* Título */}
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                  Empieza a Crear <span className="text-primary">Como Profesional</span>
-                </h1>
-
-                {/* Descripción corta */}
-                <p className="text-sm md:text-lg text-white/80 max-w-xl mx-auto md:mx-0">
-                  Micrófono REMAX K18 + KOOSDA Mini Gimbal KM01
-                </p>
-
-                {/* Precio y beneficios */}
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                  <div className="flex items-baseline justify-center md:justify-start gap-2">
-                    <span className="text-4xl md:text-5xl font-bold text-primary">
-                      $299.900
-                    </span>
-                    <span className="text-sm text-white/70">COP</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-center md:justify-start gap-4 text-white/70 text-xs md:text-sm">
-                    <span className="flex items-center gap-1.5">
-                      <Truck className="h-4 w-4 text-primary" />
-                      Envío Gratis
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <ShieldCheck className="h-4 w-4 text-primary" />
-                      Pago Contra Entrega
-                    </span>
-                  </div>
-                </div>
-
-                {/* Botones */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Button
-                    size="lg"
-                    onClick={handleBuyKitEsencial}
-                    className="flex-1 sm:flex-none text-base px-8 py-6 font-bold shadow-2xl hover:shadow-primary/30 transition-all hover:scale-105 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
-                  >
-                    Comprar Ahora
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => document.getElementById('detalles')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="flex-1 sm:flex-none text-base px-8 py-6 font-semibold border-white/50 text-white hover:bg-white/20 hover:text-white rounded-full backdrop-blur-sm"
-                  >
-                    Ver Detalles
-                  </Button>
-                </div>
-              </div>
-
-              {/* Scroll indicator */}
-              <div className="flex justify-center pt-6">
-                <button 
-                  onClick={() => document.getElementById('confianza')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="animate-bounce text-white/50 hover:text-white/80 transition-colors"
-                >
-                  <ChevronDown className="h-8 w-8" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECCIÓN DE CONFIANZA */}
-        <section id="confianza" className="bg-secondary/30 py-6 border-y border-border/50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-              <div className="flex items-center justify-center gap-3">
-                <Truck className="h-7 w-7 text-primary flex-shrink-0" />
-                <div className="text-left">
-                  <p className="font-bold text-foreground text-sm md:text-base">Envío a toda Colombia</p>
-                  <p className="text-xs text-muted-foreground">Rápido y seguro</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <ShieldCheck className="h-7 w-7 text-primary flex-shrink-0" />
-                <div className="text-left">
-                  <p className="font-bold text-foreground text-sm md:text-base">Pago 100% Seguro</p>
-                  <p className="text-xs text-muted-foreground">Transacciones protegidas</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <Award className="h-7 w-7 text-primary flex-shrink-0" />
-                <div className="text-left">
-                  <p className="font-bold text-foreground text-sm md:text-base">Garantía de Calidad</p>
-                  <p className="text-xs text-muted-foreground">30 días de garantía</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* RESUMEN DEL KIT */}
-        <section className="py-12 md:py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">¿Qué incluye el Kit Esencial?</h2>
-              <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
-                Todo lo esencial para comenzar a crear contenido de calidad
-              </p>
-            </div>
-            
-            <div className="max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                <div className="bg-card rounded-2xl p-6 md:p-8 border shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Mic className="w-7 h-7 md:w-8 md:h-8 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-lg md:text-xl mb-2 text-center">REMAX Wireless K18</h3>
-                  <p className="text-muted-foreground mb-4 text-center text-sm">Micrófono inalámbrico profesional</p>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Cancelación de Ruido IA</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Sistema 2 en 1</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> 6 Horas de Grabación</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Plug & Play (Tipo-C)</li>
-                  </ul>
-                </div>
-                <div className="bg-card rounded-2xl p-6 md:p-8 border shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Video className="w-7 h-7 md:w-8 md:h-8 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-lg md:text-xl mb-2 text-center">KOOSDA Mini Gimbal KM01</h3>
-                  <p className="text-muted-foreground mb-4 text-center text-sm">3 en 1: Gimbal, Selfie Stick y Trípode</p>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Diseño Mini Portátil</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Luz de Relleno Extraíble</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Rotación 360°</li>
-                    <li className="flex items-center gap-2"><span className="text-primary">✓</span> Compatible con cualquier celular</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* DETALLES DE PRODUCTOS */}
-        <section id="detalles" className="py-12 md:py-16 bg-secondary/20">
-          <div className="container mx-auto px-4">
-            <div className="space-y-16 md:space-y-24 max-w-7xl mx-auto">
-              
-              {/* Producto 1: Micrófono */}
-              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div className="order-2 md:order-1">
-                  <span className="text-primary font-semibold text-xs md:text-sm tracking-wider uppercase">Incluido en el Kit</span>
-                  <h3 className="text-2xl md:text-4xl font-bold mt-2 mb-3">REMAX Wireless K18</h3>
-                  <p className="text-lg md:text-xl text-muted-foreground mb-6">Audio Profesional. Conexión Instantánea.</p>
-                  <div className="grid gap-4">
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Mic className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Cancelación de Ruido IA</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Tu voz se escucha clara y nítida</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Video className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Sistema 2 en 1</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Ideal para entrevistas y contenido dual</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Clock className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">6 Horas de Grabación</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Batería de larga duración</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Usb className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Plug & Play (Tipo-C)</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Conecta y graba al instante sin apps</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="order-1 md:order-2 relative h-[280px] md:h-[450px] w-full">
-                  <Image 
-                    src="/images/remax/115_K-18.png" 
-                    alt="Micrófono REMAX K18" 
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
-
-              {/* Producto 2: Mini Gimbal */}
-              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div className="relative h-[280px] md:h-[450px] w-full">
-                  <Image 
-                    src="/images/remax/007_KM-01.png" 
-                    alt="Gimbal KOOSDA KM01" 
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div>
-                  <span className="text-primary font-semibold text-xs md:text-sm tracking-wider uppercase">Incluido en el Kit</span>
-                  <h3 className="text-2xl md:text-4xl font-bold mt-2 mb-3">KOOSDA Mini Gimbal KM01</h3>
-                  <p className="text-lg md:text-xl text-muted-foreground mb-6">3 en 1: Graba, Transmite, Captura.</p>
-                  <div className="grid gap-4">
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Smartphone className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Gimbal, Selfie Stick y Trípode</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Versatilidad total para cualquier toma</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Luz de Relleno Extraíble</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Iluminación perfecta en cualquier lugar</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <Video className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Diseño Mini Portátil</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Cabe en tu bolsillo, listo para viajar</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl border">
-                      <RotateCw className="w-5 h-5 md:w-6 md:h-6 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-card-foreground text-sm md:text-base">Rotación 360°</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">Captura todos los ángulos automáticamente</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         
-        {/* CTA FINAL */}
-        <section className="py-16 md:py-20 bg-gradient-to-b from-primary/10 to-background">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-5xl font-bold mb-4">¿Listo para empezar?</h2>
-            <p className="text-base md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              El Kit Esencial tiene todo lo que necesitas para comenzar tu camino como creador.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        {/* ===== SECCIÓN 1: PROBLEMA ===== */}
+        <section className="relative w-full aspect-[4/5] md:aspect-video flex items-end overflow-hidden">
+          <Image
+            src="/images/landing/1 imagen problmea.jpeg"
+            alt="El problema de grabar sin equipo profesional"
+            fill
+            priority
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 pb-12 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            <div className="container mx-auto max-w-3xl text-center space-y-4">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                Grabar no es lo mismo que <span className="text-red-400">crear.</span>
+              </h1>
+              <p className="text-base md:text-lg text-white/90">
+                Cuando no tienes control, tu contenido se nota.
+              </p>
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-lg md:text-xl rounded-full shadow-lg transition-transform hover:scale-105"
-                onClick={handleBuyKitEsencial}
+                onClick={scrollToBuy}
+                className="text-base px-8 py-6 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
               >
-                Comprar - $299.900
+                Quiero la Solución →
               </Button>
             </div>
-            <p className="text-xs md:text-sm text-muted-foreground mt-4">Envío Gratis • Pago Contra Entrega • 30 días de garantía</p>
           </div>
         </section>
+
+        {/* ===== SECCIÓN 2: SOLUCIÓN ===== */}
+        <section className="relative w-full aspect-[4/5] md:aspect-video flex items-end overflow-hidden">
+          <Image
+            src="/images/landing/2. solucion.jpeg"
+            alt="Kit Esencial CCS724"
+            fill
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 pb-12 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            <div className="container mx-auto max-w-2xl space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/30 border border-primary/50 rounded-full">
+                <Zap className="h-4 w-4 text-primary" />
+                <span className="text-xs font-bold text-primary">KIT ESENCIAL</span>
+              </div>
+              
+              <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+                Todo cambia cuando decides <span className="text-primary">hacerlo bien.</span>
+              </h2>
+
+              <div className="flex items-baseline gap-3">
+                <span className="text-3xl md:text-5xl font-black text-primary">$299.900</span>
+                <span className="text-base text-white/60 line-through">$420.000</span>
+                <span className="px-2 py-0.5 bg-green-500 text-white text-xs font-bold rounded-full">-29%</span>
+              </div>
+
+              <div className="flex flex-wrap gap-3 text-white/90 text-xs">
+                <span className="flex items-center gap-1.5">
+                  <Truck className="h-4 w-4 text-primary" /> Envío Gratis
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-primary" /> Pago Contra Entrega
+                </span>
+              </div>
+
+              <Button
+                size="lg"
+                onClick={handleBuyKitEsencial}
+                className="text-lg px-10 py-7 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
+              >
+                🛒 Comprar Ahora
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== BARRA DE CONFIANZA ===== */}
+        <section className="bg-primary py-3">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-10 text-primary-foreground text-xs md:text-sm font-medium">
+              <span className="flex items-center gap-1.5">
+                <Check className="h-4 w-4" /> +500 creadores
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Star className="h-4 w-4 fill-current" /> 4.8/5
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Truck className="h-4 w-4" /> Envío 24-48h
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SECCIÓN 3: AUDIO ===== */}
+        <section className="relative w-full aspect-[4/5] md:aspect-video flex items-end overflow-hidden">
+          <Image
+            src="/images/landing/3 audio.jpeg"
+            alt="Micrófono REMAX K18"
+            fill
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 pb-12 bg-gradient-to-t from-black/70 to-transparent">
+            <div className="container mx-auto max-w-xl ml-auto text-right space-y-3">
+              <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs">
+                🎤 Micrófono REMAX K18
+              </span>
+              <h2 className="text-2xl md:text-4xl font-bold text-white">
+                Que te escuchen, <span className="text-primary">importa más.</span>
+              </h2>
+              <ul className="space-y-1.5 text-white/90 text-sm">
+                <li className="flex items-center justify-end gap-2">
+                  Cancelación de Ruido IA <Check className="h-4 w-4 text-primary" />
+                </li>
+                <li className="flex items-center justify-end gap-2">
+                  Sistema Dual <Check className="h-4 w-4 text-primary" />
+                </li>
+                <li className="flex items-center justify-end gap-2">
+                  6h batería <Check className="h-4 w-4 text-primary" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SECCIÓN 4: ESTABILIZACIÓN ===== */}
+        <section className="relative w-full aspect-[4/5] md:aspect-video flex items-end overflow-hidden">
+          <Image
+            src="/images/landing/4 estalibizacionb.jpeg"
+            alt="Gimbal KM01"
+            fill
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 pb-12 bg-gradient-to-t from-black/70 to-transparent">
+            <div className="container mx-auto max-w-xl space-y-3">
+              <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-white text-xs">
+                📹 Gimbal KM01
+              </span>
+              <h2 className="text-2xl md:text-4xl font-bold text-white">
+                Muévete. <span className="text-primary">Tu imagen sigue estable.</span>
+              </h2>
+              <ul className="space-y-1.5 text-white/90 text-sm">
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> 3 en 1: Gimbal + Selfie + Trípode
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> Luz LED incorporada
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> Rotación 360°
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SECCIÓN 5: PROFESIONAL ===== */}
+        <section className="relative w-full aspect-[4/5] md:aspect-video flex items-center overflow-hidden">
+          <Image
+            src="/images/landing/5 profesional.jpeg"
+            alt="Resultado profesional"
+            fill
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 text-center">
+            <div className="inline-block bg-black/50 backdrop-blur-sm rounded-2xl p-6 space-y-4">
+              <h2 className="text-2xl md:text-4xl font-bold text-white">
+                Esto ya se ve <span className="text-primary">profesional.</span>
+              </h2>
+              <p className="text-white/80">Y no necesitas un estudio.</p>
+              <div className="flex justify-center gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-black text-primary">2</div>
+                  <div className="text-xs text-white/70">Productos</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-black text-primary">∞</div>
+                  <div className="text-xs text-white/70">Posibilidades</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SECCIÓN 6: CTA FINAL ===== */}
+        <section id="comprar" className="relative w-full aspect-[4/5] md:aspect-video flex items-end overflow-hidden">
+          <Image
+            src="/images/landing/6 cta.jpeg"
+            alt="Compra Kit Esencial"
+            fill
+            className="object-cover"
+          />
+          
+          <div className="relative z-10 w-full p-6 pb-12 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+            <div className="container mx-auto max-w-2xl space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/30 border border-green-500/50 rounded-full">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span className="text-xs font-medium text-green-400">¡Últimas unidades!</span>
+              </div>
+              
+              <h2 className="text-2xl md:text-4xl font-bold text-white">
+                Crea contenido <span className="text-primary">profesional.</span>
+              </h2>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Mic className="h-5 w-5 text-primary" />
+                  <span className="text-white text-sm">Micrófono REMAX K18</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Video className="h-5 w-5 text-primary" />
+                  <span className="text-white text-sm">Gimbal KM01</span>
+                </div>
+                <div className="border-t border-white/20 pt-3 flex justify-between items-center">
+                  <span className="text-white/60 text-sm line-through">$420.000</span>
+                  <span className="font-black text-primary text-2xl">$299.900</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 text-white/80 text-xs">
+                <span className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full">
+                  <Truck className="h-3 w-3" /> Envío Gratis
+                </span>
+                <span className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full">
+                  <ShieldCheck className="h-3 w-3" /> Pago Contra Entrega
+                </span>
+                <span className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full">
+                  <Award className="h-3 w-3" /> 30 días garantía
+                </span>
+              </div>
+
+              <Button
+                size="lg"
+                onClick={handleBuyKitEsencial}
+                className="w-full text-lg py-7 font-black bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
+              >
+                🛒 ¡LO QUIERO! - $299.900
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== FAQ ===== */}
+        <section className="py-12 bg-background">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <h2 className="text-xl md:text-3xl font-bold text-center mb-8">Preguntas Frecuentes</h2>
+            <div className="space-y-3">
+              {[
+                { q: '¿Funciona con mi celular?', a: 'Sí, compatible con USB-C y todos los smartphones.' },
+                { q: '¿Cómo es el envío?', a: 'Envío gratis, llega en 2-5 días hábiles.' },
+                { q: '¿Puedo pagar contra entrega?', a: '¡Sí! Pagas cuando recibes.' },
+                { q: '¿Tiene garantía?', a: '30 días de garantía.' },
+              ].map((faq, i) => (
+                <details key={i} className="group bg-card border rounded-xl p-4">
+                  <summary className="font-semibold flex justify-between items-center cursor-pointer">
+                    {faq.q}
+                    <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p className="mt-2 text-muted-foreground text-sm">{faq.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== FLOATING CTA (Mobile) ===== */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-background to-transparent md:hidden">
+          <Button
+            size="lg"
+            onClick={handleBuyKitEsencial}
+            className="w-full text-base py-5 font-bold bg-primary text-primary-foreground rounded-full shadow-xl"
+          >
+            🛒 Comprar - $299.900
+          </Button>
+        </div>
+
       </main>
 
       <Footer />

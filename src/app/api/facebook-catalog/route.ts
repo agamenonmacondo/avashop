@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { products } from '@/lib/placeholder-data';
 
-// Función para escapar caracteres especiales en XML
+// Función para escapar caracteres especiales en XML (sin tocar URLs)
 function escapeXml(unsafe: string): string {
   return unsafe
     .replace(/&/g, '&amp;')
@@ -46,19 +46,20 @@ export async function GET() {
       return; // Omitir productos sin imágenes
     }
 
-    // Escapar todos los textos que van dentro del XML
+    // URLs no deben ser escapadas (son seguras para XML)
+    const productUrl = `${baseUrl}/product/${product.slug || product.id}`;
+    
+    // Escapar solo los textos que no son URLs
     const safeTitle = escapeXml(product.name);
     const safeDescription = escapeXml(product.description || product.name);
-    const safeLink = escapeXml(`${baseUrl}/product/${product.slug || product.id}`);
-    const safeImageUrl = escapeXml(imageUrl);
 
     xml += `
 <item>
   <g:id>${product.id}</g:id>
   <g:title>${safeTitle}</g:title>
   <g:description>${safeDescription}</g:description>
-  <g:link>${safeLink}</g:link>
-  <g:image_link>${safeImageUrl}</g:image_link>
+  <g:link>${productUrl}</g:link>
+  <g:image_link>${imageUrl}</g:image_link>
   <g:brand>CCS724</g:brand>
   <g:condition>new</g:condition>
   <g:availability>${(product.stock || 0) > 0 ? 'in stock' : 'out of stock'}</g:availability>
@@ -78,9 +79,7 @@ export async function GET() {
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'no-cache, no-store, must-revalidate', // Desactivar caché temporalmente para debugging
-      'Pragma': 'no-cache',
-      'Expires': '0',
+      'Cache-Control': 'public, max-age=3600', // Cache por 1 hora
     },
   });
 }
