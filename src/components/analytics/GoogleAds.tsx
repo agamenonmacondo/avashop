@@ -1,28 +1,30 @@
 'use client';
 
 import Script from 'next/script';
+import { useEffect } from 'react';
+
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17796310652';
 
 export default function GoogleAds() {
-  const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
-
-  if (!ADS_ID) {
-    console.warn('⚠️ Google Ads ID no encontrado. Revisa tu archivo .env.local');
-    return null;
-  }
+  useEffect(() => {
+    console.log('✅ [Google Ads] Componente montado con ID:', GOOGLE_ADS_ID);
+  }, []);
 
   return (
     <>
-      {/* Google Ads (gtag.js) */}
+      {/* Global site tag (gtag.js) - Google Ads */}
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`}
         strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
       />
+      
       <Script id="google-ads-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${ADS_ID}');
+          gtag('config', '${GOOGLE_ADS_ID}');
+          console.log('✅ [Google Ads] Etiqueta global configurada: ${GOOGLE_ADS_ID}');
         `}
       </Script>
     </>
