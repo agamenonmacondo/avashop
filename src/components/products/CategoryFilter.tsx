@@ -27,7 +27,7 @@ export default function CategoryFilter({
   const mainCategories = categories
     .filter(cat => !cat.parentId)
     .sort((a, b) => {
-      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2 };
+      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2, 'carloscardona': 3 };
       return (order[a.id] || 999) - (order[b.id] || 999);
     });
   
@@ -41,6 +41,7 @@ export default function CategoryFilter({
     const images: Record<string, string> = {
       'accesorios': '/images/banners/banner acesosrios.jpeg',
       'belleza': '/images/banners/banner belleza.jpeg',
+      'carloscardona': '/images/banners/carlos cardona baner.jpeg',
     };
     return images[categoryId] || null;
   };
@@ -87,6 +88,9 @@ export default function CategoryFilter({
       'smartwatches': '/images/banners/BANNER SMART WACHT.jpeg',
       'smartwatch': '/images/banners/BANNER SMART WACHT.jpeg',
       'relojes inteligentes': '/images/banners/BANNER SMART WACHT.jpeg',
+      
+      // Carlos Cardona Comunicaciones
+      'celulares': '/images/banners/carlos cardona baner.jpeg',
     };
 
     // Buscar coincidencia exacta primero
@@ -234,6 +238,8 @@ export default function CategoryFilter({
                     "absolute inset-0",
                     category.id === 'accesorios' 
                       ? "bg-gradient-to-r from-blue-600 to-purple-600" 
+                      : category.id === 'carloscardona'
+                      ? "bg-gradient-to-r from-orange-600 to-red-600"
                       : "bg-gradient-to-r from-pink-600 to-rose-600"
                   )} />
                 )}
@@ -405,13 +411,14 @@ export function CategoryFilterMobile({
   const mainCategories = categories
     .filter(cat => !cat.parentId)
     .sort((a, b) => {
-      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2 };
+      const order: Record<string, number> = { 'accesorios': 1, 'belleza': 2, 'carloscardona': 3 };
       return (order[a.id] || 999) - (order[b.id] || 999);
     });
   
   const getCategoryIcon = (categoryId: string) => {
     if (categoryId === 'belleza') return '💄';
     if (categoryId === 'accesorios') return '🎧';
+    if (categoryId === 'carloscardona') return '📱';
     return '📦';
   };
 
@@ -483,7 +490,7 @@ export function CategoryFilterMobile({
                   >
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-lg">
-                        {subcategory.id.startsWith('b') ? '✨' : '🔌'}
+                        {subcategory.id.startsWith('b') ? '✨' : subcategory.id.startsWith('c') ? '📱' : '🔌'}
                       </span>
                       <span className="text-xs">{subcategory.name}</span>
                       {productsCount[subcategory.id] && (

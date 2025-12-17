@@ -15,6 +15,13 @@ export const accesoriosCategory: Category = {
   slug: 'accesorios' 
 };
 
+export const carloscardonaCategory: Category = { 
+  id: 'carloscardona', 
+  name: 'Carlos Cardona', 
+  slug: 'carloscardona' 
+};
+
+
 // ===== SUBCATEGORÍAS DE BELLEZA =====
 export const limpiadoresCategory: Category = { 
   id: 'b1', 
@@ -178,11 +185,19 @@ export const adaptadoresCategory: Category = {
   parentId: 'accesorios' 
 };
 
+export const celularesCategory: Category = { 
+  id: 'c1', 
+  name: 'celulares', 
+  slug: 'celulares',
+  parentId: 'carloscardona' 
+};
+
 // ===== ARRAY DE CATEGORÍAS =====
 export const categories: Category[] = [
   bellezaCategory,
   accesoriosCategory,
   limpiadoresCategory,
+  carloscardonaCategory,
   hidratantesCategory,
   mascarillasCategory,
   protectoresSolaresCategory,
@@ -205,6 +220,7 @@ export const categories: Category[] = [
   tecladosCategory,
   micrófonosCategory,
   adaptadoresCategory,
+  celularesCategory
 ];
 
 
@@ -3914,22 +3930,83 @@ export const products: Product[] = [
     createdAt: now,
     updatedAt: now,
   },
+  // ...existing code...
   {
-    id: "mon-sub-set-de-vitamina-c",
-    name: "Set De Vitamina C",
-    description: "Producto de MON_SUB",
-    price: 41250,
+    id: "iphone-15-128gb",
+    name: "Apple iPhone 15 128GB",
+    description: "iPhone 15 con pantalla Super Retina XDR de 6.1 pulgadas, chip A16 Bionic, cámara principal de 48MP con teleobjetivo 2x, Dynamic Island y USB-C. Incluye 128GB de almacenamiento interno.",
+    price: 1550000,
     imageUrls: [
-      "/images/mon_sub/063_SET_DE_VITAMINA_C.png"
+      "/images/iphone 15/650383081fa16-apple iphone 15.png",
+      "/images/iphone 15/iphone_15_hero.png",
+      "/images/iphone 15/iPhone-15-Pink.png",
+      "/images/iphone 15/PNG.monsteriphone-15-plus-pro-pro-max-blue png.png"
     ],
-    category: setsBellezaCategory,
+    category: celularesCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
-    details: JSON.parse("{\"pagina\": 0, \"categoria_original\": \"\", \"color_principal\": \"\", \"precio_base\": 25000, \"multiplicador\": 1.65, \"subcategoria\": \"setsBellezaCategory\"}"),
+    details: JSON.parse("{\"pagina\":0,\"categoria_original\":\"celulares\",\"color_principal\":\"varios\",\"precio_base\":1550000,\"multiplicador\":1,\"subcategoria\":\"celulares\",\"almacenamiento\":\"128GB\",\"modelo\":\"iPhone 15\"}"),
     createdAt: now,
     updatedAt: now,
-  }
+  },
+  {
+    id: "iphone-15-pro-128gb",
+    name: "Apple iPhone 15 Pro 128GB",
+    description: "iPhone 15 Pro con diseño de titanio, pantalla Super Retina XDR de 6.1 pulgadas con ProMotion 120Hz, chip A17 Pro, sistema de cámaras Pro con teleobjetivo 3x, botón de acción personalizable y USB-C con USB 3. Incluye 128GB de almacenamiento.",
+    price: 2950000,
+    imageUrls: [
+      "/images/iphone 16 pro/16pro.png",
+      "/images/iphone 16 pro/iPhone-16-Pro-Max-PNG-File-thumb.png",
+      "/images/iphone 16 pro/iphone-16pro.png"
+    ],
+    category: celularesCategory,
+    stock: 8,
+    rating: 0,
+    reviewsCount: 0,
+    details: JSON.parse("{\"pagina\":0,\"categoria_original\":\"celulares\",\"color_principal\":\"titanio\",\"precio_base\":2950000,\"multiplicador\":1,\"subcategoria\":\"celulares\",\"almacenamiento\":\"128GB\",\"modelo\":\"iPhone 15 Pro\"}"),
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
+    id: "iphone-16-pro-256gb",
+    name: "Apple iPhone 16 Pro 256GB",
+    description: "iPhone 16 Pro con diseño de titanio de grado 5, pantalla Super Retina XDR de 6.3 pulgadas con ProMotion 120Hz, chip A18 Pro de última generación, sistema de cámaras profesional con Fusion 48MP y teleobjetivo 5x, Control de Cámara táctil y 256GB de almacenamiento.",
+    price: 3500000,
+    imageUrls: [
+      "/images/iphone 16 pro/16pro.png",
+      "/images/iphone 16 pro/iPhone-16-Pro-Max-PNG-File-thumb.png",
+      "/images/iphone 16 pro/iphone-16pro.png"
+    ],
+    category: celularesCategory,
+    stock: 6,
+    rating: 0,
+    reviewsCount: 0,
+    details: JSON.parse("{\"pagina\":0,\"categoria_original\":\"celulares\",\"color_principal\":\"titanio natural\",\"precio_base\":3500000,\"multiplicador\":1,\"subcategoria\":\"celulares\",\"almacenamiento\":\"256GB\",\"modelo\":\"iPhone 16 Pro\"}"),
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
+    id: "iphone-16-pro-max-256gb",
+    name: "Apple iPhone 16 Pro Max 256GB - Desert Titanium",
+    description: "iPhone 16 Pro Max en acabado Desert Titanium con pantalla Super Retina XDR de 6.9 pulgadas, la más grande en un iPhone, chip A18 Pro, sistema de cámaras Pro con teleobjetivo 5x mejorado, batería de mayor duración, Control de Cámara con sensores táctiles y 256GB de almacenamiento interno.",
+    price: 3890000,
+    imageUrls: [
+      "/images/iphone_16_promax/121032-iphone-16-pro-max.png",
+      "/images/iphone_16_promax/Celular-Apple-iPhone-16-PRO---PRO-MAX-Desert-Titanium-2.png",
+      "/images/iphone_16_promax/iphone-16-pro-max-desert-titanium-pdp-image-position-2-en-ww.png"
+    ],
+    category: celularesCategory,
+    stock: 5,
+    rating: 0,
+    reviewsCount: 0,
+    details: JSON.parse("{\"pagina\":0,\"categoria_original\":\"celulares\",\"color_principal\":\"desert titanium\",\"precio_base\":3890000,\"multiplicador\":1,\"subcategoria\":\"celulares\",\"almacenamiento\":\"256GB\",\"modelo\":\"iPhone 16 Pro Max\"}"),
+    createdAt: now,
+    updatedAt: now,
+  },
+ 
+ 
+
 ];
 
 export const mockUser: User = {
@@ -3941,6 +4018,7 @@ export const mockUser: User = {
   addresses: [
     { id: 'addr1', street: 'Carrera 7 # 70-30', city: 'Bogotá D.C.', state: 'Cundinamarca', zipCode: '110231', country: 'Colombia', isDefault: true },
   ],
+  
 };
 
 export const mockOrders: Order[] = [

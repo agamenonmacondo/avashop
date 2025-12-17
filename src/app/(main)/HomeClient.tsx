@@ -29,6 +29,7 @@ const getBannerImageByCategory = (categoryId: string, categoryName: string, pare
   const mainCategoryImages: Record<string, string> = {
     'accesorios': '/images/banners/banner acesosrios.jpeg',
     'belleza': '/images/banners/banner belleza.jpeg',
+    'carloscardona': '/images/banners/carlos cardona baner.jpeg',
   };
 
   const normalizedName = categoryName.toLowerCase().trim();
@@ -66,6 +67,9 @@ const getBannerImageByCategory = (categoryId: string, categoryName: string, pare
     'teclados': '/images/banners/BANNER TECLADOS.jpeg',
     'smartwatches': '/images/banners/BANNER SMART WACHT.jpeg',
     'smartwatch': '/images/banners/BANNER SMART WACHT.jpeg',
+    
+    // CARLOS CARDONA COMUNICACIONES
+    'celulares': '/images/banners/carlos cardona baner.jpeg',
   };
 
   if (!parentId && mainCategoryImages[categoryId]) {
