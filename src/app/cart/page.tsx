@@ -17,7 +17,6 @@ export default function CartPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  // Cargar carrito desde localStorage
   useEffect(() => {
     const loadCart = () => {
       try {
@@ -32,7 +31,6 @@ export default function CartPage() {
 
     loadCart();
 
-    // Escuchar cambios en el carrito
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'cart') {
         loadCart();
@@ -43,7 +41,6 @@ export default function CartPage() {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Guardar carrito en localStorage
   const saveCart = (items: CartItem[]) => {
     localStorage.setItem('cart', JSON.stringify(items));
     setCartItems(items);
@@ -71,7 +68,13 @@ export default function CartPage() {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingCost = subtotal > 200000 ? 0 : 15000;
+  
+  // ✅ Verificar si el carrito contiene el Combo Navideño
+  const hasComboNavideno = cartItems.some(item => item.id === 'combo-navideno');
+  
+  // ✅ Si tiene Combo Navideño, envío gratis. Si no, aplicar lógica normal
+  const shippingCost = hasComboNavideno ? 0 : (subtotal > 200000 ? 0 : 15000);
+  
   const totalAmount = subtotal + shippingCost;
 
   if (cartItems.length === 0) {
@@ -145,8 +148,15 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
-                <span>{shippingCost === 0 ? 'Gratis' : formatColombianCurrency(shippingCost)}</span>
+                <span className={hasComboNavideno ? "text-green-600 font-semibold" : ""}>
+                  {shippingCost === 0 ? 'Gratis' : formatColombianCurrency(shippingCost)}
+                </span>
               </div>
+              {hasComboNavideno && (
+                <p className="text-xs text-green-600">
+                  🎄 ¡Envío gratis por Combo Navideño!
+                </p>
+              )}
               <div className="border-t pt-2 flex justify-between font-bold text-xl">
                 <span>Total</span>
                 <span>{formatColombianCurrency(totalAmount)}</span>

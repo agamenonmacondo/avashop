@@ -8,6 +8,15 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const heroContent = [
     {
         type: 'video',
+        src: '/images/combo_navideño/hero video.mp4',
+        title: '🎄 Combo Navideño',
+        description: 'Regalo familiar a precio inteligente: Masajeador + Smart Band + Consola Retro',
+        price: '$145.000',
+        link: '/landing/combo-navideno',
+        buttonText: '🎁 Ver Combo Navideño',
+    },
+    {
+        type: 'video',
         src: '/images/combos/combo_1/COMBO PRO REEL DESKTOP.mp4',
         title: 'Combo PRO',
         description: 'Audio Dual y Estabilización Inteligente',
@@ -108,47 +117,60 @@ export default function HeroSection() {
                     className="absolute inset-0 w-full h-full object-cover"
                 />
 
-                {/* Overlay gradiente oscuro para legibilidad */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+                {/* Overlay gradiente REDUCIDO - Solo en los bordes para legibilidad del texto */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
                 {/* Contenido sobre el video */}
-                <div className="absolute inset-0 flex items-end sm:items-center pb-12 sm:pb-0">
+                <div className="absolute inset-0 flex items-end sm:items-center pb-16 sm:pb-0">
                     <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
-                        <div className="max-w-lg space-y-2 sm:space-y-3 md:space-y-4">
-                            {/* Badge - Siempre visible con buen contraste */}
-                            <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-primary rounded-full shadow-lg">
-                                <span className="text-[10px] sm:text-xs md:text-sm font-bold text-primary-foreground tracking-wide">
-                                    CCS724
+                        <div className="max-w-lg space-y-3 sm:space-y-4 md:space-y-5">
+                            {/* Badge - Destacado para Combo Navideño */}
+                            <div className={`inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-2xl ${
+                                activeIndex === 0 
+                                    ? 'bg-red-600 animate-pulse' 
+                                    : 'bg-primary'
+                            }`}>
+                                <span className="text-xs sm:text-sm md:text-base font-bold text-white tracking-wide">
+                                    {activeIndex === 0 ? '🎄 NAVIDAD 2025' : 'CCS724'}
                                 </span>
                             </div>
 
-                            {/* Título - Blanco puro para máximo contraste */}
-                            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-lg">
+                            {/* Título - Con sombra más fuerte para contraste */}
+                            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                                 {activeContent.title}
                             </h1>
 
                             {/* Descripción */}
-                            <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed max-w-md drop-shadow">
+                            <p className="text-sm sm:text-base md:text-lg text-white/95 leading-relaxed max-w-md drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                                 {activeContent.description}
                             </p>
 
                             {/* Precio */}
                             {activeContent.price && (
-                                <div className="flex items-baseline gap-1.5 sm:gap-2">
-                                    <span className="text-xl sm:text-2xl md:text-4xl font-bold text-primary drop-shadow-lg">
+                                <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
+                                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-primary drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                                         {activeContent.price}
                                     </span>
-                                    <span className="text-xs sm:text-sm text-white/80 font-medium">COP</span>
+                                    <span className="text-sm sm:text-base text-white/90 font-semibold">COP</span>
+                                    {activeIndex === 0 && (
+                                        <span className="px-3 py-1 bg-green-500 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg">
+                                            ENVÍO GRATIS
+                                        </span>
+                                    )}
                                 </div>
                             )}
 
-                            {/* CTA Button */}
-                            <div className="pt-1 sm:pt-2">
+                            {/* CTA Button - Mejorado para mobile y desktop */}
+                            <div className="pt-2 sm:pt-3">
                                 <Button
-                                    size="default"
+                                    size="lg"
                                     onClick={handleCTAClick}
-                                    className="text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105 bg-primary hover:bg-primary/90 text-primary-foreground"
+                                    className={`w-full sm:w-auto text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-bold shadow-2xl hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-105 rounded-full ${
+                                        activeIndex === 0
+                                            ? 'bg-red-600 hover:bg-red-700 text-white'
+                                            : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                                    }`}
                                 >
                                     {activeContent.buttonText}
                                 </Button>
@@ -160,23 +182,23 @@ export default function HeroSection() {
                 {/* Controles de navegación - Flechas */}
                 <button
                     onClick={goToPrevious}
-                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all opacity-70 sm:opacity-0 sm:group-hover:opacity-100"
+                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 shadow-xl"
                     aria-label="Anterior"
                 >
-                    <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+                    <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                 </button>
                 <button
                     onClick={goToNext}
-                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all opacity-70 sm:opacity-0 sm:group-hover:opacity-100"
+                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 md:p-4 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 shadow-xl"
                     aria-label="Siguiente"
                 >
-                    <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+                    <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                 </button>
 
                 {/* Indicadores de navegación */}
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:bottom-4 sm:right-4 md:bottom-6 md:right-8 flex items-center gap-1.5 sm:gap-2">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 flex items-center gap-2 sm:gap-3">
                     {/* Contador - Solo en tablet/desktop */}
-                    <span className="hidden sm:inline text-white/80 text-xs md:text-sm font-medium mr-2 drop-shadow">
+                    <span className="hidden sm:inline text-white/90 text-sm md:text-base font-semibold mr-2 drop-shadow-lg">
                         {activeIndex + 1} / {heroContent.length}
                     </span>
                     
@@ -185,10 +207,10 @@ export default function HeroSection() {
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                            className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 shadow-lg ${
                                 activeIndex === index
-                                    ? 'w-5 sm:w-6 md:w-8 bg-primary'
-                                    : 'w-1.5 sm:w-2 bg-white/60 hover:bg-white/80'
+                                    ? 'w-6 sm:w-8 md:w-10 bg-primary'
+                                    : 'w-2 sm:w-2.5 bg-white/70 hover:bg-white/90'
                             }`}
                             aria-label={`Ir a slide ${index + 1}`}
                         />
@@ -196,9 +218,9 @@ export default function HeroSection() {
                 </div>
 
                 {/* Barra de progreso */}
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-white/30">
+                <div className="absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-white/20">
                     <div 
-                        className="h-full bg-primary transition-all duration-300"
+                        className="h-full bg-primary transition-all duration-300 shadow-lg"
                         style={{ 
                             width: `${((activeIndex + 1) / heroContent.length) * 100}%` 
                         }}

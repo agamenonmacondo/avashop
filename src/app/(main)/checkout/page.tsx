@@ -53,10 +53,16 @@ const calculateOrderSummary = (cartItems: any[]) => {
   }
   
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 200000 ? 0 : 15000;
-  const total = subtotal + shipping; // ✅ Sin IVA
   
-  return { items: cartItems, subtotal, shipping, total }; // ✅ Sin incluir 'iva'
+  // ✅ Verificar si el carrito contiene el Combo Navideño
+  const hasComboNavideno = cartItems.some(item => item.id === 'combo-navideno');
+  
+  // ✅ Si tiene Combo Navideño, envío gratis. Si no, aplicar lógica normal
+  const shipping = hasComboNavideno ? 0 : (subtotal > 200000 ? 0 : 15000);
+  
+  const total = subtotal + shipping;
+  
+  return { items: cartItems, subtotal, shipping, total };
 };
 
 const APP_URL = (process.env.NEXT_PUBLIC_BOLD_REDIRECT_URL || process.env.NEXT_PUBLIC_APP_URL || '').toString();
@@ -653,8 +659,15 @@ function CheckoutContent() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
-                <span>{orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}</span>
+                <span className={orderSummary.shipping === 0 ? "text-green-600 font-semibold" : ""}>
+                  {orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}
+                </span>
               </div>
+              {cartItems.some(item => item.id === 'combo-navideno') && (
+                <p className="text-xs text-green-600">
+                  🎄 ¡Envío gratis por Combo Navideño!
+                </p>
+              )}
               <Separator />
               <div className="flex justify-between font-bold text-xl">
                 <span>Total</span>

@@ -25,12 +25,63 @@ export default function Header() {
       ? '/images/AVALOGO/ccs724_logo_yellow_transparent.png'
       : '/images/AVALOGO/ccs724_logo_transparent.png';
 
+  // Durante SSR y antes de montar, muestra un placeholder invisible o el logo por defecto
+  if (!mounted) {
+    return (
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 max-w-screen-2xl items-center">
+          <div className="flex items-center">
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="mr-2">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Abrir menú</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-3/4 pr-0">
+                  <nav className="grid gap-6 text-lg font-medium mt-8 pl-6">
+                    <Link
+                      href="/"
+                      className="flex items-center gap-2 text-lg font-semibold -ml-2"
+                    >
+                      <div className="h-10 w-32 bg-muted animate-pulse rounded" />
+                    </Link>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
+            <Link
+              href="/"
+              className="md:hidden flex items-center"
+            >
+              <div className="h-10 w-32 bg-muted animate-pulse rounded" />
+            </Link>
+            <Link
+              href="/"
+              className="mr-6 hidden md:flex items-center gap-3"
+            >
+              <div className="h-12 w-48 bg-muted animate-pulse rounded" />
+            </Link>
+          </div>
+          <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/cart" aria-label="Carrito de Compras">
+                <ShoppingCart className="h-5 w-5" />
+              </Link>
+            </Button>
+            <UserNav />
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
-        {/* Left container for logo and nav */}
         <div className="flex items-center">
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -52,7 +103,6 @@ export default function Header() {
                       height={120}
                       className="object-contain"
                       priority
-                      key={`mobile-${logoSrc}`}
                     />
                   </Link>
                   <Link href="/landing" className="text-base hover:underline">
@@ -64,12 +114,17 @@ export default function Header() {
                   >
                     Kit Esencial
                   </Link>
+                  <Link
+                    href="/landing/combo-navideno"
+                    className="text-base hover:underline"
+                  >
+                    🎄 Combo Navideño
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
           </div>
 
-          {/* Mobile Logo (visible solo en mobile) */}
           <Link
             href="/"
             className="md:hidden flex items-center"
@@ -81,11 +136,9 @@ export default function Header() {
               height={140}
               className="object-contain h-10 w-auto"
               priority
-              key={`header-mobile-${logoSrc}`}
             />
           </Link>
 
-          {/* Desktop Logo & Nav */}
           <Link
             href="/"
             className="mr-6 hidden md:flex items-center gap-3"
@@ -97,7 +150,6 @@ export default function Header() {
               height={200}
               className="object-contain"
               priority
-              key={`desktop-${logoSrc}`}
             />
           </Link>
 
@@ -105,16 +157,15 @@ export default function Header() {
             <Link href="/landing" className="hover:underline">
               Combo Pro
             </Link>
-            <Link
-              href="/landing/kit-esencial"
-              className="hover:underline"
-            >
+            <Link href="/landing/kit-esencial" className="hover:underline">
               Kit Esencial
+            </Link>
+            <Link href="/landing/combo-navideno" className="hover:underline">
+              🎄 Combo Navideño
             </Link>
           </nav>
         </div>
 
-        {/* Right container for actions */}
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
