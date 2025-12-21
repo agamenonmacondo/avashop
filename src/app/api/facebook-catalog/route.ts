@@ -46,8 +46,8 @@ export async function GET() {
       return; // Omitir productos sin imágenes
     }
 
-    // URLs no deben ser escapadas (son seguras para XML)
-    const productUrl = `${baseUrl}/product/${product.slug || product.id}`;
+    // ✅ URL CORREGIDA: /products/ en lugar de /product/
+    const productUrl = `${baseUrl}/products/${product.slug || product.id}`;
     
     // Escapar solo los textos que no son URLs
     const safeTitle = escapeXml(product.name);
