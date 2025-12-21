@@ -2,12 +2,19 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, ShoppingCart } from 'lucide-react';
+import { Menu, ShoppingCart, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import UserNav from './UserNav';
 import { ThemeToggle } from './ThemeToggle';
 import SearchBar from './SearchBar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
@@ -78,7 +85,7 @@ export default function Header() {
                   <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-3/4 pr-0">
+              <SheetContent side="left" className="w-3/4 pr-0 overflow-y-auto">
                 <nav className="grid gap-6 text-lg font-medium mt-8 pl-6">
                   <Link href="/" className="flex items-center gap-2 text-lg font-semibold -ml-2">
                     <Image
@@ -96,6 +103,7 @@ export default function Header() {
                     <SearchBar />
                   </div>
 
+                  {/* Enlaces principales */}
                   <Link href="/landing" className="text-base hover:underline">
                     Combo Pro
                   </Link>
@@ -103,8 +111,32 @@ export default function Header() {
                     Kit Esencial
                   </Link>
                   <Link href="/landing/combo-navideno" className="text-base hover:underline">
-                    🎄 Combo Navideño
+                    Combo Navideño
                   </Link>
+
+                  {/* Información Legal - Móvil */}
+                  <div className="border-t pt-4 mt-2">
+                    <p className="text-sm font-semibold text-muted-foreground mb-3">
+                      Información Legal
+                    </p>
+                    <div className="grid gap-3 pl-2">
+                      <Link href="/sobre-nosotros" className="text-sm hover:underline">
+                        Sobre Nosotros
+                      </Link>
+                      <Link href="/terminos-y-condiciones" className="text-sm hover:underline">
+                        Términos y Condiciones
+                      </Link>
+                      <Link href="/politica-de-privacidad" className="text-sm hover:underline">
+                        Política de Privacidad
+                      </Link>
+                      <Link href="/politica-de-envios" className="text-sm hover:underline">
+                        Política de Envíos
+                      </Link>
+                      <Link href="/politica-de-devoluciones" className="text-sm hover:underline">
+                        Política de Devoluciones
+                      </Link>
+                    </div>
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -131,8 +163,46 @@ export default function Header() {
               Kit Esencial
             </Link>
             <Link href="/landing/combo-navideno" className="hover:underline whitespace-nowrap">
-              🎄 Combo Navideño
+              Combo Navideño
             </Link>
+
+            {/* Menú desplegable Legal - Desktop */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-auto py-0 px-2 hover:bg-transparent">
+                  <span className="whitespace-nowrap">Info Legal</span>
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href="/sobre-nosotros" className="cursor-pointer">
+                    Sobre Nosotros
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/terminos-y-condiciones" className="cursor-pointer">
+                    Términos y Condiciones
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/politica-de-privacidad" className="cursor-pointer">
+                    Política de Privacidad
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/politica-de-envios" className="cursor-pointer">
+                    Política de Envíos
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/politica-de-devoluciones" className="cursor-pointer">
+                    Política de Devoluciones
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
 
