@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Gift, Sparkles, ShieldCheck, Truck, Award, ChevronDown, Check, Star, Zap, Heart } from 'lucide-react';
+import { Gift, Sparkles, ShieldCheck, Truck, Award, ChevronDown, Check, Star, Zap, Heart, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -59,8 +59,35 @@ export default function ComboNavidenoPage() {
     router.push('/cart');
   }
 
+  function handleWhatsAppInquiry() {
+    const phoneNumber = '573504017710';
+    const message = `¡Hola! Estoy interesado en el *Combo Navideño CCS724*
+
+🎁 *3 productos por $145.000*
+✅ Masajeador Facial
+✅ Smart Band  
+✅ Consola Retro (400 juegos)
+
+Me gustaría saber:
+• ¿Cómo funciona el *pago contra entrega*?
+• ¿Cuándo llega mi pedido?
+• ¿Tienen garantía?
+
+Gracias 😊`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    if (typeof window !== 'undefined') {
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    }
+  }
+
   const scrollToBuy = () => {
-    document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById('comprar');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -69,13 +96,14 @@ export default function ComboNavidenoPage() {
         id="product-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        strategy="afterInteractive"
       />
       
       <Header />
 
       <main className="pt-16">
         
-        {/* ===== SECCIÓN 1: PROBLEMA - Regalo Familiar ===== */}
+        {/* SECCIÓN 1: PROBLEMA - Regalo Familiar */}
         <section className="w-full">
           {/* Mobile: imagen + contenido debajo */}
           <div className="md:hidden">
@@ -101,13 +129,24 @@ export default function ComboNavidenoPage() {
                 <p className="text-base">
                   Masajeador + Smart Band + Consola Retro
                 </p>
-                <Button
-                  size="lg"
-                  onClick={scrollToBuy}
-                  className="text-base px-8 py-6 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
-                >
-                  Ver Oferta Especial →
-                </Button>
+                <div className="flex flex-col gap-3">
+                  <Button
+                    size="lg"
+                    onClick={scrollToBuy}
+                    className="text-base px-8 py-6 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
+                  >
+                    Ver Oferta Especial →
+                  </Button>
+                  <Button
+                    size="lg"
+                    onClick={handleWhatsAppInquiry}
+                    variant="outline"
+                    className="text-base px-8 py-6 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-lg hover:scale-105 transition-transform"
+                  >
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Consultar por WhatsApp
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -136,19 +175,30 @@ export default function ComboNavidenoPage() {
                 <p className="text-xl text-muted-foreground">
                   Masajeador + Smart Band + Consola Retro
                 </p>
-                <Button
-                  size="lg"
-                  onClick={scrollToBuy}
-                  className="text-lg px-10 py-7 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
-                >
-                  Ver Oferta Especial →
-                </Button>
+                <div className="flex flex-col gap-4">
+                  <Button
+                    size="lg"
+                    onClick={scrollToBuy}
+                    className="text-lg px-10 py-7 font-bold bg-primary text-primary-foreground rounded-full shadow-xl hover:scale-105 transition-transform"
+                  >
+                    Ver Oferta Especial →
+                  </Button>
+                  <Button
+                    size="lg"
+                    onClick={handleWhatsAppInquiry}
+                    variant="outline"
+                    className="text-lg px-10 py-7 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-lg hover:scale-105 transition-transform"
+                  >
+                    <MessageCircle className="h-6 w-6 mr-2" />
+                    Consultar por WhatsApp
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ===== SECCIÓN 2: DIVERSIÓN - Consola Retro ===== */}
+        {/* SECCIÓN 2: DIVERSIÓN - Consola Retro */}
         <section className="w-full">
           {/* Mobile */}
           <div className="md:hidden">
@@ -240,7 +290,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== BARRA DE CONFIANZA ===== */}
+        {/* BARRA DE CONFIANZA */}
         <section className="bg-primary py-3">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center items-center gap-4 md:gap-10 text-primary-foreground text-xs md:text-sm font-medium">
@@ -257,7 +307,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== SECCIÓN 3: TECNOLOGÍA - Smart Band ===== */}
+        {/* SECCIÓN 3: TECNOLOGÍA - Smart Band */}
         <section className="w-full">
           {/* Mobile */}
           <div className="md:hidden">
@@ -331,7 +381,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== SECCIÓN 4: RELAJACIÓN - Masajeador ===== */}
+        {/* SECCIÓN 4: RELAJACIÓN - Masajeador */}
         <section className="w-full">
           {/* Mobile */}
           <div className="md:hidden">
@@ -412,7 +462,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== SECCIÓN 5: COMBO COMPLETO ===== */}
+        {/* SECCIÓN 5: COMBO COMPLETO */}
         <section className="w-full">
           {/* Mobile */}
           <div className="md:hidden">
@@ -504,7 +554,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== SECCIÓN 6: CTA FINAL ===== */}
+        {/* SECCIÓN 6: CTA FINAL */}
         <section id="comprar" className="w-full bg-gradient-to-b from-background to-primary/10 py-16">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="bg-card border-2 border-primary/20 rounded-3xl overflow-hidden shadow-2xl">
@@ -588,15 +638,27 @@ export default function ComboNavidenoPage() {
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <Button
-                  size="lg"
-                  onClick={handleBuyComboNavideno}
-                  className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
-                >
-                  <Gift className="h-6 w-6 mr-2" />
-                  ¡LO QUIERO! - $145.000
-                </Button>
+                {/* CTA Buttons */}
+                <div className="space-y-3">
+                  <Button
+                    size="lg"
+                    onClick={handleBuyComboNavideno}
+                    className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
+                  >
+                    <Gift className="h-6 w-6 mr-2" />
+                    ¡LO QUIERO! - $145.000
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    onClick={handleWhatsAppInquiry}
+                    variant="outline"
+                    className="w-full text-lg py-7 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-xl hover:scale-105 transition-transform"
+                  >
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Preguntar por WhatsApp
+                  </Button>
+                </div>
 
                 <p className="text-center text-xs text-muted-foreground">
                   🎄 Oferta válida por tiempo limitado
@@ -606,7 +668,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== FAQ ===== */}
+        {/* FAQ */}
         <section className="py-12 bg-background">
           <div className="container mx-auto px-4 max-w-2xl">
             <h2 className="text-xl md:text-3xl font-bold text-center mb-8">Preguntas Frecuentes</h2>
@@ -631,7 +693,7 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== SOCIAL PROOF ===== */}
+        {/* SOCIAL PROOF */}
         <section className="py-12 bg-muted/30">
           <div className="container mx-auto px-4 max-w-4xl">
             <h2 className="text-2xl font-bold text-center mb-8">Lo que dicen nuestros clientes</h2>
@@ -655,15 +717,26 @@ export default function ComboNavidenoPage() {
           </div>
         </section>
 
-        {/* ===== FLOATING CTA (Mobile) ===== */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-background to-transparent md:hidden">
-          <Button
-            size="lg"
-            onClick={handleBuyComboNavideno}
-            className="w-full text-base py-5 font-bold bg-primary text-primary-foreground rounded-full shadow-xl"
-          >
-            🎁 Comprar - $145.000
-          </Button>
+        {/* FLOATING CTA (Mobile) */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-background via-background to-transparent md:hidden">
+          <div className="flex gap-2">
+            <Button
+              size="lg"
+              onClick={handleBuyComboNavideno}
+              className="flex-1 text-base py-5 font-bold bg-primary text-primary-foreground rounded-full shadow-xl"
+            >
+              🎁 $145.000
+            </Button>
+            <Button
+              size="lg"
+              onClick={handleWhatsAppInquiry}
+              variant="outline"
+              className="flex-1 text-base py-5 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-xl"
+            >
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp
+            </Button>
+          </div>
         </div>
 
       </main>

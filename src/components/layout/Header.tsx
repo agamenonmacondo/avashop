@@ -6,6 +6,7 @@ import { Menu, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import UserNav from './UserNav';
 import { ThemeToggle } from './ThemeToggle';
+import SearchBar from './SearchBar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
@@ -14,64 +15,49 @@ export default function Header() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Evitar hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Selecciona el logo según el modo (solo después de montar)
   const logoSrc =
     mounted && resolvedTheme === 'dark'
       ? '/images/AVALOGO/ccs724_logo_yellow_transparent.png'
       : '/images/AVALOGO/ccs724_logo_transparent.png';
 
-  // Durante SSR y antes de montar, muestra un placeholder invisible o el logo por defecto
   if (!mounted) {
     return (
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 max-w-screen-2xl items-center">
-          <div className="flex items-center">
+        <div className="container flex h-14 md:h-16 max-w-screen-2xl items-center justify-between gap-2 md:gap-4">
+          {/* Logo izquierda */}
+          <div className="flex items-center gap-2">
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="mr-2">
-                    <Menu className="h-6 w-6" />
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Menu className="h-5 w-5" />
                     <span className="sr-only">Abrir menú</span>
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-3/4 pr-0">
-                  <nav className="grid gap-6 text-lg font-medium mt-8 pl-6">
-                    <Link
-                      href="/"
-                      className="flex items-center gap-2 text-lg font-semibold -ml-2"
-                    >
-                      <div className="h-10 w-32 bg-muted animate-pulse rounded" />
-                    </Link>
-                  </nav>
+                  <div className="h-10 w-32 bg-muted animate-pulse rounded" />
                 </SheetContent>
               </Sheet>
             </div>
-            <Link
-              href="/"
-              className="md:hidden flex items-center"
-            >
-              <div className="h-10 w-32 bg-muted animate-pulse rounded" />
-            </Link>
-            <Link
-              href="/"
-              className="mr-6 hidden md:flex items-center gap-3"
-            >
-              <div className="h-12 w-48 bg-muted animate-pulse rounded" />
+            <Link href="/" className="flex items-center">
+              <div className="h-8 w-24 md:h-10 md:w-40 bg-muted animate-pulse rounded" />
             </Link>
           </div>
-          <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/cart" aria-label="Carrito de Compras">
-                <ShoppingCart className="h-5 w-5" />
-              </Link>
-            </Button>
-            <UserNav />
+
+          {/* Buscador centro */}
+          <div className="hidden sm:flex flex-1 max-w-md mx-4">
+            <div className="w-full h-9 md:h-10 bg-muted animate-pulse rounded-full" />
+          </div>
+
+          {/* Acciones derecha */}
+          <div className="flex items-center gap-1 md:gap-2">
+            <div className="h-8 w-8 md:h-9 md:w-9 bg-muted animate-pulse rounded-full" />
+            <div className="h-8 w-8 md:h-9 md:w-9 bg-muted animate-pulse rounded-full" />
+            <div className="h-8 w-8 md:h-9 md:w-9 bg-muted animate-pulse rounded-full" />
           </div>
         </div>
       </header>
@@ -80,44 +66,43 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-screen-2xl items-center">
-        <div className="flex items-center">
+      <div className="container flex h-14 md:h-16 max-w-screen-2xl items-center justify-between gap-2 md:gap-4">
+        {/* Logo y menú - Izquierda */}
+        <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+          {/* Menú móvil */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="mr-2">
-                  <Menu className="h-6 w-6" />
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Menu className="h-5 w-5" />
                   <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-3/4 pr-0">
                 <nav className="grid gap-6 text-lg font-medium mt-8 pl-6">
-                  <Link
-                    href="/"
-                    className="flex items-center gap-2 text-lg font-semibold -ml-2"
-                  >
+                  <Link href="/" className="flex items-center gap-2 text-lg font-semibold -ml-2">
                     <Image
                       src={logoSrc}
                       alt="CCS724 Logo"
-                      width={120}
-                      height={120}
+                      width={160}
+                      height={160}
                       className="object-contain"
                       priority
                     />
                   </Link>
+                  
+                  {/* Buscador en menú móvil */}
+                  <div className="px-2">
+                    <SearchBar />
+                  </div>
+
                   <Link href="/landing" className="text-base hover:underline">
                     Combo Pro
                   </Link>
-                  <Link
-                    href="/landing/kit-esencial"
-                    className="text-base hover:underline"
-                  >
+                  <Link href="/landing/kit-esencial" className="text-base hover:underline">
                     Kit Esencial
                   </Link>
-                  <Link
-                    href="/landing/combo-navideno"
-                    className="text-base hover:underline"
-                  >
+                  <Link href="/landing/combo-navideno" className="text-base hover:underline">
                     🎄 Combo Navideño
                   </Link>
                 </nav>
@@ -125,52 +110,43 @@ export default function Header() {
             </Sheet>
           </div>
 
-          <Link
-            href="/"
-            className="md:hidden flex items-center"
-          >
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
             <Image
               src={logoSrc}
               alt="CCS724 Logo"
-              width={140}
-              height={140}
-              className="object-contain h-10 w-auto"
+              width={250}
+              height={250}
+              className="object-contain h-12 w-auto md:h-18"
               priority
             />
           </Link>
 
-          <Link
-            href="/"
-            className="mr-6 hidden md:flex items-center gap-3"
-          >
-            <Image
-              src={logoSrc}
-              alt="CCS724 Logo"
-              width={200}
-              height={200}
-              className="object-contain"
-              priority
-            />
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/landing" className="hover:underline">
+          {/* Navegación desktop */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium">
+            <Link href="/landing" className="hover:underline whitespace-nowrap">
               Combo Pro
             </Link>
-            <Link href="/landing/kit-esencial" className="hover:underline">
+            <Link href="/landing/kit-esencial" className="hover:underline whitespace-nowrap">
               Kit Esencial
             </Link>
-            <Link href="/landing/combo-navideno" className="hover:underline">
+            <Link href="/landing/combo-navideno" className="hover:underline whitespace-nowrap">
               🎄 Combo Navideño
             </Link>
           </nav>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
+        {/* Buscador - Centro (Desktop) */}
+        <div className="hidden sm:flex flex-1 max-w-md mx-2 lg:mx-4">
+          <SearchBar />
+        </div>
+
+        {/* Acciones - Derecha */}
+        <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
           <ThemeToggle />
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9" asChild>
             <Link href="/cart" aria-label="Carrito de Compras">
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart className="h-4 w-4 md:h-5 md:w-5" />
             </Link>
           </Button>
           <UserNav />

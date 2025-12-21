@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react'; // ✅ Agregar Suspense aquí
+import { Suspense, useEffect, useState } from 'react';
 import { trackInitiateCheckout } from '@/lib/meta-pixel';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -11,8 +11,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { Home, ShoppingCart, Mail, CreditCard, Bitcoin, MessageCircle } from 'lucide-react'; // ✅ Añadir MessageCircle para WhatsApp
+import { Home, ShoppingCart, Mail, CreditCard, Bitcoin, MessageCircle, Shield, Lock, CheckCircle2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatColombianCurrency } from '@/lib/utils';
 import { createCoinbaseCharge } from '@/lib/actions/order.actions';
 import { useProfile } from '@/hooks/useProfile';
@@ -53,13 +54,8 @@ const calculateOrderSummary = (cartItems: any[]) => {
   }
   
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  
-  // ✅ Verificar si el carrito contiene el Combo Navideño
   const hasComboNavideno = cartItems.some(item => item.id === 'combo-navideno');
-  
-  // ✅ Si tiene Combo Navideño, envío gratis. Si no, aplicar lógica normal
   const shipping = hasComboNavideno ? 0 : (subtotal > 200000 ? 0 : 15000);
-  
   const total = subtotal + shipping;
   
   return { items: cartItems, subtotal, shipping, total };
@@ -172,19 +168,16 @@ function CheckoutContent() {
 
           const shippingData = {
             fullName: data.name ?? '',
-            address: addressObj.street ?? addressObj.address ?? '', // ⚠️ PROBLEMA: puede ser "street" o "address"
+            address: addressObj.street ?? addressObj.address ?? '',
             city: addressObj.city ?? '',
             state: addressObj.state ?? '',
             zipCode: addressObj.zipCode ?? '',
             country: addressObj.country ?? 'Colombia',
-            email: data.id ?? '', // ✅ Correcto: id ES el email
+            email: data.id ?? '',
             phone: data.phone ?? '',
           };
 
-          console.log('📥 [CHECKOUT] Datos cargados desde Supabase:', shippingData); // ⭐ AGREGAR LOG
           shippingForm.reset(shippingData as any);
-        } else {
-          console.log('⚠️ [CHECKOUT] No se encontró perfil para:', normalizedEmail); // ⭐ AGREGAR LOG
         }
       } catch (err) {
         console.error('fetchProfile exception', err);
@@ -222,7 +215,6 @@ function CheckoutContent() {
     }
   }, [user, isCartLoaded, authChecked, router, toast]);
 
-  // ✅ Función corregida para guardar cambios en el perfil
   const handleSaveProfile = async () => {
     try {
       const isValid = await shippingForm.trigger();
@@ -250,16 +242,13 @@ function CheckoutContent() {
 
       const normalizedEmail = user.email.toLowerCase().trim();
 
-      // ✅ Preparar datos de dirección (MISMA ESTRUCTURA que al cargar)
       const addressData = {
-        street: formData.address, // ⭐ Usa "street" para ser consistente
+        street: formData.address,
         city: formData.city,
         state: formData.state,
         zipCode: formData.zipCode || '',
         country: formData.country,
       };
-
-      console.log('💾 [CHECKOUT] Guardando en Supabase:', { normalizedEmail, addressData }); // ⭐ LOG
 
       const { error } = await supabase
         .from('profiles')
@@ -274,7 +263,7 @@ function CheckoutContent() {
         });
 
       if (error) {
-        console.error('❌ [CHECKOUT] Error guardando perfil:', error);
+        console.error('Error guardando perfil:', error);
         toast({
           title: "Error al guardar",
           description: "No se pudieron guardar los cambios.",
@@ -283,7 +272,6 @@ function CheckoutContent() {
         return false;
       }
 
-      console.log('✅ [CHECKOUT] Perfil guardado exitosamente');
       toast({
         title: "✅ Perfil actualizado",
         description: "Tus datos de envío se guardaron correctamente.",
@@ -301,7 +289,6 @@ function CheckoutContent() {
     }
   };
 
-  // ✅ Modificar getValidatedOrderInput para guardar antes de proceder
   const getValidatedOrderInput = async () => {
     const isShippingValid = await shippingForm.trigger();
     if (!isShippingValid) {
@@ -322,7 +309,6 @@ function CheckoutContent() {
       return null;
     }
 
-    // ✅ Guardar perfil antes de proceder al pago
     const profileSaved = await handleSaveProfile();
     if (!profileSaved) {
       return null;
@@ -357,10 +343,6 @@ function CheckoutContent() {
       return;
     }
 
-    // ⭐ AGREGAR LOG PARA VER QUÉ SE ESTÁ ENVIANDO
-    console.log('📤 [CHECKOUT] orderInput completo:', orderInput);
-    console.log('📤 [CHECKOUT] cartItems a enviar:', orderInput.cartItems);
-
     try {
       const res = await fetch('/api/bold/create-payment', {
         method: 'POST',
@@ -369,14 +351,13 @@ function CheckoutContent() {
           orderId: orderInput.orderId,
           amount: orderInput.amount,
           currency: orderInput.currency,
-          cartItems: orderInput.cartItems, // ⭐ Verificar que esto tenga datos
+          cartItems: orderInput.cartItems,
           shippingData: orderInput.shippingDetails,
           userEmail: user?.email || orderInput.customerData.email,
         }),
       });
 
       const result = await res.json();
-      console.log('📥 [CHECKOUT] Respuesta del servidor:', result);
 
       if (res.ok && result.success && result.data) {
         setBoldButtonData({
@@ -397,7 +378,7 @@ function CheckoutContent() {
         });
       }
     } catch (err) {
-      console.error('❌ [CHECKOUT] Error:', err);
+      console.error('Error:', err);
       toast({ 
         title: 'Error al preparar el pago', 
         description: 'Ocurrió un error al comunicar con el servidor.', 
@@ -480,248 +461,383 @@ function CheckoutContent() {
     );
   }
 
-  return (
-    <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-      <h1 className="text-3xl md:text-4xl font-bold font-headline mb-8">Finalizar Compra</h1>
-      <div className="grid lg:grid-cols-3 gap-8 items-start">
-        <div className="lg:col-span-2 space-y-8">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-headline flex items-center">
-                <Home className="mr-3 h-6 w-6 text-primary"/>
-                Dirección de Envío
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {isProfileLoading && (
-                <div className="text-sm text-muted-foreground mb-4">
-                  Cargando datos del perfil...
-                </div>
-              )}
-              {profileError && (
-                <div className="text-sm text-red-600 mb-4">
-                  Error: {profileError}
-                </div>
-              )}
-              <Form {...shippingForm}>
-                <form id="shipping-form" className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <FormField 
-                      control={shippingForm.control} 
-                      name="fullName" 
-                      render={({ field }) => ( 
-                        <FormItem> 
-                          <FormLabel>Nombre Completo</FormLabel> 
-                          <FormControl>
-                            <Input placeholder="Ej: Ana Pérez" {...field} />
-                          </FormControl> 
-                          <FormMessage /> 
-                        </FormItem> 
-                      )} 
-                    />
-                    <FormField 
-                      control={shippingForm.control} 
-                      name="email" 
-                      render={({ field }) => ( 
-                        <FormItem> 
-                          <FormLabel className="flex items-center">
-                            <Mail className="mr-2 h-4 w-4 text-muted-foreground"/>
-                            Correo Electrónico
-                          </FormLabel> 
-                          <FormControl>
-                            <Input type="email" placeholder="tu@correo.com" {...field} />
-                          </FormControl> 
-                          <FormMessage /> 
-                        </FormItem> 
-                      )} 
-                    />
-                  </div>
-                  <FormField 
-                    control={shippingForm.control} 
-                    name="address" 
-                    render={({ field }) => ( 
-                      <FormItem> 
-                        <FormLabel>Dirección (Calle, Carrera, Apto)</FormLabel> 
-                        <FormControl>
-                          <Input placeholder="Ej: Carrera 10 # 20-30 Apto 101" {...field} />
-                        </FormControl> 
-                        <FormMessage /> 
-                      </FormItem> 
-                    )} 
-                  />
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    <FormField 
-                      control={shippingForm.control} 
-                      name="city" 
-                      render={({ field }) => ( 
-                        <FormItem> 
-                          <FormLabel>Ciudad</FormLabel> 
-                          <FormControl>
-                            <Input placeholder="Ej: Bogotá D.C." {...field} />
-                          </FormControl> 
-                          <FormMessage /> 
-                        </FormItem> 
-                      )} 
-                    />
-                    <FormField 
-                      control={shippingForm.control} 
-                      name="state" 
-                      render={({ field }) => ( 
-                        <FormItem> 
-                          <FormLabel>Departamento</FormLabel> 
-                          <FormControl>
-                            <Input placeholder="Ej: Cundinamarca" {...field} />
-                          </FormControl> 
-                          <FormMessage /> 
-                        </FormItem> 
-                      )} 
-                    />
-                    <FormField 
-                      control={shippingForm.control} 
-                      name="zipCode" 
-                      render={({ field }) => ( 
-                        <FormItem> 
-                          <FormLabel>Código Postal (Opcional)</FormLabel> 
-                          <FormControl>
-                            <Input placeholder="Ej: 110111" {...field} />
-                          </FormControl> 
-                          <FormMessage /> 
-                        </FormItem> 
-                      )} 
-                    />
-                  </div>
-                  <FormField 
-                    control={shippingForm.control} 
-                    name="country" 
-                    render={({ field }) => ( 
-                      <FormItem> 
-                        <FormLabel>País</FormLabel> 
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl> 
-                        <FormMessage /> 
-                      </FormItem> 
-                    )} 
-                  />
-                  <FormField 
-                    control={shippingForm.control} 
-                    name="phone" 
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Teléfono</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Ej: 3504017710" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} 
-                  />
-                </form>
-              </Form>
-              
-              {/* ✅ Botón opcional para guardar sin proceder al pago */}
-              <div className="mt-4">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={handleSaveProfile}
-                  disabled={!shippingForm.formState.isValid}
-                >
-                  💾 Guardar datos de envío
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+  const heroProduct = cartItems[0];
 
-        <div className="lg:col-span-1">
-          <Card className="shadow-lg sticky top-24">
-            <CardHeader>
-              <CardTitle className="text-2xl font-headline flex items-center">
-                <ShoppingCart className="mr-3 h-6 w-6 text-primary"/>
-                Resumen del Pedido
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {orderSummary.items.length > 0 ? orderSummary.items.map(item => (
-                <div key={item.id} className="flex justify-between items-center text-sm">
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">Cant: {item.quantity}</p>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/10">
+      {/* Hero Section Optimizado */}
+      {heroProduct && (
+        <section className="relative w-full overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
+          <div className="container mx-auto px-4 py-6 md:py-10">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center max-w-6xl mx-auto">
+              {/* Imagen del producto */}
+              <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-muted/30 to-muted/10 shadow-2xl border border-border/20">
+                <Image
+                  src={heroProduct.imageUrl || heroProduct.imageUrls?.[0] || '/images/placeholder-product.png'}
+                  alt={heroProduct.name}
+                  fill
+                  className="object-contain p-4 md:p-8"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  unoptimized={heroProduct.imageUrl?.startsWith('/images')}
+                />
+                {/* Badge de oferta */}
+                {orderSummary.shipping === 0 && (
+                  <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-bold shadow-lg flex items-center gap-1">
+                    <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
+                    Envío Gratis
                   </div>
-                  <p>{formatColombianCurrency(item.price * item.quantity)}</p>
-                </div>
-              )) : <p className="text-sm text-muted-foreground">Tu carrito está vacío.</p>}
-              <Separator/>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span>{formatColombianCurrency(orderSummary.subtotal)}</span>
+                )}
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Envío</span>
-                <span className={orderSummary.shipping === 0 ? "text-green-600 font-semibold" : ""}>
-                  {orderSummary.shipping === 0 ? 'Gratis' : formatColombianCurrency(orderSummary.shipping)}
-                </span>
-              </div>
-              {cartItems.some(item => item.id === 'combo-navideno') && (
-                <p className="text-xs text-green-600">
-                  🎄 ¡Envío gratis por Combo Navideño!
-                </p>
-              )}
-              <Separator />
-              <div className="flex justify-between font-bold text-xl">
-                <span>Total</span>
-                <span>{formatColombianCurrency(orderSummary.total)}</span>
-              </div>
-            </CardContent>
-            <CardFooter className="flex-col space-y-4">
-              {!boldButtonData ? (
-                <div className="w-full space-y-2">
-                    <Button 
-                      type="button" 
-                      onClick={handleBoldCheckout} 
-                      size="lg" 
-                      className="w-full text-base" 
-                      disabled={!user || isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
-                    >
-                        <CreditCard className="mr-2 h-5 w-5" />
-                        {isBoldLoading ? 'Preparando...' : 'Pago con Bold'}
-                    </Button>
-                    <Button 
-                      type="button" 
-                      onClick={handleCoinbaseCheckout} 
-                      size="lg" 
-                      className="w-full text-base" 
-                      disabled={isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
-                    >
-                        <Bitcoin className="mr-2 h-5 w-5" />
-                        {isCoinbaseLoading ? 'Procesando...' : 'Pago con Cripto (Coinbase)'}
-                    </Button>
-                    {/* ✅ Nuevo botón Pago Contra Entrega */}
-                    <Button 
-                      type="button" 
-                      onClick={handleWhatsAppCheckout} 
-                      size="lg" 
-                      className="w-full text-base" 
-                      disabled={!shippingForm.formState.isValid || cartItems.length === 0}
-                    >
-                        <MessageCircle className="mr-2 h-5 w-5" />
-                        Pago Contra Entrega (WhatsApp)
-                    </Button>
-                </div>
-              ) : (
-                <div className="w-full">
-                  <p className="text-sm text-center mb-2 text-muted-foreground">
-                    Haz clic en el botón de Bold para continuar.
+
+              {/* Información del producto */}
+              <div className="space-y-4 md:space-y-6 text-center md:text-left">
+                <div className="space-y-2 md:space-y-3">
+                  <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold font-headline text-foreground leading-tight">
+                    ¡Ya casi es tuyo!
+                  </h1>
+                  <p className="text-lg md:text-2xl font-semibold text-primary">
+                    {heroProduct.name}
                   </p>
-                  <BoldButton {...boldButtonData} onClose={handleBoldClose} />
+                  <p className="text-sm md:text-base text-muted-foreground line-clamp-3">
+                    {heroProduct.description || 'Completa tu compra de forma rápida y segura'}
+                  </p>
                 </div>
-              )}
-              <p className="text-xs text-muted-foreground text-center w-full pt-2">
-                Al continuar, aceptas nuestros <Link href="/terms" className="underline hover:text-primary">Términos y Condiciones</Link>.
-              </p>
-            </CardFooter>
-          </Card>
+
+                {/* CTA Principal */}
+                <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-4 md:p-6 border border-primary/20 shadow-lg">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
+                    <Shield className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                    <span className="text-base md:text-xl font-bold text-foreground">
+                      Compra 100% Segura con CCS724
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
+                    <div className="flex items-center justify-center md:justify-start gap-2 text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Pagos Encriptados</span>
+                    </div>
+                    <div className="flex items-center justify-center md:justify-start gap-2 text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Envíos Verificados</span>
+                    </div>
+                    <div className="flex items-center justify-center md:justify-start gap-2 text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Soporte 24/7</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Total destacado en mobile */}
+                <div className="md:hidden bg-primary/10 rounded-xl p-4 border border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <span className="text-base font-semibold text-muted-foreground">Total a pagar:</span>
+                    <span className="text-2xl font-bold text-primary">
+                      {formatColombianCurrency(orderSummary.total)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Contenido Principal */}
+      <div className="container mx-auto px-4 py-6 md:py-10 max-w-7xl">
+        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
+          {/* Formulario de Envío */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="shadow-xl border-border/50 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 border-b">
+                <CardTitle className="text-xl md:text-2xl font-headline flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Home className="h-5 w-5 md:h-6 md:w-6 text-primary"/>
+                  </div>
+                  <span>Información de Envío</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6">
+                {isProfileLoading && (
+                  <div className="text-sm text-muted-foreground mb-4 p-3 bg-muted/30 rounded-lg">
+                    Cargando tus datos guardados...
+                  </div>
+                )}
+                {profileError && (
+                  <div className="text-sm text-red-600 mb-4 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+                    Error: {profileError}
+                  </div>
+                )}
+                <Form {...shippingForm}>
+                  <form id="shipping-form" className="space-y-4">
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="fullName" 
+                        render={({ field }) => ( 
+                          <FormItem> 
+                            <FormLabel className="text-sm font-semibold">Nombre Completo</FormLabel> 
+                            <FormControl>
+                              <Input placeholder="Ana Pérez" className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="email" 
+                        render={({ field }) => ( 
+                          <FormItem> 
+                            <FormLabel className="flex items-center gap-2 text-sm font-semibold">
+                              <Mail className="h-4 w-4 text-primary"/>
+                              Correo Electrónico
+                            </FormLabel> 
+                            <FormControl>
+                              <Input type="email" placeholder="tu@correo.com" className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                    </div>
+                    <FormField 
+                      control={shippingForm.control} 
+                      name="address" 
+                      render={({ field }) => ( 
+                        <FormItem> 
+                          <FormLabel className="text-sm font-semibold">Dirección Completa</FormLabel> 
+                          <FormControl>
+                            <Input placeholder="Cra 10 # 20-30 Apto 101" className="h-11" {...field} />
+                          </FormControl> 
+                          <FormMessage /> 
+                        </FormItem> 
+                      )} 
+                    />
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="city" 
+                        render={({ field }) => ( 
+                          <FormItem className="col-span-2 sm:col-span-1"> 
+                            <FormLabel className="text-sm font-semibold">Ciudad</FormLabel> 
+                            <FormControl>
+                              <Input placeholder="Bogotá" className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="state" 
+                        render={({ field }) => ( 
+                          <FormItem className="col-span-2 sm:col-span-1"> 
+                            <FormLabel className="text-sm font-semibold">Departamento</FormLabel> 
+                            <FormControl>
+                              <Input placeholder="Cundinamarca" className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="zipCode" 
+                        render={({ field }) => ( 
+                          <FormItem className="col-span-2 sm:col-span-1"> 
+                            <FormLabel className="text-sm font-semibold">Código Postal</FormLabel> 
+                            <FormControl>
+                              <Input placeholder="110111 (opcional)" className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="country" 
+                        render={({ field }) => ( 
+                          <FormItem> 
+                            <FormLabel className="text-sm font-semibold">País</FormLabel> 
+                            <FormControl>
+                              <Input className="h-11" {...field} />
+                            </FormControl> 
+                            <FormMessage /> 
+                          </FormItem> 
+                        )} 
+                      />
+                      <FormField 
+                        control={shippingForm.control} 
+                        name="phone" 
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-sm font-semibold">Teléfono</FormLabel>
+                            <FormControl>
+                              <Input placeholder="3504017710" className="h-11" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )} 
+                      />
+                    </div>
+                  </form>
+                </Form>
+                
+                <div className="mt-6 pt-6 border-t">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={handleSaveProfile}
+                    disabled={!shippingForm.formState.isValid}
+                    className="w-full sm:w-auto"
+                  >
+                    💾 Guardar mis datos
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Resumen del Pedido - Sticky en desktop */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-20 space-y-4">
+              <Card className="shadow-2xl border-border/50 overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 border-b">
+                  <CardTitle className="text-xl md:text-2xl font-headline flex items-center gap-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <ShoppingCart className="h-5 w-5 md:h-6 md:w-6 text-primary"/>
+                    </div>
+                    <span>Tu Pedido</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 md:p-6 space-y-4">
+                  {/* Lista de productos compacta */}
+                  <div className="space-y-3 max-h-48 overflow-y-auto pr-2 scrollbar-thin">
+                    {orderSummary.items.map(item => (
+                      <div key={item.id} className="flex gap-3 p-2 rounded-lg bg-muted/20 hover:bg-muted/40 transition-colors">
+                        <div className="relative h-14 w-14 flex-shrink-0 rounded-md overflow-hidden bg-background border border-border/30">
+                          <Image
+                            src={item.imageUrl || item.imageUrls?.[0] || '/images/placeholder-product.png'}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                            sizes="56px"
+                            unoptimized={item.imageUrl?.startsWith('/images')}
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-sm line-clamp-1">{item.name}</p>
+                          <div className="flex items-center justify-between mt-1">
+                            <p className="text-xs text-muted-foreground">Cant: {item.quantity}</p>
+                            <p className="text-sm font-bold text-primary">
+                              {formatColombianCurrency(item.price * item.quantity)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Separator/>
+                  
+                  {/* Totales */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span className="font-semibold">{formatColombianCurrency(orderSummary.subtotal)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Envío</span>
+                      <span className={orderSummary.shipping === 0 ? "text-green-600 font-bold" : "font-semibold"}>
+                        {orderSummary.shipping === 0 ? '¡Gratis!' : formatColombianCurrency(orderSummary.shipping)}
+                      </span>
+                    </div>
+                    {orderSummary.shipping === 0 && (
+                      <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-2">
+                        <p className="text-xs text-green-700 dark:text-green-400 flex items-center gap-2 justify-center">
+                          <Sparkles className="h-3.5 w-3.5" />
+                          <span className="font-semibold">Envío gratis aplicado</span>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <Separator className="my-4" />
+                  
+                  {/* Total destacado */}
+                  <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-4 border border-primary/20">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold text-foreground">Total</span>
+                      <span className="text-2xl md:text-3xl font-bold text-primary">
+                        {formatColombianCurrency(orderSummary.total)}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+
+                <CardFooter className="flex-col gap-3 p-4 md:p-6 pt-0">
+                  {!boldButtonData ? (
+                    <>
+                      <Button 
+                        type="button" 
+                        onClick={handleBoldCheckout} 
+                        size="lg" 
+                        className="w-full h-12 text-base font-bold shadow-lg hover:shadow-xl transition-all" 
+                        disabled={!user || isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
+                      >
+                        <CreditCard className="mr-2 h-5 w-5" />
+                        {isBoldLoading ? 'Preparando...' : 'Pagar con Tarjeta'}
+                      </Button>
+                      <Button 
+                        type="button" 
+                        onClick={handleCoinbaseCheckout} 
+                        size="lg" 
+                        variant="outline"
+                        className="w-full h-12 text-base font-bold border-2" 
+                        disabled={isPaymentProcessing || !shippingForm.formState.isValid || cartItems.length === 0}
+                      >
+                        <Bitcoin className="mr-2 h-5 w-5" />
+                        {isCoinbaseLoading ? 'Procesando...' : 'Pagar con Cripto'}
+                      </Button>
+                      <Button 
+                        type="button" 
+                        onClick={handleWhatsAppCheckout} 
+                        size="lg" 
+                        variant="secondary"
+                        className="w-full h-12 text-base font-bold" 
+                        disabled={!shippingForm.formState.isValid || cartItems.length === 0}
+                      >
+                        <MessageCircle className="mr-2 h-5 w-5" />
+                        Contra Entrega (WhatsApp)
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="w-full space-y-3">
+                      <p className="text-sm text-center text-muted-foreground">
+                        Completa el pago en la ventana de Bold
+                      </p>
+                      <BoldButton {...boldButtonData} onClose={handleBoldClose} />
+                    </div>
+                  )}
+                  
+                  <div className="w-full pt-3 border-t">
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                      <Lock className="h-3.5 w-3.5" />
+                      <span>
+                        Al continuar aceptas nuestros{' '}
+                        <Link href="/terminos-y-condiciones" className="underline hover:text-primary font-medium">
+                          Términos y Condiciones
+                        </Link>
+                      </span>
+                    </div>
+                  </div>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -732,13 +848,11 @@ export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // Cargar carrito
     const cartData = localStorage.getItem('cart');
     if (cartData) {
       const parsedCart: CartItem[] = JSON.parse(cartData);
       setCart(parsedCart);
 
-      // Track InitiateCheckout
       const totalValue = parsedCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const totalItems = parsedCart.reduce((sum, item) => sum + item.quantity, 0);
       const contentIds = parsedCart.map(item => item.id);

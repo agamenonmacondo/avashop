@@ -163,6 +163,9 @@ export default function Footer() {
         <div className="text-center text-sm text-muted-foreground border-t border-border/40 pt-6">
           <p>&copy; {new Date().getFullYear()} CCS 724. Todos los derechos reservados.</p>
           <p className="text-xs mt-2">Tienda online de tecnología en Colombia</p>
+          <p className="text-xs mt-2 font-semibold">
+            OG REAL ESTATE SAS &middot; NIT 901067922-2
+          </p>
         </div>
       </div>
     </footer>
