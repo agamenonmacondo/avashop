@@ -40,7 +40,9 @@ function buildImageUrl(baseUrl: string, img: string): string {
   if (/^https?:\/\//i.test(img)) return img;
   const prefix = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const path = img.startsWith('/') ? img : `/${img}`;
-  return `${prefix}${encodeURI(path)}`;
+  const url = `${prefix}${encodeURI(path)}`;
+  // Escapar '&' para XML (URLs con query params)
+  return url.replace(/&/g, '&amp;');
 }
 
 export async function GET() {
@@ -81,16 +83,17 @@ export async function GET() {
       return; // Omitir productos sin imágenes
     }
 
-    // URL producto segura
+    // URL producto segura (escapar '&' para XML)
     const slugPart = encodeURIComponent(product.slug || product.id);
     const productUrl = `${baseUrl.replace(/\/$/, '')}/products/${slugPart}`;
-    
+    const safeProductUrl = productUrl.replace(/&/g, '&amp;');
+
     xml += `
 <item>
   <g:id>${sanitizeForXml(String(product.id))}</g:id>
   <g:title>${safeTitle}</g:title>
   <g:description>${safeDescription}</g:description>
-  <g:link>${productUrl}</g:link>
+  <g:link>${safeProductUrl}</g:link>
   <g:image_link>${imageUrl}</g:image_link>
   <g:brand>CCS724</g:brand>
   <g:condition>new</g:condition>

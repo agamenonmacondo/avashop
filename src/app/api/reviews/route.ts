@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabaseClient';
 
-// ⚡ Cache de estadísticas (5 minutos)
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+// mantener CACHE_TTL y statsCache o usar Upstash/Redis para producción
+const CACHE_TTL = 5 * 60 * 1000;
 const statsCache = new Map<string, { data: any; timestamp: number }>();
 
 export const runtime = 'edge';
@@ -56,47 +56,36 @@ export async function GET(request: Request) {
       );
     }
 
-    // ⚡ 2. CACHÉ DE ESTADÍSTICAS - Evitar recalcular constantemente
+    // stats: primero cache local/redis, si no -> llamar RPC
     const cacheKey = `stats:${productIdStr}`;
-    const cached = statsCache.get(cacheKey);
     const now = Date.now();
-
+    const cached = statsCache.get(cacheKey);
     let stats;
-    if (cached && (now - cached.timestamp) < CACHE_TTL) {
-      // Usar caché si es válido
+    if (cached && now - cached.timestamp < CACHE_TTL) {
       stats = cached.data;
     } else {
-      // ⚡ 3. AGREGACIÓN EN DATABASE - No traer todos los datos
-      const { data: aggregatedData } = await supabase
-        .from('reviews')
-        .select('rating')
-        .eq('product_id', productIdStr);
+      const { data: rpcRes, error: rpcErr } = await supabase
+        .rpc('get_review_stats', { p_product_id: productIdStr });
 
-      const total = aggregatedData?.length || 0;
-      const average = total > 0 
-        ? aggregatedData!.reduce((sum, r) => sum + r.rating, 0) / total 
-        : 0;
-
-      const distribution = {
-        1: aggregatedData?.filter(r => r.rating === 1).length || 0,
-        2: aggregatedData?.filter(r => r.rating === 2).length || 0,
-        3: aggregatedData?.filter(r => r.rating === 3).length || 0,
-        4: aggregatedData?.filter(r => r.rating === 4).length || 0,
-        5: aggregatedData?.filter(r => r.rating === 5).length || 0,
-      };
-
-      stats = { total, average, distribution };
-
-      // Guardar en caché
-      statsCache.set(cacheKey, { data: stats, timestamp: now });
-
-      // Limpiar caché viejo (evitar memory leaks)
-      if (statsCache.size > 1000) {
-        const oldestKey = statsCache.keys().next().value;
-        if (oldestKey) {
-          statsCache.delete(oldestKey);
-        }
+      if (rpcErr) {
+        console.error('rpc error', rpcErr);
+        stats = { total: 0, average: 0, distribution: {1:0,2:0,3:0,4:0,5:0} };
+      } else {
+        // mapear rpcRes (returned as array/row)
+        const row = Array.isArray(rpcRes) ? rpcRes[0] : rpcRes;
+        stats = {
+          total: Number(row?.total ?? 0),
+          average: Number(row?.average ?? 0),
+          distribution: {
+            1: Number(row?.rating_1 ?? 0),
+            2: Number(row?.rating_2 ?? 0),
+            3: Number(row?.rating_3 ?? 0),
+            4: Number(row?.rating_4 ?? 0),
+            5: Number(row?.rating_5 ?? 0),
+          }
+        };
       }
+      statsCache.set(cacheKey, { data: stats, timestamp: now });
     }
 
     // ⚡ 4. RESPONSE HEADERS - Habilitar caché en browser/CDN
