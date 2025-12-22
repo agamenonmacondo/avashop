@@ -45,6 +45,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function generateShortSku(id: string): string {
+  // Genera un SKU corto basado en el ID (ej. primeras letras de palabras + sufijo)
+  const words = id.split('-');
+  const acronym = words.map(word => word.charAt(0).toUpperCase()).join('');
+  const suffix = id.slice(-3).toUpperCase(); // últimos 3 caracteres
+  return acronym + suffix; // ej. MSAFVCAZDF para mon-sub-aceite-facial-de-vitamina-c-azul-doble-fase
+}
+
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
   const product = products.find((p) => p.id === id);
@@ -94,7 +102,7 @@ export default async function ProductPage({ params }: Props) {
     name: product.name,
     image: product.imageUrls,
     description: description,
-    sku: product.id,
+    sku: generateShortSku(product.id), // ✅ Cambiar a SKU corto para evitar warning de longitud
     brand: {
       '@type': 'Brand',
       name: brandName
