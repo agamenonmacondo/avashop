@@ -53,10 +53,22 @@ export default async function ProductPage({ params }: Props) {
     return <div className="container mx-auto px-4 py-12 text-center">Producto no encontrado</div>;
   }
 
-  // 2. SOLUCIÓN AL ERROR: Definimos valores seguros.
-  // Si rating es undefined, usamos 0.
-  const rating = product.rating ?? 0;
-  const reviewsCount = product.reviewsCount ?? 0;
+  // SERVER-SIDE: intentar obtener estadísticas y reseñas reales (si existe API)
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
+  let serverReviewsData: { stats?: { average?: number; total?: number }; reviews?: any[] } | null = null;
+
+  try {
+    const res = await fetch(`${baseUrl}/api/reviews?productId=${product.id}`, { cache: 'no-store' });
+    if (res.ok) {
+      serverReviewsData = await res.json();
+    }
+  } catch (e) {
+    // silencioso: fallback a datos del producto (si existen)
+  }
+
+  // valores seguros y fiables
+  const rating = serverReviewsData?.stats?.average ?? product.rating ?? 0;
+  const reviewsCount = serverReviewsData?.stats?.total ?? product.reviewsCount ?? 0;
 
   const priceValidUntil = new Date();
   priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
@@ -87,16 +99,6 @@ export default async function ProductPage({ params }: Props) {
       '@type': 'Brand',
       name: brandName
     },
-    // 3. Usamos la variable segura 'rating'
-    ...(rating > 0 && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: rating,
-        reviewCount: reviewsCount || 1,
-        bestRating: "5",
-        worstRating: "1"
-      }
-    }),
     offers: {
       '@type': 'Offer',
       price: product.price,
@@ -140,22 +142,33 @@ export default async function ProductPage({ params }: Props) {
         returnFees: 'https://schema.org/FreeReturn',
       },
     },
-    // 4. Usamos la variable segura 'rating' para evitar reseñas falsas si es 0
-    ...(rating > 0 ? {
-      review: {
+  };
+
+  // Añadir aggregateRating si hay al menos 1 reseña real
+  if (reviewsCount > 0) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: Number(rating.toFixed ? rating.toFixed(1) : rating),
+      reviewCount: reviewsCount,
+      bestRating: "5",
+      worstRating: "1"
+    };
+
+    // incluir hasta 3 reseñas verificadas como ejemplos (si la API las devuelve)
+    const serverReviews = serverReviewsData?.reviews ?? [];
+    if (serverReviews.length > 0) {
+      jsonLd.review = serverReviews.slice(0, 3).map((r: any) => ({
         '@type': 'Review',
+        author: { '@type': 'Person', name: r.user_email?.split?.('@')?.[0] ?? 'Cliente' },
+        datePublished: new Date(r.created_at).toISOString().split('T')[0],
         reviewRating: {
           '@type': 'Rating',
-          ratingValue: rating.toString()
+          ratingValue: String(r.rating)
         },
-        author: {
-          '@type': 'Person',
-          name: 'Cliente Verificado'
-        },
-        datePublished: new Date().toISOString().split('T')[0]
-      }
-    } : {}),
-  };
+        reviewBody: r.comment || ''
+      }));
+    }
+  }
 
   if (videoUrl) {
     jsonLd.subjectOf = {
