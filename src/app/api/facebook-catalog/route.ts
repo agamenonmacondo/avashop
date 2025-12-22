@@ -11,6 +11,38 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, '&apos;');
 }
 
+// sanitize XML by removing chars not allowed in XML 1.0, then escape
+function sanitizeForXml(input: string): string {
+  if (!input) return '';
+  // remove invalid XML 1.0 chars: allow #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+  const filtered = Array.from(input).filter((ch) => {
+    const cp = ch.codePointAt(0) ?? 0;
+    return (
+      cp === 0x9 ||
+      cp === 0xA ||
+      cp === 0xD ||
+      (cp >= 0x20 && cp <= 0xD7FF) ||
+      (cp >= 0xE000 && cp <= 0xFFFD) ||
+      (cp >= 0x10000 && cp <= 0x10FFFF)
+    );
+  }).join('');
+  return filtered
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+// build absolute and encoded image URL
+function buildImageUrl(baseUrl: string, img: string): string {
+  if (!img) return '';
+  if (/^https?:\/\//i.test(img)) return img;
+  const prefix = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const path = img.startsWith('/') ? img : `/${img}`;
+  return `${prefix}${encodeURI(path)}`;
+}
+
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ccs724.com';
   
@@ -35,27 +67,27 @@ export async function GET() {
       return;
     }
 
-    // Construir la URL de la imagen absoluta (tomar la primera imagen)
+    // Escapar y sanitizar textos
+    const safeTitle = sanitizeForXml(product.name || '');
+    const safeDescription = sanitizeForXml(product.description || product.name || '');
+
+    // Imagen absoluta segura
     let imageUrl = '';
     if (product.imageUrls && product.imageUrls.length > 0) {
-      const img = product.imageUrls[0];
-      imageUrl = img.startsWith('http') ? img : `${baseUrl}${img}`;
+      imageUrl = buildImageUrl(baseUrl, product.imageUrls[0]);
     } else {
       console.warn(`⚠️ Producto ${product.id} no tiene imágenes`);
       skippedProducts++;
       return; // Omitir productos sin imágenes
     }
 
-    // ✅ URL CORREGIDA: /products/ en lugar de /product/
-    const productUrl = `${baseUrl}/products/${product.slug || product.id}`;
+    // URL producto segura
+    const slugPart = encodeURIComponent(product.slug || product.id);
+    const productUrl = `${baseUrl.replace(/\/$/, '')}/products/${slugPart}`;
     
-    // Escapar solo los textos que no son URLs
-    const safeTitle = escapeXml(product.name);
-    const safeDescription = escapeXml(product.description || product.name);
-
     xml += `
 <item>
-  <g:id>${product.id}</g:id>
+  <g:id>${sanitizeForXml(String(product.id))}</g:id>
   <g:title>${safeTitle}</g:title>
   <g:description>${safeDescription}</g:description>
   <g:link>${productUrl}</g:link>
@@ -63,7 +95,7 @@ export async function GET() {
   <g:brand>CCS724</g:brand>
   <g:condition>new</g:condition>
   <g:availability>${(product.stock || 0) > 0 ? 'in stock' : 'out of stock'}</g:availability>
-  <g:price>${product.price} COP</g:price>
+  <g:price>${Number(product.price)} COP</g:price>
 </item>`;
 
     validProductCount++;
