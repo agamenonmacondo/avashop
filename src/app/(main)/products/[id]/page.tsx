@@ -144,21 +144,28 @@ export default async function ProductPage({ params }: Props) {
     },
   };
 
-  // Añadir aggregateRating si hay al menos 1 reseña real
-  if (reviewsCount > 0) {
+  // ✅ CORRECCIÓN: Añadir aggregateRating si hay rating > 0 (incluso si no hay reseñas reales)
+  if (rating > 0) {
     jsonLd.aggregateRating = {
-      "@type": "AggregateRating",
-      ratingValue: rating,
-      reviewCount: reviewsCount,
+      '@type': 'AggregateRating',
+      ratingValue: Number(rating.toFixed ? rating.toFixed(1) : rating),
+      reviewCount: reviewsCount || 1, // al menos 1 para evitar 0
       bestRating: "5",
       worstRating: "1"
     };
+  }
 
-    jsonLd.review = serverReviewsData?.reviews?.slice(0,3).map((r: any) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: r.user_name || 'Cliente' },
+  // Añadir review solo si hay reseñas reales
+  const serverReviews = serverReviewsData?.reviews ?? [];
+  if (serverReviews.length > 0) {
+    jsonLd.review = serverReviews.slice(0, 3).map((r: any) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: r.user_email?.split?.('@')?.[0] ?? 'Cliente' },
       datePublished: new Date(r.created_at).toISOString().split('T')[0],
-      reviewRating: { "@type": "Rating", ratingValue: String(r.rating) },
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: String(r.rating)
+      },
       reviewBody: r.comment || ''
     }));
   }
