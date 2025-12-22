@@ -147,27 +147,20 @@ export default async function ProductPage({ params }: Props) {
   // Añadir aggregateRating si hay al menos 1 reseña real
   if (reviewsCount > 0) {
     jsonLd.aggregateRating = {
-      '@type': 'AggregateRating',
-      ratingValue: Number(rating.toFixed ? rating.toFixed(1) : rating),
+      "@type": "AggregateRating",
+      ratingValue: rating,
       reviewCount: reviewsCount,
       bestRating: "5",
       worstRating: "1"
     };
 
-    // incluir hasta 3 reseñas verificadas como ejemplos (si la API las devuelve)
-    const serverReviews = serverReviewsData?.reviews ?? [];
-    if (serverReviews.length > 0) {
-      jsonLd.review = serverReviews.slice(0, 3).map((r: any) => ({
-        '@type': 'Review',
-        author: { '@type': 'Person', name: r.user_email?.split?.('@')?.[0] ?? 'Cliente' },
-        datePublished: new Date(r.created_at).toISOString().split('T')[0],
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: String(r.rating)
-        },
-        reviewBody: r.comment || ''
-      }));
-    }
+    jsonLd.review = serverReviewsData?.reviews?.slice(0,3).map((r: any) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.user_name || 'Cliente' },
+      datePublished: new Date(r.created_at).toISOString().split('T')[0],
+      reviewRating: { "@type": "Rating", ratingValue: String(r.rating) },
+      reviewBody: r.comment || ''
+    }));
   }
 
   if (videoUrl) {
