@@ -1,203 +1,230 @@
 import type { Product, Category, Order, User } from '@/types';
 
 
+
 // Updated categories based on the full product list
 // ===== CATEGORÍAS PADRE =====
 export const bellezaCategory: Category = { 
   id: 'belleza', 
   name: 'Belleza', 
-  slug: 'belleza' 
+  slug: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care'  // ✅ Taxonomía GMC
 };
 
 export const accesoriosCategory: Category = { 
   id: 'accesorios', 
   name: 'Accesorios', 
-  slug: 'accesorios' 
+  slug: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories'  // ✅ Taxonomía GMC
 };
 
 export const carloscardonaCategory: Category = { 
   id: 'carloscardona', 
   name: 'Carlos Cardona', 
-  slug: 'carloscardona' 
+  slug: 'carloscardona',
+  googleTaxonomy: 'Electronics > Cell Phones'  // ✅ Taxonomía GMC (para celulares)
 };
 
-
-// ===== SUBCATEGORÍAS DE BELLEZA =====
+// Subcategorías Belleza
 export const limpiadoresCategory: Category = { 
   id: 'b1', 
   name: 'Limpiadores', 
   slug: 'limpiadores',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Face Cleansers'  // ✅ Taxonomía GMC
 };
 
 export const hidratantesCategory: Category = { 
   id: 'b2', 
   name: 'Hidratantes', 
   slug: 'hidratantes',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Moisturizers'  // ✅ Taxonomía GMC
 };
 
 export const mascarillasCategory: Category = { 
   id: 'b3', 
   name: 'Mascarillas', 
   slug: 'mascarillas',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Face Masks'  // ✅ Taxonomía GMC
 };
 
 export const protectoresSolaresCategory: Category = { 
   id: 'b4', 
   name: 'Protectores Solares', 
   slug: 'protectores-solares',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Sun Care > Sunscreen'  // ✅ Taxonomía GMC
 };
 
 export const balsamosLabialesCategory: Category = { 
   id: 'b5', 
   name: 'Bálsamos Labiales', 
   slug: 'balsamos-labiales',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Lip Care > Lip Balm'  // ✅ Taxonomía GMC
 };
 
 export const exfoliantesCategory: Category = { 
   id: 'b6', 
   name: 'Exfoliantes', 
   slug: 'exfoliantes',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Exfoliators'  // ✅ Taxonomía GMC
 };
 
 export const aceitesFacialesCategory: Category = { 
   id: 'b7', 
   name: 'Aceites Faciales', 
   slug: 'aceites-faciales',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Facial Oils'  // ✅ Taxonomía GMC
 };
 
 export const cremasFacialesCategory: Category = { 
   id: 'b8', 
   name: 'Cremas Faciales', 
   slug: 'cremas-faciales',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Face Creams'  // ✅ Taxonomía GMC
 };
 
 export const setsBellezaCategory: Category = { 
   id: 'b9', 
   name: 'Sets de Belleza', 
   slug: 'sets-belleza',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Skin Care Sets'  // ✅ Taxonomía GMC
 };
 
 export const cremasManosCategory: Category = { 
   id: 'b10', 
   name: 'Cremas de Manos', 
   slug: 'cremas-manos',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Hand Care > Hand Creams'  // ✅ Taxonomía GMC
 };
 
 export const locionesCategory: Category = { 
   id: 'b11', 
   name: 'Lociones', 
   slug: 'lociones',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Body Care > Body Lotions'  // ✅ Taxonomía GMC
 };
 
 export const serumCategory: Category = { 
   id: 'b12', 
   name: 'Sérums', 
   slug: 'serums',
-  parentId: 'belleza' 
+  parentId: 'belleza',
+  googleTaxonomy: 'Beauty & Personal Care > Skin Care > Serums'  // ✅ Taxonomía GMC
 };
 
-// ===== SUBCATEGORÍAS DE ACCESORIOS =====
+// Subcategorías Accesorios
 export const auricularesCategory: Category = { 
   id: 'a1', 
   name: 'Auriculares', 
   slug: 'auriculares',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Audio > Headphones'  // ✅ Taxonomía GMC
 };
 
 export const cargadoresCategory: Category = { 
   id: 'a2', 
   name: 'Cargadores', 
   slug: 'cargadores',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Chargers'  // ✅ Taxonomía GMC
 };
 
 export const cablesCategory: Category = { 
   id: 'a3', 
   name: 'Cables', 
   slug: 'cables',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Cables'  // ✅ Taxonomía GMC
 };
 
 export const soportesCategory: Category = { 
   id: 'a4', 
   name: 'Soportes', 
   slug: 'soportes',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Stands'  // ✅ Taxonomía GMC
 };
 
 export const powerBanksCategory: Category = { 
   id: 'a5', 
   name: 'Power Banks', 
   slug: 'power-banks',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Power Banks'  // ✅ Taxonomía GMC
 };
 
 export const altavocesCategory: Category = { 
   id: 'a6', 
   name: 'Altavoces', 
   slug: 'altavoces',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Audio > Speakers'  // ✅ Taxonomía GMC
 };
 
 export const hubsCategory: Category = { 
   id: 'a7', 
   name: 'Hubs', 
   slug: 'hubs',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Hubs'  // ✅ Taxonomía GMC
 };
 
 export const smartwatchesCategory: Category = { 
   id: 'a8', 
   name: 'Smartwatches', 
   slug: 'smartwatches',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Wearables > Smartwatches'  // ✅ Taxonomía GMC
 };
 
 export const tecladosCategory: Category = { 
   id: 'a9', 
   name: 'Teclados', 
   slug: 'teclados',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Keyboards'  // ✅ Taxonomía GMC
 };
 
-export const micrófonosCategory: Category = { 
+export const microfonosCategory: Category = { 
   id: 'a10', 
   name: 'Micrófonos', 
-  slug: 'microfonos',
-  parentId: 'accesorios' 
+  slug: 'microfonos',  // ✅ Normalizado sin acento
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Audio > Microphones'  // ✅ Taxonomía GMC
 };
 
 export const adaptadoresCategory: Category = { 
   id: 'a11', 
   name: 'Adaptadores', 
   slug: 'adaptadores',
-  parentId: 'accesorios' 
+  parentId: 'accesorios',
+  googleTaxonomy: 'Electronics > Accessories > Adapters'  // ✅ Taxonomía GMC
 };
 
+// Subcategorías Carlos Cardona
 export const celularesCategory: Category = { 
   id: 'c1', 
-  name: 'celulares', 
+  name: 'Celulares', 
   slug: 'celulares',
-  parentId: 'carloscardona' 
+  parentId: 'carloscardona',
+  googleTaxonomy: 'Electronics > Cell Phones'  // ✅ Taxonomía GMC
 };
 
-// ===== ARRAY DE CATEGORÍAS =====
 export const categories: Category[] = [
   bellezaCategory,
   accesoriosCategory,
-  limpiadoresCategory,
   carloscardonaCategory,
+  limpiadoresCategory,
   hidratantesCategory,
   mascarillasCategory,
   protectoresSolaresCategory,
@@ -218,7 +245,7 @@ export const categories: Category[] = [
   hubsCategory,
   smartwatchesCategory,
   tecladosCategory,
-  micrófonosCategory,
+  microfonosCategory,  // ✅ Actualizado sin acento
   adaptadoresCategory,
   celularesCategory
 ];
@@ -964,7 +991,7 @@ export const products: Product[] = [
       "/images/remax/113_K-16.png",
       "/images/remax/114_K-16.png"
     ],
-    category: micrófonosCategory,
+    category: microfonosCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -981,7 +1008,7 @@ export const products: Product[] = [
       "/images/remax/115_K-18.png",
       "/images/remax/116_K-18.png"
     ],
-    category: micrófonosCategory,
+    category: microfonosCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -999,7 +1026,7 @@ export const products: Product[] = [
       "/images/remax/118_K-15.png",
       "/images/remax/119_K-15.png"
     ],
-    category: micrófonosCategory,
+    category: microfonosCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
@@ -1017,7 +1044,7 @@ export const products: Product[] = [
       "/images/remax/121_K-13.png",
       "/images/remax/122_K-13.png"
     ],
-    category: micrófonosCategory,
+    category: microfonosCategory,
     stock: 10,
     rating: 0,
     reviewsCount: 0,
