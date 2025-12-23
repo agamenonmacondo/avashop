@@ -113,6 +113,9 @@ export default function Header() {
                   <Link href="/landing/combo-navideno" className="text-base hover:underline">
                     Combo Navideño
                   </Link>
+                  <Link href="/landing/creatina" className="text-base hover:underline">
+                    Creatina
+                  </Link>
 
                   {/* Información Legal - Móvil */}
                   <div className="border-t pt-4 mt-2">
@@ -164,6 +167,9 @@ export default function Header() {
             </Link>
             <Link href="/landing/combo-navideno" className="hover:underline whitespace-nowrap">
               Combo Navideño
+            </Link>
+            <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
+              Creatina
             </Link>
 
             {/* Menú desplegable Legal - Desktop */}

@@ -54,8 +54,8 @@ const calculateOrderSummary = (cartItems: any[]) => {
   }
   
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const hasComboNavideno = cartItems.some(item => item.id === 'combo-navideno');
-  const shipping = hasComboNavideno ? 0 : (subtotal > 200000 ? 0 : 15000);
+  const hasFreeShipping = cartItems.some(item => item.id === 'combo-navideno' || item.id === 'creatina-for-women');
+  const shipping = hasFreeShipping ? 0 : (subtotal > 200000 ? 0 : 15000);
   const total = subtotal + shipping;
   
   return { items: cartItems, subtotal, shipping, total };

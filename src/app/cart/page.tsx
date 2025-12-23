@@ -69,11 +69,11 @@ export default function CartPage() {
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   
-  // ✅ Verificar si el carrito contiene el Combo Navideño
-  const hasComboNavideno = cartItems.some(item => item.id === 'combo-navideno');
+  // ✅ Verificar si el carrito contiene productos con envío gratis (Combo Navideño o Creatina)
+  const hasFreeShipping = cartItems.some(item => item.id === 'combo-navideno' || item.id === 'creatina-for-women');
   
-  // ✅ Si tiene Combo Navideño, envío gratis. Si no, aplicar lógica normal
-  const shippingCost = hasComboNavideno ? 0 : (subtotal > 200000 ? 0 : 15000);
+  // ✅ Si tiene productos con envío gratis, envío gratis. Si no, aplicar lógica normal
+  const shippingCost = hasFreeShipping ? 0 : (subtotal > 200000 ? 0 : 15000);
   
   const totalAmount = subtotal + shippingCost;
 
@@ -148,13 +148,13 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Envío</span>
-                <span className={hasComboNavideno ? "text-green-600 font-semibold" : ""}>
+                <span className={hasFreeShipping ? "text-green-600 font-semibold" : ""}>
                   {shippingCost === 0 ? 'Gratis' : formatColombianCurrency(shippingCost)}
                 </span>
               </div>
-              {hasComboNavideno && (
+              {hasFreeShipping && (
                 <p className="text-xs text-green-600">
-                  🎄 ¡Envío gratis por Combo Navideño!
+                  🎄 ¡Envío gratis por Combo Navideño o Creatina!
                 </p>
               )}
               <div className="border-t pt-2 flex justify-between font-bold text-xl">
