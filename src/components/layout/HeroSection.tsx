@@ -4,8 +4,18 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 const heroContent = [
+    {
+        type: 'image',
+        src: '/images/creatina/hero_creatina.jpeg',
+        title: '💪 Creatina Monohidrato',
+        description: 'Potencia tu energía y fuerza con creatina para mujeres',
+        price: '$65.000',
+        link: '/landing/creatina',
+        buttonText: 'Ver Creatina',
+    },
     {
         type: 'video',
         src: '/images/combo_navideño/hero video.mp4',
@@ -106,16 +116,26 @@ export default function HeroSection() {
         >
             {/* Contenedor principal - MÁS ESPACIO para el video en mobile */}
             <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] max-h-[60vh] sm:max-h-[60vh] md:max-h-[70vh]">
-                {/* Video de fondo */}
-                <video
-                    ref={videoRef}
-                    src={activeContent.src}
-                    loop
-                    muted
-                    playsInline
-                    autoPlay
-                    className="absolute inset-0 w-full h-full object-cover"
-                />
+                {/* Video o Imagen de fondo */}
+                {activeContent.type === 'video' ? (
+                    <video
+                        ref={videoRef}
+                        src={activeContent.src}
+                        loop
+                        muted
+                        playsInline
+                        autoPlay
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                ) : (
+                    <Image
+                        src={activeContent.src}
+                        alt={activeContent.title}
+                        fill
+                        className="object-cover"
+                        priority={activeIndex === 0}
+                    />
+                )}
 
                 {/* Overlay gradiente REDUCIDO - Solo en los bordes para legibilidad del texto */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
