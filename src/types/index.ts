@@ -12,6 +12,14 @@ export interface ProductDetails {
   [key: string]: any; // Para cualquier otro campo adicional
 }
 
+export interface Review {
+  author: string;
+  datePublished: string;
+  reviewBody: string;
+  ratingValue: number;
+  bestRating?: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -26,6 +34,8 @@ export interface Product {
   active?: boolean;        // ✅ Ahora es opcional
   rating?: number;
   reviewsCount?: number;
+  reviews?: Review[]; // ✅ Nuevo: array de reseñas individuales
+  priceValidUntil?: string; // ✅ Nuevo: fecha de validez del precio (YYYY-MM-DD)
   details?: ProductDetails;
   createdAt?: Date | string;   // ✅ Acepta Date o string
   updatedAt?: Date | string;   // ✅ Acepta Date o string
