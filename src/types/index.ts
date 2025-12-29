@@ -45,6 +45,7 @@ export interface Product {
   gtin?: string;
   brand?: string;
   identifier_exists?: 'yes' | 'no';
+  sale_price?: number; // Para descuentos, si aplica
 }
 
 export interface Category {
