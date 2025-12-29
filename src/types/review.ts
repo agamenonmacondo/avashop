@@ -1,26 +1,17 @@
 export interface Review {
-  id: number;
-  order_id: number;
-  product_id: string;
-  user_id: string | null;
-  user_email: string;
-  rating: number; // 1-5
-  comment: string;
-  is_verified: boolean;
-  created_at: string;
-  updated_at: string;
+  id: string;
+  author?: string;
+  datePublished?: string;
+  reviewBody?: string;
+  ratingValue?: number;
+  bestRating?: number;
+  worstRating?: number;
 }
 
 export interface ReviewStats {
   average: number;
   total: number;
-  distribution: {
-    1: number;
-    2: number;
-    3: number;
-    4: number;
-    5: number;
-  };
+  distribution: { 1: number; 2: number; 3: number; 4: number; 5: number; }; // requerido, objeto con claves 1-5
 }
 
 export interface CreateReviewInput {

@@ -21,37 +21,20 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
   });
 
   const priceValidUntil = product.priceValidUntil || undefined;
-  const price = product.price != null ? String(product.price) : undefined;
+  const price = product.price != null ? Number(product.price).toFixed(0) : undefined;
   const priceCurrency = product.priceCurrency || 'COP';
 
+  // definir condición para Offer (evita el error de scope)
+  const condition = product.condition || 'New';
+
   const availability = product.availability
-    ? `https://schema.org/${product.availability}`
+    ? `https://schema.org/${product.availability.replace(/https?:\/\/schema\.org\//, '')}`
     : (product.stock && product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock');
+  
+  const url = product.url ? (product.url.startsWith('http') ? product.url : `${site}${product.url.startsWith('/') ? '' : '/'}${product.url}`) : (product.slug ? `${site}/products/${product.slug}` : `${site}/products/${product.id}`);
 
-  const condition = product.condition ? `https://schema.org/${product.condition}Condition` : undefined;
-
-  const url = product.url ? product.url : (product.slug ? `${site}/products/${product.slug}` : `${site}/products/${product.id}`);
-
-  // Try to fetch reviews/stats from internal API if product has no reviews/stats
-  let apiReviews: Review[] = [];
-  let apiStats: any = null;
-  try {
-    const base = process.env.NEXT_PUBLIC_BASE_URL || site; // <- usar site como fallback en vez de localhost
-    const res = await fetch(`${base}/api/reviews?productId=${encodeURIComponent(product.id)}&limit=20`, {
-      next: { revalidate: 120 },
-    });
-    if (res.ok) {
-      const json = await res.json();
-      apiReviews = Array.isArray(json.reviews) ? json.reviews : [];
-      apiStats = json.stats ?? null;
-    }
-  } catch (e) {
-    // fail silently — se usan los datos del product si existen
-  }
-
-  const reviewsSource: Review[] = apiReviews.length ? apiReviews : (product.reviews ?? []);
-  const reviewsCount = apiStats?.reviewsCount ?? product.reviewsCount ?? (reviewsSource?.length || 0);
-  const ratingValue = apiStats?.rating ?? product.rating ?? undefined;
+  // ensure identifier_exists fallback
+  const identifier_exists = product.identifier_exists || (product.gtin || product.mpn ? 'yes' : 'no');
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
@@ -63,13 +46,20 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
     brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
     mpn: product.mpn || undefined,
     gtin: product.gtin || undefined,
+    // añadir seller / organización para transparencia
+    seller: {
+      '@type': 'Organization',
+      name: 'CCS 724',
+      url: site,
+      telephone: '+573504017710',
+    },
     offers: {
       '@type': 'Offer',
-      price,
+      price: price !== undefined ? price : undefined,
       priceCurrency,
       availability,
       condition,
-      priceValidUntil,
+      priceValidUntil: product.priceValidUntil || undefined,
       url,
       shippingDetails: {
         '@type': 'OfferShippingDetails',
@@ -77,7 +67,7 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
         url: POLICIES.shipping,
         shippingRate: {
           '@type': 'MonetaryAmount',
-          value: '0',
+          value: 0,
           currency: priceCurrency,
         },
         shippingDestination: {
@@ -111,11 +101,32 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
         returnFees: 'https://schema.org/FreeReturn',
       },
     },
+    identifier_exists,
     // añadir enlaces legales a nivel de producto
     termsOfService: POLICIES.terms,
     privacyPolicy: POLICIES.privacy,
-    identifier_exists: product.identifier_exists,
   };
+
+  // Try to fetch reviews/stats from internal API if product has no reviews/stats
+  let apiReviews: Review[] = [];
+  let apiStats: any = null;
+  try {
+    const base = process.env.NEXT_PUBLIC_BASE_URL || site; // <- usar site como fallback en vez de localhost
+    const res = await fetch(`${base}/api/reviews?productId=${encodeURIComponent(product.id)}&limit=20`, {
+      next: { revalidate: 120 },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      apiReviews = Array.isArray(json.reviews) ? json.reviews : [];
+      apiStats = json.stats ?? null;
+    }
+  } catch (e) {
+    // fail silently — se usan los datos del product si existen
+  }
+
+  const reviewsSource: Review[] = apiReviews.length ? apiReviews : (product.reviews ?? []);
+  const reviewsCount = apiStats?.reviewsCount ?? product.reviewsCount ?? (reviewsSource?.length || 0);
+  const ratingValue = apiStats?.rating ?? product.rating ?? undefined;
 
   if (reviewsCount && reviewsCount > 0) {
     jsonLd.aggregateRating = {

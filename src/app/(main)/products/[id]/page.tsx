@@ -3,6 +3,7 @@ import { products } from '@/lib/placeholder-data';
 import ProductDetailClient from './ProductDetailClient';
 import Breadcrumbs from '@/components/ui/Breadcrumbs'; // 1. Importamos Breadcrumbs
 import JsonLdProduct from '@/components/JsonLdProduct'; // Importar componente JsonLdProduct
+import type { ReviewStats } from '@/types/review';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -64,7 +65,7 @@ export default async function Page({ params }: Props) {
 
   // SERVER-SIDE: intentar obtener estadísticas y reseñas reales (si existe API)
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
-  let serverReviewsData: { stats?: { average?: number; total?: number }; reviews?: any[] } | null = null;
+  let serverReviewsData: { stats?: { average: number; total: number; distribution?: { 1: number; 2: number; 3: number; 4: number; 5: number; } }; reviews?: any[] } | null = null;
 
   try {
     const res = await fetch(`${baseUrl}/api/reviews?productId=${product.id}`, { cache: 'no-store' });
@@ -74,6 +75,15 @@ export default async function Page({ params }: Props) {
   } catch (e) {
     // silencioso: fallback a datos del producto (si existen)
   }
+
+  // convertir distribution si es array (de API) a objeto esperado
+  const safeStats: ReviewStats | null = serverReviewsData?.stats
+    ? {
+        average: serverReviewsData.stats.average,
+        total: serverReviewsData.stats.total,
+        distribution: serverReviewsData.stats.distribution ?? { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, // fallback si undefined
+      }
+    : null;
 
   // valores seguros y fiables
   const rating = serverReviewsData?.stats?.average ?? product.rating ?? 0;
@@ -207,7 +217,7 @@ export default async function Page({ params }: Props) {
       <ProductDetailClient 
         product={product} 
         initialReviews={serverReviews} 
-        initialStats={serverReviewsData?.stats ?? null} 
+        initialStats={safeStats} 
       />
     </div>
   );
