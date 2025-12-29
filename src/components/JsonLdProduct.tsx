@@ -15,16 +15,25 @@ type Product = {
   aggregateRating?: { ratingValue: number; reviewCount: number } | null;
   reviews?: any[] | null;
   url?: string;
+  gtin?: string;
 };
 
 export default function JsonLdProduct({ product }: { product: Product | null }) {
   if (!product) return null;
 
+  const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
+
+  const imagesRaw = (product.images ?? []) as string[];
+  const images = imagesRaw.map((u) => {
+    const url = u ?? '';
+    return url.startsWith('http') ? url : `${site}${url.startsWith('/') ? '' : '/'}${url}`;
+  });
+
   const offer = {
     '@type': 'Offer',
-    url: product.url || `https://www.ccs724.com/products/${product.id}`,
+    url: product.url || `${site}/products/${product.id}`,
     priceCurrency: product.currency || 'COP',
-    price: product.price != null ? String(product.price) : undefined,
+    price: product.price != null ? Number(product.price).toFixed(2) : undefined,
     availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
     priceValidUntil: product.priceValidUntil || undefined,
   };
@@ -33,23 +42,36 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.title,
-    image: product.images || [],
+    image: images,
     description: product.description || '',
     sku: product.sku || product.id,
     brand: { '@type': 'Brand', name: product.brand || 'CCS724' },
     offers: offer,
   };
 
-  if (product.aggregateRating) {
+  if (product.gtin) {
+    ld.gtin = product.gtin;
+    ld.identifier_exists = true;
+  }
+
+  if (product.aggregateRating && product.aggregateRating.reviewCount > 0) {
     ld.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: product.aggregateRating.ratingValue,
       reviewCount: product.aggregateRating.reviewCount,
+      bestRating: 5,
+      worstRating: 1
     };
   }
 
-  if (product.reviews) {
-    ld.review = product.reviews;
+  if (Array.isArray(product.reviews) && product.reviews.length > 0) {
+    ld.review = product.reviews.map((r: any) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: (r.user_name ?? r.user_email?.split?.('@')?.[0]) ?? 'Cliente' },
+      datePublished: r.created_at ? new Date(r.created_at).toISOString().split('T')[0] : undefined,
+      reviewRating: r.rating ? { '@type': 'Rating', ratingValue: String(r.rating) } : undefined,
+      reviewBody: r.comment || r.body || ''
+    }));
   }
 
   return (

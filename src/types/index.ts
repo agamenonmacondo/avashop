@@ -39,6 +39,12 @@ export interface Product {
   details?: ProductDetails;
   createdAt?: Date | string;   // ✅ Acepta Date o string
   updatedAt?: Date | string;   // ✅ Acepta Date o string
+
+  // Campos opcionales añadidos para el feed / JSON-LD
+  mpn?: string;
+  gtin?: string;
+  brand?: string;
+  identifier_exists?: 'yes' | 'no';
 }
 
 export interface Category {
