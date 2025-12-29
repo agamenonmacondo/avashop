@@ -9,7 +9,8 @@ type Props = {
 
 export default function ProductJsonLd({ product, priceCurrency = 'COP', priceValidUntil }: Props) {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
+  // no loading gate: render JSON-LD immediately using product data
+  // (reviews will be appended when fetched)
 
   useEffect(() => {
     // Fetch reviews desde la API
@@ -22,14 +23,12 @@ export default function ProductJsonLd({ product, priceCurrency = 'COP', priceVal
         }
       } catch (error) {
         console.error('Error fetching reviews:', error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchReviews();
   }, [product.id]);
 
-  if (loading) return null; // O un placeholder si prefieres
+  // don't block rendering — build LD immediately
 
   const availability = product.stock && product.stock > 0 ? 'InStock' : 'OutOfStock';
 
@@ -43,7 +42,7 @@ export default function ProductJsonLd({ product, priceCurrency = 'COP', priceVal
     brand: product.category?.name ? { '@type': 'Brand', name: product.category.name } : undefined,
     offers: {
       '@type': 'Offer',
-      url: `https://www.ccs724.com/products/${product.slug ?? product.id}`,  // ✅ Cambiado: Construye la URL dinámicamente
+      url: `https://www.ccs724.com/products/${product.slug ?? product.id}`,
       priceCurrency,
       price: String(product.price),
       availability: `https://schema.org/${availability}`,
