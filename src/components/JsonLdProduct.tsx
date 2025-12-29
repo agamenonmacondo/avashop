@@ -46,7 +46,7 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.title,
-    image: images,
+    image: product.images?.map((url: string) => url.startsWith('http') ? url : `https://www.ccs724.com${url}`) || [],
     description: product.description || '',
     sku: product.sku || product.id,
     brand: { '@type': 'Brand', name: product.brand || 'CCS724' },
