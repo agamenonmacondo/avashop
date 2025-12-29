@@ -187,30 +187,7 @@ export default async function ProductPage({ params }: Props) {
   
   // Añadir review solo si hay reseñas reales
   const serverReviews = serverReviewsData?.reviews ?? [];
-  if (serverReviews.length > 0) {
-    jsonLd.review = serverReviews.slice(0, 3).map((r: any) => ({
-      '@type': 'Review',
-      author: { '@type': 'Person', name: r.user_email?.split?.('@')?.[0] ?? 'Cliente' },
-      datePublished: new Date(r.created_at).toISOString().split('T')[0],
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: String(r.rating)
-      },
-      reviewBody: r.comment || ''
-    }));
-  }
-
-  if (videoUrl) {
-    jsonLd.subjectOf = {
-      '@type': 'VideoObject',
-      name: `Video de ${product.name}`,
-      description: description,
-      thumbnailUrl: product.imageUrls[0],
-      uploadDate: new Date().toISOString(),
-      contentUrl: videoUrl,
-      embedUrl: videoUrl
-    };
-  }
+  const serverStats = serverReviewsData?.stats ?? null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -228,7 +205,11 @@ export default async function ProductPage({ params }: Props) {
         ]} 
       />
 
-      <ProductDetailClient product={product} />
+      <ProductDetailClient 
+        product={product} 
+        initialReviews={serverReviews} 
+        initialStats={serverStats} 
+      />
     </div>
   );
 }
