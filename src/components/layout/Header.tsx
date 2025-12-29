@@ -103,16 +103,7 @@ export default function Header() {
                     <SearchBar />
                   </div>
 
-                  {/* Enlaces principales */}
-                  <Link href="/landing" className="text-base hover:underline">
-                    Combo Pro
-                  </Link>
-                  <Link href="/landing/kit-esencial" className="text-base hover:underline">
-                    Kit Esencial
-                  </Link>
-                  <Link href="/landing/combo-navideno" className="text-base hover:underline">
-                    Combo Navideño
-                  </Link>
+                  {/* Mantener solo enlace a Creatina (se eliminaron Combo Pro, Kit Esencial y Combo Navideño) */}
                   <Link href="/landing/creatina" className="text-base hover:underline">
                     Creatina
                   </Link>
@@ -157,17 +148,8 @@ export default function Header() {
             />
           </Link>
 
-          {/* Navegación desktop */}
+          {/* Navegación desktop - SE ELIMINARON Combo Pro, Kit Esencial y Combo Navideño */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium">
-            <Link href="/landing" className="hover:underline whitespace-nowrap">
-              Combo Pro
-            </Link>
-            <Link href="/landing/kit-esencial" className="hover:underline whitespace-nowrap">
-              Kit Esencial
-            </Link>
-            <Link href="/landing/combo-navideno" className="hover:underline whitespace-nowrap">
-              Combo Navideño
-            </Link>
             <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
               Creatina
             </Link>
