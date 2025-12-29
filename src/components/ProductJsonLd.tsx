@@ -33,8 +33,10 @@ export default function ProductJsonLd({ product, priceCurrency = 'COP', priceVal
   const availability = product.stock && product.stock > 0 ? 'InStock' : 'OutOfStock';
 
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
-  const imagesRaw = (product as any).imageUrls ?? (product as any).images ?? [];
-  const images = imagesRaw.map((u: string) => u?.startsWith?.('http') ? u : `${site}${u}`);
+  const imagesRaw = (product as any).imageUrls ?? (product as any).image ?? (product as any).image_link ?? [];
+  const images = (Array.isArray(imagesRaw) ? imagesRaw : [imagesRaw]).map((u: string) =>
+    u?.startsWith?.('http') ? u : `${site}${u}`
+  );
   const thumbnail = images[0];
 
   const ld: any = {
