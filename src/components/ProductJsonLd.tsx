@@ -32,21 +32,27 @@ export default function ProductJsonLd({ product, priceCurrency = 'COP', priceVal
 
   const availability = product.stock && product.stock > 0 ? 'InStock' : 'OutOfStock';
 
+  const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
+  const imagesRaw = (product as any).imageUrls ?? (product as any).images ?? [];
+  const images = imagesRaw.map((u: string) => u?.startsWith?.('http') ? u : `${site}${u}`);
+  const thumbnail = images[0];
+
   const ld: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
-    image: product.imageUrls || [],
+    image: images,
     description: product.description || product.name,
     sku: product.slug || product.id,
     brand: product.category?.name ? { '@type': 'Brand', name: product.category.name } : undefined,
     offers: {
       '@type': 'Offer',
-      url: `https://www.ccs724.com/products/${product.slug ?? product.id}`,
+      url: `${site}/products/${product.slug ?? product.id}`,
       priceCurrency,
       price: String(product.price),
       availability: `https://schema.org/${availability}`,
     },
+    ...(thumbnail ? { subjectOf: { thumbnailUrl: thumbnail } } : {}),
   };
 
   if (priceValidUntil) ld.offers.priceValidUntil = priceValidUntil;
