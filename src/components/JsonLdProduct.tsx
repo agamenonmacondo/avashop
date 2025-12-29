@@ -2,10 +2,18 @@ import Script from 'next/script';
 import React from 'react';
 import { Product, Review } from '../types';
 
-export default function JsonLdProduct({ product }: { product: Product | null }) {
+export default async function JsonLdProduct({ product }: { product: Product | null }) {
   if (!product) return null;
 
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
+
+  // política URLs de la empresa
+  const POLICIES = {
+    returns: 'https://www.ccs724.com/politica-de-devoluciones',
+    shipping: 'https://www.ccs724.com/politica-de-envios',
+    terms: 'https://www.ccs724.com/terminos-y-condiciones',
+    privacy: 'https://www.ccs724.com/politica-de-privacidad',
+  };
 
   const images = (product.imageUrls ?? []).map((u) => {
     const url = u ?? '';
@@ -23,6 +31,27 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
   const condition = product.condition ? `https://schema.org/${product.condition}Condition` : undefined;
 
   const url = product.url ? product.url : (product.slug ? `${site}/products/${product.slug}` : `${site}/products/${product.id}`);
+
+  // Try to fetch reviews/stats from internal API if product has no reviews/stats
+  let apiReviews: Review[] = [];
+  let apiStats: any = null;
+  try {
+    const base = process.env.NEXT_PUBLIC_BASE_URL || site; // <- usar site como fallback en vez de localhost
+    const res = await fetch(`${base}/api/reviews?productId=${encodeURIComponent(product.id)}&limit=20`, {
+      next: { revalidate: 120 },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      apiReviews = Array.isArray(json.reviews) ? json.reviews : [];
+      apiStats = json.stats ?? null;
+    }
+  } catch (e) {
+    // fail silently — se usan los datos del product si existen
+  }
+
+  const reviewsSource: Review[] = apiReviews.length ? apiReviews : (product.reviews ?? []);
+  const reviewsCount = apiStats?.reviewsCount ?? product.reviewsCount ?? (reviewsSource?.length || 0);
+  const ratingValue = apiStats?.rating ?? product.rating ?? undefined;
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
@@ -42,6 +71,8 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
       url,
       shippingDetails: {
         '@type': 'OfferShippingDetails',
+        // link a la política de envíos
+        url: POLICIES.shipping,
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: '0',
@@ -70,27 +101,32 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         applicableCountry: 'CO',
+        // link a la política de devoluciones
+        url: POLICIES.returns,
         returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
         merchantReturnDays: 30,
         returnMethod: 'https://schema.org/ReturnByMail',
         returnFees: 'https://schema.org/FreeReturn',
       },
     },
+    // añadir enlaces legales a nivel de producto
+    termsOfService: POLICIES.terms,
+    privacyPolicy: POLICIES.privacy,
     mpn: product.mpn,
     gtin: product.gtin,
     identifier_exists: product.identifier_exists,
   };
 
-  if (product.reviewsCount && product.reviewsCount > 0) {
+  if (reviewsCount && reviewsCount > 0) {
     jsonLd.aggregateRating = {
       '@type': 'AggregateRating',
-      ratingValue: product.rating ?? undefined,
-      reviewCount: product.reviewsCount,
+      ratingValue: ratingValue ?? undefined,
+      reviewCount: reviewsCount,
       bestRating: 5,
       worstRating: 1,
     };
 
-    jsonLd.review = (product.reviews ?? []).map((r: Review) => ({
+    jsonLd.review = (reviewsSource ?? []).map((r: Review) => ({
       '@type': 'Review',
       author: { '@type': 'Person', name: (r as any).author ?? (r as any).user ?? 'Usuario' },
       datePublished: (r as any).datePublished,
