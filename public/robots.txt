@@ -45,5 +45,3 @@ Allow: /*.webp
 
 # Sitemaps
 Sitemap: https://www.ccs724.com/sitemap.xml
-Sitemap: https://www.ccs724.com/product-sitemap.xml
-Sitemap: https://www.ccs724.com/category-sitemap.xml
