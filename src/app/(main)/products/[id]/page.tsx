@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { products } from '@/lib/placeholder-data';
 import ProductDetailClient from './ProductDetailClient';
 import Breadcrumbs from '@/components/ui/Breadcrumbs'; // 1. Importamos Breadcrumbs
+import JsonLdProduct from '@/components/JsonLdProduct'; // Importar componente JsonLdProduct
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -53,7 +54,7 @@ function generateShortSku(id: string): string {
   return acronym + suffix; // ej. MSAFVCAZDF para mon-sub-aceite-facial-de-vitamina-c-azul-doble-fase
 }
 
-export default async function ProductPage({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { id } = await params;
   const product = products.find((p) => p.id === id);
 
@@ -191,11 +192,9 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      
+      {/* ✅ Reemplaza JSON-LD inline con el componente oficial */}
+      <JsonLdProduct product={product} />
+
       {/* 5. Implementación de Breadcrumbs */}
       <Breadcrumbs 
         items={[
@@ -208,7 +207,7 @@ export default async function ProductPage({ params }: Props) {
       <ProductDetailClient 
         product={product} 
         initialReviews={serverReviews} 
-        initialStats={serverStats} 
+        initialStats={serverReviewsData?.stats ?? null} 
       />
     </div>
   );
