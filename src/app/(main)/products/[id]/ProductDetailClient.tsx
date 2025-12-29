@@ -14,6 +14,8 @@ import { getSupabase } from '@/lib/supabaseClient';
 
 interface ProductDetailClientProps {
   product: Product;
+  initialReviews?: Review[];
+  initialStats?: ReviewStats | null;
 }
 
 interface Review {
@@ -39,7 +41,11 @@ interface ReviewStats {
   };
 }
 
-export default function ProductDetailClient({ product }: ProductDetailClientProps) {
+export default function ProductDetailClient({
+  product,
+  initialReviews = [],
+  initialStats = null,
+}: ProductDetailClientProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
@@ -47,31 +53,41 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [showShareModal, setShowShareModal] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [reviewStats, setReviewStats] = useState<ReviewStats>({
-    average: 0,
-    total: 0,
-    distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
-  });
-  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [reviews, setReviews] = useState<Review[]>(initialReviews || []);
+  const [reviewStats, setReviewStats] = useState<ReviewStats>(
+    initialStats ?? {
+     average: 0,
+     total: 0,
+     distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    }
+  );
+  const [loadingReviews, setLoadingReviews] = useState(
+    !(initialReviews && initialReviews.length > 0)
+  );
 
   useEffect(() => {
+    // Si ya vienen reseñas desde el servidor, no refetchear
+    if (initialReviews && initialReviews.length > 0) {
+      setLoadingReviews(false);
+      return;
+    }
+
+    if (!product?.id) {
+      console.warn('ProductDetailClient: product.id no está disponible, saltando fetch de reseñas');
+      setLoadingReviews(false);
+      return;
+    }
+
     const fetchReviews = async () => {
       try {
         setLoadingReviews(true);
-        const response = await fetch(`/api/reviews?productId=${product.id}`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          setReviews(data.reviews || []);
-          setReviewStats(data.stats || {
-            average: 0,
-            total: 0,
-            distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
-          });
-        }
-      } catch (error) {
-        console.error('Error loading reviews:', error);
+        const res = await fetch(`/api/reviews?productId=${encodeURIComponent(product.id)}`);
+        if (!res.ok) throw new Error(`reviews API ${res.status}`);
+        const data = await res.json();
+        setReviews(data.reviews ?? []);
+        setReviewStats(data.stats ?? { average: 0, total: 0, distribution: {1:0,2:0,3:0,4:0,5:0} });
+      } catch (err) {
+        console.error('Error loading reviews:', err);
       } finally {
         setLoadingReviews(false);
       }
@@ -79,7 +95,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
     fetchReviews();
   }, [product.id]);
-
+  
   const handleAddToCart = async () => {
     setIsAddingToCart(true);
     
