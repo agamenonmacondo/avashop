@@ -61,6 +61,8 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
     image: images,
     description: product.description || '',
     brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
+    mpn: product.mpn || undefined,
+    gtin: product.gtin || undefined,
     offers: {
       '@type': 'Offer',
       price,
@@ -112,8 +114,6 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
     // añadir enlaces legales a nivel de producto
     termsOfService: POLICIES.terms,
     privacyPolicy: POLICIES.privacy,
-    mpn: product.mpn,
-    gtin: product.gtin,
     identifier_exists: product.identifier_exists,
   };
 
@@ -139,11 +139,16 @@ export default async function JsonLdProduct({ product }: { product: Product | nu
     }));
   }
 
+  // Filtrar undefined antes de serializar
+  const cleanJsonLd = Object.fromEntries(
+    Object.entries(jsonLd).filter(([_, v]) => v !== undefined)
+  );
+
   return (
     <Script
       id={`ld-product-${product.id}`}
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
     />
   );
 }
