@@ -28,25 +28,26 @@ export interface Product {
   imageUrls: string[];
   category: Category;
   subcategory?: Category;
-  slug?: string;           // ✅ Ahora es opcional
+  slug?: string;
+  url?: string;               // <-- URL absoluta del producto
   stock: number;
-  featured?: boolean;      // ✅ Ahora es opcional
-  active?: boolean;        // ✅ Ahora es opcional
+  featured?: boolean;
+  active?: boolean;
   rating?: number;
   reviewsCount?: number;
-  reviews?: Review[]; // ✅ Nuevo: array de reseñas individuales
-  priceValidUntil?: string; // ✅ Nuevo: fecha de validez del precio (YYYY-MM-DD)
+  reviews?: Review[];
+  priceValidUntil?: string;
+  priceCurrency?: string;     // <-- 'COP', 'USD', etc.
+  availability?: 'InStock' | 'OutOfStock' | 'PreOrder' | string; // para Offer
+  condition?: 'New' | 'Used' | 'Refurbished' | string; // opcional para Google
   details?: ProductDetails;
-  createdAt?: Date | string;   // ✅ Acepta Date o string
-  updatedAt?: Date | string;   // ✅ Acepta Date o string
-
-  // Campos opcionales añadidos para el feed / JSON-LD
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   mpn?: string;
   gtin?: string;
   brand?: string;
   identifier_exists?: 'yes' | 'no';
-  sale_price?: number; // Para descuentos, si aplica
-  
+  sale_price?: number;
 }
 
 export interface Category {

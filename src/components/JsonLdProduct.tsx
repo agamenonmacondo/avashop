@@ -7,38 +7,45 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
 
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ccs724.com';
 
-  const imagesRaw = (product.imageUrls ?? []) as string[];
-  const images = imagesRaw.map((u) => {
+  const images = (product.imageUrls ?? []).map((u) => {
     const url = u ?? '';
     return url.startsWith('http') ? url : `${site}${url.startsWith('/') ? '' : '/'}${url}`;
   });
 
-  const priceValidUntil = product.priceValidUntil || (product.sale_price ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : undefined);
+  const priceValidUntil = product.priceValidUntil || undefined;
+  const price = product.price != null ? String(product.price) : undefined;
+  const priceCurrency = product.priceCurrency || 'COP';
+
+  const availability = product.availability
+    ? `https://schema.org/${product.availability}`
+    : (product.stock && product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock');
+
+  const condition = product.condition ? `https://schema.org/${product.condition}Condition` : undefined;
+
+  const url = product.url ? product.url : (product.slug ? `${site}/products/${product.slug}` : `${site}/products/${product.id}`);
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
+    sku: product.mpn || product.id,
     image: images,
     description: product.description || '',
-    sku: product.mpn || product.id,
-    brand: {
-      '@type': 'Brand',
-      name: product.brand || 'CCS724',
-    },
+    brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
     offers: {
       '@type': 'Offer',
-      price: product.price != null ? Number(product.price) : undefined,
-      priceCurrency: 'COP',
-      availability: product.stock && product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      priceValidUntil: product.priceValidUntil || priceValidUntil,
-      url: product.slug ? `${site}/products/${product.slug}` : `${site}/products/${product.id}`,
+      price,
+      priceCurrency,
+      availability,
+      condition,
+      priceValidUntil,
+      url,
       shippingDetails: {
         '@type': 'OfferShippingDetails',
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: '0',
-          currency: 'COP',
+          currency: priceCurrency,
         },
         shippingDestination: {
           '@type': 'DefinedRegion',
@@ -71,10 +78,9 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
     },
     mpn: product.mpn,
     gtin: product.gtin,
-    identifier_exists: product.identifier_exists ? product.identifier_exists : undefined,
+    identifier_exists: product.identifier_exists,
   };
 
-  // Incluir ratings/reviews solo si existen y cuentan
   if (product.reviewsCount && product.reviewsCount > 0) {
     jsonLd.aggregateRating = {
       '@type': 'AggregateRating',
@@ -86,10 +92,14 @@ export default function JsonLdProduct({ product }: { product: Product | null }) 
 
     jsonLd.review = (product.reviews ?? []).map((r: Review) => ({
       '@type': 'Review',
-      author: { '@type': 'Person', name: r.author },
-      datePublished: r.datePublished,
-      reviewRating: { '@type': 'Rating', ratingValue: r.ratingValue, bestRating: r.bestRating ?? 5 },
-      reviewBody: r.reviewBody,
+      author: { '@type': 'Person', name: (r as any).author ?? (r as any).user ?? 'Usuario' },
+      datePublished: (r as any).datePublished,
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: (r as any).ratingValue ?? (r as any).rating ?? undefined,
+        bestRating: (r as any).bestRating ?? 5,
+      },
+      reviewBody: (r as any).reviewBody ?? (r as any).body ?? '',
     }));
   }
 
