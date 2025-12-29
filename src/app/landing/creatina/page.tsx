@@ -28,18 +28,18 @@ export default function CreatinaLanding() {
     '@type': 'Product',
     name: 'Creatina Monohidrato – For Women',
     image: 'https://www.ccs724.com/images/creatina/landing 1.jpeg',
-    description: 'Potencia tu rendimiento con Creatina Monohidrato para Mujeres. Aumenta fuerza, energía y recuperación muscular. Ideal para fitness, gimnasio y vida activa.',
+    description:
+      'Creatina monohidrato para suplementación deportiva. Diseñada para complementar la dieta de personas físicamente activas que realizan entrenamientos de alta intensidad. Siga la dosis recomendada y consulte con un profesional de la salud en caso de dudas. No está destinada a diagnosticar, tratar o curar enfermedades. Los resultados pueden variar.',
     brand: { '@type': 'Brand', name: 'CCS724' },
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '156' },
-    offers: {
-      '@type': 'Offer',
-      url: 'https://www.ccs724.com/landing/creatina',
-      priceCurrency: 'COP',
-      price: '65000',
-      availability: 'https://schema.org/InStock',
-      priceValidUntil: '2025-12-31',
-    },
-  };
+     offers: {
+       '@type': 'Offer',
+       url: 'https://www.ccs724.com/landing/creatina',
+       priceCurrency: 'COP',
+       price: '65000',
+       availability: 'https://schema.org/InStock',
+       priceValidUntil: '2025-12-31',
+     },
+   };
 
   function buyNow() {
     const product = {
@@ -210,10 +210,10 @@ export default function CreatinaLanding() {
                     <Check className="h-4 w-4 text-primary" /> Ideal para fitness y gimnasio
                   </li>
                 </ul>
-
+                
                 <div className="bg-card border rounded-lg p-3">
                   <p className="text-sm font-semibold">
-                    Suplemento <span className="text-primary">científicamente probado</span>
+                    Suplemento diseñado para <span className="text-primary">complementar la dieta</span> en personas activas. Consulte con un profesional de la salud.
                   </p>
                 </div>
               </div>
@@ -236,21 +236,21 @@ export default function CreatinaLanding() {
                 <ul className="space-y-3 text-lg">
                   <li className="flex items-center gap-3">
                     <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Aumenta fuerza y potencia muscular</span>
+                    <span>Puede ayudar a la fuerza y potencia muscular cuando se usa según indicaciones</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Acelera recuperación post-entreno</span>
+                    <span>Apoya la recuperación post‑entreno en combinación con dieta y descanso</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Ideal para fitness, gimnasio y vida activa</span>
+                    <span>Adecuado para personas activas que realizan entrenamientos de alta intensidad</span>
                   </li>
                 </ul>
 
                 <div className="bg-card border-2 border-primary/20 rounded-xl p-5">
                   <p className="text-lg font-semibold">
-                    Suplemento <span className="text-primary">científicamente probado</span>
+                    Suplemento diseñado para <span className="text-primary">complementar la dieta</span> en personas activas. Consulte con un profesional de la salud.
                   </p>
                 </div>
               </div>
@@ -317,11 +317,11 @@ export default function CreatinaLanding() {
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-black text-primary">5g</div>
-                    <div className="text-xs text-muted-foreground">Dosis</div>
+                    <div className="text-xs text-muted-foreground">Dosis sugerida</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-black text-primary">∞</div>
-                    <div className="text-xs text-muted-foreground">Energía</div>
+                    <div className="text-3xl font-black text-primary">Varía</div>
+                    <div className="text-xs text-muted-foreground">Resultados individuales</div>
                   </div>
                 </div>
 
@@ -367,12 +367,10 @@ export default function CreatinaLanding() {
                 </div>
 
                 <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
-                  Energía que <span className="text-primary">transforma tu rutina</span>
+                  Apoya tu <span className="text-primary">rutina de entrenamiento</span>
                 </h2>
-
                 <p className="text-xl text-muted-foreground">
-                  Monohidrato puro, sin aditivos,<br />
-                  para resultados reales
+                  Monohidrato puro, sin aditivos. Resultados individuales pueden variar; siga la dosis recomendada.
                 </p>
 
                 <div className="flex justify-center gap-12 pt-4">
@@ -442,9 +440,9 @@ export default function CreatinaLanding() {
             <h2 className="text-xl md:text-3xl font-bold text-center mb-8">Preguntas Frecuentes</h2>
             <div className="space-y-3">
               {[
-                { q: '¿Cómo tomar la creatina?', a: 'Mezcla 5g con agua o jugo. Toma diariamente, ideal post-entreno.' },
-                { q: '¿Es segura para mujeres?', a: 'Sí, científicamente probada. Aumenta energía sin efectos secundarios.' },
-                { q: '¿Cuánto tarda en hacer efecto?', a: '2-4 semanas de uso consistente para notar mejoras.' },
+                { q: '¿Cómo tomar la creatina?', a: 'Mezcla 5 g con agua o jugo. Tomar según indicación del envase. Consulte a un profesional de la salud si tiene dudas.' },
+                { q: '¿Es segura para mujeres?', a: 'Cuando se usa según indicaciones, la creatina es un suplemento comúnmente utilizado en deportistas; consulte con un profesional de la salud si tiene condiciones médicas.' },
+                { q: '¿Cuánto tarda en hacer efecto?', a: 'Los efectos pueden variar entre personas; algunos notan cambios tras semanas de uso consistente.' },
                 { q: '¿Puedo pagar al recibir?', a: '¡Sí! Aceptamos pago contra entrega.' },
                 { q: '¿Tiene garantía?', a: '30 días de garantía. Si no te gusta, te devolvemos.' },
                 { q: '¿Es para principiantes?', a: 'Perfecta para todas: principiantes y avanzadas en fitness.' },
@@ -461,29 +459,7 @@ export default function CreatinaLanding() {
           </div>
         </section>
 
-        {/* SOCIAL PROOF */}
-        <section className="py-12 bg-muted/30">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-center mb-8">Lo que dicen nuestras clientas</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { name: 'Ana P.', text: 'Desde que tomo creatina, mis entrenos son más intensos. Recomiendo 100%.', stars: 5 },
-                { name: 'Carla R.', text: 'Fácil de usar, resultados reales. Me siento con más energía todo el día.', stars: 5 },
-                { name: 'Laura M.', text: 'Excelente suplemento. Llegó rápido y el envío fue gratis.', stars: 5 },
-              ].map((review, i) => (
-                <div key={i} className="bg-card border rounded-xl p-5 space-y-3">
-                  <div className="flex gap-1">
-                    {[...Array(review.stars)].map((_, j) => (
-                      <Star key={j} className="h-4 w-4 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground italic">&quot;{review.text}&quot;</p>
-                  <p className="text-sm font-semibold">- {review.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Social proof removed — only show verified reviews via product pages or structured data */}
 
         {/* FLOATING CTA (Mobile) */}
         <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-background via-background to-transparent md:hidden">

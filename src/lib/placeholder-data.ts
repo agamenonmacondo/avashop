@@ -5271,7 +5271,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-mascarilla-de-brazos",
     name: "MASCARILLA DE BRAZOS",
-    description: "Disfruta de una experiencia de cuidado personal con nuestra Mascarilla de Brazos, diseñada para proporcionar brillo y suavidad a tus brazos. Con su fórmula de hidratación profunda, esta mascarilla actúa intensamente para dejar tu piel hidratada y nutrida. Ideal para después de la depilación o en cualquier momento que necesites un impulso de hidratación. Su textura hidratante se absorbe fácilmente, dejando una sensación de suavidad duradera.",
+    description: "Mascarilla hidratante para brazos que aporta suavidad y brillo. Su fórmula nutritiva hidrata intensamente, ideal para después de la depilación o cuando se necesite un refuerzo de hidratación",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/021_MASCARILLA_DE_BRAZOS.png"
@@ -5383,7 +5383,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-serum-facial-en-barra",
     name: "SERUM FACIAL EN BARRA",
-    description: "Descubre el poder del SERUM FACIAL EN BARRA, diseñado para proporcionar hidratación profunda y suavidad a tu piel. Con su innovadora presentación en barra, este serum facial ofrece una experiencia única y práctica para el cuidado diario de tu rostro. Sus beneficios incluyen una intensa luminocidad y una hidratación duradera, dejándote una piel suave y radiante. Ideal para todos los tipos de piel, este producto es perfecto para aquellos que buscan una solución efectiva y fácil de usar para mantener su piel saludable y rejuvenecida.",
+    description: "Serum facial en barra con fórmula hidratante que aporta luminosidad y suavidad a la piel. Su presentación en barra facilita la aplicación y es adecuada para todo tipo de piel. Ayuda a mejorar la apariencia de la piel.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/025_SERUM_FACIAL_EN_BARRA.png"
@@ -5495,7 +5495,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-aceite-facial-doble-fase",
     name: "ACEITE FACIAL DOBLE FASE",
-    description: "Descubre el secreto para una piel radiante y rejuvenecida con nuestro ACEITE FACIAL DOBLE FASE. Ideal para todo tipo de piel, este innovador producto reafirma e hidrata profundamente, dejando tu rostro suave y luminoso. Con propiedades iluminadoras, hidratantes y antienvejecimiento, este aceite facial es perfecto para combatir los signos del tiempo y mantener una apariencia saludable y vibrante. Su fórmula doble fase proporciona una experiencia única y efectiva para el cuidado de la piel.",
+    description: "Aceite facial de doble fase que hidrata y suaviza la piel. Formulado con ingredientes emolientes e iluminadores, ayuda a mantener la piel con un aspecto radiante y saludable. Adecuado para todos los tipos de piel.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/030_ACEITE_FACIAL_DOBLE_FASE.png"
@@ -5663,7 +5663,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-crema-facial-dia-y-noche",
     name: "CREMA FACIAL DIA Y NOCHE",
-    description: "Descubre la crema facial todo en uno para día y noche, diseñada para nutrir tu piel durante el día y repararla mientras duermes. Esta crema 2 en 1 ofrece una solución integral para el cuidado facial, proporcionando hidratación y rejuvenecimiento. Su textura suave y absorbente la hace ideal para todos los tipos de piel. Con su fórmula innovadora, esta crema facial ayuda a combatir los signos del envejecimiento y a mantener la piel radiante y saludable.",
+    description: "Crema facial 2 en 1 para uso diurno y nocturno. Su fórmula hidrata y nutre la piel durante el día y proporciona ingredientes emolientes para apoyar el cuidado cutáneo mientras descansas. Ayuda a mejorar la apariencia de la piel y a reducir la sensación de sequedad. Apta para todos los tipos de piel.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/036_CREMA_FACIAL_DIA_Y_NOCHE.png"
@@ -5691,7 +5691,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-mondsub-crema-dia-noche",
     name: "MONDSUB CREMA DIA & NOCHE",
-    description: "Descubre el secreto para un cuidado de piel integral con la Crema de Día y Noche de MONDSUB. La crema de día ofrece hidratación y humectación para mantener tu piel fresca y radiante durante el día. Por la noche, la crema reparadora e iluminadora actúa mientras duermes, rejuveneciendo y revitalizando tu piel. Con ingredientes como escualano y fermento bifido, esta crema proporciona una doble acción para un cuidado de piel completo. Perfecta para todos los tipos de piel, esta crema es ideal para aquellos que buscan mantener una piel saludable y radiante.",
+    description: "Crema facial de doble acción que hidrata y nutre la piel, dejándola suave y agradable al tacto. Su textura ligera se absorbe fácilmente y es adecuada para el uso diario. Formulada con emolientes y humectantes para ayudar a mantener la piel confortable.",
     price: 36300,
     imageUrls: [
       "/images/mon_sub/034_MONDSUB_CREMA_DIA_&_NOCHE.png",
@@ -5749,7 +5749,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-crema-facial-efecto-dual",
     name: "CREMA FACIAL EFECTO DUAL",
-    description: "Una crema facial con doble beneficio que ofrece una solución integral para el cuidado de la piel. Con su efecto dual, esta crema promete hidratar y nutrir la piel, dejándola suave y radiante. Su textura suave y absorbente la hace ideal para el uso diario. Aunque no se especifican los ingredientes, su presentación sugiere una fórmula avanzada para el cuidado facial.",
+    description: "Crema facial de doble acción que hidrata y nutre la piel, dejándola suave y agradable al tacto. Su textura ligera se absorbe fácilmente y es adecuada para el uso diario. Formulada con emolientes y humectantes para ayudar a mantener la piel confortable.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/040_CREMA_FACIAL_EFECTO_DUAL.png"
@@ -5861,7 +5861,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-mascarilla-de-absorcion-de-bio-colageno",
     name: "MASCARILLA DE ABSORCION DE BIO COLAGENO",
-    description: "Descubre la mascarilla de absorción de bio colágeno, un producto innovador diseñado para hidratar y rejuvenecer tu piel. Con su fórmula rica en colágeno, esta mascarilla facial promueve la elasticidad y firmeza de la piel, reduciendo la apariencia de líneas finas y arrugas. Su textura suave y cómoda se adapta perfectamente al contorno de tu rostro, permitiendo una absorción óptima de sus beneficios. Ideal para todos los tipos de piel, esta mascarilla es perfecta para aquellos que buscan una solución natural y efectiva para mantener una piel saludable y radiante.",
+    description: "Mascarilla facial de bio colágeno diseñada para hidratar y suavizar la piel. Ayuda a mejorar la sensación de elasticidad y puede contribuir a reducir la apariencia de líneas finas. Adecuada para todo tipo de piel.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/044_MASCARILLA_DE_ABSORCION_DE_BIO_COLAGENO.png"
@@ -6030,7 +6030,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-mondsub-mascarilla-de-hidrogel-niacinamida",
     name: "MONDSUB MASCARILLA DE HIDROGEL NIACINAMIDA",
-    description: "Mascarilla de hidrogel con niacinamida que proporciona una piel radiante y uniforme con un brillo luminoso, eliminando la apariencia opaca de la piel. Ideal para hidratar y mejorar la textura de la piel. Presentada en caja con 12 unidades.",
+    description: "Mascarilla de hidrogel con niacinamida que aporta hidratación y ayuda a mejorar la apariencia de la piel para un aspecto más uniforme y luminoso. Se presenta en caja con 12 unidades.",
     price: 74250,
     imageUrls: [
       "/images/mon_sub/052_MONDSUB_MASCARILLA_DE_HIDROGEL_NIACINAMIDA.png"
@@ -6086,7 +6086,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-mascarilla-facial-reafirmante-de-panda",
     name: "MASCARILLA FACIAL REAFIRMANTE DE PANDA",
-    description: "Mascarilla reafirmante que mejora la apariencia de las líneas de expresión y revitaliza la piel apagada y deshidratada. Presentada en una caja que contiene 6 unidades, es ideal para aquellos que buscan hidratar y rejuvenecer su piel de manera efectiva.",
+    description: "Mascarilla facial con extractos hidratantes que ayuda a mejorar la apariencia de las líneas de expresión y a revitalizar la piel seca o apagada. Presentada en caja de 6 unidades, ideal para quienes buscan un cuidado facial práctico",
     price: 33000,
     imageUrls: [
       "/images/mon_sub/054_MASCARILLA_FACIAL_REAFIRMANTE_DE_PANDA.png"
@@ -6367,7 +6367,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-set-de-vitamina-c-iluminador-y-reafirmante",
     name: "SET DE VITAMINA C ILUMINADOR Y REAFIRMANTE",
-    description: "Este set de vitamina C es un producto iluminador y reafirmante diseñado para mejorar la apariencia de la piel. Con su fórmula enriquecida con vitamina C, ayuda a iluminar y unificar el tono de la piel, reduciendo la apariencia de manchas y dejándola con un aspecto más radiante y saludable. Su textura suave y absorbente lo hace ideal para un uso diario, proporcionando una sensación de frescura y suavidad en la piel. Es perfecto para aquellos que buscan mejorar la apariencia de su piel con un producto fácil de usar y con beneficios visibles.",
+    description: "Set con vitamina C que ayuda a iluminar y mejorar la apariencia del tono de la piel. Puede contribuir a reducir la apariencia de manchas y aporta suavidad. Adecuado para uso diario..",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/067_SET_DE_VITAMINA_C_ILUMINADOR_Y_REAFIRMANTE.png"
@@ -6479,7 +6479,7 @@ export const products: Product[] = [{
 {
     id: "mon-sub-crema-hidratante-sensitiva-y-crema-reafirmante-par",
     name: "CREMA HIDRATANTE SENSITIVA y CREMA REAFIRMANTE PARA EL CONTORNO DE OJOS",
-    description: "Dos productos de cuidado personal: una crema hidratante para piel sensible que ofrece suavidad, rejuvenecimiento, nutrición e hidratación; y una crema reafirmante para el contorno de ojos que utiliza tecnología avanzada para reparar lesiones oculares y brindar una apariencia joven y radiante.",
+    description: "Dúo de cuidado facial que incluye una crema hidratante para piel sensible (suaviza e hidrata la piel) y una crema para el contorno de ojos que ayuda a mejorar el aspecto de la zona ocular gracias a ingredientes nutritivos. Su uso regular contribuye a mantener la piel con una apariencia fresca y luminosa. No reemplaza tratamientos médicos.",
     price: 41250,
     imageUrls: [
       "/images/mon_sub/073_CREMA_HIDRATANTE_SENSITIVA_y_CREMA_REAFIRMANTE_PAR.png"
