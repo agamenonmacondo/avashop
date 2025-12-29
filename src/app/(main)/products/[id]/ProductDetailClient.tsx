@@ -14,8 +14,6 @@ import { getSupabase } from '@/lib/supabaseClient';
 
 interface ProductDetailClientProps {
   product: Product;
-  initialReviews?: Review[];
-  initialStats?: ReviewStats | null;
 }
 
 interface Review {
@@ -41,11 +39,7 @@ interface ReviewStats {
   };
 }
 
-export default function ProductDetailClient({
-  product,
-  initialReviews = [],
-  initialStats = null,
-}: ProductDetailClientProps) {
+export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
@@ -53,23 +47,15 @@ export default function ProductDetailClient({
   const [showShareModal, setShowShareModal] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   
-  const [reviews, setReviews] = useState<Review[]>(initialReviews || []);
-  const [reviewStats, setReviewStats] = useState<ReviewStats>(
-    initialStats ?? {
-      average: 0,
-      total: 0,
-      distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
-    }
-  );
-  const [loadingReviews, setLoadingReviews] = useState(initialReviews && initialReviews.length > 0 ? false : true);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewStats, setReviewStats] = useState<ReviewStats>({
+    average: 0,
+    total: 0,
+    distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+  });
+  const [loadingReviews, setLoadingReviews] = useState(true);
 
   useEffect(() => {
-    // Si ya viene data inicial del server, no forzar fetch; sino traer desde API
-    if (initialReviews && initialReviews.length > 0) {
-      setLoadingReviews(false);
-      return;
-    }
-
     const fetchReviews = async () => {
       try {
         setLoadingReviews(true);
@@ -92,8 +78,8 @@ export default function ProductDetailClient({
     };
 
     fetchReviews();
-  }, [product.id, initialReviews]);
-  
+  }, [product.id]);
+
   const handleAddToCart = async () => {
     setIsAddingToCart(true);
     
