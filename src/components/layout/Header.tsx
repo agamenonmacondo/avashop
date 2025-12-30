@@ -107,6 +107,9 @@ export default function Header() {
                   <Link href="/landing/creatina" className="text-base hover:underline">
                     Creatina
                   </Link>
+                  <Link href="/landing/utiles-escolares" className="text-base hover:underline">
+                    Útiles Escolares
+                  </Link>
 
                   {/* Información Legal - Móvil */}
                   <div className="border-t pt-4 mt-2">
@@ -152,6 +155,9 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium">
             <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
               Creatina
+            </Link>
+            <Link href="/landing/utiles-escolares" className="hover:underline whitespace-nowrap">
+              Útiles Escolares
             </Link>
 
             {/* Menú desplegable Legal - Desktop */}
