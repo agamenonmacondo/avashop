@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { to, subject, html } = body;
+    const { to, cc, subject, html } = body; // <-- extrae cc
 
     if (!to || !subject || !html) {
       return NextResponse.json(
@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: process.env.SMTP_FROM || 'ventas@ccs724.com',
       to: Array.isArray(to) ? to : [to],
+      cc, // <-- agrega cc aquí
       subject,
       html,
       replyTo: 'ventas@ccs724.com',
