@@ -1,5 +1,5 @@
-import { getSupabase } from '@/lib/supabaseClient';
 import { User } from 'firebase/auth';
+import { getSupabase } from '@/lib/supabaseClient';
 
 export async function syncUserProfile(user: User) {
   const supabase = getSupabase();

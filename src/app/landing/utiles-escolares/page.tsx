@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged, signOut, type User as FirebaseUser } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { getSupabase } from '@/lib/supabaseClient';
@@ -16,16 +16,18 @@ import BoldButton from '@/components/checkout/BoldButton';
 import { sendEmail, getOrderConfirmationEmail } from '@/lib/email';
 import { useToast } from '../../../components/ui/use-toast';
 
-// Tipos para tipar los parámetros y evitar errores TS7006
+// Tipos
 type Product = {
   id: string;
   name: string;
   price: number;
   image: string;
+  subcategory_id: string;
 };
 type Subcategory = {
   id: string;
   name: string;
+  category_id: string;
   products: Product[];
 };
 type Category = {
@@ -35,548 +37,32 @@ type Category = {
   subcategories: Subcategory[];
 };
 
-// Catálogo con imágenes exactas para cada producto
-const CATEGORIES: Category[] = [
-  {
-    id: 'cuadernos',
-    name: 'Cuadernos',
-    image: '/images/UTILES/BANNER 1.png',
-    subcategories: [
-      {
-        id: 'cosido',
-        name: 'Cosido',
-        products: [
-          {
-            id: 'cuad-cosido-100',
-            name: 'Cuaderno cosido rayado 100h',
-            price: 12000,
-            image: '/images/UTILES/CUAD COSIDO 100.png',
-          },
-          {
-            id: 'cuad-cosido-50',
-            name: 'Cuaderno cosido cuadriculado 50h',
-            price: 8000,
-            image: '/images/UTILES/CUAD COSIDO 50.png',
-          },
-        ],
-      },
-      {
-        id: 'argollado',
-        name: 'Argollado',
-        products: [
-          {
-            id: 'cuad-argollado-100',
-            name: 'Cuaderno argollado 100h',
-            price: 13000,
-            image: '/images/UTILES/CUAD ARGOLLADO 100.png',
-          },
-        ],
-      },
-      {
-        id: 'blocks',
-        name: 'Blocks',
-        products: [
-          {
-            id: 'block-rayado',
-            name: 'Block rayado',
-            price: 9000,
-            image: '/images/UTILES/BLOCK RAYADO.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'escritura',
-    name: 'Escritura',
-    image: '/images/UTILES/BANNER 2.png',
-    subcategories: [
-      {
-        id: 'lapiz',
-        name: 'Lápiz',
-        products: [
-          {
-            id: 'lapiz-n2',
-            name: 'Lápiz N°2',
-            price: 1500,
-            image: '/images/UTILES/LAPIZ N2.png',
-          },
-          {
-            id: 'lapiz-rojo',
-            name: 'Lápiz rojo',
-            price: 1700,
-            image: '/images/UTILES/LAZPI ROJO.png',
-          },
-        ],
-      },
-      {
-        id: 'esferos',
-        name: 'Esferos',
-        products: [
-          {
-            id: 'esfero-azul',
-            name: 'Esfero azul',
-            price: 1200,
-            image: '/images/UTILES/EZFERO AZUL.png',
-          },
-          {
-            id: 'esfero-negro',
-            name: 'Esfero negro',
-            price: 1200,
-            image: '/images/UTILES/EZFERO NEGRO.png',
-          },
-          {
-            id: 'esfero-rojo',
-            name: 'Esfero rojo',
-            price: 1200,
-            image: '/images/UTILES/EZFERO ROJO.png',
-          },
-        ],
-      },
-      {
-        id: 'marcadores',
-        name: 'Marcadores',
-        products: [
-          {
-            id: 'marcador-permanente',
-            name: 'Marcador permanente',
-            price: 2500,
-            image: '/images/UTILES/MARCADOR PERMANETE.png',
-          },
-          {
-            id: 'marcador-borrable',
-            name: 'Marcador borrable',
-            price: 2700,
-            image: '/images/UTILES/MARCADOR BORRABLE.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'colores-arte',
-    name: 'Colores y arte',
-    image: '/images/UTILES/BANNER 3.png',
-    subcategories: [
-      {
-        id: 'colores',
-        name: 'Colores',
-        products: [
-          {
-            id: 'colores-largos',
-            name: 'Colores largos',
-            price: 6000,
-            image: '/images/UTILES/COLORE LARGOS.png',
-          },
-          {
-            id: 'colores-cortos',
-            name: 'Colores cortos',
-            price: 4000,
-            image: '/images/UTILES/COLORES CORTO.png',
-          },
-        ],
-      },
-      {
-        id: 'crayones',
-        name: 'Crayones',
-        products: [
-          {
-            id: 'crayones-jumbo',
-            name: 'Crayones jumbo',
-            price: 5000,
-            image: '/images/UTILES/CRAYONE SJUMBO.png',
-          },
-        ],
-      },
-      {
-        id: 'temperas',
-        name: 'Témperas y acuarelas',
-        products: [
-          {
-            id: 'temperas',
-            name: 'Témperas',
-            price: 7000,
-            image: '/images/UTILES/TEMPERA.png',
-          },
-          {
-            id: 'acuarelas',
-            name: 'Acuarelas',
-            price: 8000,
-            image: '/images/UTILES/TEMPERA.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'papeleria',
-    name: 'Papelería',
-    image: '/images/UTILES/BANNER 4.png',
-    subcategories: [
-      {
-        id: 'papel-bond',
-        name: 'Papel bond',
-        products: [
-          {
-            id: 'resma-bond',
-            name: 'Resma papel bond',
-            price: 25000,
-            image: '/images/UTILES/REMA BOND.png',
-          },
-        ],
-      },
-      {
-        id: 'cartulina',
-        name: 'Cartulina',
-        products: [
-          {
-            id: 'cartulina-blanca',
-            name: 'Cartulina blanca',
-            price: 1200,
-            image: '/images/UTILES/CARTULINA BLANCA.png',
-          },
-          {
-            id: 'cartulina-color',
-            name: 'Cartulina de color',
-            price: 1300,
-            image: '/images/UTILES/CARTULINA COLOR.png',
-          },
-        ],
-      },
-      {
-        id: 'foamy',
-        name: 'Foamy',
-        products: [
-          {
-            id: 'foamy',
-            name: 'Foamy',
-            price: 1000,
-            image: '/images/UTILES/FOAMY.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'corte-pegado',
-    name: 'Corte y pegado',
-    image: '/images/UTILES/BANNER 5.png',
-    subcategories: [
-      {
-        id: 'tijeras',
-        name: 'Tijeras',
-        products: [
-          {
-            id: 'tijeras-roma',
-            name: 'Tijeras punta roma',
-            price: 3500,
-            image: '/images/UTILES/TIJERAS ROMA.png',
-          },
-        ],
-      },
-      {
-        id: 'pegantes',
-        name: 'Pegantes',
-        products: [
-          {
-            id: 'pegante-barra',
-            name: 'Pegante en barra',
-            price: 2500,
-            image: '/images/UTILES/PEGANTE BARRA.png',
-          },
-          {
-            id: 'pegante-liquido',
-            name: 'Pegante líquido',
-            price: 2200,
-            image: '/images/UTILES/PEGANTE LIQUIDO.png',
-          },
-        ],
-      },
-      {
-        id: 'cinta',
-        name: 'Cinta',
-        products: [
-          {
-            id: 'cinta',
-            name: 'Cinta adhesiva',
-            price: 1800,
-            image: '/images/UTILES/CINTA.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'geometria',
-    name: 'Geometría y medición',
-    image: '/images/UTILES/BANNER 6.png',
-    subcategories: [
-      {
-        id: 'reglas',
-        name: 'Reglas',
-        products: [
-          {
-            id: 'regla-20',
-            name: 'Regla 20cm',
-            price: 1200,
-            image: '/images/UTILES/REGLA 20.png',
-          },
-          {
-            id: 'regla-30',
-            name: 'Regla 30cm',
-            price: 1500,
-            image: '/images/UTILES/REGLA 30.png',
-          },
-        ],
-      },
-      {
-        id: 'escuadras',
-        name: 'Escuadras',
-        products: [
-          {
-            id: 'escuadra',
-            name: 'Escuadra',
-            price: 2000,
-            image: '/images/UTILES/ESCUADRA.png',
-          },
-        ],
-      },
-      {
-        id: 'compas',
-        name: 'Compás',
-        products: [
-          {
-            id: 'compas',
-            name: 'Compás',
-            price: 3500,
-            image: '/images/UTILES/COMPAS.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'correccion-apoyo',
-    name: 'Corrección y apoyo',
-    image: '/images/UTILES/BANNER 7.png',
-    subcategories: [
-      {
-        id: 'borrador',
-        name: 'Borrador',
-        products: [
-          {
-            id: 'borrador',
-            name: 'Borrador',
-            price: 1000,
-            image: '/images/UTILES/BORRADOR.png',
-          },
-        ],
-      },
-      {
-        id: 'sacapuntas',
-        name: 'Sacapuntas',
-        products: [
-          {
-            id: 'sacapuntas',
-            name: 'Sacapuntas',
-            price: 1200,
-            image: '/images/UTILES/SACAPUNTAS.png',
-          },
-        ],
-      },
-      {
-        id: 'corrector',
-        name: 'Corrector',
-        products: [
-          {
-            id: 'corrector-liquido',
-            name: 'Corrector líquido',
-            price: 2500,
-            image: '/images/UTILES/CORRECTOR LIQUIDO.png',
-          },
-          {
-            id: 'corrector-cinta',
-            name: 'Corrector en cinta',
-            price: 3000,
-            image: '/images/UTILES/CORRECTOR CINTA.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'organizacion',
-    name: 'Organización',
-    image: '/images/UTILES/BANNER 8.png',
-    subcategories: [
-      {
-        id: 'cartuchera',
-        name: 'Cartuchera',
-        products: [
-          {
-            id: 'cartuchera-sencilla',
-            name: 'Cartuchera sencilla',
-            price: 8000,
-            image: '/images/UTILES/CARTUCHERA SENCILLA.png',
-          },
-          {
-            id: 'cartuchera-doble',
-            name: 'Cartuchera doble',
-            price: 12000,
-            image: '/images/UTILES/CARTUCHERA DOBLE.png',
-          },
-        ],
-      },
-      {
-        id: 'carpetas',
-        name: 'Carpetas',
-        products: [
-          {
-            id: 'carpeta-oficio',
-            name: 'Carpeta oficio',
-            price: 3500,
-            image: '/images/UTILES/CARPETA CARTA.png',
-          },
-          {
-            id: 'carpeta-carta',
-            name: 'Carpeta carta',
-            price: 3500,
-            image: '/images/UTILES/CARPETA CARTA.png',
-          },
-        ],
-      },
-      {
-        id: 'forros',
-        name: 'Forros',
-        products: [
-          {
-            id: 'forro',
-            name: 'Forro plástico',
-            price: 1000,
-            image: '/images/UTILES/FORRO PLASTICO.png',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'otros',
-    name: 'Otros',
-    image: '/images/UTILES/BANNER 9.png',
-    subcategories: [
-      {
-        id: 'accesorios',
-        name: 'Accesorios',
-        products: [
-          {
-            id: 'regla-flexible',
-            name: 'Regla flexible',
-            price: 2000,
-            image: '/images/UTILES/REGLA FLEXIBLE.png',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-// Array de rutas de imágenes de productos
-const PRODUCT_IMAGES = [
-	'/images/UTILES/PRODCUTOS (1).png',
-	'/images/UTILES/PRODCUTOS (2).png',
-	'/images/UTILES/PRODCUTOS (3).png',
-	'/images/UTILES/PRODCUTOS (4).png',
-	'/images/UTILES/PRODCUTOS (5).png',
-	'/images/UTILES/PRODCUTOS (6).png',
-	'/images/UTILES/PRODCUTOS (7).png',
-	'/images/UTILES/PRODCUTOS (8).png',
-	'/images/UTILES/PRODCUTOS (9).png',
-	'/images/UTILES/PRODCUTOS (10).png',
-	'/images/UTILES/PRODCUTOS (11).png',
-	'/images/UTILES/PRODCUTOS (12).png',
-	'/images/UTILES/PRODCUTOS (13).png',
-	'/images/UTILES/PRODCUTOS (14).png',
-	'/images/UTILES/PRODCUTOS (15).png',
-	'/images/UTILES/PRODCUTOS (16).png',
-	'/images/UTILES/PRODCUTOS (17).png',
-	'/images/UTILES/PRODCUTOS (18).png',
-	'/images/UTILES/PRODCUTOS (19).png',
-	'/images/UTILES/PRODCUTOS (20).png',
-	'/images/UTILES/PRODCUTOS (21).png',
-	'/images/UTILES/PRODCUTOS (22).png',
-	'/images/UTILES/PRODCUTOS (23).png',
-	'/images/UTILES/PRODCUTOS (24).png',
-	'/images/UTILES/PRODCUTOS (25).png',
-	'/images/UTILES/PRODCUTOS (26).png',
-	'/images/UTILES/PRODCUTOS (27).png',
-];
-
-// Función para asignar imágenes automáticamente a cada producto
-function assignImagesToProducts(categories: Category[], images: string[]): Category[] {
-	let imgIdx = 0;
-	return categories.map((cat: Category) => ({
-		...cat,
-		subcategories: cat.subcategories.map((sub: Subcategory) => ({
-			...sub,
-			products: sub.products.map((prod: Product) => ({
-				...prod,
-				image: prod.image || images[imgIdx++] || '/images/UTILES/placeholder.png',
-			})),
-		})),
-	}));
-}
-
-// Usa la función para tu catálogo
-const CATEGORIES_WITH_IMAGES = assignImagesToProducts(CATEGORIES, PRODUCT_IMAGES);
-
-// Luego, usa CATEGORIES_WITH_IMAGES en tu render en vez de CATEGORIES:
 type CartItem = {
-	id: string;
-	name: string;
-	price: number;
-	quantity: number;
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
 };
 
-// Simulación de más productos en Cuadernos
-const EXTENDED_CUADERNOS_PRODUCTS: Product[] = [
-  { id: 'cuad-cosido-100', name: 'Cuaderno cosido rayado 100h', price: 12000, image: '/images/UTILES/CUAD COSIDO 100.png' },
-  { id: 'cuad-cosido-50', name: 'Cuaderno cosido cuadriculado 50h', price: 8000, image: '/images/UTILES/CUAD COSIDO 50.png' },
-  { id: 'cuad-argollado-100', name: 'Cuaderno argollado 100h', price: 13000, image: '/images/UTILES/CUAD ARGOLLADO 100.png' },
-  { id: 'block-rayado', name: 'Block rayado', price: 9000, image: '/images/UTILES/BLOCK RAYADO.png' },
-  // Productos simulados adicionales
-  { id: 'cuad-cosido-200', name: 'Cuaderno cosido 200h', price: 18000, image: '/images/UTILES/CUAD COSIDO 100.png' },
-  { id: 'cuad-espiral-80', name: 'Cuaderno espiral 80h', price: 10000, image: '/images/UTILES/CUAD ARGOLLADO 100.png' },
-  { id: 'cuad-tapa-dura', name: 'Cuaderno tapa dura', price: 22000, image: '/images/UTILES/CUAD COSIDO 50.png' },
-  { id: 'cuad-premium', name: 'Cuaderno premium 150h', price: 25000, image: '/images/UTILES/CUAD ARGOLLADO 100.png' },
-  { id: 'block-dibujo', name: 'Block dibujo A4', price: 12000, image: '/images/UTILES/BLOCK RAYADO.png' },
-  { id: 'cuad-mini', name: 'Cuaderno mini 50h', price: 5000, image: '/images/UTILES/CUAD COSIDO 50.png' },
-  { id: 'cuad-profesional', name: 'Cuaderno profesional', price: 28000, image: '/images/UTILES/CUAD COSIDO 100.png' },
-  { id: 'block-acuarela', name: 'Block acuarela', price: 15000, image: '/images/UTILES/BLOCK RAYADO.png' },
-];
-
 export default function UtilesEscolaresLanding() {
-  // Cambiar: TODAS las categorías inician REPLEGADAS
+  // Estado para catálogo desde BD
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loadingCatalog, setLoadingCatalog] = useState(true);
+
+  // Estado UI
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-  
-  // Inicializar con la primera subcategoría de cada categoría abierta
-  const [openSub, setOpenSub] = useState<{ [catId: string]: string | null }>(
-    CATEGORIES.reduce((acc, cat) => ({
-      ...acc,
-      [cat.id]: cat.subcategories[0]?.id || null
-    }), {})
-  );
+  const [openSub, setOpenSub] = useState<{ [catId: string]: string | null }>({});
   const [cart, setCart] = useState<{ [prodId: string]: number }>({});
   const [accumulated, setAccumulated] = useState(0);
   const [quickviewProduct, setQuickviewProduct] = useState<Product | null>(null);
   const [showCartDetail, setShowCartDetail] = useState(false);
 
-  // ===== NUEVO: Auth (Firebase) + perfil (Supabase) con UI replegable =====
+  // Auth y perfil
   const router = useRouter();
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
-
-  const [authCollapsed, setAuthCollapsed] = useState(true); // panel de autenticación
-  const [profileCollapsed, setProfileCollapsed] = useState(false); // formulario datos
+  const [authCollapsed, setAuthCollapsed] = useState(true);
+  const [profileCollapsed, setProfileCollapsed] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
 
   const [profileForm, setProfileForm] = useState({
@@ -596,7 +82,55 @@ export default function UtilesEscolaresLanding() {
 
   const { toast } = useToast();
 
-  // Escuchar sesión Firebase
+  // Agrega este estado después de los otros estados
+  const [cartSaving, setCartSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+  // ===== Cargar catálogo desde Supabase =====
+  useEffect(() => {
+    const fetchCatalog = async () => {
+      setLoadingCatalog(true);
+      const supabase = getSupabase();
+      if (!supabase) {
+        setLoadingCatalog(false);
+        return;
+      }
+      
+      // 1. Trae categorías
+      const { data: cats } = await supabase.from('categories').select('*');
+      // 2. Trae subcategorías
+      const { data: subs } = await supabase.from('subcategories').select('*');
+      // 3. Trae productos
+      const { data: prods } = await supabase.from('products').select('*');
+
+      // 4. Arma la estructura anidada
+      const subcategories: Subcategory[] = (subs || []).map(sub => ({
+        ...sub,
+        products: (prods || []).filter(p => p.subcategory_id === sub.id),
+      }));
+
+      const categoriesWithSubs: Category[] = (cats || []).map(cat => ({
+        ...cat,
+        subcategories: subcategories.filter(sub => sub.category_id === cat.id),
+      }));
+
+      setCategories(categoriesWithSubs);
+
+      // Inicializar openSub con la primera subcategoría de cada categoría
+      setOpenSub(
+        (cats || []).reduce((acc, cat) => ({
+          ...acc,
+          [cat.id]: subcategories.find(sub => sub.category_id === cat.id)?.id || null
+        }), {})
+      );
+
+      setLoadingCatalog(false);
+    };
+
+    fetchCatalog();
+  }, []);
+
+  // ===== Escuchar sesión Firebase =====
   useEffect(() => {
     const auth = getFirebaseAuth();
     if (!auth) {
@@ -608,9 +142,7 @@ export default function UtilesEscolaresLanding() {
       setFirebaseUser(u);
       setAuthChecked(true);
 
-      // Si inicia sesión, plegar panel auth
       if (u) setAuthCollapsed(true);
-      // Si se desloguea, expandir panel auth y expandir formulario (aunque estará bloqueado)
       if (!u) {
         setAuthCollapsed(false);
         setProfileCollapsed(false);
@@ -620,7 +152,7 @@ export default function UtilesEscolaresLanding() {
     return () => unsub();
   }, []);
 
-  // Cargar perfil desde Supabase cuando haya usuario autenticado
+  // ===== Cargar perfil desde Supabase =====
   useEffect(() => {
     const loadProfile = async () => {
       if (!firebaseUser?.email) return;
@@ -642,7 +174,6 @@ export default function UtilesEscolaresLanding() {
           return;
         }
 
-        // addresses puede venir como string o como JSON
         let addr0 = {
           city: '',
           state: '',
@@ -661,9 +192,7 @@ export default function UtilesEscolaresLanding() {
               ...parsed[0],
             };
           }
-        } catch {
-          // Si falla el parseo, deja los valores por defecto
-        }
+        } catch {}
 
         setProfileForm({
           name: data.name ?? '',
@@ -675,7 +204,6 @@ export default function UtilesEscolaresLanding() {
           zipCode: addr0.zipCode ?? '',
         });
 
-        // Si “ya está lleno”, iniciar replegado
         const isFilled =
           Boolean(data.name) &&
           Boolean(data.phone) &&
@@ -691,11 +219,76 @@ export default function UtilesEscolaresLanding() {
     loadProfile();
   }, [firebaseUser?.email]);
 
+  // ===== Cargar carrito desde la base de datos cuando el usuario inicia sesión =====
+  useEffect(() => {
+    if (!firebaseUser?.email) return;
+
+    const loadCart = async () => {
+      const supabase = getSupabase();
+      if (!supabase) return;
+      
+      const { data, error } = await supabase
+        .from('user_carts')
+        .select('product_id, quantity')
+        .eq('profile_id', firebaseUser.email);
+
+      if (!error && data) {
+        const cartFromDb: { [prodId: string]: number } = {};
+        data.forEach((item: any) => {
+          cartFromDb[item.product_id] = item.quantity;
+        });
+        setCart(cartFromDb);
+      }
+    };
+
+    loadCart();
+  }, [firebaseUser?.email]);
+
+  // ===== Recalcular total cuando cambie el carrito O las categorías =====
+  useEffect(() => {
+    if (categories.length > 0) {
+      recalculateAccumulated(cart);
+    }
+  }, [cart, categories]);
+
+  // ===== Guardar carrito en la base de datos cada vez que cambie =====
+  useEffect(() => {
+    if (!firebaseUser?.email) return;
+    const supabase = getSupabase();
+    if (!supabase) return;
+
+    setCartSaving(true);
+    
+    const saveCart = async () => {
+      const items = Object.entries(cart).map(([product_id, quantity]) => ({
+        profile_id: firebaseUser.email,
+        product_id,
+        quantity,
+        updated_at: new Date().toISOString(),
+      }));
+
+      // Borra el carrito anterior y guarda el nuevo
+      await supabase.from('user_carts').delete().eq('profile_id', firebaseUser.email);
+      if (items.length > 0) {
+        await supabase.from('user_carts').upsert(items, { onConflict: 'profile_id,product_id' });
+      }
+      
+      setLastSaved(new Date());
+      setCartSaving(false);
+    };
+
+    // Debounce: espera 1 segundo después del último cambio antes de guardar
+    const timer = setTimeout(() => {
+      saveCart();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [cart, firebaseUser?.email]);
+
   const handleSaveProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setProfileStatus({ type: 'saving' });
 
-    // Exigir autenticación
     if (!firebaseUser?.email) {
       setProfileStatus({
         type: 'error',
@@ -736,10 +329,10 @@ export default function UtilesEscolaresLanding() {
       .from('profiles')
       .upsert(
         {
-          id: firebaseUser.email, // tu esquema usa email como id
+          id: firebaseUser.email,
           name,
           phone,
-          addresses: JSON.stringify(addresses), // compatible con tu dump actual
+          addresses: JSON.stringify(addresses),
           updated_at: new Date().toISOString(),
         },
         { onConflict: 'id' }
@@ -762,26 +355,8 @@ export default function UtilesEscolaresLanding() {
     if (!auth) return;
     await signOut(auth);
   };
-  // ===== FIN NUEVO =====
 
-  // Modificar CATEGORIES para usar productos extendidos en Cuadernos
-  const CATEGORIES_EXTENDED = CATEGORIES.map(cat =>
-    cat.id === 'cuadernos'
-      ? {
-          ...cat,
-          subcategories: cat.subcategories.map(sub => ({
-            ...sub,
-            products:
-              sub.id === 'cosido'
-                ? EXTENDED_CUADERNOS_PRODUCTS.slice(0, 4)
-                : sub.id === 'argollado'
-                  ? EXTENDED_CUADERNOS_PRODUCTS.slice(4, 8)
-                  : EXTENDED_CUADERNOS_PRODUCTS.slice(8),
-          })),
-        }
-      : cat
-  );
-
+  // ===== Lógica de carrito adaptada =====
   const handleToggleSub = (catId: string, subId: string) => {
     setOpenSub((prev) => ({
       ...prev,
@@ -789,16 +364,14 @@ export default function UtilesEscolaresLanding() {
     }));
   };
 
-  // Nueva función para toggle de categorías
   const handleToggleCategory = (catId: string) => {
     setExpandedCategories(prev => 
       prev.includes(catId) 
-        ? prev.filter(id => id !== catId) // Replegar si ya está expandida
-        : [...prev, catId] // Expandir si está replegada
+        ? prev.filter(id => id !== catId)
+        : [...prev, catId]
     );
   };
 
-  // Agrega productos de cualquier categoría expandida
   const handleAddToCart = (product: Product) => {
     setCart((prev) => {
       const newQty = (prev[product.id] || 0) + 1;
@@ -820,7 +393,7 @@ export default function UtilesEscolaresLanding() {
 
   const recalculateAccumulated = (cartObj: { [prodId: string]: number }) => {
     let total = 0;
-    CATEGORIES_EXTENDED.forEach((cat) =>
+    categories.forEach((cat) =>
       cat.subcategories.forEach((sub) =>
         sub.products.forEach((prod) => {
           if (cartObj[prod.id]) total += prod.price * cartObj[prod.id];
@@ -837,12 +410,11 @@ export default function UtilesEscolaresLanding() {
     maximumFractionDigits: 0 
   }).format(accumulated);
 
-  // Obtener productos en el carrito con detalles
   const getCartItems = () => {
     const items: Array<{ product: Product; quantity: number }> = [];
     Object.entries(cart).forEach(([prodId, qty]) => {
       if (qty > 0) {
-        const product = CATEGORIES_EXTENDED.flatMap(cat => 
+        const product = categories.flatMap(cat => 
           cat.subcategories.flatMap(sub => sub.products)
         ).find(p => p.id === prodId);
         if (product) {
@@ -1124,6 +696,19 @@ export default function UtilesEscolaresLanding() {
     }).format(value);
   };
 
+  // Si el catálogo está cargando, muestra loader
+  if (loadingCatalog) {
+    return (
+      <>
+        <Header />
+        <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen flex items-center justify-center">
+          <div className="text-2xl font-bold text-primary">Cargando catálogo...</div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -1184,13 +769,16 @@ export default function UtilesEscolaresLanding() {
                   <div className="px-6 lg:px-8 pb-6 lg:pb-8">
                     {!firebaseUser ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <GoogleLoginButton className="w-full" text="Google" />
+                        <GoogleLoginButton className="w-full" text="Continuar con Google" redirectTo="/landing/utiles-escolares" />
                         <button
                           type="button"
-                          onClick={() => router.push('/login')}
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-black text-sm"
+                          onClick={() => {
+                            sessionStorage.setItem('authRedirect', '/landing/utiles-escolares');
+                            router.push('/login');
+                          }}
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-black text-sm hover:bg-gray-100 transition-colors"
                         >
-                          Email
+                          📧 Continuar con Email
                         </button>
                       </div>
                     ) : (
@@ -1355,7 +943,7 @@ export default function UtilesEscolaresLanding() {
           {/* ===== FIN formulario ===== */}
 
           <div className="flex flex-col gap-8">
-            {CATEGORIES_EXTENDED.map((cat: Category, catIdx: number) => {
+            {categories.map((cat: Category, catIdx: number) => {
               const isExpanded = expandedCategories.includes(cat.id);
               const allProducts = cat.id === 'cuadernos' 
                 ? cat.subcategories.flatMap(s => s.products) 
@@ -1816,13 +1404,29 @@ export default function UtilesEscolaresLanding() {
         {/* Totalizador Principal */}
         <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white p-4 lg:p-5 rounded-2xl shadow-2xl flex items-center justify-between border-2 border-primary/30 backdrop-blur-md cursor-pointer hover:scale-[1.02] transition-transform">
           <div className="flex flex-col">
-            <span className="text-[10px] text-primary font-black uppercase tracking-widest mb-1">
-              Tu Pedido {showCartDetail && '👇'}
-            </span>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] text-primary font-black uppercase tracking-widest">
+                Tu Pedido {showCartDetail && '👇'}
+              </span>
+              {firebaseUser && (
+                <span className={`text-[8px] px-2 py-0.5 rounded-full font-bold transition-all ${
+                  cartSaving 
+                    ? 'bg-yellow-500/20 text-yellow-400 animate-pulse' 
+                    : 'bg-green-500/20 text-green-400'
+                }`}>
+                  {cartSaving ? '💾 Guardando...' : '✓ Guardado'}
+                </span>
+              )}
+            </div>
             <div className="flex items-baseline gap-2">
               <span className="font-black text-xl lg:text-2xl">{totalItems}</span>
               <span className="text-xs lg:text-sm text-gray-400">productos</span>
             </div>
+            {lastSaved && (
+              <span className="text-[8px] text-gray-500 mt-1">
+                Última actualización: {lastSaved.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
           </div>
           <div className="text-right">
             <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1 block">

@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
 import GoogleLoginButton from './GoogleLoginButton';
-import { syncUserProfile } from '@/lib/auth/syncUserProfile';
+import { syncUserProfile } from '@/lib/auth/syncUserProfile'; // Solo importa, no declares de nuevo
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Correo electrónico inválido.' }),
@@ -46,14 +46,18 @@ export default function LoginForm() {
     
     try {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
-      await syncUserProfile(userCredential.user, false);
+      await syncUserProfile(userCredential.user); // Solo 1 argumento
 
       toast({ 
         title: 'Inicio de sesión exitoso', 
         description: 'Bienvenido de vuelta.' 
       });
 
-      router.push('/dashboard');
+      // Leer redirección desde sessionStorage o usar /dashboard por defecto
+      const destination = sessionStorage.getItem('authRedirect') || '/dashboard';
+      sessionStorage.removeItem('authRedirect');
+      
+      router.push(destination);
     } catch (error: any) {
       console.error('Error al iniciar sesión:', error);
       
@@ -78,7 +82,7 @@ export default function LoginForm() {
         <CardTitle className="text-center text-xl">Iniciar Sesión</CardTitle>
       </CardHeader>
       <CardContent>
-        <GoogleLoginButton disabled={form.formState.isSubmitting} isNewUser={false} />
+        <GoogleLoginButton /> {/* Solo las props válidas */}
 
         <div className="my-6 flex items-center">
           <Separator className="flex-1" />
