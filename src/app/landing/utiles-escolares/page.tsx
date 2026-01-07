@@ -526,9 +526,17 @@ export default function UtilesEscolaresLanding() {
         items: items.map(({ product, quantity }) => ({
           name: product.name,
           quantity,
-          price: product.price
+          price: product.price,
+          image: product.image // ✅ Incluye la imagen
         })),
-        total: accumulated
+        total: accumulated,
+        shippingAddress: profileForm.street ? {
+          street: profileForm.street,
+          city: profileForm.city,
+          state: profileForm.state,
+          country: profileForm.country,
+          zipCode: profileForm.zipCode
+        } : undefined
       });
 
       await sendEmail({
@@ -657,9 +665,17 @@ export default function UtilesEscolaresLanding() {
           items: items.map(({ product, quantity }) => ({
             name: product.name,
             quantity,
-            price: product.price
+            price: product.price,
+            image: product.image // ✅ Incluye la imagen
           })),
-          total: accumulated
+          total: accumulated,
+          shippingAddress: profileForm.street ? {
+            street: profileForm.street,
+            city: profileForm.city,
+            state: profileForm.state,
+            country: profileForm.country,
+            zipCode: profileForm.zipCode
+          } : undefined
         });
 
         await sendEmail({
