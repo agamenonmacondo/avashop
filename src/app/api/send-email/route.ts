@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { to, cc, subject, html } = body; // <-- extrae cc
+    const { to, cc, subject, html } = body;
 
     if (!to || !subject || !html) {
       return NextResponse.json(
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: process.env.SMTP_FROM || 'ventas@ccs724.com',
       to: Array.isArray(to) ? to : [to],
-      cc, // <-- agrega cc aquí
+      cc,
       subject,
       html,
       replyTo: 'ventas@ccs724.com',
@@ -28,8 +28,6 @@ export async function POST(request: NextRequest) {
       throw error;
     }
 
-    console.log('✅ Correo enviado:', data?.id);
-
     return NextResponse.json({
       success: true,
       id: data?.id,
@@ -37,7 +35,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error: any) {
-    console.error('❌ Error al enviar correo:', error);
     return NextResponse.json(
       { error: 'Error al enviar correo', details: error.message },
       { status: 500 }

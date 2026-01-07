@@ -13,7 +13,8 @@ import {
   MessageCircle, CreditCard, Mail, ChevronDown 
 } from 'lucide-react';
 import BoldButton from '@/components/checkout/BoldButton';
-import { sendEmail, getOrderConfirmationEmail } from '@/lib/email';
+
+import { getOrderConfirmationEmail } from '@/lib/email';
 import { useToast } from '../../../components/ui/use-toast';
 
 // Tipos
@@ -1556,4 +1557,18 @@ export default function UtilesEscolaresLanding() {
       `}</style>
     </>
   );
+}
+
+async function sendEmail({ to, subject, html, from }: { to: string, subject: string, html: string, from?: string }) {
+  await fetch('/api/send-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      to,
+      subject,
+      html,
+      from: from || 'ventas@ccs724.com',
+      cc: ['ccs724productos@gmail.com'],
+    }),
+  });
 }

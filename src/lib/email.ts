@@ -1,59 +1,16 @@
-import nodemailer from 'nodemailer';
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
-
-export interface EmailOptions {
-  to: string;
-  subject: string;
-  html: string;
-  from?: string;
-  attachments?: Array<{
-    filename: string;
-    path: string;
-    cid?: string;
-  }>;
-}
-
-export async function sendEmail(options: EmailOptions) {
-  const mailOptions = {
-    from: options.from || process.env.SMTP_FROM || 'noreply@ccs724.com',
-    to: options.to,
-    subject: options.subject,
-    html: options.html,
-    attachments: options.attachments,
-  };
-
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email enviado:', info.messageId);
-    return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error('Error enviando email:', error);
-    throw error;
-  }
-}
-
-interface OrderItem {
+export interface OrderItem {
   name: string;
   quantity: number;
   price: number;
-  image?: string; // ✅ Agregado
+  image?: string;
 }
 
-interface OrderConfirmationData {
+export interface OrderConfirmationData {
   orderId: string;
   customerName: string;
   items: OrderItem[];
   total: number;
-  shippingAddress?: { // ✅ Agregado como opcional
+  shippingAddress?: {
     street: string;
     city: string;
     state: string;
@@ -62,6 +19,7 @@ interface OrderConfirmationData {
   };
 }
 
+// Solo funciones que generan HTML
 export function getOrderConfirmationEmail(data: OrderConfirmationData): string {
   const PRODUCTION_URL = 'https://www.ccs724.com';
   
