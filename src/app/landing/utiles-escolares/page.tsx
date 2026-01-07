@@ -10,7 +10,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { 
   X, Eye, ShoppingCart, Trash2, User, ClipboardList, Check,
-  MessageCircle, CreditCard, Mail 
+  MessageCircle, CreditCard, Mail, ChevronDown 
 } from 'lucide-react';
 import BoldButton from '@/components/checkout/BoldButton';
 import { sendEmail, getOrderConfirmationEmail } from '@/lib/email';
@@ -701,8 +701,8 @@ export default function UtilesEscolaresLanding() {
     return (
       <>
         <Header />
-        <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen flex items-center justify-center">
-          <div className="text-2xl font-bold text-primary">Cargando catálogo...</div>
+        <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen flex items-center justify-center">
+          <div className="text-2xl font-bold text-primary dark:text-primary-foreground">Cargando catálogo...</div>
         </main>
         <Footer />
       </>
@@ -712,58 +712,112 @@ export default function UtilesEscolaresLanding() {
   return (
     <>
       <Header />
-      <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
+      <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen">
         <section className="container mx-auto px-4 py-8">
           {/* Encabezado */}
-          <div className="text-center mb-12 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-black mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+          <div className="text-center mb-8 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-black mb-4 text-gray-900 dark:text-white">
               ¡Completa tu Lista Escolar!
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              <span className="font-bold text-primary">Paso a paso:</span> Selecciona productos, toca
-              <Eye className="inline w-5 h-5 mx-1 text-primary" />
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+              <span className="font-bold text-primary dark:text-yellow-500">Paso a paso:</span> Selecciona productos, toca
+              <Eye className="inline w-5 h-5 mx-1 text-primary dark:text-yellow-500" />
               para ver detalles y presiona
-              <span className="inline-block mx-1 px-3 py-1 bg-primary text-white rounded-full text-sm font-bold">
+              <span className="inline-block mx-1 px-3 py-1 bg-yellow-500 text-gray-900 rounded-full text-sm font-bold">
                 Siguiente
               </span>
               para avanzar.
             </p>
+
+            {/* NUEVO: Instrucciones rápidas */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-lg border border-blue-100 dark:border-gray-600 max-w-3xl mx-auto">
+              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl">📝</span>
+                ¿Cómo funciona?
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-yellow-500 text-gray-900 rounded-full flex items-center justify-center font-black text-sm">1</span>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Inicia sesión</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        Haz clic en el ícono <User className="inline w-3 h-3 text-primary dark:text-yellow-500" /> para entrar con Google o email
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-yellow-500 text-gray-900 rounded-full flex items-center justify-center font-black text-sm">2</span>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Completa tus datos</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        Clic en <ClipboardList className="inline w-3 h-3 text-primary dark:text-yellow-500" /> para agregar nombre y dirección
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-yellow-500 text-gray-900 rounded-full flex items-center justify-center font-black text-sm">3</span>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Selecciona productos</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        Toca cada categoría <ChevronDown className="inline w-3 h-3 text-primary dark:text-yellow-500" />, elige y agrega al carrito
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-blue-200 dark:border-gray-600 text-center">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  <span className="font-bold text-primary dark:text-yellow-500">💡 Tip:</span> 
+                  Tu carrito se guarda automáticamente. Al final, puedes pagar con 
+                  <span className="font-bold"> WhatsApp</span>, <span className="font-bold">Bold</span> o 
+                  <span className="font-bold"> solicitar cotización</span>.
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* ===== NUEVO: Autenticación replegable (antes del formulario) ===== */}
+          {/* ===== Autenticación replegable ===== */}
           <div className="mb-6 max-w-4xl mx-auto flex justify-center">
             <div 
               onClick={() => authCollapsed && setAuthCollapsed(false)}
-              className={`bg-white shadow-2xl border border-gray-100 transition-all duration-500 overflow-hidden ${
+              className={`bg-white dark:bg-gray-800 shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-500 overflow-hidden ${
                 authCollapsed 
-                  ? 'w-16 h-16 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 hover:bg-primary/5 ring-2 ring-primary/20' 
+                  ? 'w-16 h-16 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 hover:bg-primary/5 dark:hover:bg-yellow-500/10 ring-2 ring-primary/20 dark:ring-yellow-500/30' 
                   : 'w-full rounded-3xl'
               }`}
             >
               {authCollapsed ? (
                 <div className="relative">
-                  <User className="w-7 h-7 text-primary" />
+                  <User className="w-7 h-7 text-primary dark:text-yellow-500" />
                   {firebaseUser && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800" />
                   )}
                 </div>
               ) : (
                 <>
-                  <div className="p-6 lg:p-8 flex items-center justify-between gap-4">
+                  <div className="p-6 lg:p-8 flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-700">
                     <div>
-                      <h2 className="text-xl lg:text-2xl font-black text-gray-900">
+                      <h2 className="text-xl lg:text-2xl font-black text-gray-900 dark:text-white">
                         {firebaseUser ? 'Sesión iniciada' : 'Inicia sesión'}
                       </h2>
-                      <p className="text-gray-600 mt-1 text-sm">
+                      <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
                         {firebaseUser?.email || 'Para guardar tus datos'}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setAuthCollapsed(true); }}
-                      className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition"
+                      className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                     >
-                      <X className="w-5 h-5 text-gray-400" />
+                      <X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     </button>
                   </div>
                   <div className="px-6 lg:px-8 pb-6 lg:pb-8">
@@ -776,7 +830,7 @@ export default function UtilesEscolaresLanding() {
                             sessionStorage.setItem('authRedirect', '/landing/utiles-escolares');
                             router.push('/login');
                           }}
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-black text-sm hover:bg-gray-100 transition-colors"
+                          className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-3 font-black text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                         >
                           📧 Continuar con Email
                         </button>
@@ -785,7 +839,7 @@ export default function UtilesEscolaresLanding() {
                       <button
                         type="button"
                         onClick={handleLogout}
-                        className="text-xs font-bold text-red-500 hover:underline"
+                        className="text-xs font-bold text-red-500 dark:text-red-400 hover:underline"
                       >
                         Cerrar sesión
                       </button>
@@ -795,59 +849,58 @@ export default function UtilesEscolaresLanding() {
               )}
             </div>
           </div>
-          {/* ===== FIN auth ===== */}
 
-          {/* ===== Formulario (al principio) replegable si ya hay datos ===== */}
+          {/* ===== Formulario replegable ===== */}
           <div className="mb-12 max-w-4xl mx-auto flex justify-center">
             <div 
               onClick={() => profileCollapsed && setProfileCollapsed(false)}
-              className={`bg-white shadow-2xl border border-gray-100 transition-all duration-500 overflow-hidden ${
+              className={`bg-white dark:bg-gray-800 shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-500 overflow-hidden ${
                 profileCollapsed 
-                  ? 'w-16 h-16 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 hover:bg-primary/5 ring-2 ring-primary/20' 
+                  ? 'w-16 h-16 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 hover:bg-primary/5 dark:hover:bg-yellow-500/10 ring-2 ring-primary/20 dark:ring-yellow-500/30' 
                   : 'w-full rounded-3xl'
               }`}
             >
               {profileCollapsed ? (
                 <div className="relative">
-                  <ClipboardList className="w-7 h-7 text-primary" />
+                  <ClipboardList className="w-7 h-7 text-primary dark:text-yellow-500" />
                   {profileForm.name && (
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center border-2 border-white">
-                      <Check className="w-2 h-2 text-white" />
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary dark:bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">
+                      <Check className="w-2 h-2 text-white dark:text-gray-900" />
                     </div>
                   )}
                 </div>
               ) : (
                 <>
-                  <div className="p-6 lg:p-8 border-b border-gray-100 flex items-center justify-between gap-4">
+                  <div className="p-6 lg:p-8 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between gap-4">
                     <div>
-                      <h2 className="text-2xl lg:text-3xl font-black text-gray-900">Tus datos</h2>
-                      <p className="text-gray-600 text-sm">Información para el pedido</p>
+                      <h2 className="text-2xl lg:text-3xl font-black text-gray-900 dark:text-white">Tus datos</h2>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">Información para el pedido</p>
                     </div>
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setProfileCollapsed(true); }}
-                      className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition"
+                      className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                     >
-                      <X className="w-5 h-5 text-gray-400" />
+                      <X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     </button>
                   </div>
 
                   <form onSubmit={handleSaveProfile} className="p-6 lg:p-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1 md:col-span-2">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Email (solo lectura)
                         </label>
                         <input
                           value={firebaseUser?.email ?? ''}
                           readOnly
-                          className="w-full rounded-xl border border-gray-200 bg-gray-100 px-4 py-3 outline-none"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none"
                           placeholder="Inicia sesión para ver tu email"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Nombre
                         </label>
                         <input
@@ -855,72 +908,72 @@ export default function UtilesEscolaresLanding() {
                           onChange={(ev) => setProfileForm((p) => ({ ...p, name: ev.target.value }))}
                           type="text"
                           required
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Tu nombre completo"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Teléfono
                         </label>
                         <input
                           value={profileForm.phone}
                           onChange={(ev) => setProfileForm((p) => ({ ...p, phone: ev.target.value }))}
                           type="tel"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="3001234567"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Ciudad
                         </label>
                         <input
                           value={profileForm.city}
                           onChange={(ev) => setProfileForm((p) => ({ ...p, city: ev.target.value }))}
                           type="text"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Bogotá"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Departamento/Estado
                         </label>
                         <input
                           value={profileForm.state}
                           onChange={(ev) => setProfileForm((p) => ({ ...p, state: ev.target.value }))}
                           type="text"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Cundinamarca"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Código postal
                         </label>
                         <input
                           value={profileForm.zipCode}
                           onChange={(ev) => setProfileForm((p) => ({ ...p, zipCode: ev.target.value }))}
                           type="text"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="110121"
                         />
                       </div>
 
                       <div className="md:col-span-2 space-y-1">
-                        <label className="text-xs font-black uppercase tracking-wider text-gray-600">
+                        <label className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-400">
                           Dirección
                         </label>
                         <input
                           value={profileForm.street}
                           onChange={(ev) => setProfileForm((p) => ({ ...p, street: ev.target.value }))}
                           type="text"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Calle / Carrera / Apt..."
                         />
                       </div>
@@ -930,7 +983,7 @@ export default function UtilesEscolaresLanding() {
                       <button
                         type="submit"
                         disabled={profileStatus.type === 'saving' || !firebaseUser?.email}
-                        className="w-full bg-primary text-white py-3 rounded-xl font-black shadow-lg disabled:opacity-50"
+                        className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 py-3 rounded-xl font-black shadow-lg disabled:opacity-50 transition-all"
                       >
                         {profileStatus.type === 'saving' ? 'GUARDANDO...' : 'GUARDAR DATOS'}
                       </button>
@@ -940,22 +993,19 @@ export default function UtilesEscolaresLanding() {
               )}
             </div>
           </div>
-          {/* ===== FIN formulario ===== */}
 
           <div className="flex flex-col gap-8">
             {categories.map((cat: Category, catIdx: number) => {
               const isExpanded = expandedCategories.includes(cat.id);
-              const allProducts = cat.id === 'cuadernos' 
-                ? cat.subcategories.flatMap(s => s.products) 
-                : cat.subcategories.find(s => s.id === openSub[cat.id])?.products || [];
+              const allProducts = cat.subcategories.find(s => s.id === openSub[cat.id])?.products || [];
 
               return (
                 <div
                   key={cat.id}
-                  className={`rounded-3xl overflow-hidden shadow-2xl bg-white transition-all duration-500 ring-2 ${
+                  className={`rounded-3xl overflow-hidden shadow-2xl bg-white dark:bg-gray-800 transition-all duration-500 ring-2 ${
                     isExpanded 
                       ? 'ring-primary hover:ring-primary/80' 
-                      : 'ring-gray-200 hover:ring-primary/40'
+                      : 'ring-gray-200 dark:ring-gray-700 hover:ring-primary/40'
                   } ${isExpanded ? 'flex flex-col lg:flex-row' : 'flex flex-row'}`}
                 >
                   {/* Banner - Compacto cuando está replegado */}
@@ -1025,23 +1075,23 @@ export default function UtilesEscolaresLanding() {
 
                   {/* Área de Productos - Solo visible cuando está expandida */}
                   {isExpanded && (
-                    <div className="w-full lg:w-[72%] xl:w-[77%] p-4 lg:p-6 xl:p-8 flex flex-col bg-gray-50 animate-in slide-in-from-bottom duration-300">
+                    <div className="w-full lg:w-[72%] xl:w-[77%] p-4 lg:p-6 xl:p-8 flex flex-col bg-gray-50 dark:bg-gray-900 animate-in slide-in-from-bottom duration-300">
                       {/* Botón para contraer (móvil) */}
                       <div className="flex justify-between items-center mb-4 lg:hidden">
-                        <h3 className="text-lg font-black text-gray-900">Productos</h3>
+                        <h3 className="text-lg font-black text-gray-900 dark:text-white">Productos</h3>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleToggleCategory(cat.id);
                           }}
-                          className="px-4 py-2 bg-gray-200 rounded-lg text-sm font-bold hover:bg-gray-300 transition"
+                          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg text-sm font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                         >
                           Contraer ▲
                         </button>
                       </div>
 
                       {/* Selector de Subcategorías */}
-                      {cat.id !== 'cuadernos' && (
+                      {cat.subcategories.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-6">
                           {cat.subcategories.map((sub: Subcategory) => (
                             <button
@@ -1049,12 +1099,9 @@ export default function UtilesEscolaresLanding() {
                               className={`px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm ${
                                 openSub[cat.id] === sub.id 
                                   ? 'bg-primary text-white scale-105 shadow-lg' 
-                                  : 'bg-white text-gray-600 hover:bg-gray-100'
+                                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                               }`}
-                              onClick={() => setOpenSub(prev => ({ 
-                                ...prev, 
-                                [cat.id]: prev[cat.id] === sub.id ? null : sub.id 
-                              }))}
+                              onClick={() => handleToggleSub(cat.id, sub.id)}
                             >
                               {sub.name}
                             </button>
@@ -1066,7 +1113,7 @@ export default function UtilesEscolaresLanding() {
                       <div 
                         className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-2.5 lg:gap-3 pr-2 ${
                           allProducts.length > 10 
-                            ? 'max-h-[600px] lg:max-h-[750px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-200' 
+                            ? 'max-h-[600px] lg:max-h-[750px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-200 dark:scrollbar-track-gray-700' 
                             : ''
                         }`}
                       >
@@ -1075,55 +1122,60 @@ export default function UtilesEscolaresLanding() {
                           return (
                             <div 
                               key={prod.id} 
-                              className="relative group bg-white rounded-lg lg:rounded-xl p-2 hover:shadow-xl transition-all border border-gray-100 hover:border-primary/40 hover:scale-[1.03]"
+                              className="relative group bg-white dark:bg-gray-800 rounded-lg lg:rounded-xl p-2 hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 hover:border-primary/40 dark:hover:border-yellow-500/40 hover:scale-[1.03]"
                             >
-                              {/* Imagen MÁS COMPACTA */}
+                              {/* Imagen con zoom en hover */}
                               <div className="aspect-[4/5] rounded-md lg:rounded-lg overflow-hidden mb-2 relative">
                                 <img 
                                   src={prod.image} 
                                   alt={prod.name} 
-                                  className="w-full h-full object-cover" 
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125" 
                                 />
                                 {qty > 0 && (
-                                  <div className="absolute top-1 right-1 bg-primary text-white rounded-full w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center text-[10px] lg:text-xs font-black shadow-lg ring-2 ring-white">
+                                  <div className="absolute top-1 right-1 bg-primary dark:bg-yellow-500 text-white dark:text-gray-900 rounded-full w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center text-[10px] lg:text-xs font-black shadow-lg ring-2 ring-white dark:ring-gray-800">
                                     {qty}
                                   </div>
                                 )}
                                 
                                 <button
                                   onClick={() => setQuickviewProduct(prod)}
-                                  className="absolute bottom-1 right-1 bg-white/95 hover:bg-white p-1 lg:p-1.5 rounded-md shadow-md transition-all lg:opacity-0 lg:group-hover:opacity-100"
+                                  className="absolute bottom-1 right-1 bg-white/95 dark:bg-gray-900/95 hover:bg-white dark:hover:bg-gray-900 p-1 lg:p-1.5 rounded-md shadow-md transition-all lg:opacity-0 lg:group-hover:opacity-100 border border-gray-200 dark:border-gray-600"
                                   aria-label="Vista rápida"
                                 >
-                                  <Eye className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-primary" />
+                                  <Eye className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-primary dark:text-yellow-500" />
                                 </button>
                               </div>
 
                               <div className="space-y-1">
-                                <h3 className="text-[9px] lg:text-[10px] font-bold text-gray-800 line-clamp-2 leading-tight h-6 lg:h-7">
+                                <h3 className="text-[9px] lg:text-[10px] font-bold text-gray-800 dark:text-gray-200 line-clamp-2 leading-tight h-6 lg:h-7">
                                   {prod.name}
                                 </h3>
-                                <div className="flex items-baseline gap-1">
-                                  <span className="text-primary font-black text-xs lg:text-sm">
-                                    ${(prod.price / 1000).toFixed(0)}K
+                                <div className="flex items-baseline gap-1 flex-wrap">
+                                  <span className="text-primary dark:text-yellow-500 font-black text-xs lg:text-sm">
+                                    {formatColombianCurrency(prod.price)}
                                   </span>
-                                  <span className="text-gray-400 text-[8px] lg:text-[9px] line-through">
-                                    ${((prod.price * 1.2) / 1000).toFixed(0)}K
+                                  <span className="text-gray-400 dark:text-gray-500 text-[8px] lg:text-[9px] line-through">
+                                    {formatColombianCurrency(Math.round(prod.price * 1.2))}
                                   </span>
+                                  {prod.price < prod.price * 1.2 && (
+                                    <span className="px-1 py-0.5 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-[8px] font-bold ml-1">
+                                      -20%
+                                    </span>
+                                  )}
                                 </div>
                                 
-                                {/* Controles ULTRA COMPACTOS */}
+                                {/* Controles */}
                                 <div className="flex items-center gap-1">
                                   <button 
-                                    className="flex-1 py-1 lg:py-1.5 rounded-md bg-gray-100 hover:bg-red-50 text-gray-700 font-bold text-[10px] lg:text-xs transition disabled:opacity-30"
+                                    className="flex-1 py-1 lg:py-1.5 rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/30 text-gray-700 dark:text-gray-200 font-bold text-[10px] lg:text-xs transition disabled:opacity-30"
                                     onClick={() => handleRemoveFromCart(prod)}
                                     disabled={qty === 0}
                                   >
                                     −
                                   </button>
-                                  <span className="font-black text-xs lg:text-sm min-w-[18px] lg:min-w-[20px] text-center">{qty}</span>
+                                  <span className="font-black text-xs lg:text-sm min-w-[18px] lg:min-w-[20px] text-center text-gray-900 dark:text-white">{qty}</span>
                                   <button 
-                                    className="flex-1 py-1 lg:py-1.5 rounded-md bg-primary hover:bg-primary/90 text-white font-bold text-[10px] lg:text-xs transition shadow-sm hover:shadow-md"
+                                    className="flex-1 py-1 lg:py-1.5 rounded-md bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold text-[10px] lg:text-xs transition shadow-sm hover:shadow-md"
                                     onClick={() => handleAddToCart(prod)}
                                   >
                                     +
@@ -1148,26 +1200,26 @@ export default function UtilesEscolaresLanding() {
               alt="Finalizar pedido" 
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/40" />
             
             <div className="relative z-10 text-center p-6 md:p-12 w-full text-white">
-              <h2 className="text-4xl md:text-6xl font-black mb-6 drop-shadow-2xl uppercase tracking-tight">
+              <h2 className="text-4xl md:text-6xl font-black mb-6 drop-shadow-2xl uppercase tracking-tight text-white">
                 ¡Finaliza tu Lista!
               </h2>
               
-              <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 mb-10 inline-block border border-white/20 shadow-2xl">
+              <div className="bg-gray-900/60 backdrop-blur-xl rounded-3xl p-6 mb-10 inline-block border border-gray-700/50 shadow-2xl">
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
                   <div className="text-center md:text-left">
-                    <p className="text-white/70 uppercase tracking-widest text-xs font-bold mb-1">
+                    <p className="text-gray-400 uppercase tracking-widest text-xs font-bold mb-1">
                       Productos
                     </p>
-                    <p className="text-3xl font-black">{totalItems} items</p>
+                    <p className="text-3xl font-black text-white">{totalItems} items</p>
                   </div>
                   
-                  <div className="w-px h-12 bg-white/20 hidden md:block" />
+                  <div className="w-px h-12 bg-gray-700 hidden md:block" />
                   
                   <div className="text-center md:text-left">
-                    <p className="text-white/70 uppercase tracking-widest text-xs font-bold mb-1">
+                    <p className="text-gray-400 uppercase tracking-widest text-xs font-bold mb-1">
                       Total a pagar
                     </p>
                     <p className="text-4xl md:text-5xl font-black text-yellow-400 drop-shadow-lg">
@@ -1180,7 +1232,7 @@ export default function UtilesEscolaresLanding() {
               {!showBoldPayment ? (
                 <div className="flex flex-wrap justify-center gap-4">
                   <button 
-                    className="group bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
+                    className="group bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
                     onClick={handleWhatsAppCheckout}
                     disabled={!firebaseUser || totalItems === 0}
                   >
@@ -1190,7 +1242,7 @@ export default function UtilesEscolaresLanding() {
                   </button>
                   
                   <button 
-                    className="group bg-[#FF3D00] hover:bg-[#E63600] text-white px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
+                    className="group bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
                     onClick={handleBoldPayment}
                     disabled={!firebaseUser || totalItems === 0 || isProcessingPayment}
                   >
@@ -1200,7 +1252,7 @@ export default function UtilesEscolaresLanding() {
                   </button>
                   
                   <button 
-                    className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
+                    className="group bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl hover:shadow-2xl disabled:opacity-50"
                     onClick={handleEmailQuote}
                     disabled={!firebaseUser || totalItems === 0 || isProcessingPayment}
                   >
@@ -1210,7 +1262,7 @@ export default function UtilesEscolaresLanding() {
                   </button>
                 </div>
               ) : (
-                <div className="max-w-md mx-auto bg-white/95 backdrop-blur-sm rounded-2xl p-6">
+                <div className="max-w-md mx-auto bg-gray-800/95 backdrop-blur-sm rounded-2xl p-6">
                   <BoldButton 
                     {...boldPaymentData} 
                     onClose={() => {
@@ -1233,65 +1285,68 @@ export default function UtilesEscolaresLanding() {
           onClick={() => setQuickviewProduct(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-in zoom-in duration-200"
+            className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-in zoom-in duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white border-b border-gray-100 p-4 flex items-center justify-between z-10">
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-black uppercase">
+            <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 p-4 flex items-center justify-between z-10">
+              <span className="px-3 py-1 bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 rounded-full text-xs font-black uppercase">
                 Vista Rápida
               </span>
               <button
                 onClick={() => setQuickviewProduct(null)}
-                className="p-2 hover:bg-gray-100 rounded-full transition"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition"
                 aria-label="Cerrar"
               >
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 text-gray-900 dark:text-white" />
               </button>
             </div>
 
             <div className="p-6 lg:flex lg:gap-6">
-              <div className="lg:w-1/2 mb-6 lg:mb-0">
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden ring-2 ring-primary/20">
+              <div className="lg:w-1/2 mb-6 lg:mb-0 group/zoom">
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden ring-2 ring-yellow-500/30 dark:ring-yellow-500/50 relative cursor-zoom-in">
                   <img 
                     src={quickviewProduct.image} 
                     alt={quickviewProduct.name} 
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/zoom:scale-150" 
                   />
+                  <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs opacity-0 group-hover/zoom:opacity-100 transition-opacity">
+                    🔍 Haz hover para zoom
+                  </div>
                 </div>
               </div>
 
               <div className="lg:w-1/2 flex flex-col justify-between">
                 <div className="space-y-4">
                   <div>
-                    <h2 className="text-2xl lg:text-3xl font-black text-gray-900 leading-tight mb-2">
+                    <h2 className="text-2xl lg:text-3xl font-black text-gray-900 dark:text-white leading-tight mb-2">
                       {quickviewProduct.name}
                     </h2>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-gray-400 line-through text-lg">
-                        ${(quickviewProduct.price * 1.2).toLocaleString()}
+                    <div className="flex items-center gap-3 mb-4 flex-wrap">
+                      <span className="text-gray-400 dark:text-gray-500 line-through text-lg">
+                        {formatColombianCurrency(Math.round(quickviewProduct.price * 1.2))}
                       </span>
-                      <span className="text-primary font-black text-4xl">
-                        ${quickviewProduct.price.toLocaleString()}
+                      <span className="text-yellow-600 dark:text-yellow-400 font-black text-4xl">
+                        {formatColombianCurrency(quickviewProduct.price)}
                       </span>
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-xs font-bold">
                         -20%
                       </span>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 rounded-xl p-4 space-y-2">
-                    <h3 className="font-bold text-sm text-gray-500 uppercase tracking-wider">Características</h3>
-                    <ul className="space-y-2 text-sm text-gray-700">
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 space-y-2 border border-gray-100 dark:border-gray-700">
+                    <h3 className="font-bold text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Características</h3>
+                    <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                       <li className="flex items-start gap-2">
-                        <span className="text-primary font-bold">✓</span>
+                        <span className="text-yellow-600 dark:text-yellow-400 font-bold">✓</span>
                         Producto de alta calidad para uso escolar
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-primary font-bold">✓</span>
+                        <span className="text-yellow-600 dark:text-yellow-400 font-bold">✓</span>
                         Material resistente y duradero
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-primary font-bold">✓</span>
+                        <span className="text-yellow-600 dark:text-yellow-400 font-bold">✓</span>
                         Disponible para entrega inmediata
                       </li>
                     </ul>
@@ -1299,26 +1354,26 @@ export default function UtilesEscolaresLanding() {
 
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-green-700 font-bold">En stock - Entrega rápida</span>
+                    <span className="text-green-700 dark:text-green-400 font-bold">En stock - Entrega rápida</span>
                   </div>
                 </div>
 
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-4">
-                    <span className="text-sm font-bold text-gray-600">Cantidad:</span>
+                    <span className="text-sm font-bold text-gray-600 dark:text-gray-400">Cantidad:</span>
                     <div className="flex items-center gap-3">
                       <button 
-                        className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-red-50 font-bold text-lg transition"
+                        className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/30 text-gray-900 dark:text-white font-bold text-lg transition border border-gray-200 dark:border-gray-600"
                         onClick={() => handleRemoveFromCart(quickviewProduct)}
                         disabled={(cart[quickviewProduct.id] || 0) === 0}
                       >
                         −
                       </button>
-                      <span className="font-black text-2xl min-w-[40px] text-center">
+                      <span className="font-black text-2xl min-w-[40px] text-center text-gray-900 dark:text-white">
                         {cart[quickviewProduct.id] || 0}
                       </span>
                       <button 
-                        className="w-10 h-10 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-lg transition shadow-md"
+                        className="w-10 h-10 rounded-lg bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold text-lg transition shadow-md"
                         onClick={() => handleAddToCart(quickviewProduct)}
                       >
                         +
@@ -1331,7 +1386,7 @@ export default function UtilesEscolaresLanding() {
                       handleAddToCart(quickviewProduct);
                       setQuickviewProduct(null);
                     }}
-                    className="w-full py-4 bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl font-black text-lg shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
+                    className="w-full py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-gray-900 rounded-2xl font-black text-lg shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
                   >
                     <ShoppingCart className="w-6 h-6" />
                     AGREGAR AL CARRITO
@@ -1351,37 +1406,36 @@ export default function UtilesEscolaresLanding() {
       >
         {/* Panel de Detalle (visible en hover) */}
         {showCartDetail && totalItems > 0 && (
-          <div className="mb-3 bg-white rounded-2xl shadow-2xl border-2 border-primary/20 max-h-[400px] overflow-hidden animate-in slide-in-from-bottom duration-200">
-            <div className="bg-gradient-to-r from-primary to-blue-600 text-white p-3 flex items-center justify-between">
+          <div className="mb-3 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-primary/20 dark:border-yellow-500/30 max-h-[400px] overflow-hidden animate-in slide-in-from-bottom duration-200">
+            <div className="bg-gradient-to-r from-primary to-blue-600 dark:from-yellow-600 dark:to-yellow-500 text-white dark:text-gray-900 p-3 flex items-center justify-between">
               <span className="font-black text-sm uppercase tracking-wider">Detalle de tu pedido</span>
               <ShoppingCart className="w-5 h-5" />
             </div>
-            <div className="max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-100 p-4 space-y-3">
+            <div className="max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary dark:scrollbar-thumb-yellow-500 scrollbar-track-gray-100 dark:scrollbar-track-gray-700 p-4 space-y-3">
               {getCartItems().map(({ product, quantity }) => (
-                <div key={product.id} className="flex items-center gap-3 bg-gray-50 rounded-xl p-2 hover:bg-gray-100 transition group">
+                <div key={product.id} className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 rounded-xl p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition group">
                   <img 
                     src={product.image} 
                     alt={product.name} 
-                    className="w-14 h-14 object-cover rounded-lg ring-1 ring-gray-200" 
+                    className="w-14 h-14 object-cover rounded-lg ring-1 ring-gray-200 dark:ring-gray-600" 
                   />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-bold text-gray-900 truncate">{product.name}</h4>
+                    <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">{product.name}</h4>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-primary font-black text-sm">
-                        ${product.price.toLocaleString()}
+                      <span className="text-primary dark:text-yellow-400 font-black text-sm">
+                        {formatColombianCurrency(product.price)}
                       </span>
-                      <span className="text-gray-400 text-[8px] lg:text-[9px] line-through">
-                        ${((product.price * 1.2) / 1000).toFixed(0)}K
+                      <span className="text-gray-400 dark:text-gray-500 text-[8px] lg:text-[9px] line-through">
+                        {formatColombianCurrency(Math.round(product.price * 1.2))}
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="text-gray-900 font-black text-sm">
-                      ${(product.price * quantity).toLocaleString()}
+                    <span className="text-gray-900 dark:text-white font-black text-sm">
+                      {formatColombianCurrency(product.price * quantity)}
                     </span>
                     <button
                       onClick={() => {
-                        // Eliminar completamente del carrito
                         setCart(prev => {
                           const newCart = { ...prev };
                           delete newCart[product.id];
@@ -1389,7 +1443,7 @@ export default function UtilesEscolaresLanding() {
                           return newCart;
                         });
                       }}
-                      className="text-red-500 hover:text-red-700 transition opacity-0 group-hover:opacity-100"
+                      className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition opacity-0 group-hover:opacity-100"
                       aria-label="Eliminar"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -1402,17 +1456,17 @@ export default function UtilesEscolaresLanding() {
         )}
 
         {/* Totalizador Principal */}
-        <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white p-4 lg:p-5 rounded-2xl shadow-2xl flex items-center justify-between border-2 border-primary/30 backdrop-blur-md cursor-pointer hover:scale-[1.02] transition-transform">
+        <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 text-white p-4 lg:p-5 rounded-2xl shadow-2xl flex items-center justify-between border-2 border-primary/30 dark:border-yellow-500/40 backdrop-blur-md cursor-pointer hover:scale-[1.02] transition-transform">
           <div className="flex flex-col">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] text-primary font-black uppercase tracking-widest">
+              <span className="text-[10px] text-primary dark:text-yellow-400 font-black uppercase tracking-widest">
                 Tu Pedido {showCartDetail && '👇'}
               </span>
               {firebaseUser && (
                 <span className={`text-[8px] px-2 py-0.5 rounded-full font-bold transition-all ${
                   cartSaving 
                     ? 'bg-yellow-500/20 text-yellow-400 animate-pulse' 
-                    : 'bg-green-500/20 text-green-400'
+                    : 'bg-green-500/20 text-green-400 dark:bg-green-400/20 dark:text-green-300'
                 }`}>
                   {cartSaving ? '💾 Guardando...' : '✓ Guardado'}
                 </span>
@@ -1420,19 +1474,19 @@ export default function UtilesEscolaresLanding() {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="font-black text-xl lg:text-2xl">{totalItems}</span>
-              <span className="text-xs lg:text-sm text-gray-400">productos</span>
+              <span className="text-xs lg:text-sm text-gray-400 dark:text-gray-300">productos</span>
             </div>
             {lastSaved && (
-              <span className="text-[8px] text-gray-500 mt-1">
+              <span className="text-[8px] text-gray-500 dark:text-gray-400 mt-1">
                 Última actualización: {lastSaved.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
           </div>
           <div className="text-right">
-            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1 block">
+            <span className="text-[10px] text-gray-400 dark:text-gray-300 font-black uppercase tracking-widest mb-1 block">
               Total Acumulado
             </span>
-            <p className="font-black text-xl lg:text-2xl text-primary">{formattedTotal}</p>
+            <p className="font-black text-xl lg:text-2xl text-primary dark:text-yellow-400">{formattedTotal}</p>
           </div>
         </div>
       </div>
