@@ -1107,22 +1107,32 @@ export default function UtilesEscolaresLanding() {
                         </button>
                       </div>
 
-                      {/* Selector de Subcategorías */}
+                      {/* Selector de Subcategorías - VERSIÓN MEJORADA */}
                       {cat.subcategories.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          {cat.subcategories.map((sub: Subcategory) => (
-                            <button
-                              key={sub.id}
-                              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm ${
-                                openSub[cat.id] === sub.id 
-                                  ? 'bg-primary text-white scale-105 shadow-lg' 
-                                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                              }`}
-                              onClick={() => handleToggleSub(cat.id, sub.id)}
-                            >
-                              {sub.name}
-                            </button>
-                          ))}
+                        <div className="relative mb-6">
+                          <div
+                            className="flex gap-2 pb-2 overflow-x-auto scrollbar-hide md:flex-wrap md:overflow-x-visible"
+                          >
+                            {cat.subcategories.map((sub: Subcategory) => (
+                              <button
+                                key={sub.id}
+                                className={`
+                                  flex-shrink-0
+                                  px-4 py-2 rounded-full
+                                  text-sm font-semibold
+                                  transition-all duration-200
+                                  whitespace-nowrap
+                                  border
+                                  ${openSub[cat.id] === sub.id
+                                    ? 'bg-primary text-white border-primary shadow-lg'
+                                    : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-primary'}
+                                `}
+                                onClick={() => handleToggleSub(cat.id, sub.id)}
+                              >
+                                {sub.name}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       )}
 
@@ -1345,7 +1355,7 @@ export default function UtilesEscolaresLanding() {
                       <span className="text-yellow-600 dark:text-yellow-400 font-black text-4xl">
                         {formatColombianCurrency(quickviewProduct.price)}
                       </span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-xs font-bold">
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-[8px] font-bold ml-1">
                         -20%
                       </span>
                     </div>
@@ -1509,8 +1519,18 @@ export default function UtilesEscolaresLanding() {
       </div>
 
       <style jsx global>{`
+        /* Ocultar scrollbar para filtros */
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        
         .scrollbar-thin::-webkit-scrollbar {
           width: 6px;
+          height: 6px;
         }
         .scrollbar-thumb-primary::-webkit-scrollbar-thumb {
           background-color: hsl(var(--primary));
