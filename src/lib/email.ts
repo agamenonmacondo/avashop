@@ -1,3 +1,48 @@
+import { Resend } from 'resend';
+
+// Inicializar Resend
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+
+// ✅ AGREGAR ESTA FUNCIÓN QUE FALTA
+export async function sendEmail({
+  to,
+  subject,
+  html,
+  from = 'CCS724 <noreply@ccs724.com>',
+}: {
+  to: string | string[];
+  subject: string;
+  html: string;
+  from?: string;
+}) {
+  if (!resend) {
+    console.warn('⚠️ RESEND_API_KEY no configurada. Email no enviado.');
+    return { success: false, error: 'API key no configurada' };
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from,
+      to: Array.isArray(to) ? to : [to],
+      subject,
+      html,
+    });
+
+    if (error) {
+      console.error('❌ Error enviando email:', error);
+      return { success: false, error };
+    }
+
+    console.log('✅ Email enviado:', data?.id);
+    return { success: true, data };
+  } catch (error) {
+    console.error('❌ Error enviando email:', error);
+    return { success: false, error };
+  }
+}
+
 export interface OrderItem {
   name: string;
   quantity: number;
