@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { cn } from '@/lib/utils';
 import Script from 'next/script';
+import { AuthenticatedChatWidget } from "@/components/chat/AuthenticatedChatWidget";
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -100,6 +101,9 @@ export default function RootLayout({
           {children}
           <Toaster />
         </ThemeProvider>
+
+        {/* Widget de chat con autenticación */}
+        <AuthenticatedChatWidget />
       </body>
     </html>
   );
