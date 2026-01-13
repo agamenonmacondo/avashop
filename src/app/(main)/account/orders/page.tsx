@@ -8,9 +8,6 @@ import Link from 'next/link';
 import { getSupabase } from '@/lib/supabaseClient';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import MetaPixel from '@/components/analytics/MetaPixel';
 import { useForm } from 'react-hook-form';
 
 interface OrderItem {
@@ -40,18 +37,19 @@ function OrdersContent() {
   const form = useForm({
     defaultValues: {
       name: '',
-      email: '', // ← aquí se llenará con el email autenticado
+      email: '',
       phone: '',
     },
   });
 
   useEffect(() => {
     const auth = getFirebaseAuth();
+    if (!auth) return; // ✅ Verificar que auth no sea null
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         form.setValue('email', user.email || '');
         form.setValue('name', user.displayName || '');
-        // Si tienes más datos, también puedes setearlos aquí
       }
     });
     return () => unsubscribe();
@@ -84,7 +82,6 @@ function OrdersContent() {
       try {
         console.log('🔍 Buscando órdenes para:', firebaseUser.email);
 
-        // Obtener órdenes del usuario
         const { data: ordersData, error: ordersError } = await supabase
           .from('orders')
           .select('*')
@@ -101,7 +98,6 @@ function OrdersContent() {
         console.log('✅ Órdenes encontradas:', ordersData?.length || 0);
 
         if (ordersData && ordersData.length > 0) {
-          // Obtener items de cada orden
           const ordersWithItems = await Promise.all(
             ordersData.map(async (order) => {
               const { data: items, error: itemsError } = await supabase
@@ -123,9 +119,9 @@ function OrdersContent() {
         }
 
         setLoading(false);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('❌ Error general:', err);
-        setError(err.message || 'Error desconocido');
+        setError(err instanceof Error ? err.message : 'Error desconocido');
         setLoading(false);
       }
     });
@@ -238,7 +234,6 @@ function OrdersContent() {
                     <div className="mt-2">
                       {getStatusBadge(order.payment_status)}
                     </div>
-                    {/* Enlace al detalle */}
                     <Button asChild variant="outline" size="sm" className="mt-2">
                       <Link href={`/account/orders/${order.order_id}`}>Ver Detalle</Link>
                     </Button>
@@ -271,7 +266,6 @@ function OrdersContent() {
   );
 }
 
-// Componente de carga mientras se resuelve useSearchParams
 function OrdersLoading() {
   return (
     <div className="container mx-auto p-4">
@@ -280,30 +274,10 @@ function OrdersLoading() {
   );
 }
 
-// Exportación principal envuelta en Suspense
 export default function OrdersPage() {
   return (
     <Suspense fallback={<OrdersLoading />}>
       <OrdersContent />
     </Suspense>
-  );
-}
-
-export function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex min-h-screen flex-col">
-      {/* 2. Envolver MetaPixel en Suspense */}
-      <Suspense fallback={null}>
-        <MetaPixel />
-      </Suspense>
-      
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
   );
 }
