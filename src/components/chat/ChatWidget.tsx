@@ -251,13 +251,13 @@ export function ChatWidget({
         </div>
       )}
 
-      {/* Botón flotante - MÁS PEQUEÑO Y MÁS ARRIBA */}
+      {/* Botón flotante - MÁS ARRIBA para evitar superposición */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed right-5 bottom-24 z-50 group"
+          className="fixed right-5 bottom-32 z-50 group"
         >
-          {/* Círculo más pequeño (w-14 h-14 en vez de w-20 h-20) */}
+          {/* Círculo del agente */}
           <div className="relative w-14 h-14 rounded-full 
             bg-white dark:bg-gray-800 
             shadow-xl flex items-center justify-center
@@ -290,7 +290,7 @@ export function ChatWidget({
 
       {/* Panel del chat - TAMBIÉN MÁS ARRIBA */}
       <div
-        className={`fixed right-4 bottom-24 z-50 transition-all duration-300
+        className={`fixed right-4 bottom-32 z-50 transition-all duration-300
           ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
       >
         <div className="w-[420px] max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col border border-gray-200 dark:border-gray-700 overflow-hidden">
