@@ -65,3 +65,18 @@ export default function MetaPixel() {
     </>
   );
 }
+
+function MetaPixelContent() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      // ✅ Usar operador opcional
+      window.fbq('track', 'PageView', {
+        page_path: pathname,
+        page_search: searchParams?.toString() || '',
+      });
+    }
+  }, [pathname, searchParams]);
+}

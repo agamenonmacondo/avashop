@@ -1,37 +1,41 @@
-
 'use client';
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { XCircle } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { XCircle } from 'lucide-react';
+import Link from 'next/link';
 
 function CancelContent() {
   const searchParams = useSearchParams();
-  const orderId = searchParams.get('order_id'); 
+  const orderId = searchParams?.get('order_id') || 'N/A';
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 min-h-[60vh] flex items-center justify-center">
-      <Card className="w-full max-w-lg text-center shadow-xl">
+      <Card className="max-w-md w-full text-center shadow-xl">
         <CardHeader>
-          <XCircle className="mx-auto h-16 w-16 text-destructive mb-4" />
-          <CardTitle className="text-3xl font-bold font-headline">Proceso Cancelado</CardTitle>
+          <div className="mx-auto mb-4">
+            <XCircle className="h-16 w-16 text-red-500" />
+          </div>
+          <CardTitle className="text-2xl font-bold text-red-600">
+            Pago Cancelado
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <CardDescription className="text-lg text-muted-foreground mb-6">
-            {orderId 
-              ? `El proceso de pago para el pedido ${orderId} fue cancelado.`
-              : "El proceso de pago fue cancelado o no se completó."}
-            <br />
-            Tu carrito aún conserva tus artículos si deseas intentarlo de nuevo.
-          </CardDescription>
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" className="transition-transform hover:scale-105 active:scale-95">
+        <CardContent className="space-y-4">
+          <p className="text-muted-foreground">
+            El pago ha sido cancelado. Tu pedido no se ha procesado.
+          </p>
+          {orderId !== 'N/A' && (
+            <p className="text-sm text-muted-foreground">
+              Orden: <span className="font-mono font-medium">{orderId}</span>
+            </p>
+          )}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+            <Button asChild variant="outline">
               <Link href="/cart">Volver al Carrito</Link>
             </Button>
-            <Button variant="outline" size="lg" asChild className="transition-transform hover:scale-105 active:scale-95">
+            <Button asChild>
               <Link href="/">Continuar Comprando</Link>
             </Button>
           </div>
@@ -41,9 +45,17 @@ function CancelContent() {
   );
 }
 
-export default function OrderCancelPage() {
+function CancelLoading() {
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <div className="container mx-auto px-4 py-12 min-h-[60vh] flex items-center justify-center">
+      <p className="text-muted-foreground">Cargando...</p>
+    </div>
+  );
+}
+
+export default function CancelPage() {
+  return (
+    <Suspense fallback={<CancelLoading />}>
       <CancelContent />
     </Suspense>
   );
