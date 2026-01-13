@@ -50,68 +50,20 @@ export function ChatWidget({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // ✅ URL del producto - usa el ID directamente como en la página de productos
+  // ✅ URL del producto
   const getProductUrl = (product: Product): string => {
-    // La página de productos usa: /productos/[id]
-    // Donde [id] es el product.id de la base de datos
     const productId = product.id;
-    return `https://www.ccs724.com/productos/${productId}`;
+    return `/productos/${productId}`;
   };
 
-  // ✅ URL de imagen - usa la ruta correcta de las imágenes
+  // ✅ URL de imagen
   const getImageUrl = (product: Product): string => {
     const imageSource = product.image_url || product.image || "";
     
-    if (!imageSource) {
-      return "/images/placeholder.png";
-    }
-    
-    // Si ya es URL completa, usarla
-    if (imageSource.startsWith("http://") || imageSource.startsWith("https://")) {
-      return imageSource;
-    }
-    
-    // Si es ruta relativa, construir URL completa
-    if (imageSource.startsWith("/images/") || imageSource.startsWith("/")) {
-      return imageSource;
-    }
-    
-    // Agregar /images/ si no tiene
+    if (!imageSource) return "/images/placeholder.png";
+    if (imageSource.startsWith("http://") || imageSource.startsWith("https://")) return imageSource;
+    if (imageSource.startsWith("/")) return imageSource;
     return `/images/${imageSource}`;
-  };
-
-  // Función para extraer productos mencionados en el texto
-  const extractMentionedProducts = (text: string, allProducts: Product[]): Product[] => {
-    if (!allProducts || allProducts.length === 0) return [];
-    
-    const textLower = text.toLowerCase();
-    const mentionedProducts: Product[] = [];
-    
-    for (const product of allProducts) {
-      const productNameLower = product.name.toLowerCase();
-      const nameParts = productNameLower.split(/\s+/);
-      const significantParts = nameParts.filter(part => part.length > 3);
-      const matchCount = significantParts.filter(part => textLower.includes(part)).length;
-      
-      if (matchCount >= 2 || textLower.includes(productNameLower)) {
-        if (!mentionedProducts.find(p => p.id === product.id)) {
-          mentionedProducts.push(product);
-        }
-      }
-    }
-    
-    const priceMatches = text.match(/\$[\d.,]+/g) || [];
-    for (const priceStr of priceMatches) {
-      const price = parseInt(priceStr.replace(/[$.,]/g, ''));
-      const productByPrice = allProducts.find(p => 
-        Math.abs(p.price - price) < 100 && !mentionedProducts.find(mp => mp.id === p.id)
-      );
-      if (productByPrice) {
-        mentionedProducts.push(productByPrice);
-      }
-    }
-    
-    return mentionedProducts.slice(0, 8);
   };
 
   const sendMessage = async () => {
@@ -155,13 +107,15 @@ export function ChatWidget({
 
       if (data.session_id) setSessionId(data.session_id);
 
+      // ✅ CORREGIDO: Mostrar TODOS los productos que devuelve el API (máximo 8)
       let products: Product[] = [];
       const rawProducts = data.products || [];
 
       if (Array.isArray(rawProducts) && rawProducts.length > 0) {
-        const allProducts = rawProducts.map((p: Record<string, unknown>) => {
+        // Tomar los primeros 8 productos directamente
+        products = rawProducts.slice(0, 8).map((p: Record<string, unknown>) => {
+          // Obtener la imagen de diferentes campos posibles
           let imageUrl = "";
-          
           if (p.image_url && typeof p.image_url === "string") {
             imageUrl = p.image_url;
           } else if (p.image && typeof p.image === "string") {
@@ -178,17 +132,27 @@ export function ChatWidget({
             image_url: imageUrl,
             product_url: (p.product_url as string) || "",
           };
-        });
-        
-        const responseText = data.response || "";
-        products = extractMentionedProducts(responseText, allProducts);
+        }).filter(p => p.id && p.name); // Solo productos válidos
+      }
+
+      // Limpiar el contenido de la respuesta (quitar URLs ya que mostramos tarjetas)
+      let cleanResponse = data.response || "No pude procesar tu solicitud.";
+      
+      // Si hay productos, simplificar el mensaje
+      if (products.length > 0) {
+        // Quitar URLs del texto para que se vea más limpio
+        cleanResponse = cleanResponse
+          .replace(/Link:\s*https?:\/\/[^\s\n]+/gi, '')
+          .replace(/https?:\/\/www\.ccs724\.com\/productos\/[^\s\n]+/gi, '')
+          .replace(/\n{3,}/g, '\n\n')
+          .trim();
       }
 
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: data.response || "No pude procesar tu solicitud.",
+          content: cleanResponse,
           timestamp: new Date(),
           products: products.length > 0 ? products : undefined,
         },
@@ -200,7 +164,7 @@ export function ChatWidget({
         ...prev,
         {
           role: "assistant",
-          content: `⚠️ Error del servidor: ${errorMessage}\n\nPor favor, intenta de nuevo o contacta a soporte.`,
+          content: `⚠️ Error: ${errorMessage}\n\nPor favor, intenta de nuevo.`,
           timestamp: new Date(),
         },
       ]);
@@ -282,30 +246,23 @@ export function ChatWidget({
         </div>
       )}
 
-      {/* ✅ Botón flotante - Posición fija arriba del totalizador */}
+      {/* Botón flotante */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed right-4 bottom-28 sm:bottom-32 z-[140] group"
+          className="fixed right-4 bottom-28 sm:bottom-6 z-[140] group"
         >
           <div className="relative w-14 h-14 rounded-full 
             bg-white dark:bg-gray-800 
             shadow-xl flex items-center justify-center
             transition-transform duration-300 group-hover:scale-110
-            border-3 border-amber-500">
+            border-2 border-amber-500">
             <Image
               src="/images/AVALOGO/ccs724_logo_solo_transparent.png"
               alt="Agente CCS724"
               width={40}
               height={40}
-              className="object-contain dark:hidden"
-            />
-            <Image
-              src="/images/AVALOGO/ccs724_icon_transparent.png"
-              alt="Agente CCS724"
-              width={40}
-              height={40}
-              className="object-contain hidden dark:block"
+              className="object-contain"
             />
           </div>
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800" />
@@ -317,18 +274,14 @@ export function ChatWidget({
         </button>
       )}
 
-      {/* ✅ Panel del chat - CORREGIDO para móvil */}
+      {/* Panel del chat */}
       <div
         className={`fixed z-[160] transition-all duration-300
           ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
-          
-          /* ✅ MÓVIL: Ocupa casi toda la pantalla, posicionado desde abajo */
           inset-x-2 bottom-2 top-auto
-          
-          /* ✅ DESKTOP: Tamaño fijo en esquina derecha */
-          sm:inset-auto sm:right-4 sm:bottom-28`}
+          sm:inset-auto sm:right-4 sm:bottom-6`}
       >
-        <div className="w-full sm:w-[400px] h-[calc(100vh-120px)] sm:h-[500px] max-h-[600px] 
+        <div className="w-full sm:w-[380px] h-[calc(100vh-100px)] sm:h-[520px] max-h-[600px] 
           bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col 
           border border-gray-200 dark:border-gray-700 overflow-hidden">
           
@@ -360,7 +313,7 @@ export function ChatWidget({
             </button>
           </div>
 
-          {/* Messages - área scrolleable */}
+          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800">
             <div className="space-y-4">
               {messages.map((msg, idx) => (
@@ -373,14 +326,7 @@ export function ChatWidget({
                           alt="CCS724"
                           width={28}
                           height={28}
-                          className="w-full h-full object-contain dark:hidden"
-                        />
-                        <Image
-                          src="/images/AVALOGO/ccs724_icon_transparent.png"
-                          alt="CCS724"
-                          width={28}
-                          height={28}
-                          className="w-full h-full object-contain hidden dark:block"
+                          className="w-full h-full object-contain"
                         />
                       </div>
                     )}
@@ -392,12 +338,7 @@ export function ChatWidget({
                       }`}
                     >
                       <div
-                        className="text-sm leading-relaxed"
-                        style={{
-                          wordBreak: "break-word",
-                          overflowWrap: "break-word",
-                          whiteSpace: "pre-wrap",
-                        }}
+                        className="text-sm leading-relaxed whitespace-pre-wrap break-words"
                       >
                         {msg.content}
                       </div>
@@ -411,7 +352,7 @@ export function ChatWidget({
                     </div>
                   </div>
 
-                  {/* Productos */}
+                  {/* ✅ PRODUCTOS EN TARJETAS */}
                   {msg.products && msg.products.length > 0 && (
                     <div className="mt-3 ml-10">
                       <p className="text-xs text-gray-600 dark:text-gray-400 font-semibold mb-2 flex items-center gap-1.5">
@@ -421,12 +362,13 @@ export function ChatWidget({
                       <div className="grid grid-cols-2 gap-2">
                         {msg.products.map((product, pIdx) => (
                           <div
-                            key={pIdx}
-                            className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 
-                              shadow hover:shadow-md hover:border-amber-500 transition-all overflow-hidden"
+                            key={`${product.id}-${pIdx}`}
+                            className="bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 
+                              shadow-sm hover:shadow-md hover:border-amber-400 transition-all overflow-hidden"
                           >
+                            {/* Imagen clickeable para zoom */}
                             <div 
-                              className="relative h-20 sm:h-24 bg-white dark:bg-gray-800 cursor-pointer group"
+                              className="relative h-24 bg-gray-50 dark:bg-gray-800 cursor-pointer group"
                               onClick={() => setZoomedProduct(product)}
                             >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -438,24 +380,26 @@ export function ChatWidget({
                                   (e.target as HTMLImageElement).src = "/images/placeholder.png";
                                 }}
                               />
-                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 flex items-center justify-center">
-                                <ZoomIn className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-lg" />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 flex items-center justify-center transition-colors">
+                                <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 drop-shadow-lg transition-opacity" />
                               </div>
                             </div>
                             
+                            {/* Info del producto */}
                             <div className="p-2">
-                              <p className="text-[10px] sm:text-xs font-medium text-gray-800 dark:text-gray-100 line-clamp-2 min-h-[28px] sm:min-h-[32px]">
+                              <p className="text-xs font-medium text-gray-800 dark:text-gray-100 line-clamp-2 min-h-[32px]">
                                 {product.name}
                               </p>
-                              <p className="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400 mt-1">
+                              <p className="text-sm font-bold text-amber-600 dark:text-amber-400 mt-1">
                                 {formatPrice(product.price)}
                               </p>
                               
+                              {/* Botón ver producto */}
                               <a
                                 href={getProductUrl(product)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-1.5 w-full py-1.5 bg-amber-500 hover:bg-amber-600 text-gray-900 text-[10px] font-semibold rounded flex items-center justify-center gap-1 transition-colors"
+                                className="mt-2 w-full py-1.5 bg-amber-500 hover:bg-amber-600 text-gray-900 text-xs font-semibold rounded-lg flex items-center justify-center gap-1 transition-colors"
                               >
                                 <ExternalLink className="w-3 h-3" />
                                 Ver producto
@@ -477,14 +421,7 @@ export function ChatWidget({
                       alt="CCS724"
                       width={28}
                       height={28}
-                      className="w-full h-full object-contain dark:hidden"
-                    />
-                    <Image
-                      src="/images/AVALOGO/ccs724_icon_transparent.png"
-                      alt="CCS724"
-                      width={28}
-                      height={28}
-                      className="w-full h-full object-contain hidden dark:block"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                   <div className="bg-white dark:bg-gray-700 rounded-2xl rounded-bl-sm px-4 py-3 border border-gray-200 dark:border-gray-600 shadow">
@@ -501,7 +438,7 @@ export function ChatWidget({
             </div>
           </div>
 
-          {/* Input - fijo en la parte inferior */}
+          {/* Input */}
           <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex-shrink-0">
             <div className="flex gap-2">
               <Input
@@ -526,7 +463,7 @@ export function ChatWidget({
         </div>
       </div>
 
-      {/* Overlay - z-index menor que el chat */}
+      {/* Overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black/20 dark:bg-black/40 z-[155]" 
