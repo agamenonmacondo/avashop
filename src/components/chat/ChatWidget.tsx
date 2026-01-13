@@ -86,6 +86,46 @@ export function ChatWidget({
     return `/images/${imageSource}`;
   };
 
+  // Función para extraer productos mencionados en el texto
+  const extractMentionedProducts = (text: string, allProducts: Product[]): Product[] => {
+    if (!allProducts || allProducts.length === 0) return [];
+    
+    const textLower = text.toLowerCase();
+    const mentionedProducts: Product[] = [];
+    
+    // Buscar productos cuyo nombre aparezca en el texto
+    for (const product of allProducts) {
+      const productNameLower = product.name.toLowerCase();
+      
+      // Verificar si el nombre del producto o parte de él está en el texto
+      const nameParts = productNameLower.split(/\s+/);
+      const significantParts = nameParts.filter(part => part.length > 3);
+      
+      // Si al menos 2 partes significativas del nombre están en el texto
+      const matchCount = significantParts.filter(part => textLower.includes(part)).length;
+      
+      if (matchCount >= 2 || textLower.includes(productNameLower)) {
+        if (!mentionedProducts.find(p => p.id === product.id)) {
+          mentionedProducts.push(product);
+        }
+      }
+    }
+    
+    // También buscar por precio mencionado
+    const priceMatches = text.match(/\$[\d.,]+/g) || [];
+    for (const priceStr of priceMatches) {
+      const price = parseInt(priceStr.replace(/[$.,]/g, ''));
+      const productByPrice = allProducts.find(p => 
+        Math.abs(p.price - price) < 100 && !mentionedProducts.find(mp => mp.id === p.id)
+      );
+      if (productByPrice) {
+        mentionedProducts.push(productByPrice);
+      }
+    }
+    
+    return mentionedProducts.slice(0, 8);
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -131,7 +171,7 @@ export function ChatWidget({
       const rawProducts = data.products || [];
 
       if (Array.isArray(rawProducts) && rawProducts.length > 0) {
-        products = rawProducts.slice(0, 8).map((p: Record<string, unknown>) => {
+        const allProducts = rawProducts.map((p: Record<string, unknown>) => {
           let imageUrl = "";
           
           if (p.image_url && typeof p.image_url === "string") {
@@ -151,6 +191,13 @@ export function ChatWidget({
             product_url: (p.product_url as string) || "",
           };
         });
+        
+        // FILTRAR: Solo mostrar productos mencionados en la respuesta
+        const responseText = data.response || "";
+        products = extractMentionedProducts(responseText, allProducts);
+        
+        // Si no encontramos ninguno mencionado, no mostrar productos
+        // (evita mostrar productos aleatorios)
       }
 
       setMessages((prev) => [
