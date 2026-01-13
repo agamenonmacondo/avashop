@@ -72,7 +72,7 @@ export default function SignupForm() {
       const user = result.user;
       
       // ✅ Guardar perfil en base de datos
-      await syncUserProfile(user, true);
+      await syncUserProfile(user);  // ❌ Quitar el segundo argumento "true"
 
       toast({
         title: "Registro/Inicio de Sesión con Google Exitoso",
@@ -115,7 +115,7 @@ export default function SignupForm() {
         });
 
         // ✅ Guardar perfil en base de datos inmediatamente después de crear la cuenta
-        await syncUserProfile(userCredential.user, true);
+        await syncUserProfile(userCredential.user);  // ❌ Quitar el segundo argumento "true"
       }
       toast({
         title: "Registro Exitoso",

@@ -1,45 +1,59 @@
 import { User } from 'firebase/auth';
 import { getSupabase } from '@/lib/supabaseClient';
 
-export async function syncUserProfile(user: User) {
+export async function syncUserProfile(user: User, forceCreate?: boolean) {
   const supabase = getSupabase();
-  // Si no hay supabase o el usuario no tiene email, no podemos guardar en tu esquema actual
-  if (!supabase || !user.email) return;
+  
+  if (!supabase) {
+    console.error('❌ Supabase no disponible');
+    return;
+  }
 
   try {
-    // 1. Verificar si el usuario ya existe en Supabase
-    const { data: existingUser } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', user.email) // Tu tabla usa email como ID
-      .maybeSingle();
-
-    if (existingUser) {
-      return; // Ya existe, no hacemos nada
+    const email = user.email?.toLowerCase().trim();
+    
+    if (!email) {
+      console.error('❌ Usuario sin email');
+      return;
     }
 
-    // 2. Si no existe, crearlo
-    console.log('🆕 Creando perfil en Supabase para:', user.email);
-    
-    const newProfile = {
-      id: user.email, // ID es el email
-      name: user.displayName || user.email.split('@')[0],
-      phone: user.phoneNumber || null,
-      addresses: [], // Inicializamos arrays vacíos JSONB
-      orders: []
+    // Verificar si el perfil ya existe
+    const { data: existingProfile } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (existingProfile && !forceCreate) {
+      console.log('✅ Perfil ya existe:', email);
+      return existingProfile;
+    }
+
+    // Crear o actualizar perfil
+    const profileData = {
+      firebase_uid: user.uid,
+      email: email,
+      display_name: user.displayName || '',
+      photo_url: user.photoURL || '',
+      updated_at: new Date().toISOString(),
     };
 
-    const { error } = await supabase
-      .from('profiles')
-      .insert([newProfile]);
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .upsert(profileData, { onConflict: 'email' })
+      .select()
+      .single();
 
     if (error) {
-      console.error('❌ Error creando perfil en Supabase:', error.message);
-    } else {
-      console.log('✅ Perfil creado exitosamente en base de datos');
+      console.error('❌ Error en syncUserProfile:', error);
+      return null;
     }
+
+    console.log('✅ Perfil sincronizado:', data);
+    return data;
 
   } catch (error) {
     console.error('❌ Error en syncUserProfile:', error);
+    return null;
   }
 }
