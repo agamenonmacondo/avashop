@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { X, Send, Loader2, ZoomIn, Package } from "lucide-react";
+import { X, Send, Loader2, ZoomIn, Package, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -11,6 +11,8 @@ interface Product {
   name: string;
   price: number;
   image: string;
+  product_url?: string;  // URL del producto
+  image_url?: string;    // URL alternativa de imagen
 }
 
 interface Message {
@@ -49,6 +51,56 @@ export function ChatWidget({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Función para obtener la URL del producto
+  const getProductUrl = (product: Product): string => {
+    // Si tiene product_url, usarla directamente
+    if (product.product_url && product.product_url.includes("ccs724.com")) {
+      return product.product_url;
+    }
+    
+    // Para productos de Supabase (útiles escolares)
+    const slug = product.id || product.name.toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[áàäâ]/g, "a")
+      .replace(/[éèëê]/g, "e")
+      .replace(/[íìïî]/g, "i")
+      .replace(/[óòöô]/g, "o")
+      .replace(/[úùüû]/g, "u")
+      .replace(/ñ/g, "n")
+      .replace(/[^a-z0-9-]/g, "");
+    
+    return `https://www.ccs724.com/productos/${slug}`;
+  };
+
+  // Función para obtener la imagen del producto
+  const getImageUrl = (product: Product): string => {
+    // Priorizar image_url si existe
+    const imageSource = product.image_url || product.image || "";
+    
+    // Si está vacío, usar placeholder
+    if (!imageSource) {
+      return "/images/placeholder.png";
+    }
+    
+    // Si ya es una URL completa (http/https), usarla directamente
+    if (imageSource.startsWith("http://") || imageSource.startsWith("https://")) {
+      return imageSource;
+    }
+    
+    // Si es una ruta relativa que empieza con /images/, es local
+    if (imageSource.startsWith("/images/")) {
+      return imageSource; // Next.js lo resolverá desde /public
+    }
+    
+    // Si empieza con / pero no es /images/, asumirlo como ruta local
+    if (imageSource.startsWith("/")) {
+      return imageSource;
+    }
+    
+    // Si es solo un nombre de archivo o ruta sin /, agregar prefijo
+    return `/images/${imageSource}`;
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -64,6 +116,13 @@ export function ChatWidget({
     setIsLoading(true);
 
     try {
+      console.log("🔵 Enviando mensaje al agente:", {
+        message: currentInput,
+        email: userEmail || "guest@ccs724.com",
+        session_id: sessionId,
+        url: apiUrl,
+      });
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -74,21 +133,60 @@ export function ChatWidget({
         }),
       });
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      console.log("🟢 Respuesta del servidor:", {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+      });
+
+      if (!response.ok) {
+        // Intentar obtener el mensaje de error del servidor
+        let errorDetail = `HTTP ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorDetail = errorData.error || errorData.message || errorDetail;
+          console.error("🔴 Error del servidor:", errorData);
+        } catch {
+          const errorText = await response.text();
+          console.error("🔴 Respuesta del servidor:", errorText);
+          if (errorText) errorDetail = errorText.substring(0, 100);
+        }
+        throw new Error(errorDetail);
+      }
 
       const data = await response.json();
+      console.log("✅ Datos recibidos:", data);
+      console.log("📦 Productos recibidos:", data.products);
+
       if (data.session_id) setSessionId(data.session_id);
 
       let products: Product[] = [];
       const rawProducts = data.products || [];
 
       if (Array.isArray(rawProducts) && rawProducts.length > 0) {
-        products = rawProducts.slice(0, 6).map((p: Product) => ({
-          id: p.id || "",
-          name: p.name || "Producto",
-          price: p.price || 0,
-          image: p.image || "",
-        }));
+        products = rawProducts.slice(0, 8).map((p: Record<string, unknown>) => {
+          // Obtener imagen - puede venir como image_url, image, o imageUrls (array)
+          let imageUrl = "";
+          
+          if (p.image_url && typeof p.image_url === "string") {
+            imageUrl = p.image_url;
+          } else if (p.image && typeof p.image === "string") {
+            imageUrl = p.image;
+          } else if (Array.isArray(p.imageUrls) && p.imageUrls.length > 0) {
+            imageUrl = p.imageUrls[0] as string;
+          }
+          
+          return {
+            id: (p.id as string) || "",
+            name: (p.name as string) || "Producto",
+            price: (p.price as number) || 0,
+            image: imageUrl,
+            image_url: imageUrl,
+            product_url: (p.product_url as string) || "",
+          };
+        });
+        
+        console.log("📦 Productos procesados con imágenes:", products);
       }
 
       setMessages((prev) => [
@@ -101,12 +199,15 @@ export function ChatWidget({
         },
       ]);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("❌ Error completo:", error);
+
+      const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Hubo un error. Intenta de nuevo.",
+          content: `⚠️ Error del servidor: ${errorMessage}\n\nPor favor, intenta de nuevo o contacta a soporte.`,
           timestamp: new Date(),
         },
       ]);
@@ -128,13 +229,6 @@ export function ChatWidget({
       currency: "COP",
       minimumFractionDigits: 0,
     }).format(price);
-
-  const getImageUrl = (image: string) => {
-    if (!image) return "/images/placeholder.png";
-    if (image.startsWith("http")) return image;
-    if (image.startsWith("/")) return image;
-    return `/${image}`;
-  };
 
   return (
     <>
@@ -163,7 +257,7 @@ export function ChatWidget({
             <div className="relative aspect-square bg-white dark:bg-gray-800 group cursor-zoom-in">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={getImageUrl(zoomedProduct.image)}
+                src={getImageUrl(zoomedProduct)}
                 alt={zoomedProduct.name}
                 className="w-full h-full object-contain p-8 transition-transform duration-500 group-hover:scale-150"
                 onError={(e) => {
@@ -180,15 +274,16 @@ export function ChatWidget({
                   {formatPrice(zoomedProduct.price)}
                 </span>
               </div>
-              <button
-                onClick={() => {
-                  window.location.href = `/landing/utiles-escolares`;
-                  setZoomedProduct(null);
-                }}
-                className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-xl"
+              <a
+                href={getProductUrl(zoomedProduct)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setZoomedProduct(null)}
+                className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-xl flex items-center justify-center gap-2"
               >
-                Ver en catálogo
-              </button>
+                <ExternalLink className="w-5 h-5" />
+                Ver en tienda
+              </a>
             </div>
           </div>
         </div>
@@ -277,25 +372,27 @@ export function ChatWidget({
                       }`}
                     >
                       {/* TEXTO COMPLETO - SIN TRUNCAR */}
-                      <div 
+                      <div
                         className="text-[15px] leading-relaxed"
-                        style={{ 
+                        style={{
                           wordBreak: "break-word",
                           overflowWrap: "break-word",
-                          whiteSpace: "pre-wrap"
+                          whiteSpace: "pre-wrap",
                         }}
                       >
                         {msg.content}
                       </div>
-                      <p className={`text-[11px] mt-3 text-right ${
-                        msg.role === "user" ? "text-gray-700/70" : "text-gray-500 dark:text-gray-400"
-                      }`}>
+                      <p
+                        className={`text-[11px] mt-3 text-right ${
+                          msg.role === "user" ? "text-gray-700/70" : "text-gray-500 dark:text-gray-400"
+                        }`}
+                      >
                         {msg.timestamp.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" })}
                       </p>
                     </div>
                   </div>
 
-                  {/* Productos */}
+                  {/* Productos con URLs y fotos correctas */}
                   {msg.products && msg.products.length > 0 && (
                     <div className="mt-4 ml-13">
                       <p className="text-sm text-gray-600 dark:text-gray-400 font-semibold mb-3 flex items-center gap-2">
@@ -306,14 +403,17 @@ export function ChatWidget({
                         {msg.products.map((product, pIdx) => (
                           <div
                             key={pIdx}
-                            onClick={() => setZoomedProduct(product)}
                             className="bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 
-                              shadow hover:shadow-lg hover:border-amber-500 transition-all cursor-pointer group overflow-hidden"
+                              shadow hover:shadow-lg hover:border-amber-500 transition-all overflow-hidden"
                           >
-                            <div className="relative h-28 bg-white dark:bg-gray-800">
+                            {/* Imagen clickeable para zoom */}
+                            <div 
+                              className="relative h-28 bg-white dark:bg-gray-800 cursor-pointer group"
+                              onClick={() => setZoomedProduct(product)}
+                            >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
-                                src={getImageUrl(product.image)}
+                                src={getImageUrl(product)}
                                 alt={product.name}
                                 className="w-full h-full object-contain p-3 group-hover:scale-110 transition-transform"
                                 onError={(e) => {
@@ -324,6 +424,8 @@ export function ChatWidget({
                                 <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 drop-shadow-lg" />
                               </div>
                             </div>
+                            
+                            {/* Info del producto */}
                             <div className="p-3">
                               <p className="text-sm font-medium text-gray-800 dark:text-gray-100 line-clamp-2 min-h-[40px]">
                                 {product.name}
@@ -331,6 +433,17 @@ export function ChatWidget({
                               <p className="text-base font-bold text-amber-600 dark:text-amber-400 mt-1">
                                 {formatPrice(product.price)}
                               </p>
+                              
+                              {/* Botón para ir al producto */}
+                              <a
+                                href={getProductUrl(product)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-2 w-full py-1.5 bg-amber-500 hover:bg-amber-600 text-gray-900 text-xs font-semibold rounded-lg flex items-center justify-center gap-1 transition-colors"
+                              >
+                                <ExternalLink className="w-3 h-3" />
+                                Ver producto
+                              </a>
                             </div>
                           </div>
                         ))}
@@ -360,7 +473,7 @@ export function ChatWidget({
                   </div>
                 </div>
               )}
-              
+
               {/* Referencia para auto-scroll */}
               <div ref={messagesEndRef} />
             </div>
