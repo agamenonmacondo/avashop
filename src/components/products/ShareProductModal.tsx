@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Copy, Check, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -24,6 +24,12 @@ export default function ShareProductModal({
   productUrl
 }: ShareProductModalProps) {
   const [copied, setCopied] = useState(false);
+  const [canShare, setCanShare] = useState(false);
+
+  useEffect(() => {
+    // Verificar si Web Share API está disponible
+    setCanShare(typeof navigator !== 'undefined' && 'share' in navigator);
+  }, []);
 
   if (!isOpen) return null;
 
@@ -138,7 +144,7 @@ export default function ShareProductModal({
 
           {/* Share Buttons - MÁS GRANDES */}
           <div className="space-y-3">
-            {navigator.share && (
+            {canShare && (
               <Button
                 variant="default"
                 size="lg"
