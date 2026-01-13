@@ -16,7 +16,7 @@ interface Profile {
   name?: string;
   phone?: string;
   addresses?: Address[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function useProfile(user?: User | null) {
@@ -33,6 +33,9 @@ export function useProfile(user?: User | null) {
       return;
     }
 
+    // ✅ Guardar email en variable después de verificar que existe
+    const userEmail = user.email;
+
     let mounted = true;
     const fetchProfile = async () => {
       setIsLoading(true);
@@ -47,7 +50,8 @@ export function useProfile(user?: User | null) {
           return;
         }
 
-        const normalizedEmail = user.email.toLowerCase().trim();
+        // ✅ Usar la variable que ya verificamos
+        const normalizedEmail = userEmail.toLowerCase().trim();
         const { data, error: sbError } = await supabase
           .from('profiles')
           .select('*')
@@ -61,8 +65,8 @@ export function useProfile(user?: User | null) {
         } else if (mounted) {
           setProfile(data ?? null);
         }
-      } catch (e: any) {
-        const msg = e?.message ?? String(e);
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e);
         if (mounted) setError(msg);
         console.error('fetchProfile exception', e);
       } finally {

@@ -1,76 +1,68 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Star } from 'lucide-react';
-import type { Review } from '@/types/review';
+import { getSupabase } from '@/lib/supabaseClient';
+import { Review } from '@/types/review';  // ✅ Importar desde tipos centrales
 
 interface ReviewListProps {
-  reviews: Review[];
+  productId: string;
 }
 
-export default function ReviewList({ reviews }: ReviewListProps) {
-  if (reviews.length === 0) {
-    return null;
+export default function ReviewList({ productId }: ReviewListProps) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const supabase = getSupabase();
+      if (!supabase) return;
+
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('product_id', productId)
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setReviews(data as Review[]);
+      }
+      setLoading(false);
+    };
+
+    fetchReviews();
+  }, [productId]);
+
+  if (loading) {
+    return <div className="text-muted-foreground">Cargando reseñas...</div>;
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-CO', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const maskEmail = (email: string) => {
-    const [name, domain] = email.split('@');
-    return `${name.substring(0, 2)}***@${domain}`;
-  };
+  if (reviews.length === 0) {
+    return <div className="text-muted-foreground">No hay reseñas aún.</div>;
+  }
 
   return (
     <div className="space-y-4">
       {reviews.map((review) => (
-        <div
-          key={review.id}
-          className="border border-border rounded-lg p-4 hover:bg-secondary/5 transition-colors"
-        >
-          {/* Header con estrellas y usuario */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              {/* Estrellas */}
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < review.rating
-                        ? 'fill-yellow-500 text-yellow-500'
-                        : 'text-gray-300 dark:text-gray-600'
-                    }`}
-                  />
-                ))}
-              </div>
-
-              {/* Usuario */}
-              <span className="text-sm font-medium">
-                {maskEmail(review.user_email)}
-              </span>
-
-              {/* Badge de verificación */}
-              {review.is_verified && (
-                <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 px-2 py-1 rounded-full font-medium">
-                  ✓ Compra Verificada
-                </span>
-              )}
+        <div key={review.id} className="border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="font-semibold">{review.user_name}</span>
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-4 w-4 ${
+                    i < review.rating
+                      ? 'fill-yellow-500 text-yellow-500'
+                      : 'text-gray-300 dark:text-gray-600'
+                  }`}
+                />
+              ))}
             </div>
-
-            {/* Fecha */}
-            <span className="text-sm text-muted-foreground">
-              {formatDate(review.created_at)}
-            </span>
           </div>
-
-          {/* Comentario */}
-          <p className="text-sm text-foreground leading-relaxed">
-            {review.comment}
+          <p className="text-sm text-muted-foreground">{review.comment}</p>
+          <p className="text-xs text-muted-foreground mt-2">
+            {new Date(review.created_at).toLocaleDateString('es-CO')}
           </p>
         </div>
       ))}

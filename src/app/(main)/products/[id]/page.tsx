@@ -3,7 +3,7 @@ import { products } from '@/lib/placeholder-data';
 import ProductDetailClient from './ProductDetailClient';
 import Breadcrumbs from '@/components/ui/Breadcrumbs'; // 1. Importamos Breadcrumbs
 import JsonLdProduct from '@/components/JsonLdProduct'; // Importar componente JsonLdProduct
-import type { ReviewStats } from '@/types/review';
+import { Review, ReviewStats } from '@/types/review';  // ✅ Importar desde tipos centrales
 
 type Props = {
   params: Promise<{ id: string }>;

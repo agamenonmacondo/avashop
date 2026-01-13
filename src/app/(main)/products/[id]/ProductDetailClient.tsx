@@ -11,34 +11,12 @@ import type { Product } from '@/types';
 import ShareProductModal from '@/components/products/ShareProductModal';
 import Image from 'next/image';
 import { getSupabase } from '@/lib/supabaseClient';
+import { Review, ReviewStats } from '@/types/review';  // ✅ Importar desde tipos centrales
 
 interface ProductDetailClientProps {
   product: Product;
   initialReviews?: Review[];
   initialStats?: ReviewStats | null;
-}
-
-interface Review {
-  id: number;
-  product_id: string;
-  user_email: string;
-  rating: number;
-  comment: string;
-  is_verified: boolean;
-  photo_url?: string | null;
-  created_at: string;
-}
-
-interface ReviewStats {
-  average: number;
-  total: number;
-  distribution: {
-    1: number;
-    2: number;
-    3: number;
-    4: number;
-    5: number;
-  };
 }
 
 export default function ProductDetailClient({

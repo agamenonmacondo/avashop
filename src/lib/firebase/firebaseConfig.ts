@@ -43,4 +43,13 @@ export function getFirebaseAuth(): Auth | null {
   }
 }
 
+// ✅ Agregar estas funciones
+export function getFirebaseStorage(): FirebaseStorage | null {
+  return storage;
+}
+
+export function getFirebaseFirestore(): Firestore | null {
+  return db;
+}
+
 export default getFirebaseAuth;
