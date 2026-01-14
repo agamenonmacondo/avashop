@@ -729,7 +729,18 @@ export default function UtilesEscolaresLanding() {
   return (
     <>
       <Header />
-      <main className="pt-16 pb-32 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen">
+      
+      {/* ===== BANNER PRINCIPAL ===== */}
+      <section className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] xl:h-[500px] overflow-hidden mt-16">
+        <img 
+          src="/images/UTILES/BANNER UTILES.png" 
+          alt="Útiles Escolares - Banner Principal" 
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+      </section>
+
+      <main className="pb-32 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen">
         <section className="container mx-auto px-4 py-8">
           {/* Encabezado */}
           <div className="text-center mb-8 max-w-4xl mx-auto">
