@@ -15,10 +15,10 @@ export default function CreatinaLanding() {
   const phone = '573504017710';
 
   useEffect(() => {
-    gtagViewItem(65000, [{
+    gtagViewItem(80000, [{
       id: 'creatina-for-women',
       name: 'Creatina Monohidrato – For Women',
-      price: 65000,
+      price: 80000,
       quantity: 1,
     }]);
   }, []);
@@ -35,7 +35,7 @@ export default function CreatinaLanding() {
        '@type': 'Offer',
        url: 'https://www.ccs724.com/landing/creatina',
        priceCurrency: 'COP',
-       price: '65000',
+       price: '80000',
        availability: 'https://schema.org/InStock',
        priceValidUntil: '2025-12-31',
      },
@@ -45,12 +45,12 @@ export default function CreatinaLanding() {
     const product = {
       id: 'creatina-for-women',
       name: 'Creatina Monohidrato – For Women',
-      price: 65000,
+      price: 80000,
       quantity: 1,
       imageUrls: ['/images/creatina/landing 1.jpeg'],
       stock: 50,
     };
-    gtagAddToCart(65000, [product]);
+    gtagAddToCart(80000, [product]);
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     if (!cart.find((i: any) => i.id === product.id)) cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -284,152 +284,77 @@ export default function CreatinaLanding() {
         </section>
 
         {/* SECCIÓN 3: CTA FINAL */}
-        <section id="comprar" className="w-full">
-          {/* Mobile */}
-          <div className="md:hidden">
-            <div className="relative w-full aspect-[9/16]">
-              <Image
-                src="/images/creatina/landing 3.jpeg"
-                alt="Compra creatina para mujeres ahora"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="bg-background p-6">
-              <div className="space-y-4 text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/80 rounded-full">
-                  <Zap className="h-4 w-4 text-white" />
-                  <span className="text-xs font-bold text-white">CREATINA PARA MUJERES</span>
+        <section id="comprar" className="w-full bg-background py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto space-y-8 text-center">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 rounded-full">
+                <Zap className="h-5 w-5 text-white" />
+                <span className="text-sm font-bold text-white">CREATINA PARA MUJERES</span>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                Apoya tu <span className="text-primary">rutina de entrenamiento</span>
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground">
+                Monohidrato puro, sin aditivos. Resultados individuales pueden variar; siga la dosis recomendada.
+              </p>
+
+              <div className="flex justify-center gap-8 md:gap-12 pt-4">
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-black text-primary">100%</div>
+                  <div className="text-sm text-muted-foreground mt-1">Pura</div>
                 </div>
-
-                <h2 className="text-2xl font-bold">
-                  Energía que <span className="text-primary">transforma tu rutina</span>
-                </h2>
-
-                <p className="text-sm">
-                  Monohidrato puro, sin aditivos, para resultados reales
-                </p>
-
-                <div className="flex justify-center gap-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-black text-primary">100%</div>
-                    <div className="text-xs text-muted-foreground">Pura</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-black text-primary">5g</div>
-                    <div className="text-xs text-muted-foreground">Dosis sugerida</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-black text-primary">Varía</div>
-                    <div className="text-xs text-muted-foreground">Resultados individuales</div>
-                  </div>
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-black text-primary">5g</div>
+                  <div className="text-sm text-muted-foreground mt-1">Dosis</div>
                 </div>
-
-                <div className="space-y-3">
-                  <Button
-                    size="lg"
-                    onClick={buyNow}
-                    className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
-                  >
-                    <ShoppingCart className="h-6 w-6 mr-2" />
-                    ¡LO QUIERO! - $65.000
-                  </Button>
-
-                  <Button
-                    size="lg"
-                    onClick={openWhatsApp}
-                    variant="outline"
-                    className="w-full text-lg py-7 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-xl hover:scale-105 transition-transform"
-                  >
-                    <MessageCircle className="h-5 w-5 mr-2" />
-                    Preguntar por WhatsApp
-                  </Button>
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-black text-primary">∞</div>
+                  <div className="text-sm text-muted-foreground mt-1">Energía</div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Desktop */}
-          <div className="hidden md:grid md:grid-cols-5 md:gap-0">
-            <div className="relative col-span-2 aspect-[9/16]">
-              <Image
-                src="/images/creatina/landing 3.jpeg"
-                alt="Compra creatina para mujeres ahora"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="col-span-3 flex items-center justify-center bg-background p-12">
-              <div className="max-w-xl space-y-8 text-center">
-                <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600/80 rounded-full">
-                  <Zap className="h-5 w-5 text-white" />
-                  <span className="text-sm font-bold text-white">CREATINA PARA MUJERES</span>
+              {/* Benefits */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm max-w-2xl mx-auto">
+                <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
+                  <Truck className="h-4 w-4 text-primary" />
+                  <span>Envío Gratis</span>
                 </div>
-
-                <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
-                  Apoya tu <span className="text-primary">rutina de entrenamiento</span>
-                </h2>
-                <p className="text-xl text-muted-foreground">
-                  Monohidrato puro, sin aditivos. Resultados individuales pueden variar; siga la dosis recomendada.
-                </p>
-
-                <div className="flex justify-center gap-12 pt-4">
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-primary">100%</div>
-                    <div className="text-sm text-muted-foreground mt-1">Pura</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-primary">5g</div>
-                    <div className="text-sm text-muted-foreground mt-1">Dosis</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-primary">∞</div>
-                    <div className="text-sm text-muted-foreground mt-1">Energía</div>
-                  </div>
+                <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  <span>Pago Contra Entrega</span>
                 </div>
-
-                {/* Benefits */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-                  <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
-                    <Truck className="h-4 w-4 text-primary" />
-                    <span>Envío Gratis</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
-                    <ShieldCheck className="h-4 w-4 text-primary" />
-                    <span>Pago Contra Entrega</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
-                    <Award className="h-4 w-4 text-primary" />
-                    <span>30 días garantía</span>
-                  </div>
+                <div className="flex items-center gap-2 bg-muted/30 px-3 py-2 rounded-lg">
+                  <Award className="h-4 w-4 text-primary" />
+                  <span>30 días garantía</span>
                 </div>
-
-                {/* CTA Buttons */}
-                <div className="space-y-3">
-                  <Button
-                    size="lg"
-                    onClick={buyNow}
-                    className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
-                  >
-                    <ShoppingCart className="h-6 w-6 mr-2" />
-                    ¡LO QUIERO! - $65.000
-                  </Button>
-
-                  <Button
-                    size="lg"
-                    onClick={openWhatsApp}
-                    variant="outline"
-                    className="w-full text-lg py-7 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-xl hover:scale-105 transition-transform"
-                  >
-                    <MessageCircle className="h-5 w-5 mr-2" />
-                    Preguntar por WhatsApp
-                  </Button>
-                </div>
-
-                <p className="text-center text-xs text-muted-foreground">
-                  💪 Energía para mujeres activas
-                </p>
               </div>
+
+              {/* CTA Buttons */}
+              <div className="space-y-3 max-w-lg mx-auto">
+                <Button
+                  size="lg"
+                  onClick={buyNow}
+                  className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
+                >
+                  <ShoppingCart className="h-6 w-6 mr-2" />
+                  ¡LO QUIERO! - $80.000
+                </Button>
+
+                <Button
+                  size="lg"
+                  onClick={openWhatsApp}
+                  variant="outline"
+                  className="w-full text-lg py-7 font-bold border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full shadow-xl hover:scale-105 transition-transform"
+                >
+                  <MessageCircle className="h-5 w-5 mr-2" />
+                  Preguntar por WhatsApp
+                </Button>
+              </div>
+
+              <p className="text-center text-xs text-muted-foreground">
+                💪 Energía para mujeres activas
+              </p>
             </div>
           </div>
         </section>
@@ -459,8 +384,6 @@ export default function CreatinaLanding() {
           </div>
         </section>
 
-        {/* Social proof removed — only show verified reviews via product pages or structured data */}
-
         {/* FLOATING CTA (Mobile) */}
         <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-background via-background to-transparent md:hidden">
           <div className="flex gap-2">
@@ -469,7 +392,7 @@ export default function CreatinaLanding() {
               onClick={buyNow}
               className="flex-1 text-base py-5 font-bold bg-primary text-primary-foreground rounded-full shadow-xl"
             >
-              💪 $65.000
+              💪 $80.000
             </Button>
             <Button
               size="lg"
