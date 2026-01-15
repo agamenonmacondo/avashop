@@ -34,14 +34,12 @@ import {
   ChevronDown,
   ChevronRight,
   X,
-  ZoomIn,
   Maximize2
 } from 'lucide-react';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
 import { createClient } from '@supabase/supabase-js';
 
-// Crear cliente de Supabase con validación
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -53,11 +51,9 @@ const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
-// Lista de correos autorizados
 const AUTHORIZED_ADMIN_EMAILS = [
   'agamenonmacondo@gmail.com',
   'elkinleon87@gmail.com',
-  
 ];
 
 function isAuthorizedAdmin(email: string | null | undefined): boolean {
@@ -100,7 +96,6 @@ interface GroupedProducts {
   };
 }
 
-// Función para calcular utilidad de un producto
 function calculateProfit(price: number, cost?: number): { absolute: number; relative: number } {
   if (!cost || cost === 0) {
     return { absolute: 0, relative: 0 };
@@ -110,29 +105,7 @@ function calculateProfit(price: number, cost?: number): { absolute: number; rela
   return { absolute, relative };
 }
 
-// Componente para mostrar la utilidad con colores
-function ProfitBadge({ price, cost }: { price: number; cost?: number }) {
-  const { absolute, relative } = calculateProfit(price, cost);
-  
-  if (!cost || cost === 0) {
-    return <span className="text-muted-foreground text-xs">N/A</span>;
-  }
-
-  const isPositive = absolute > 0;
-
-  return (
-    <div className="flex flex-col items-start">
-      <span className={`font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-        ${absolute.toLocaleString('es-CO')}
-      </span>
-      <span className={`text-xs ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-        {isPositive ? '+' : ''}{relative.toFixed(1)}%
-      </span>
-    </div>
-  );
-}
-
-// Modal de zoom para imagen
+// Modal de zoom
 function ImageZoomModal({ 
   isOpen, 
   onClose, 
@@ -146,9 +119,9 @@ function ImageZoomModal({
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl w-full p-0">
-        <DialogHeader className="p-4 pb-2">
-          <DialogTitle className="text-lg">{productName}</DialogTitle>
+      <DialogContent className="max-w-[95vw] w-full p-2 sm:max-w-3xl sm:p-6">
+        <DialogHeader className="p-2 pb-1 sm:p-4 sm:pb-2">
+          <DialogTitle className="text-sm sm:text-lg">{productName}</DialogTitle>
         </DialogHeader>
         <div className="relative w-full aspect-square bg-muted/30 rounded-lg overflow-hidden">
           <img
@@ -166,7 +139,7 @@ function ImageZoomModal({
   );
 }
 
-// Componente de tarjeta de producto para móvil
+// Tarjeta de producto optimizada para móvil
 function ProductCard({ 
   product, 
   isEditing, 
@@ -196,139 +169,157 @@ function ProductCard({
 
   return (
     <>
-      <div className="border rounded-lg p-4 bg-card">
-        <div className="flex gap-4">
-          {/* Imagen con botón de zoom */}
+      <div className="border rounded-md p-2 bg-card">
+        {/* Sección superior: Imagen + Info básica */}
+        <div className="flex gap-2">
+          {/* Imagen compacta */}
           <div className="flex-shrink-0 relative group">
             {product.image ? (
               <>
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-xl shadow-md cursor-pointer transition-transform hover:scale-105"
+                  className="w-16 h-16 object-cover rounded-md shadow-sm cursor-pointer transition-transform active:scale-95"
                   onClick={() => setShowImageZoom(true)}
                   onError={(e) => {
                     e.currentTarget.src = '/placeholder.png';
                     e.currentTarget.onerror = null;
                   }}
                 />
-                {/* Botón de zoom superpuesto */}
                 <button
                   onClick={() => setShowImageZoom(true)}
-                  className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  aria-label="Ver imagen ampliada"
+                  className="absolute top-0.5 right-0.5 bg-black/60 hover:bg-black/80 text-white rounded-full p-0.5 transition-opacity"
+                  aria-label="Ampliar imagen"
                 >
-                  <Maximize2 className="h-4 w-4" />
+                  <Maximize2 className="h-2.5 w-2.5" />
                 </button>
               </>
             ) : (
-              <div className="w-28 h-28 sm:w-36 sm:h-36 bg-muted rounded-xl flex items-center justify-center shadow-md">
-                <Package className="h-12 w-12 text-muted-foreground" />
+              <div className="w-16 h-16 bg-muted rounded-md flex items-center justify-center">
+                <Package className="h-6 w-6 text-muted-foreground" />
               </div>
             )}
           </div>
 
-          {/* Info del producto */}
+          {/* Info principal */}
           <div className="flex-1 min-w-0">
-            <h4 className="font-semibold text-base leading-tight line-clamp-2">{product.name}</h4>
-            <p className="text-xs text-muted-foreground mt-1 truncate">{product.id}</p>
+            <h4 className="font-semibold text-[11px] leading-tight line-clamp-2 mb-0.5">{product.name}</h4>
+            <p className="text-[9px] text-muted-foreground truncate">{product.id}</p>
             
-            {isEditing ? (
-              <div className="mt-3 space-y-3">
-                <div className="flex items-center gap-2">
-                  <label className="text-sm text-muted-foreground w-14">Costo:</label>
-                  <Input
-                    type="number"
-                    value={product.newCost ?? product.cost ?? ''}
-                    onChange={(e) => onCostChange(e.target.value)}
-                    className="h-10 text-base font-medium"
-                    min="0"
-                    step="100"
-                    placeholder="Costo"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <label className="text-sm text-muted-foreground w-14">Precio:</label>
-                  <Input
-                    type="number"
-                    value={product.newPrice ?? product.price}
-                    onChange={(e) => onPriceChange(e.target.value)}
-                    className="h-10 text-base font-medium"
-                    min="0"
-                    step="100"
-                    placeholder="Precio"
-                    autoFocus
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-muted-foreground w-14">Utilidad:</span>
-                  <span className={`font-bold text-base ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                    ${absolute.toLocaleString('es-CO')} ({relative.toFixed(1)}%)
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
+            {/* Grid de precios cuando NO está editando */}
+            {!isEditing && (
+              <div className="mt-1 grid grid-cols-3 gap-1 text-[9px]">
                 <div>
-                  <span className="text-muted-foreground text-xs">Costo</span>
-                  <p className="font-semibold">${product.cost?.toLocaleString('es-CO') ?? 'N/A'}</p>
+                  <span className="text-muted-foreground block">Costo</span>
+                  <p className="font-semibold text-[10px]">
+                    ${product.cost?.toLocaleString('es-CO', { maximumFractionDigits: 0 }) ?? 'N/A'}
+                  </p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground text-xs">Precio</span>
-                  <p className="font-bold text-primary text-lg">${product.price.toLocaleString('es-CO')}</p>
+                  <span className="text-muted-foreground block">Precio</span>
+                  <p className="font-bold text-primary text-[11px]">
+                    ${product.price.toLocaleString('es-CO', { maximumFractionDigits: 0 })}
+                  </p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground text-xs">Utilidad</span>
-                  <ProfitBadge price={product.price} cost={product.cost} />
+                  <span className="text-muted-foreground block">Utilidad</span>
+                  {product.cost && product.cost > 0 ? (
+                    <div className="flex flex-col items-start">
+                      <span className={`font-bold text-[10px] ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                        ${absolute.toLocaleString('es-CO', { maximumFractionDigits: 0 })}
+                      </span>
+                      <span className={`text-[8px] ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                        {isPositive ? '+' : ''}{relative.toFixed(0)}%
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-muted-foreground text-[9px]">N/A</span>
+                  )}
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* Botones de acción */}
-        <div className="mt-4 flex gap-3">
+        {/* Sección de edición */}
+        {isEditing && (
+          <div className="mt-2 space-y-1.5">
+            <div className="flex items-center gap-1.5">
+              <label className="text-[9px] text-muted-foreground w-10 flex-shrink-0">Costo:</label>
+              <Input
+                type="number"
+                value={product.newCost ?? product.cost ?? ''}
+                onChange={(e) => onCostChange(e.target.value)}
+                className="h-7 text-[11px] font-medium px-2"
+                min="0"
+                step="100"
+                placeholder="0"
+              />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <label className="text-[9px] text-muted-foreground w-10 flex-shrink-0">Precio:</label>
+              <Input
+                type="number"
+                value={product.newPrice ?? product.price}
+                onChange={(e) => onPriceChange(e.target.value)}
+                className="h-7 text-[11px] font-medium px-2"
+                min="0"
+                step="100"
+                placeholder="0"
+                autoFocus
+              />
+            </div>
+            <div className="flex items-center gap-1.5 text-[9px]">
+              <span className="text-muted-foreground w-10 flex-shrink-0">Utilidad:</span>
+              <span className={`font-bold text-[10px] ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                ${absolute.toLocaleString('es-CO', { maximumFractionDigits: 0 })} ({relative.toFixed(0)}%)
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Botones */}
+        <div className="mt-2 flex gap-1.5">
           {isEditing ? (
             <>
               <Button
-                size="lg"
+                size="sm"
                 onClick={onSave}
                 disabled={savingId === product.id}
-                className="flex-1 h-12 text-base font-semibold bg-green-600 hover:bg-green-700"
+                className="flex-1 h-8 text-[10px] font-semibold bg-green-600 hover:bg-green-700 px-2"
               >
                 {savingId === product.id ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <Loader2 className="h-3 w-3 animate-spin" />
                 ) : (
                   <>
-                    <Save className="h-5 w-5 mr-2" />
-                    Guardar Cambios
+                    <Save className="h-3 w-3 mr-1" />
+                    Guardar
                   </>
                 )}
               </Button>
               <Button
-                size="lg"
+                size="sm"
                 variant="outline"
                 onClick={onCancel}
                 disabled={savingId === product.id}
-                className="h-12 px-4"
+                className="h-8 px-2"
               >
-                <X className="h-5 w-5" />
+                <X className="h-3 w-3" />
               </Button>
             </>
           ) : (
             <Button
-              size="lg"
+              size="sm"
               variant="default"
               onClick={onEdit}
-              className="w-full h-12 text-base font-semibold"
+              className="w-full h-8 text-[10px] font-semibold"
             >
-              ✏️ Editar Precio / Costo
+              ✏️ Editar
             </Button>
           )}
         </div>
       </div>
 
-      {/* Modal de zoom */}
       <ImageZoomModal
         isOpen={showImageZoom}
         onClose={() => setShowImageZoom(false)}
@@ -353,7 +344,6 @@ export default function AdminProductosPage() {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
 
-  // Escuchar estado de autenticación de Firebase
   useEffect(() => {
     const auth = getFirebaseAuth();
     if (!auth) {
@@ -369,7 +359,6 @@ export default function AdminProductosPage() {
     return () => unsubscribe();
   }, []);
 
-  // Verificar autorización
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/login?redirect=/admin/productos');
@@ -382,7 +371,6 @@ export default function AdminProductosPage() {
     }
   }, [user, authLoading, router]);
 
-  // Cargar datos
   useEffect(() => {
     if (user && isAuthorizedAdmin(user.email)) {
       fetchAllData();
@@ -425,7 +413,6 @@ export default function AdminProductosPage() {
     }
   }
 
-  // Filtrar y agrupar productos
   const groupedProducts = useMemo(() => {
     const filtered = products.filter(p =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -552,8 +539,6 @@ export default function AdminProductosPage() {
         return;
       }
 
-      console.log('Actualizando producto:', productId, updateData);
-
       const { error } = await supabase
         .from('products')
         .update(updateData)
@@ -615,7 +600,6 @@ export default function AdminProductosPage() {
     }));
   }
 
-  // Loading state
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -624,7 +608,6 @@ export default function AdminProductosPage() {
     );
   }
 
-  // No autorizado
   if (!user || !isAuthorizedAdmin(user.email)) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
@@ -644,68 +627,63 @@ export default function AdminProductosPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header compacto */}
-      <header className="border-b bg-card sticky top-0 z-10">
-        <div className="px-3 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Package className="h-5 w-5 text-primary" />
+      {/* Header ultra compacto */}
+      <header className="border-b bg-card sticky top-0 z-10 shadow-sm">
+        <div className="px-2 py-1.5 flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <Package className="h-4 w-4 text-primary" />
             <div>
-              <h1 className="text-base font-bold">Admin Productos</h1>
-              <p className="text-xs text-muted-foreground">{totalProducts} productos</p>
+              <h1 className="text-[11px] font-bold">Admin Productos</h1>
+              <p className="text-[9px] text-muted-foreground">{totalProducts} items</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
-            <LogOut className="h-4 w-4" />
+          <Button variant="ghost" size="sm" onClick={handleSignOut} className="h-7 w-7 p-0">
+            <LogOut className="h-3.5 w-3.5" />
           </Button>
         </div>
       </header>
 
       {/* Content */}
-      <main className="p-3 pb-20">
+      <main className="p-2 pb-16">
         {/* Message */}
         {message && (
-          <div className={`mb-3 p-3 rounded-lg flex items-center gap-2 text-sm ${
+          <div className={`mb-2 p-2 rounded-md flex items-center gap-1.5 text-[10px] ${
             message.type === 'success' 
               ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
               : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
           }`}>
-            {message.type === 'success' ? <CheckCircle className="h-4 w-4 flex-shrink-0" /> : <AlertCircle className="h-4 w-4 flex-shrink-0" />}
-            <span className="flex-1">{message.text}</span>
-            {message.type === 'error' && (
-              <Button size="sm" variant="ghost" onClick={fetchAllData} className="h-6 px-2">
-                <RefreshCw className="h-3 w-3" />
-              </Button>
-            )}
+            {message.type === 'success' ? <CheckCircle className="h-3 w-3 flex-shrink-0" /> : <AlertCircle className="h-3 w-3 flex-shrink-0" />}
+            <span className="flex-1 leading-tight">{message.text}</span>
           </div>
         )}
 
         {/* Búsqueda */}
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-1.5 mb-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
             <Input
-              placeholder="Buscar producto..."
+              placeholder="Buscar..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 h-10"
+              className="pl-7 h-8 text-[11px]"
             />
           </div>
-          <Button variant="outline" size="icon" onClick={fetchAllData} className="h-10 w-10">
-            <RefreshCw className="h-4 w-4" />
+          <Button variant="outline" size="icon" onClick={fetchAllData} className="h-8 w-8">
+            <RefreshCw className="h-3 w-3" />
           </Button>
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center min-h-[300px] gap-3">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">Cargando...</p>
+          <div className="flex flex-col items-center justify-center min-h-[200px] gap-2">
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+            <p className="text-[10px] text-muted-foreground">Cargando...</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-1.5">
             {Object.entries(groupedProducts).length === 0 ? (
               <Card>
-                <CardContent className="py-8 text-center">
-                  <p className="text-muted-foreground">No se encontraron productos</p>
+                <CardContent className="py-6 text-center">
+                  <p className="text-[10px] text-muted-foreground">No se encontraron productos</p>
                 </CardContent>
               </Card>
             ) : (
@@ -716,15 +694,15 @@ export default function AdminProductosPage() {
                     onOpenChange={() => toggleCategory(categoryId)}
                   >
                     <CollapsibleTrigger asChild>
-                      <CardHeader className="cursor-pointer py-3 px-3 hover:bg-muted/50">
-                        <div className="flex items-center gap-2">
+                      <CardHeader className="cursor-pointer py-1.5 px-2 hover:bg-muted/50">
+                        <div className="flex items-center gap-1.5">
                           {expandedCategories.has(categoryId) ? (
-                            <ChevronDown className="h-4 w-4 flex-shrink-0" />
+                            <ChevronDown className="h-3 w-3 flex-shrink-0" />
                           ) : (
-                            <ChevronRight className="h-4 w-4 flex-shrink-0" />
+                            <ChevronRight className="h-3 w-3 flex-shrink-0" />
                           )}
-                          <CardTitle className="text-base flex-1">{categoryData.category.name}</CardTitle>
-                          <Badge variant="secondary" className="text-xs">
+                          <CardTitle className="text-[11px] flex-1 leading-tight">{categoryData.category.name}</CardTitle>
+                          <Badge variant="secondary" className="text-[9px] h-4 px-1.5">
                             {Object.values(categoryData.subcategories).reduce((sum, s) => sum + s.products.length, 0)}
                           </Badge>
                         </div>
@@ -732,31 +710,31 @@ export default function AdminProductosPage() {
                     </CollapsibleTrigger>
                     
                     <CollapsibleContent>
-                      <CardContent className="pt-0 px-2 pb-2">
-                        <div className="space-y-2">
+                      <CardContent className="pt-0 px-1.5 pb-1.5">
+                        <div className="space-y-1">
                           {Object.entries(categoryData.subcategories).map(([subcategoryId, subcategoryData]) => (
                             <Collapsible 
                               key={subcategoryId}
                               open={expandedSubcategories.has(subcategoryId)}
                               onOpenChange={() => toggleSubcategory(subcategoryId)}
                             >
-                              <div className="border rounded-lg overflow-hidden">
+                              <div className="border rounded-md overflow-hidden">
                                 <CollapsibleTrigger asChild>
-                                  <div className="p-2 cursor-pointer hover:bg-muted/30 flex items-center gap-2">
+                                  <div className="p-1.5 cursor-pointer hover:bg-muted/30 flex items-center gap-1.5">
                                     {expandedSubcategories.has(subcategoryId) ? (
-                                      <ChevronDown className="h-3 w-3 flex-shrink-0" />
+                                      <ChevronDown className="h-2.5 w-2.5 flex-shrink-0" />
                                     ) : (
-                                      <ChevronRight className="h-3 w-3 flex-shrink-0" />
+                                      <ChevronRight className="h-2.5 w-2.5 flex-shrink-0" />
                                     )}
-                                    <span className="text-sm font-medium flex-1">{subcategoryData.subcategory.name}</span>
-                                    <Badge variant="outline" className="text-xs">
+                                    <span className="text-[10px] font-medium flex-1 leading-tight">{subcategoryData.subcategory.name}</span>
+                                    <Badge variant="outline" className="text-[8px] h-3.5 px-1">
                                       {subcategoryData.products.length}
                                     </Badge>
                                   </div>
                                 </CollapsibleTrigger>
                                 
                                 <CollapsibleContent>
-                                  <div className="border-t p-2 space-y-2 bg-muted/20">
+                                  <div className="border-t p-1 space-y-1 bg-muted/20">
                                     {subcategoryData.products.map((product) => (
                                       <ProductCard
                                         key={product.id}
