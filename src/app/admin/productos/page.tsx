@@ -82,6 +82,7 @@ interface Product {
   isEditing?: boolean;
   newPrice?: number;
   newCost?: number;
+  newName?: string;
 }
 
 interface GroupedProducts {
@@ -148,7 +149,8 @@ function ProductCard({
   onCancel, 
   onSave, 
   onPriceChange,
-  onCostChange 
+  onCostChange,
+  onNameChange 
 }: {
   product: Product;
   isEditing: boolean;
@@ -158,6 +160,7 @@ function ProductCard({
   onSave: () => void;
   onPriceChange: (value: string) => void;
   onCostChange: (value: string) => void;
+  onNameChange: (value: string) => void;
 }) {
   const [showImageZoom, setShowImageZoom] = useState(false);
   
@@ -203,7 +206,17 @@ function ProductCard({
 
           {/* Info principal */}
           <div className="flex-1 min-w-0">
-            <h4 className="font-semibold text-[11px] leading-tight line-clamp-2 mb-0.5">{product.name}</h4>
+            {isEditing ? (
+              <Input
+                type="text"
+                value={product.newName ?? product.name}
+                onChange={(e) => onNameChange(e.target.value)}
+                className="h-7 text-[11px] font-semibold px-2 mb-1"
+                placeholder="Nombre del producto"
+              />
+            ) : (
+              <h4 className="font-semibold text-[11px] leading-tight line-clamp-2 mb-0.5">{product.name}</h4>
+            )}
             <p className="text-[9px] text-muted-foreground truncate">{product.id}</p>
             
             {/* Grid de precios cuando NO está editando */}
@@ -266,7 +279,6 @@ function ProductCard({
                 min="0"
                 step="100"
                 placeholder="0"
-                autoFocus
               />
             </div>
             <div className="flex items-center gap-1.5 text-[9px]">
@@ -324,7 +336,7 @@ function ProductCard({
         isOpen={showImageZoom}
         onClose={() => setShowImageZoom(false)}
         imageUrl={product.image}
-        productName={product.name}
+        productName={product.newName ?? product.name}
       />
     </>
   );
@@ -487,7 +499,8 @@ export default function AdminProductosPage() {
           ...p, 
           isEditing: true, 
           newPrice: p.price,
-          newCost: p.cost 
+          newCost: p.cost,
+          newName: p.name 
         };
       }
       return p;
@@ -501,7 +514,8 @@ export default function AdminProductosPage() {
           ...p, 
           isEditing: false, 
           newPrice: undefined,
-          newCost: undefined 
+          newCost: undefined,
+          newName: undefined 
         };
       }
       return p;
@@ -523,7 +537,7 @@ export default function AdminProductosPage() {
     try {
       setSavingId(productId);
       
-      const updateData: { price?: number; cost?: number } = {};
+      const updateData: { price?: number; cost?: number; name?: string } = {};
       
       if (product.newPrice !== undefined) {
         updateData.price = product.newPrice;
@@ -531,6 +545,10 @@ export default function AdminProductosPage() {
       
       if (product.newCost !== undefined) {
         updateData.cost = product.newCost;
+      }
+
+      if (product.newName !== undefined && product.newName.trim() !== '') {
+        updateData.name = product.newName.trim();
       }
 
       if (Object.keys(updateData).length === 0) {
@@ -553,11 +571,13 @@ export default function AdminProductosPage() {
         if (p.id === productId) {
           return { 
             ...p, 
+            name: product.newName?.trim() ?? p.name,
             price: product.newPrice ?? p.price,
             cost: product.newCost ?? p.cost,
             isEditing: false, 
             newPrice: undefined,
-            newCost: undefined
+            newCost: undefined,
+            newName: undefined
           };
         }
         return p;
@@ -565,7 +585,7 @@ export default function AdminProductosPage() {
 
       setMessage({ 
         type: 'success', 
-        text: `✅ "${product.name}" actualizado` 
+        text: `✅ "${product.newName ?? product.name}" actualizado` 
       });
       setTimeout(() => setMessage(null), 3000);
       
@@ -595,6 +615,15 @@ export default function AdminProductosPage() {
     setProducts(prev => prev.map(p => {
       if (p.id === productId) {
         return { ...p, newCost: numValue };
+      }
+      return p;
+    }));
+  }
+
+  function handleNameChange(productId: string, value: string) {
+    setProducts(prev => prev.map(p => {
+      if (p.id === productId) {
+        return { ...p, newName: value };
       }
       return p;
     }));
@@ -746,6 +775,7 @@ export default function AdminProductosPage() {
                                         onSave={() => handleSave(product.id)}
                                         onPriceChange={(value) => handlePriceChange(product.id, value)}
                                         onCostChange={(value) => handleCostChange(product.id, value)}
+                                        onNameChange={(value) => handleNameChange(product.id, value)}
                                       />
                                     ))}
                                   </div>
