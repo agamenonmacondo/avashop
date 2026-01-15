@@ -16,6 +16,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { 
   Search, 
   Save, 
@@ -27,7 +33,9 @@ import {
   RefreshCw,
   ChevronDown,
   ChevronRight,
-  X
+  X,
+  ZoomIn,
+  Maximize2
 } from 'lucide-react';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
@@ -48,6 +56,8 @@ const supabase = supabaseUrl && supabaseAnonKey
 // Lista de correos autorizados
 const AUTHORIZED_ADMIN_EMAILS = [
   'agamenonmacondo@gmail.com',
+  'elkinleon87@gmail.com',
+  
 ];
 
 function isAuthorizedAdmin(email: string | null | undefined): boolean {
@@ -122,6 +132,40 @@ function ProfitBadge({ price, cost }: { price: number; cost?: number }) {
   );
 }
 
+// Modal de zoom para imagen
+function ImageZoomModal({ 
+  isOpen, 
+  onClose, 
+  imageUrl, 
+  productName 
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  imageUrl: string; 
+  productName: string;
+}) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-3xl w-full p-0">
+        <DialogHeader className="p-4 pb-2">
+          <DialogTitle className="text-lg">{productName}</DialogTitle>
+        </DialogHeader>
+        <div className="relative w-full aspect-square bg-muted/30 rounded-lg overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={productName}
+            className="w-full h-full object-contain"
+            onError={(e) => {
+              e.currentTarget.src = '/placeholder.png';
+              e.currentTarget.onerror = null;
+            }}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // Componente de tarjeta de producto para móvil
 function ProductCard({ 
   product, 
@@ -142,6 +186,8 @@ function ProductCard({
   onPriceChange: (value: string) => void;
   onCostChange: (value: string) => void;
 }) {
+  const [showImageZoom, setShowImageZoom] = useState(false);
+  
   const { absolute, relative } = calculateProfit(
     isEditing ? (product.newPrice ?? product.price) : product.price,
     isEditing ? (product.newCost ?? product.cost) : product.cost
@@ -149,126 +195,147 @@ function ProductCard({
   const isPositive = absolute > 0;
 
   return (
-    <div className="border rounded-lg p-4 bg-card">
-      <div className="flex gap-4">
-        {/* Imagen MUCHO más grande */}
-        <div className="flex-shrink-0">
-          {product.image ? (
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-xl shadow-md"
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder.png';
-                e.currentTarget.onerror = null;
-              }}
-            />
-          ) : (
-            <div className="w-28 h-28 sm:w-36 sm:h-36 bg-muted rounded-xl flex items-center justify-center shadow-md">
-              <Package className="h-12 w-12 text-muted-foreground" />
-            </div>
-          )}
+    <>
+      <div className="border rounded-lg p-4 bg-card">
+        <div className="flex gap-4">
+          {/* Imagen con botón de zoom */}
+          <div className="flex-shrink-0 relative group">
+            {product.image ? (
+              <>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-xl shadow-md cursor-pointer transition-transform hover:scale-105"
+                  onClick={() => setShowImageZoom(true)}
+                  onError={(e) => {
+                    e.currentTarget.src = '/placeholder.png';
+                    e.currentTarget.onerror = null;
+                  }}
+                />
+                {/* Botón de zoom superpuesto */}
+                <button
+                  onClick={() => setShowImageZoom(true)}
+                  className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Ver imagen ampliada"
+                >
+                  <Maximize2 className="h-4 w-4" />
+                </button>
+              </>
+            ) : (
+              <div className="w-28 h-28 sm:w-36 sm:h-36 bg-muted rounded-xl flex items-center justify-center shadow-md">
+                <Package className="h-12 w-12 text-muted-foreground" />
+              </div>
+            )}
+          </div>
+
+          {/* Info del producto */}
+          <div className="flex-1 min-w-0">
+            <h4 className="font-semibold text-base leading-tight line-clamp-2">{product.name}</h4>
+            <p className="text-xs text-muted-foreground mt-1 truncate">{product.id}</p>
+            
+            {isEditing ? (
+              <div className="mt-3 space-y-3">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-muted-foreground w-14">Costo:</label>
+                  <Input
+                    type="number"
+                    value={product.newCost ?? product.cost ?? ''}
+                    onChange={(e) => onCostChange(e.target.value)}
+                    className="h-10 text-base font-medium"
+                    min="0"
+                    step="100"
+                    placeholder="Costo"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-muted-foreground w-14">Precio:</label>
+                  <Input
+                    type="number"
+                    value={product.newPrice ?? product.price}
+                    onChange={(e) => onPriceChange(e.target.value)}
+                    className="h-10 text-base font-medium"
+                    min="0"
+                    step="100"
+                    placeholder="Precio"
+                    autoFocus
+                  />
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground w-14">Utilidad:</span>
+                  <span className={`font-bold text-base ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                    ${absolute.toLocaleString('es-CO')} ({relative.toFixed(1)}%)
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
+                <div>
+                  <span className="text-muted-foreground text-xs">Costo</span>
+                  <p className="font-semibold">${product.cost?.toLocaleString('es-CO') ?? 'N/A'}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground text-xs">Precio</span>
+                  <p className="font-bold text-primary text-lg">${product.price.toLocaleString('es-CO')}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground text-xs">Utilidad</span>
+                  <ProfitBadge price={product.price} cost={product.cost} />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Info del producto */}
-        <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-base leading-tight line-clamp-2">{product.name}</h4>
-          <p className="text-xs text-muted-foreground mt-1 truncate">{product.id}</p>
-          
+        {/* Botones de acción */}
+        <div className="mt-4 flex gap-3">
           {isEditing ? (
-            <div className="mt-3 space-y-3">
-              <div className="flex items-center gap-2">
-                <label className="text-sm text-muted-foreground w-14">Costo:</label>
-                <Input
-                  type="number"
-                  value={product.newCost ?? product.cost ?? ''}
-                  onChange={(e) => onCostChange(e.target.value)}
-                  className="h-10 text-base font-medium"
-                  min="0"
-                  step="100"
-                  placeholder="Costo"
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <label className="text-sm text-muted-foreground w-14">Precio:</label>
-                <Input
-                  type="number"
-                  value={product.newPrice ?? product.price}
-                  onChange={(e) => onPriceChange(e.target.value)}
-                  className="h-10 text-base font-medium"
-                  min="0"
-                  step="100"
-                  placeholder="Precio"
-                  autoFocus
-                />
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-muted-foreground w-14">Utilidad:</span>
-                <span className={`font-bold text-base ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                  ${absolute.toLocaleString('es-CO')} ({relative.toFixed(1)}%)
-                </span>
-              </div>
-            </div>
+            <>
+              <Button
+                size="lg"
+                onClick={onSave}
+                disabled={savingId === product.id}
+                className="flex-1 h-12 text-base font-semibold bg-green-600 hover:bg-green-700"
+              >
+                {savingId === product.id ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <>
+                    <Save className="h-5 w-5 mr-2" />
+                    Guardar Cambios
+                  </>
+                )}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={onCancel}
+                disabled={savingId === product.id}
+                className="h-12 px-4"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </>
           ) : (
-            <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
-              <div>
-                <span className="text-muted-foreground text-xs">Costo</span>
-                <p className="font-semibold">${product.cost?.toLocaleString('es-CO') ?? 'N/A'}</p>
-              </div>
-              <div>
-                <span className="text-muted-foreground text-xs">Precio</span>
-                <p className="font-bold text-primary text-lg">${product.price.toLocaleString('es-CO')}</p>
-              </div>
-              <div>
-                <span className="text-muted-foreground text-xs">Utilidad</span>
-                <ProfitBadge price={product.price} cost={product.cost} />
-              </div>
-            </div>
+            <Button
+              size="lg"
+              variant="default"
+              onClick={onEdit}
+              className="w-full h-12 text-base font-semibold"
+            >
+              ✏️ Editar Precio / Costo
+            </Button>
           )}
         </div>
       </div>
 
-      {/* Botones de acción - MÁS GRANDES */}
-      <div className="mt-4 flex gap-3">
-        {isEditing ? (
-          <>
-            <Button
-              size="lg"
-              onClick={onSave}
-              disabled={savingId === product.id}
-              className="flex-1 h-12 text-base font-semibold bg-green-600 hover:bg-green-700"
-            >
-              {savingId === product.id ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <>
-                  <Save className="h-5 w-5 mr-2" />
-                  Guardar Cambios
-                </>
-              )}
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={onCancel}
-              disabled={savingId === product.id}
-              className="h-12 px-4"
-            >
-              <X className="h-5 w-5" />
-            </Button>
-          </>
-        ) : (
-          <Button
-            size="lg"
-            variant="default"
-            onClick={onEdit}
-            className="w-full h-12 text-base font-semibold"
-          >
-            ✏️ Editar Precio / Costo
-          </Button>
-        )}
-      </div>
-    </div>
+      {/* Modal de zoom */}
+      <ImageZoomModal
+        isOpen={showImageZoom}
+        onClose={() => setShowImageZoom(false)}
+        imageUrl={product.image}
+        productName={product.name}
+      />
+    </>
   );
 }
 
@@ -469,7 +536,6 @@ export default function AdminProductosPage() {
     try {
       setSavingId(productId);
       
-      // Preparar datos para actualizar
       const updateData: { price?: number; cost?: number } = {};
       
       if (product.newPrice !== undefined) {
@@ -498,7 +564,6 @@ export default function AdminProductosPage() {
         throw new Error(error.message || 'Error al actualizar');
       }
 
-      // Actualizar estado local
       setProducts(prev => prev.map(p => {
         if (p.id === productId) {
           return { 
