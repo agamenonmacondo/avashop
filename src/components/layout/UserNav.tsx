@@ -118,12 +118,17 @@ export default function UserNav() {
           </DropdownMenuItem>
           {/* Mostrar Admin solo si el email es el del administrador */}
           {isAdmin && (
-            <DropdownMenuItem asChild>
-              <Link href="/admin/dashboard">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Admin</span>
-              </Link>
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/productos">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Gestionar Precios</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </>
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
