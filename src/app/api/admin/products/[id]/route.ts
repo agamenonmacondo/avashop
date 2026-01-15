@@ -1,62 +1,99 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { isAuthorizedAdmin } from '@/lib/admin-config';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
-  const userEmail = request.headers.get('x-user-email');
-
-  if (!isAuthorizedAdmin(userEmail)) {
-    return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
-  }
-
   try {
-    const { price, stock } = await request.json();
-    const productId = params.id;
+    const { id } = await context.params;
+    const body = await request.json();
+    
+    const { price, cost } = body;
 
-    // Obtener precio anterior para auditoría
-    const { data: oldProduct } = await supabase
-      .from('products')
-      .select('price, stock, name')
-      .eq('id', productId)
-      .single();
+    if (price === undefined && cost === undefined) {
+      return NextResponse.json(
+        { error: 'Se requiere al menos price o cost' },
+        { status: 400 }
+      );
+    }
 
-    // Actualizar producto
+    const updateData: { price?: number; cost?: number } = {};
+    
+    if (price !== undefined) {
+      updateData.price = price;
+    }
+    
+    if (cost !== undefined) {
+      updateData.cost = cost;
+    }
+
     const { data, error } = await supabase
       .from('products')
-      .update({ 
-        price: price !== undefined ? price : oldProduct?.price,
-        stock: stock !== undefined ? stock : oldProduct?.stock,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', productId)
+      .update(updateData)
+      .eq('id', id)
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error de Supabase:', error);
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
+    }
 
-    // Registrar cambio en auditoría
-    await supabase.from('price_audit_log').insert({
-      product_id: productId,
-      product_name: oldProduct?.name,
-      old_price: oldProduct?.price,
-      new_price: price ?? oldProduct?.price,
-      old_stock: oldProduct?.stock,
-      new_stock: stock ?? oldProduct?.stock,
-      changed_by: userEmail,
-      changed_at: new Date().toISOString()
+    return NextResponse.json({ 
+      success: true, 
+      data,
+      message: 'Producto actualizado correctamente' 
     });
 
-    return NextResponse.json({ product: data });
-  } catch (error) {
-    console.error('Error updating product:', error);
-    return NextResponse.json({ error: 'Error al actualizar producto' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Error en PATCH:', error);
+    return NextResponse.json(
+      { error: error.message || 'Error interno del servidor' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(
+  request: NextRequest,
+  context: RouteContext
+) {
+  try {
+    const { id } = await context.params;
+
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data);
+
+  } catch (error: any) {
+    console.error('Error en GET:', error);
+    return NextResponse.json(
+      { error: error.message || 'Error interno del servidor' },
+      { status: 500 }
+    );
   }
 }
