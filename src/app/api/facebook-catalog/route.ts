@@ -1,120 +1,145 @@
+import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
-import { products } from '@/lib/placeholder-data';
 
-// Función para escapar caracteres especiales en XML (sin tocar URLs)
-function escapeXml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ccs724.com';
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase environment variables');
 }
 
-// sanitize XML by removing chars not allowed in XML 1.0, then escape
-function sanitizeForXml(input: string): string {
-  if (!input) return '';
-  // remove invalid XML 1.0 chars: allow #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
-  const filtered = Array.from(input).filter((ch) => {
-    const cp = ch.codePointAt(0) ?? 0;
-    return (
-      cp === 0x9 ||
-      cp === 0xA ||
-      cp === 0xD ||
-      (cp >= 0x20 && cp <= 0xD7FF) ||
-      (cp >= 0xE000 && cp <= 0xFFFD) ||
-      (cp >= 0x10000 && cp <= 0x10FFFF)
-    );
-  }).join('');
-  return filtered
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-// build absolute and encoded image URL
-function buildImageUrl(baseUrl: string, img: string): string {
-  if (!img) return '';
-  if (/^https?:\/\//i.test(img)) return img;
-  const prefix = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  const path = img.startsWith('/') ? img : `/${img}`;
-  const url = `${prefix}${encodeURI(path)}`;
-  // Escapar '&' para XML (URLs con query params)
-  return url.replace(/&/g, '&amp;');
-}
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const format = searchParams.get('format') || 'csv';
 
-export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://ccs724.com';
-  
-  console.log(`📦 Total de productos en placeholder-data: ${products.length}`);
-  
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-<channel>
-<title>Catálogo CCS724</title>
-<link>${baseUrl}</link>
-<description>Productos de tecnología CCS724</description>
-`;
+  try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select(`
+        *,
+        subcategories:subcategory_id (
+          *,
+          categories:category_id (*)
+        )
+      `)
+      .not('price', 'is', null);
 
-  let validProductCount = 0;
-  let skippedProducts = 0;
+    if (error) throw error;
 
-  products.forEach((product, index) => {
-    // Validar que el producto tenga los campos mínimos requeridos
-    if (!product.id || !product.name || !product.price) {
-      console.warn(`⚠️ Producto ${index} omitido: falta id, name o price`);
-      skippedProducts++;
-      return;
+    if (format === 'xml') {
+      return generateXMLFeed(products || []);
     }
 
-    // Escapar y sanitizar textos
-    const safeTitle = sanitizeForXml(product.name || '');
-    const safeDescription = sanitizeForXml(product.description || product.name || '');
+    // Default: CSV format (recomendado por Facebook)
+    return generateCSVFeed(products || []);
 
-    // Imagen absoluta segura
-    let imageUrl = '';
-    if (product.imageUrls && product.imageUrls.length > 0) {
-      imageUrl = buildImageUrl(baseUrl, product.imageUrls[0]);
-    } else {
-      console.warn(`⚠️ Producto ${product.id} no tiene imágenes`);
-      skippedProducts++;
-      return; // Omitir productos sin imágenes
-    }
+  } catch (error) {
+    console.error('Error generating Facebook catalog:', error);
+    return NextResponse.json({ error: 'Error generating catalog' }, { status: 500 });
+  }
+}
 
-    // URL producto segura (escapar '&' para XML)
-    const slugPart = encodeURIComponent(product.slug || product.id);
-    const productUrl = `${baseUrl.replace(/\/$/, '')}/products/${slugPart}`;
-    const safeProductUrl = productUrl.replace(/&/g, '&amp;');
+function generateCSVFeed(products: any[]) {
+  // Cabeceras requeridas por Facebook
+  const headers = [
+    'id',
+    'title',
+    'description',
+    'availability',
+    'condition',
+    'price',
+    'link',
+    'image_link',
+    'brand',
+    'google_product_category'
+  ].join(',');
 
-    xml += `
-<item>
-  <g:id>${sanitizeForXml(String(product.id))}</g:id>
-  <g:title>${safeTitle}</g:title>
-  <g:description>${safeDescription}</g:description>
-  <g:link>${safeProductUrl}</g:link>
-  <g:image_link>${imageUrl}</g:image_link>
-  <g:brand>CCS724</g:brand>
-  <g:condition>new</g:condition>
-  <g:availability>${(product.stock || 0) > 0 ? 'in stock' : 'out of stock'}</g:availability>
-  <g:price>${Number(product.price)} COP</g:price>
-</item>`;
+  const rows = products.map(product => {
+    const imageUrl = product.image?.startsWith('http') 
+      ? product.image 
+      : `${siteUrl}${product.image}`;
 
-    validProductCount++;
+    // Escapar comillas y comas en los valores
+    const escapeCsv = (value: string) => {
+      if (!value) return '';
+      const escaped = value.replace(/"/g, '""');
+      return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n')
+        ? `"${escaped}"`
+        : escaped;
+    };
+
+    return [
+      escapeCsv(product.id),
+      escapeCsv(product.name),
+      escapeCsv(product.name), // description
+      'in stock',
+      'new',
+      `${product.price} COP`,
+      `${siteUrl}/products/${product.id}`,
+      imageUrl,
+      'CCS724',
+      escapeCsv(product.subcategories?.categories?.name || 'Office Supplies')
+    ].join(',');
   });
 
-  xml += `
-</channel>
-</rss>`;
+  const csv = [headers, ...rows].join('\n');
 
-  console.log(`✅ Productos válidos incluidos en el feed: ${validProductCount}`);
-  console.log(`❌ Productos omitidos: ${skippedProducts}`);
+  return new NextResponse(csv, {
+    headers: {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': 'attachment; filename="facebook-catalog.csv"',
+    },
+  });
+}
+
+function generateXMLFeed(products: any[]) {
+  const items = products.map(product => {
+    const imageUrl = product.image?.startsWith('http') 
+      ? product.image 
+      : `${siteUrl}${product.image}`;
+
+    // Escapar caracteres especiales XML
+    const escapeXml = (value: string) => {
+      if (!value) return '';
+      return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+    };
+
+    return `
+    <item>
+      <g:id>${escapeXml(product.id)}</g:id>
+      <g:title><![CDATA[${product.name}]]></g:title>
+      <g:description><![CDATA[${product.name}]]></g:description>
+      <g:link>${siteUrl}/products/${product.id}</g:link>
+      <g:image_link>${imageUrl}</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:price>${product.price} COP</g:price>
+      <g:brand>CCS724</g:brand>
+      <g:condition>new</g:condition>
+      <g:google_product_category>${escapeXml(product.subcategories?.categories?.name || 'Office Supplies')}</g:google_product_category>
+    </item>`;
+  }).join('\n');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>CCS724 Catalog</title>
+    <link>${siteUrl}</link>
+    <description>Catálogo de productos CCS724</description>
+    ${items}
+  </channel>
+</rss>`;
 
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600', // Cache por 1 hora
     },
   });
 }
