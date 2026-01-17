@@ -19,7 +19,10 @@ import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
-const ADMIN_EMAIL = "agamenonmacondo@gmail.com";
+const AUTHORIZED_ADMIN_EMAILS = [
+  'agamenonmacondo@gmail.com',
+  'elkinleon87@gmail.com',
+];
 
 export default function UserNav() {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
@@ -73,7 +76,7 @@ export default function UserNav() {
 
   const displayName = firebaseUser.displayName || firebaseUser.email?.split('@')[0] || "Usuario";
   const fallbackName = displayName.substring(0, 2).toUpperCase();
-  const isAdmin = firebaseUser.email === ADMIN_EMAIL;
+  const isAdmin = firebaseUser.email && AUTHORIZED_ADMIN_EMAILS.includes(firebaseUser.email);
 
   return (
     <DropdownMenu>
