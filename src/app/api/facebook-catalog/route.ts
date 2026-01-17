@@ -14,27 +14,48 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const format = searchParams.get('format') || 'csv';
+  const categoryId = searchParams.get('category');
+  const subcategoryId = searchParams.get('subcategory');
 
   try {
-    const { data: products, error } = await supabase
+    let query = supabase
       .from('products')
       .select(`
         *,
         subcategories:subcategory_id (
-          *,
-          categories:category_id (*)
+          id,
+          name,
+          categories:category_id (
+            id,
+            name
+          )
         )
       `)
       .not('price', 'is', null);
 
-    if (error) throw error;
-
-    if (format === 'xml') {
-      return generateXMLFeed(products || []);
+    // Filtrar por subcategoría
+    if (subcategoryId) {
+      query = query.eq('subcategory_id', subcategoryId);
     }
 
-    // Default: CSV format (recomendado por Facebook)
-    return generateCSVFeed(products || []);
+    const { data: products, error } = await query;
+
+    if (error) throw error;
+
+    // Filtrar por categoría (después de obtener los datos)
+    let filteredProducts = products || [];
+    if (categoryId && !subcategoryId) {
+      filteredProducts = filteredProducts.filter(
+        p => p.subcategories?.categories?.id === categoryId
+      );
+    }
+
+    if (format === 'xml') {
+      return generateXMLFeed(filteredProducts);
+    }
+
+    // Default: CSV format
+    return generateCSVFeed(filteredProducts);
 
   } catch (error) {
     console.error('Error generating Facebook catalog:', error);
@@ -43,7 +64,7 @@ export async function GET(request: Request) {
 }
 
 function generateCSVFeed(products: any[]) {
-  // Cabeceras requeridas por Facebook
+  // Cabeceras con campos adicionales para categorización
   const headers = [
     'id',
     'title',
@@ -54,7 +75,10 @@ function generateCSVFeed(products: any[]) {
     'link',
     'image_link',
     'brand',
-    'google_product_category'
+    'google_product_category',
+    'product_type',
+    'custom_label_0',
+    'custom_label_1'
   ].join(',');
 
   const rows = products.map(product => {
@@ -62,7 +86,9 @@ function generateCSVFeed(products: any[]) {
       ? product.image 
       : `${siteUrl}${product.image}`;
 
-    // Escapar comillas y comas en los valores
+    const categoryName = product.subcategories?.categories?.name || 'General';
+    const subcategoryName = product.subcategories?.name || 'General';
+
     const escapeCsv = (value: string) => {
       if (!value) return '';
       const escaped = value.replace(/"/g, '""');
@@ -74,14 +100,17 @@ function generateCSVFeed(products: any[]) {
     return [
       escapeCsv(product.id),
       escapeCsv(product.name),
-      escapeCsv(product.name), // description
+      escapeCsv(product.name),
       'in stock',
       'new',
       `${product.price} COP`,
       `${siteUrl}/products/${product.id}`,
       imageUrl,
       'CCS724',
-      escapeCsv(product.subcategories?.categories?.name || 'Office Supplies')
+      escapeCsv(categoryName),
+      escapeCsv(`${categoryName} > ${subcategoryName}`), // product_type con jerarquía
+      escapeCsv(categoryName),      // custom_label_0 = categoría
+      escapeCsv(subcategoryName)    // custom_label_1 = subcategoría
     ].join(',');
   });
 
@@ -101,7 +130,9 @@ function generateXMLFeed(products: any[]) {
       ? product.image 
       : `${siteUrl}${product.image}`;
 
-    // Escapar caracteres especiales XML
+    const categoryName = product.subcategories?.categories?.name || 'General';
+    const subcategoryName = product.subcategories?.name || 'General';
+
     const escapeXml = (value: string) => {
       if (!value) return '';
       return value
@@ -123,7 +154,10 @@ function generateXMLFeed(products: any[]) {
       <g:price>${product.price} COP</g:price>
       <g:brand>CCS724</g:brand>
       <g:condition>new</g:condition>
-      <g:google_product_category>${escapeXml(product.subcategories?.categories?.name || 'Office Supplies')}</g:google_product_category>
+      <g:google_product_category>${escapeXml(categoryName)}</g:google_product_category>
+      <g:product_type>${escapeXml(categoryName)} &gt; ${escapeXml(subcategoryName)}</g:product_type>
+      <g:custom_label_0>${escapeXml(categoryName)}</g:custom_label_0>
+      <g:custom_label_1>${escapeXml(subcategoryName)}</g:custom_label_1>
     </item>`;
   }).join('\n');
 
