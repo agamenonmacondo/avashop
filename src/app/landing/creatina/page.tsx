@@ -15,10 +15,10 @@ export default function CreatinaLanding() {
   const phone = '573504017710';
 
   useEffect(() => {
-    gtagViewItem(65000, [{
+    gtagViewItem(79000, [{
       id: 'creatina-for-women',
       name: 'Creatina Monohidrato – For Women',
-      price: 65000,
+      price: 79000,
       quantity: 1,
     }]);
   }, []);
@@ -31,26 +31,26 @@ export default function CreatinaLanding() {
     description:
       'Creatina monohidrato para suplementación deportiva. Diseñada para complementar la dieta de personas físicamente activas que realizan entrenamientos de alta intensidad. Siga la dosis recomendada y consulte con un profesional de la salud en caso de dudas. No está destinada a diagnosticar, tratar o curar enfermedades. Los resultados pueden variar.',
     brand: { '@type': 'Brand', name: 'CCS724' },
-     offers: {
-       '@type': 'Offer',
-       url: 'https://www.ccs724.com/landing/creatina',
-       priceCurrency: 'COP',
-       price: '65000',
-       availability: 'https://schema.org/InStock',
-       priceValidUntil: '2025-12-31',
-     },
-   };
+    offers: {
+      '@type': 'Offer',
+      url: 'https://www.ccs724.com/landing/creatina',
+      priceCurrency: 'COP',
+      price: '79000',
+      availability: 'https://schema.org/InStock',
+      priceValidUntil: '2025-12-31',
+    },
+  };
 
   function buyNow() {
     const product = {
       id: 'creatina-for-women',
       name: 'Creatina Monohidrato – For Women',
-      price: 65000,
+      price: 79000,
       quantity: 1,
       imageUrls: ['/images/creatina/landing 1.jpeg'],
       stock: 50,
     };
-    gtagAddToCart(65000, [product]);
+    gtagAddToCart(79000, [product]);
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     if (!cart.find((i: any) => i.id === product.id)) cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -338,7 +338,7 @@ export default function CreatinaLanding() {
                   className="w-full text-xl py-8 font-black bg-primary text-primary-foreground rounded-full shadow-2xl hover:scale-105 transition-transform"
                 >
                   <ShoppingCart className="h-6 w-6 mr-2" />
-                  ¡LO QUIERO! - $65.000
+                  ¡LO QUIERO! - $79.000
                 </Button>
 
                 <Button
@@ -392,7 +392,7 @@ export default function CreatinaLanding() {
               onClick={buyNow}
               className="flex-1 text-base py-5 font-bold bg-primary text-primary-foreground rounded-full shadow-xl"
             >
-              💪 $65.000
+              💪 $79.000
             </Button>
             <Button
               size="lg"
