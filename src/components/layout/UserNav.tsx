@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User as UserIcon, LogIn, UserPlus, ShoppingBag, LayoutDashboard } from 'lucide-react'; // Renamed User to UserIcon, Added LogIn, UserPlus
+import { LogOut, Settings, User as UserIcon, LogIn, UserPlus, ShoppingBag, LayoutDashboard, Package } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getFirebaseAuth } from '@/lib/firebase/firebaseConfig';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth'; 
@@ -128,6 +128,12 @@ export default function UserNav() {
                   <Link href="/admin/productos">
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Gestionar Precios</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/cotizaciones">
+                    <Package className="mr-2 h-4 w-4" />
+                    <span>Cotizaciones Rápidas</span>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
