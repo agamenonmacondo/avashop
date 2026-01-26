@@ -16,16 +16,6 @@ const heroContent = [
         buttonText: 'Ver Productos',
         showCard: false, // No mostrar tarjeta en útiles
     },
-    {
-        type: 'image',
-        src: '/images/creatina/hero_creatina.jpeg',
-        title: '💪 Creatina Monohidrato',
-        description: 'Potencia tu energía y fuerza',
-        price: '$65.000',
-        link: '/landing/creatina',
-        buttonText: 'Comprar Ahora',
-        showCard: true, // Sí mostrar tarjeta en creatina
-    },
 ];
 
 export default function HeroSection() {

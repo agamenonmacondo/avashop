@@ -103,10 +103,7 @@ export default function Header() {
                     <SearchBar />
                   </div>
 
-                  {/* Mantener solo enlace a Creatina (se eliminaron Combo Pro, Kit Esencial y Combo Navideño) */}
-                  <Link href="/landing/creatina" className="text-base hover:underline">
-                    Creatina
-                  </Link>
+                  {/* Solo enlace a Útiles Escolares */}
                   <Link href="/landing/utiles-escolares" className="text-base hover:underline">
                     Útiles Escolares
                   </Link>
@@ -153,11 +150,11 @@ export default function Header() {
 
           {/* Navegación desktop - SE ELIMINARON Combo Pro, Kit Esencial y Combo Navideño */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium">
-            <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
-              Creatina
-            </Link>
             <Link href="/landing/utiles-escolares" className="hover:underline whitespace-nowrap">
               Útiles Escolares
+            </Link>
+            <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
+              Creatina
             </Link>
 
             {/* Menú desplegable Legal - Desktop */}
