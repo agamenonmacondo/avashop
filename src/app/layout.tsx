@@ -63,6 +63,9 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'CCS724',
   },
+  other: {
+    'facebook-domain-verification': 'rmdknrgveo9uffmm4btk86smu7b2ag',
+  },
 };
 
 export default function RootLayout({
