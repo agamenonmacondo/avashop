@@ -153,10 +153,9 @@ export default function Header() {
             <Link href="/landing/utiles-escolares" className="hover:underline whitespace-nowrap">
               Útiles Escolares
             </Link>
-            <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
+            {/* <Link href="/landing/creatina" className="hover:underline whitespace-nowrap">
               Creatina
-            </Link>
-
+            </Link> */}
             {/* Menú desplegable Legal - Desktop */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
